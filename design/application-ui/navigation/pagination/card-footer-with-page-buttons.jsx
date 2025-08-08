@@ -1,3 +1,8 @@
+/**
+ * @description A card footer with page buttons pagination component for large dataset navigation.
+ * @tags navigation, pagination, card, footer, with, page, buttons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/pagination
+ */
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const items = [

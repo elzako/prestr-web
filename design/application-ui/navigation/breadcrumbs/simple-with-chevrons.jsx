@@ -1,3 +1,8 @@
+/**
+ * @description A simple with chevrons breadcrumb component for hierarchical navigation paths.
+ * @tags navigation, breadcrumbs, simple, with, chevrons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/breadcrumbs
+ */
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid'
 
 const pages = [

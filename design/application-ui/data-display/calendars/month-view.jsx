@@ -1,3 +1,8 @@
+/**
+ * @description A month view calendar component for date visualization and scheduling interfaces.
+ * @tags data display, calendars, month, view, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/calendars
+ */
 import {
   ChevronDownIcon,
   ChevronLeftIcon,

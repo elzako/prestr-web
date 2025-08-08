@@ -1,3 +1,8 @@
+/**
+ * @description A with avatar meta and dropdown card heading component for content section titles.
+ * @tags headings, card headings, with, avatar, meta, and, dropdown, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/card-headings
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { CodeBracketIcon, EllipsisVerticalIcon, FlagIcon, StarIcon } from '@heroicons/react/20/solid'
 

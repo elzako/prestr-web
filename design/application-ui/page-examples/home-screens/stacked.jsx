@@ -1,3 +1,8 @@
+/**
+ * @description A stacked home screen page example for landing page layouts.
+ * @tags page examples, home screens, stacked, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/page-examples/home-screens
+ */
 'use client'
 
 import { Fragment, useState } from 'react'

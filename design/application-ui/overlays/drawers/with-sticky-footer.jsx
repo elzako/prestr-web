@@ -1,3 +1,8 @@
+/**
+ * @description A with sticky footer drawer component for sliding panel interfaces.
+ * @tags overlays, drawers, with, sticky, footer, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/drawers
+ */
 'use client'
 
 import { useState } from 'react'

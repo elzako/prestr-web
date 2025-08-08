@@ -1,3 +1,8 @@
+/**
+ * @description A day view calendar component for date visualization and scheduling interfaces.
+ * @tags data display, calendars, day, view, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/calendars
+ */
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 

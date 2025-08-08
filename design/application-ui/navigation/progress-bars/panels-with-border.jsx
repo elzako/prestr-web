@@ -1,3 +1,8 @@
+/**
+ * @description A panels with border progress bar component for step-by-step processes.
+ * @tags navigation, progress bars, panels, with, border, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/progress-bars
+ */
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 const steps = [

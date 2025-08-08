@@ -1,3 +1,8 @@
+/**
+ * @description A stacked detail screen page example for comprehensive item views.
+ * @tags page examples, detail screens, stacked, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/page-examples/detail-screens
+ */
 'use client'
 
 import { useState } from 'react'

@@ -1,3 +1,8 @@
+/**
+ * @description Circular button components with plus icons in different sizes for floating action buttons and compact interfaces.
+ * @tags buttons, circular, floating-action-button, plus-icon, compact, ui-elements
+ * @source https://tailwindui.com/components/application-ui/elements/buttons
+ */
 import { PlusIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

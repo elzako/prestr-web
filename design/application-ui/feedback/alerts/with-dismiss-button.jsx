@@ -1,3 +1,8 @@
+/**
+ * @description A with dismiss button alert component for user notifications and status messages.
+ * @tags feedback, alerts, with, dismiss, button, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/alerts
+ */
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

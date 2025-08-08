@@ -1,3 +1,8 @@
+/**
+ * @description A with comments feed component for activity streams and timeline content.
+ * @tags lists, feeds, with, comments, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/feeds
+ */
 'use client'
 
 import { useState } from 'react'

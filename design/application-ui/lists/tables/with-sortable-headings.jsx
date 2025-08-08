@@ -1,3 +1,8 @@
+/**
+ * @description A with sortable headings table component for tabular data display and interaction.
+ * @tags lists, tables, with, sortable, headings, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/tables
+ */
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const people = [

@@ -1,3 +1,8 @@
+/**
+ * @description A with logo meta and actions page heading component for main content titles.
+ * @tags headings, page headings, with, logo, meta, and, actions, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/page-headings
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 

@@ -1,3 +1,8 @@
+/**
+ * @description A with stat button group component for related action clustering.
+ * @tags elements, button groups, with, stat, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/elements/button-groups
+ */
 import { BookmarkIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

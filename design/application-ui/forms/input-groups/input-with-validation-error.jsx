@@ -1,3 +1,8 @@
+/**
+ * @description A input with validation error input group component for enhanced form controls.
+ * @tags forms, input groups, input, with, validation, error, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/input-groups
+ */
 import { ExclamationCircleIcon } from '@heroicons/react/16/solid'
 
 export default function Example() {

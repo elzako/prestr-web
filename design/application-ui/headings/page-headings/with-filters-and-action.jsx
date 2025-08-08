@@ -1,3 +1,8 @@
+/**
+ * @description A with filters and action page heading component for main content titles.
+ * @tags headings, page headings, with, filters, and, action, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/page-headings
+ */
 import { PlusSmallIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

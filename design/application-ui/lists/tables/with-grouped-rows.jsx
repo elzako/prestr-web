@@ -1,3 +1,8 @@
+/**
+ * @description A with grouped rows table component for tabular data display and interaction.
+ * @tags lists, tables, with, grouped, rows, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/tables
+ */
 import { Fragment } from 'react'
 
 const locations = [

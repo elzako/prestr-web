@@ -1,3 +1,8 @@
+/**
+ * @description A simple dropdown component for menu options and selections.
+ * @tags elements, dropdowns, simple, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/elements/dropdowns
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 

@@ -1,3 +1,8 @@
+/**
+ * @description A with actions and breadcrumbs on dark page heading component for main content titles.
+ * @tags headings, page headings, with, actions, and, breadcrumbs, dark, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/page-headings
+ */
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

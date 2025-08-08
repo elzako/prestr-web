@@ -1,3 +1,8 @@
+/**
+ * @description A input with leading icon and trailing button input group component for enhanced form controls.
+ * @tags forms, input groups, input, with, leading, icon, and, trailing, button, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/input-groups
+ */
 import { BarsArrowUpIcon, UsersIcon } from '@heroicons/react/16/solid'
 
 export default function Example() {

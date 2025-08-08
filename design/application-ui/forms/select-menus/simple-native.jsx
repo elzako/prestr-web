@@ -1,3 +1,8 @@
+/**
+ * @description A simple native select menu component for dropdown option selection.
+ * @tags forms, select menus, simple, native, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/select-menus
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 export default function Example() {

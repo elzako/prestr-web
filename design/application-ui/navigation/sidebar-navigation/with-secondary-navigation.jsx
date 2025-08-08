@@ -1,3 +1,8 @@
+/**
+ * @description A with secondary navigation sidebar navigation component for secondary menu systems.
+ * @tags navigation, sidebar navigation, with, secondary, navigation, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
+ */
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import {

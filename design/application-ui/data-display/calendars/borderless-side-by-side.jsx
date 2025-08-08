@@ -1,3 +1,8 @@
+/**
+ * @description A borderless side by side calendar component for date visualization and scheduling interfaces.
+ * @tags data display, calendars, borderless, side, side, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/calendars
+ */
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'

@@ -1,3 +1,8 @@
+/**
+ * @description A simple empty state component for when no content is available.
+ * @tags feedback, empty states, simple, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/empty-states
+ */
 import { PlusIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

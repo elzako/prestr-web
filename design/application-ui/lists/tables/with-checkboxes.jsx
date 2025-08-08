@@ -1,3 +1,8 @@
+/**
+ * @description A with checkboxes table component for tabular data display and interaction.
+ * @tags lists, tables, with, checkboxes, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/tables
+ */
 'use client'
 
 import { useLayoutEffect, useRef, useState } from 'react'

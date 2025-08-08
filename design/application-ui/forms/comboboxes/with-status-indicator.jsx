@@ -1,3 +1,8 @@
+/**
+ * @description A with status indicator combobox component for searchable select inputs.
+ * @tags forms, comboboxes, with, status, indicator, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/comboboxes
+ */
 'use client'
 
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'

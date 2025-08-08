@@ -1,3 +1,8 @@
+/**
+ * @description A cards radio group component for single-option selection.
+ * @tags forms, radio groups, cards, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/radio-groups
+ */
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 
 const mailingLists = [

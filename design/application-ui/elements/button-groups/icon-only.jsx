@@ -1,3 +1,8 @@
+/**
+ * @description A icon only button group component for related action clustering.
+ * @tags elements, button groups, icon, only, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/elements/button-groups
+ */
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

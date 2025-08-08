@@ -1,3 +1,8 @@
+/**
+ * @description A with footer command palette component for quick action access.
+ * @tags navigation, command palettes, with, footer, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/command-palettes
+ */
 'use client'
 
 import {

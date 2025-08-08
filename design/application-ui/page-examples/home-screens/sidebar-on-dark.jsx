@@ -1,3 +1,8 @@
+/**
+ * @description A sidebar on dark home screen page example for landing page layouts.
+ * @tags page examples, home screens, sidebar, dark, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/page-examples/home-screens
+ */
 'use client'
 
 import { useState } from 'react'

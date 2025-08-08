@@ -1,3 +1,8 @@
+/**
+ * @description A with brand icon statistics component for data visualization and metrics display.
+ * @tags data display, stats, with, brand, icon, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/stats
+ */
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
 import { CursorArrowRaysIcon, EnvelopeOpenIcon, UsersIcon } from '@heroicons/react/24/outline'
 

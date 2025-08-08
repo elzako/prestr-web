@@ -1,3 +1,8 @@
+/**
+ * @description A simple with icons feed component for activity streams and timeline content.
+ * @tags lists, feeds, simple, with, icons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/feeds
+ */
 import { CheckIcon, HandThumbUpIcon, UserIcon } from '@heroicons/react/20/solid'
 
 const timeline = [

@@ -1,3 +1,8 @@
+/**
+ * @description A with starting points empty state component for when no content is available.
+ * @tags feedback, empty states, with, starting, points, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/empty-states
+ */
 import {
   Bars4Icon,
   CalendarIcon,

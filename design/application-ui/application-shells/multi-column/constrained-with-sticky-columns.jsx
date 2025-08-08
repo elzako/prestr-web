@@ -1,3 +1,8 @@
+/**
+ * @description A constrained width three-column application shell with sticky sidebar columns for focused content layouts.
+ * @tags application-shell, multi-column, three-column, sticky, constrained, sidebar
+ * @source https://tailwindui.com/components/application-ui/application-shells/multi-column
+ */
 import { BellIcon } from '@heroicons/react/24/outline'
 
 export default function Example() {

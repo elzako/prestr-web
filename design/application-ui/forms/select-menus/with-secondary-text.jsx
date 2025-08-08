@@ -1,3 +1,8 @@
+/**
+ * @description A with secondary text select menu component for dropdown option selection.
+ * @tags forms, select menus, with, secondary, text, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/select-menus
+ */
 'use client'
 
 import { useState } from 'react'

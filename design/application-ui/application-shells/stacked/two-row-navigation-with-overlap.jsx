@@ -1,3 +1,8 @@
+/**
+ * @description A stacked two row navigation with overlap application shell layout for streamlined vertical organization.
+ * @tags application shells, stacked, two, row, navigation, with, overlap, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/application-shells/stacked
+ */
 'use client'
 
 import { useState } from 'react'

@@ -1,3 +1,8 @@
+/**
+ * @description A circles with text progress bar component for step-by-step processes.
+ * @tags navigation, progress bars, circles, with, text, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/progress-bars
+ */
 import { CheckIcon } from '@heroicons/react/20/solid'
 
 const steps = [

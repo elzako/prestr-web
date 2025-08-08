@@ -1,3 +1,8 @@
+/**
+ * @description A double calendar component for date visualization and scheduling interfaces.
+ * @tags data display, calendars, double, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/calendars
+ */
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const months = [

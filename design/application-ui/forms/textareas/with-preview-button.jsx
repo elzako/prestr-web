@@ -1,3 +1,8 @@
+/**
+ * @description A with preview button textarea component for multi-line text input.
+ * @tags forms, textareas, with, preview, button, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/textareas
+ */
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { AtSymbolIcon, CodeBracketIcon, LinkIcon } from '@heroicons/react/20/solid'
 

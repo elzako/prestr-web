@@ -1,3 +1,8 @@
+/**
+ * @description A stacked settings screen page example for configuration interfaces.
+ * @tags page examples, settings screens, stacked, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/page-examples/settings-screens
+ */
 'use client'
 
 import { useState } from 'react'

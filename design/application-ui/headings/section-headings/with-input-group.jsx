@@ -1,3 +1,8 @@
+/**
+ * @description A with input group section heading component for content organization.
+ * @tags headings, section headings, with, input, group, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/section-headings
+ */
 import { BarsArrowUpIcon, MagnifyingGlassIcon } from '@heroicons/react/16/solid'
 
 export default function Example() {

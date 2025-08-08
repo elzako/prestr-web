@@ -1,3 +1,8 @@
+/**
+ * @description A with recommendations grid empty state component for when no content is available.
+ * @tags feedback, empty states, with, recommendations, grid, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/empty-states
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { PlusIcon } from '@heroicons/react/20/solid'
 

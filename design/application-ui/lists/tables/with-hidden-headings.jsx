@@ -1,3 +1,8 @@
+/**
+ * @description A with hidden headings table component for tabular data display and interaction.
+ * @tags lists, tables, with, hidden, headings, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/tables
+ */
 import { Fragment } from 'react'
 import { ArrowDownCircleIcon, ArrowPathIcon, ArrowUpCircleIcon } from '@heroicons/react/20/solid'
 

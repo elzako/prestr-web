@@ -1,3 +1,8 @@
+/**
+ * @description A with close button on outside drawer component for sliding panel interfaces.
+ * @tags overlays, drawers, with, close, button, outside, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/drawers
+ */
 'use client'
 
 import { useState } from 'react'

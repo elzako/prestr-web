@@ -1,3 +1,8 @@
+/**
+ * @description A bullets and text progress bar component for step-by-step processes.
+ * @tags navigation, progress bars, bullets, and, text, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/progress-bars
+ */
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 
 const steps = [

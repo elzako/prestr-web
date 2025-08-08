@@ -1,3 +1,8 @@
+/**
+ * @description A simple with gray footer modal dialog component for focused user interactions.
+ * @tags overlays, modal dialogs, simple, with, gray, footer, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/modal-dialogs
+ */
 'use client'
 
 import { useState } from 'react'

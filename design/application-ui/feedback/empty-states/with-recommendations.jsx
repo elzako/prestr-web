@@ -1,3 +1,8 @@
+/**
+ * @description A with recommendations empty state component for when no content is available.
+ * @tags feedback, empty states, with, recommendations, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/empty-states
+ */
 import { PlusIcon } from '@heroicons/react/20/solid'
 
 const people = [

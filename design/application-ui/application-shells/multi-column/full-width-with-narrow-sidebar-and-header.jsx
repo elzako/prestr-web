@@ -1,3 +1,8 @@
+/**
+ * @description A full-width application shell with narrow sidebar and dedicated header section for enhanced navigation.
+ * @tags application-shell, full-width, narrow-sidebar, header, navigation, layout
+ * @source https://tailwindui.com/components/application-ui/application-shells/multi-column
+ */
 'use client'
 
 import { useState } from 'react'

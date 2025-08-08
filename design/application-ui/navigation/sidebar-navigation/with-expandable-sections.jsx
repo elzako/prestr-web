@@ -1,3 +1,8 @@
+/**
+ * @description A with expandable sections sidebar navigation component for secondary menu systems.
+ * @tags navigation, sidebar navigation, with, expandable, sections, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
+ */
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 

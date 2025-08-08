@@ -1,3 +1,8 @@
+/**
+ * @description A with actions and tabs section heading component for content organization.
+ * @tags headings, section headings, with, actions, and, tabs, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/section-headings
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 const tabs = [

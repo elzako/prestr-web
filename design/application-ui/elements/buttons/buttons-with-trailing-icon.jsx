@@ -1,3 +1,8 @@
+/**
+ * @description Button components with trailing icons for directional actions and supplementary visual cues.
+ * @tags buttons, trailing-icon, directional-actions, visual-cues, ui-elements
+ * @source https://tailwindui.com/components/application-ui/elements/buttons
+ */
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

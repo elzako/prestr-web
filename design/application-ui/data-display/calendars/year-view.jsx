@@ -1,3 +1,8 @@
+/**
+ * @description A year view calendar component for date visualization and scheduling interfaces.
+ * @tags data display, calendars, year, view, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/calendars
+ */
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 

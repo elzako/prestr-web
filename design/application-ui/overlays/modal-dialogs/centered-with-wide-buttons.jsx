@@ -1,3 +1,8 @@
+/**
+ * @description A centered with wide buttons modal dialog component for focused user interactions.
+ * @tags overlays, modal dialogs, centered, with, wide, buttons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/modal-dialogs
+ */
 'use client'
 
 import { useState } from 'react'

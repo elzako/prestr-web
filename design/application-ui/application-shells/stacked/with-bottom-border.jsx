@@ -1,3 +1,8 @@
+/**
+ * @description A stacked with bottom border application shell layout for streamlined vertical organization.
+ * @tags application shells, stacked, with, bottom, border, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/application-shells/stacked
+ */
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 

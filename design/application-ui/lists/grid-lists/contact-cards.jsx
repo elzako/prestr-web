@@ -1,3 +1,8 @@
+/**
+ * @description A contact cards grid list component for organized card-based layouts.
+ * @tags lists, grid lists, contact, cards, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/grid-lists
+ */
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
 
 const people = [

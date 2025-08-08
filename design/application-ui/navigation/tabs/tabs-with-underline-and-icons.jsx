@@ -1,3 +1,8 @@
+/**
+ * @description A tabs with underline and icons tabs component for content section switching.
+ * @tags navigation, tabs, tabs, with, underline, and, icons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/tabs
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 import { BuildingOfficeIcon, CreditCardIcon, UserIcon, UsersIcon } from '@heroicons/react/20/solid'
 

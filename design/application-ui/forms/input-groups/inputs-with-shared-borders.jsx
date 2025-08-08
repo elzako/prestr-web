@@ -1,3 +1,8 @@
+/**
+ * @description A inputs with shared borders input group component for enhanced form controls.
+ * @tags forms, input groups, inputs, with, shared, borders, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/input-groups
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 export default function Example() {

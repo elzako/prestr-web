@@ -1,3 +1,8 @@
+/**
+ * @description A with badge and dropdown section heading component for content organization.
+ * @tags headings, section headings, with, badge, and, dropdown, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/section-headings
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 

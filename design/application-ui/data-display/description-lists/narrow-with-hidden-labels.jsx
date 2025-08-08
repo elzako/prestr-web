@@ -1,3 +1,8 @@
+/**
+ * @description A narrow with hidden labels description list component for structured key-value data presentation.
+ * @tags data display, description lists, narrow, with, hidden, labels, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/description-lists
+ */
 import { CalendarDaysIcon, CreditCardIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

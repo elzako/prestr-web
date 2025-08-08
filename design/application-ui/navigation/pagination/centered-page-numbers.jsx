@@ -1,3 +1,8 @@
+/**
+ * @description A centered page numbers pagination component for large dataset navigation.
+ * @tags navigation, pagination, centered, page, numbers, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/pagination
+ */
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

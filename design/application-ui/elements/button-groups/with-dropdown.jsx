@@ -1,3 +1,8 @@
+/**
+ * @description A with dropdown button group component for related action clustering.
+ * @tags elements, button groups, with, dropdown, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/elements/button-groups
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 

@@ -1,3 +1,8 @@
+/**
+ * @description A sidebar application shell with off-white background for subtle, warm interface aesthetics.
+ * @tags application-shell, sidebar, off-white, background, subtle, warm, aesthetic
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

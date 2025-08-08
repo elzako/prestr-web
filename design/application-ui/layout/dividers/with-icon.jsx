@@ -1,3 +1,8 @@
+/**
+ * @description A with icon divider component for content separation and visual organization.
+ * @tags layout, dividers, with, icon, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/layout/dividers
+ */
 import { PlusIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

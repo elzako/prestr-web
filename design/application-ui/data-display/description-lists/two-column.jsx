@@ -1,3 +1,8 @@
+/**
+ * @description A two column description list component for structured key-value data presentation.
+ * @tags data display, description lists, two, column, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/description-lists
+ */
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

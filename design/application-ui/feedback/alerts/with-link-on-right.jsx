@@ -1,3 +1,8 @@
+/**
+ * @description A with link on right alert component for user notifications and status messages.
+ * @tags feedback, alerts, with, link, right, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/alerts
+ */
 import { InformationCircleIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

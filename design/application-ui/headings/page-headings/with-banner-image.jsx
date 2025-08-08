@@ -1,3 +1,8 @@
+/**
+ * @description A with banner image page heading component for main content titles.
+ * @tags headings, page headings, with, banner, image, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/page-headings
+ */
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
 
 const profile = {

@@ -1,3 +1,8 @@
+/**
+ * @description A branded with supported text select menu component for dropdown option selection.
+ * @tags forms, select menus, branded, with, supported, text, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/select-menus
+ */
 'use client'
 
 import { useState } from 'react'

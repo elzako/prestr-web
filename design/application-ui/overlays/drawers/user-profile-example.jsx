@@ -1,3 +1,8 @@
+/**
+ * @description A user profile example drawer component for sliding panel interfaces.
+ * @tags overlays, drawers, user, profile, example, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/drawers
+ */
 'use client'
 
 import { useState } from 'react'

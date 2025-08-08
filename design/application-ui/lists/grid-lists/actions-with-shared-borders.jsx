@@ -1,3 +1,8 @@
+/**
+ * @description A actions with shared borders grid list component for organized card-based layouts.
+ * @tags lists, grid lists, actions, with, shared, borders, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/grid-lists
+ */
 import {
   AcademicCapIcon,
   BanknotesIcon,

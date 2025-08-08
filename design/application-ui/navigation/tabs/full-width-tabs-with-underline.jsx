@@ -1,3 +1,8 @@
+/**
+ * @description A full width tabs with underline tabs component for content section switching.
+ * @tags navigation, tabs, full, width, tabs, with, underline, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/tabs
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 const tabs = [

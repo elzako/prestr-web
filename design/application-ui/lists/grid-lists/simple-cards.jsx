@@ -1,3 +1,8 @@
+/**
+ * @description A simple cards grid list component for organized card-based layouts.
+ * @tags lists, grid lists, simple, cards, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/grid-lists
+ */
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 
 const projects = [

@@ -1,3 +1,8 @@
+/**
+ * @description A simple sidebar application shell with collapsible navigation for clean, minimal layouts.
+ * @tags application-shell, sidebar, simple, navigation, collapsible, layout
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

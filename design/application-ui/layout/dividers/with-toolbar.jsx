@@ -1,3 +1,8 @@
+/**
+ * @description A with toolbar divider component for content separation and visual organization.
+ * @tags layout, dividers, with, toolbar, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/layout/dividers
+ */
 import { ChatBubbleBottomCenterTextIcon, PaperClipIcon, PencilIcon, TrashIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

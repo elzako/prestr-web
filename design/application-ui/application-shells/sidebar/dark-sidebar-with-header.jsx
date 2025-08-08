@@ -1,3 +1,8 @@
+/**
+ * @description A dark-themed sidebar application shell with header for sophisticated, professional interfaces.
+ * @tags application-shell, sidebar, dark-theme, header, navigation, professional
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

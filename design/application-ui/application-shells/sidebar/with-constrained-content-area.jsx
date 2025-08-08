@@ -1,3 +1,8 @@
+/**
+ * @description A sidebar application shell with constrained content area for focused, centered layouts.
+ * @tags application-shell, sidebar, constrained, content-area, focused, centered
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

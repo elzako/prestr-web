@@ -1,3 +1,8 @@
+/**
+ * @description A light sidebar navigation component for secondary menu systems.
+ * @tags navigation, sidebar navigation, light, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
+ */
 import {
   CalendarIcon,
   ChartPieIcon,

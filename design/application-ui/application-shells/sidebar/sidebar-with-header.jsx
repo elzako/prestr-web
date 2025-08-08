@@ -1,3 +1,8 @@
+/**
+ * @description A sidebar application shell with dedicated header section for enhanced branding and navigation.
+ * @tags application-shell, sidebar, header, navigation, branding, layout
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

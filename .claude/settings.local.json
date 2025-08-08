@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(for file in design/application-ui/application-shells/sidebar/*.jsx)",
+      "Bash(do echo \"Processing: $file\")",
+      "Bash(head:*)",
+      "Bash(done)",
+      "Bash(echo)"
+    ],
+    "deny": []
+  }
+}

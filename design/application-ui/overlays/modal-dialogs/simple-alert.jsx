@@ -1,3 +1,8 @@
+/**
+ * @description A simple alert modal dialog component for focused user interactions.
+ * @tags overlays, modal dialogs, simple, alert, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/modal-dialogs
+ */
 'use client'
 
 import { useState } from 'react'

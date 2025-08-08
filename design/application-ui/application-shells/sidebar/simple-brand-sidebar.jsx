@@ -1,3 +1,8 @@
+/**
+ * @description A simple branded sidebar application shell with company logo and team navigation.
+ * @tags application-shell, sidebar, branded, logo, team-navigation, simple
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

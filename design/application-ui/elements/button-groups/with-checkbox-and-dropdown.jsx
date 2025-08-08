@@ -1,3 +1,8 @@
+/**
+ * @description A with checkbox and dropdown button group component for related action clustering.
+ * @tags elements, button groups, with, checkbox, and, dropdown, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/elements/button-groups
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 export default function Example() {

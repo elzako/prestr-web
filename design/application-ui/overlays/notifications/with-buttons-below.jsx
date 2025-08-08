@@ -1,3 +1,8 @@
+/**
+ * @description A with buttons below notification component for user alerts and messages.
+ * @tags overlays, notifications, with, buttons, below, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/notifications
+ */
 'use client'
 
 import { useState } from 'react'

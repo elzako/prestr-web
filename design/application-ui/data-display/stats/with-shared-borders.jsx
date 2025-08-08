@@ -1,3 +1,8 @@
+/**
+ * @description A with shared borders statistics component for data visualization and metrics display.
+ * @tags data display, stats, with, shared, borders, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/stats
+ */
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
 
 const stats = [

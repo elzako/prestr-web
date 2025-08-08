@@ -1,3 +1,8 @@
+/**
+ * @description A dark with quick action navigation bar component for main site navigation.
+ * @tags navigation, navbars, dark, with, quick, action, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/navbars
+ */
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/20/solid'

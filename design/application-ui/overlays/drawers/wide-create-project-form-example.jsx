@@ -1,3 +1,8 @@
+/**
+ * @description A wide create project form example drawer component for sliding panel interfaces.
+ * @tags overlays, drawers, wide, create, project, form, example, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/drawers
+ */
 'use client'
 
 import { useState } from 'react'

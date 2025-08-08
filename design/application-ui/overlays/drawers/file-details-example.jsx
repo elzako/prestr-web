@@ -1,3 +1,8 @@
+/**
+ * @description A file details example drawer component for sliding panel interfaces.
+ * @tags overlays, drawers, file, details, example, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/drawers
+ */
 'use client'
 
 import { useState } from 'react'

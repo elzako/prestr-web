@@ -1,3 +1,8 @@
+/**
+ * @description A small with meetings calendar component for date visualization and scheduling interfaces.
+ * @tags data display, calendars, small, with, meetings, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/data-display/calendars
+ */
 import {
   CalendarIcon,
   ChevronLeftIcon,

@@ -1,3 +1,8 @@
+/**
+ * @description A with icons dropdown component for menu options and selections.
+ * @tags elements, dropdowns, with, icons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/elements/dropdowns
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
   ArchiveBoxIcon,

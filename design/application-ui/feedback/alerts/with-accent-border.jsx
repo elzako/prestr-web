@@ -1,3 +1,8 @@
+/**
+ * @description A with accent border alert component for user notifications and status messages.
+ * @tags feedback, alerts, with, accent, border, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/alerts
+ */
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

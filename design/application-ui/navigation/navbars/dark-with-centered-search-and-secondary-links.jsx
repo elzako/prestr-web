@@ -1,3 +1,8 @@
+/**
+ * @description A dark with centered search and secondary links navigation bar component for main site navigation.
+ * @tags navigation, navbars, dark, with, centered, search, and, secondary, links, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/navbars
+ */
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'

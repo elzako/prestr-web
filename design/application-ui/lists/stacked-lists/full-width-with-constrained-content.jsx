@@ -1,3 +1,8 @@
+/**
+ * @description A full width with constrained content stacked list component for vertical content organization.
+ * @tags lists, stacked lists, full, width, with, constrained, content, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/stacked-lists
+ */
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const people = [

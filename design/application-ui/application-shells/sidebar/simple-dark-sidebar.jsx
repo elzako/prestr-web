@@ -1,3 +1,8 @@
+/**
+ * @description A simple dark-themed sidebar application shell with collapsible navigation for modern interfaces.
+ * @tags application-shell, sidebar, dark-theme, simple, navigation, collapsible
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

@@ -1,3 +1,8 @@
+/**
+ * @description A sidebar on dark settings screen page example for configuration interfaces.
+ * @tags page examples, settings screens, sidebar, dark, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/page-examples/settings-screens
+ */
 'use client'
 
 import { useState } from 'react'

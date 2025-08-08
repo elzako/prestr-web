@@ -1,3 +1,8 @@
+/**
+ * @description A branded sidebar application shell with header section for enhanced company identity and navigation.
+ * @tags application-shell, sidebar, branded, header, company-identity, navigation
+ * @source https://tailwindui.com/components/application-ui/application-shells/sidebar
+ */
 'use client'
 
 import { useState } from 'react'

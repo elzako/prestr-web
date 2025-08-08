@@ -1,3 +1,8 @@
+/**
+ * @description A with groups command palette component for quick action access.
+ * @tags navigation, command palettes, with, groups, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/command-palettes
+ */
 'use client'
 
 import {

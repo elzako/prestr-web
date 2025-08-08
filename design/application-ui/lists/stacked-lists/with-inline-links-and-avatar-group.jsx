@@ -1,3 +1,8 @@
+/**
+ * @description A with inline links and avatar group stacked list component for vertical content organization.
+ * @tags lists, stacked lists, with, inline, links, and, avatar, group, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/stacked-lists
+ */
 import { ChatBubbleLeftIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 
 const discussions = [

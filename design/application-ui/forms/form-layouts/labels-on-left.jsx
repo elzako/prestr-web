@@ -1,3 +1,8 @@
+/**
+ * @description A labels on left form layout component for structured data input.
+ * @tags forms, form layouts, labels, left, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/form-layouts
+ */
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 

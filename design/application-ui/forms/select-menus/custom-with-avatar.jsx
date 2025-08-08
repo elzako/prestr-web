@@ -1,3 +1,8 @@
+/**
+ * @description A custom with avatar select menu component for dropdown option selection.
+ * @tags forms, select menus, custom, with, avatar, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/select-menus
+ */
 'use client'
 
 import { useState } from 'react'

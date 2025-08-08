@@ -1,3 +1,8 @@
+/**
+ * @description A semi transparent with icons command palette component for quick action access.
+ * @tags navigation, command palettes, semi, transparent, with, icons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/command-palettes
+ */
 'use client'
 
 import {

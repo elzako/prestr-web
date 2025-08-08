@@ -1,3 +1,8 @@
+/**
+ * @description A narrow with badges on dark stacked list component for vertical content organization.
+ * @tags lists, stacked lists, narrow, with, badges, dark, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/stacked-lists
+ */
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const deployments = [

@@ -1,3 +1,8 @@
+/**
+ * @description A with title and pill actions textarea component for multi-line text input.
+ * @tags forms, textareas, with, title, and, pill, actions, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/textareas
+ */
 'use client'
 
 import { useState } from 'react'

@@ -1,3 +1,8 @@
+/**
+ * @description A with meta actions and breadcrumbs page heading component for main content titles.
+ * @tags headings, page headings, with, meta, actions, and, breadcrumbs, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/page-headings
+ */
 import {
   BriefcaseIcon,
   CalendarIcon,

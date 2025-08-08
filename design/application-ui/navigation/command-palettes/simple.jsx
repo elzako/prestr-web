@@ -1,3 +1,8 @@
+/**
+ * @description A simple command palette component for quick action access.
+ * @tags navigation, command palettes, simple, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/command-palettes
+ */
 'use client'
 
 import {

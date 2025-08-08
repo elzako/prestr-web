@@ -1,3 +1,8 @@
+/**
+ * @description A with avatar and actions card heading component for content section titles.
+ * @tags headings, card headings, with, avatar, and, actions, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/headings/card-headings
+ */
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

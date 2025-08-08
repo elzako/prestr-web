@@ -1,3 +1,8 @@
+/**
+ * @description A input with trailing icon input group component for enhanced form controls.
+ * @tags forms, input groups, input, with, trailing, icon, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/forms/input-groups
+ */
 import { QuestionMarkCircleIcon } from '@heroicons/react/16/solid'
 
 export default function Example() {

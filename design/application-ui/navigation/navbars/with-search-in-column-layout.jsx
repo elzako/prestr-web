@@ -1,3 +1,8 @@
+/**
+ * @description A with search in column layout navigation bar component for main site navigation.
+ * @tags navigation, navbars, with, search, column, layout, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/navbars
+ */
 import { Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'

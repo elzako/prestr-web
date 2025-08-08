@@ -1,3 +1,8 @@
+/**
+ * @description A with inline links and actions menu stacked list component for vertical content organization.
+ * @tags lists, stacked lists, with, inline, links, and, actions, menu, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/stacked-lists
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 

@@ -1,3 +1,8 @@
+/**
+ * @description A logos cards with description list grid list component for organized card-based layouts.
+ * @tags lists, grid lists, logos, cards, with, description, list, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/grid-lists
+ */
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 

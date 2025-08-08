@@ -1,3 +1,8 @@
+/**
+ * @description A dark sidebar navigation component for secondary menu systems.
+ * @tags navigation, sidebar navigation, dark, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
+ */
 import {
   CalendarIcon,
   ChartPieIcon,

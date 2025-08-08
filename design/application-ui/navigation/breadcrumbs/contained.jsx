@@ -1,3 +1,8 @@
+/**
+ * @description A contained breadcrumb component for hierarchical navigation paths.
+ * @tags navigation, breadcrumbs, contained, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/breadcrumbs
+ */
 import { HomeIcon } from '@heroicons/react/20/solid'
 
 const pages = [

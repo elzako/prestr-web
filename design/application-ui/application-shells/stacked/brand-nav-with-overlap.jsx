@@ -1,3 +1,8 @@
+/**
+ * @description A stacked brand nav with overlap application shell layout for streamlined vertical organization.
+ * @tags application shells, stacked, brand, nav, with, overlap, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/application-shells/stacked
+ */
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'

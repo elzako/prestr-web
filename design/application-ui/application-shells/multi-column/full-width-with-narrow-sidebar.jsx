@@ -1,3 +1,8 @@
+/**
+ * @description A full-width application shell with a narrow collapsible sidebar for streamlined navigation.
+ * @tags application-shell, full-width, narrow-sidebar, collapsible, sidebar, navigation
+ * @source https://tailwindui.com/components/application-ui/application-shells/multi-column
+ */
 'use client'
 
 import { useState } from 'react'

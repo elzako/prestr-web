@@ -1,3 +1,8 @@
+/**
+ * @description A full-width three-column application shell with sidebar navigation and a secondary column on the left.
+ * @tags application-shell, full-width, three-column, sidebar, secondary-column, navigation
+ * @source https://tailwindui.com/components/application-ui/application-shells/multi-column
+ */
 'use client'
 
 import { useState } from 'react'

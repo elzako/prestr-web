@@ -1,3 +1,8 @@
+/**
+ * @description Button components with leading icons for enhanced visual hierarchy and action clarity.
+ * @tags buttons, leading-icon, visual-hierarchy, action-buttons, ui-elements
+ * @source https://tailwindui.com/components/application-ui/elements/buttons
+ */
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 
 export default function Example() {

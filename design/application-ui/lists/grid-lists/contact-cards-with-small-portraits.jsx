@@ -1,3 +1,8 @@
+/**
+ * @description A contact cards with small portraits grid list component for organized card-based layouts.
+ * @tags lists, grid lists, contact, cards, with, small, portraits, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/lists/grid-lists
+ */
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid'
 
 const people = [

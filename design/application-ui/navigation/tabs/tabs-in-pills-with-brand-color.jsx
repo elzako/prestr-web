@@ -1,3 +1,8 @@
+/**
+ * @description A tabs in pills with brand color tabs component for content section switching.
+ * @tags navigation, tabs, tabs, pills, with, brand, color, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/tabs
+ */
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 const tabs = [

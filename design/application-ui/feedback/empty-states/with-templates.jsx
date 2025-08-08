@@ -1,3 +1,8 @@
+/**
+ * @description A with templates empty state component for when no content is available.
+ * @tags feedback, empty states, with, templates, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/feedback/empty-states
+ */
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { CalendarIcon, CommandLineIcon, MegaphoneIcon } from '@heroicons/react/24/outline'
 

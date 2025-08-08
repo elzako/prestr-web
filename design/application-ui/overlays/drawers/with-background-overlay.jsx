@@ -1,3 +1,8 @@
+/**
+ * @description A with background overlay drawer component for sliding panel interfaces.
+ * @tags overlays, drawers, with, background, overlay, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/overlays/drawers
+ */
 'use client'
 
 import { useState } from 'react'

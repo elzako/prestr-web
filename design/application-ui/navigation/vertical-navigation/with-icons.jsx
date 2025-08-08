@@ -1,3 +1,8 @@
+/**
+ * @description A with icons vertical navigation component for hierarchical menu structures.
+ * @tags navigation, vertical navigation, with, icons, tailwind-ui, component
+ * @source https://tailwindui.com/components/application-ui/navigation/vertical-navigation
+ */
 import {
   CalendarIcon,
   ChartPieIcon,
