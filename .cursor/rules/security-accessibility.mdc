@@ -1,0 +1,13 @@
+---
+globs: *.ts,*.tsx,*.jsx
+---
+
+# Security and Accessibility
+
+- Avoid `dangerouslySetInnerHTML`; if required, sanitize inputs.
+- Always include descriptive `alt` text for images; use empty `alt` only for decorative images.
+- Use semantic elements (`button`, `nav`, `main`, `section`, `h1`–`h6`). Set `type="button"` on non-submit buttons.
+- Ensure labels/aria for form controls; associate labels using `htmlFor`/`id`.
+- Provide visible focus states; ensure sufficient contrast in light and dark modes.
+- Keyboard support: all interactive elements must be reachable via tab and operable with keyboard.
+- Do not expose secrets to the client; read environment variables on the server only.

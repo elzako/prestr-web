@@ -1,0 +1,32 @@
+---
+alwaysApply: true
+---
+
+# Design Library Rule (Tailwind UI reference)
+
+The reference component library lives at [design/application-ui/](mdc:design/application-ui/).
+
+## Critical: Copy, don’t import
+
+- Do NOT import from `design/application-ui/`.
+- Instead:
+  1. Find an appropriate component by file path, file name and `@tags`.
+  2. Open the file and confirm it matches the use case.
+  3. Copy the raw JSX.
+  4. Paste into your `src/` component or route and adapt to TypeScript/Next.js as needed.
+
+## File discovery and naming
+
+- Files follow `[category]/[variant].jsx`. Use prompt keywords to match filenames.
+- Examples:
+  - Settings screen (stacked): [design/application-ui/page-examples/settings-screens/stacked.jsx](mdc:design/application-ui/page-examples/settings-screens/stacked.jsx)
+  - Sidebar shell: [design/application-ui/application-shells/sidebar/sidebar-with-header.jsx](mdc:design/application-ui/application-shells/sidebar/sidebar-with-header.jsx)
+  - Modal dialog: [design/application-ui/overlays/modal-dialogs/simple-alert-with-left-aligned-buttons.jsx](mdc:design/application-ui/overlays/modal-dialogs/simple-alert-with-left-aligned-buttons.jsx)
+
+## Adapting copied JSX
+
+- Convert to TSX: type component props, remove any unused imports, and replace placeholder data.
+- Use `"use client"` only if the component needs state/effects/refs.
+- Replace icons/images with project assets from `src/images/` when appropriate.
+- Keep Tailwind classes; adjust brand colors if needed (primary: `indigo`, danger: `rose`, success: `emerald`).
+- Ensure accessibility (focus states, `aria-*`, labels, and `alt` text).

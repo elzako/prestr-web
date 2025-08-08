@@ -1,0 +1,38 @@
+---
+alwaysApply: true
+---
+
+# Project Structure Guide
+
+- App Router lives in `src/app` using Next.js 14 conventions.
+- Entry points:
+  - [src/app/layout.tsx](mdc:src/app/layout.tsx)
+  - [src/app/page.tsx](mdc:src/app/page.tsx)
+  - [src/app/not-found.tsx](mdc:src/app/not-found.tsx)
+- Auth routes:
+  - [src/app/(auth)/login/page.tsx](<mdc:src/app/(auth)/login/page.tsx>)
+  - [src/app/(auth)/register/page.tsx](<mdc:src/app/(auth)/register/page.tsx>)
+- Reusable UI lives in `src/components/` (e.g., [Header.tsx](mdc:src/components/Header.tsx), [Footer.tsx](mdc:src/components/Footer.tsx)).
+- Static assets live in `src/images/`.
+- Tailwind entry: [src/styles/tailwind.css](mdc:src/styles/tailwind.css).
+- Configuration: [next.config.js](mdc:next.config.js), [tsconfig.json](mdc:tsconfig.json), [postcss.config.js](mdc:postcss.config.js), [prettier.config.js](mdc:prettier.config.js).
+- Tailwind UI reference library: [design/application-ui/](mdc:design/application-ui/). Never import from this folder; copy JSX into app code instead (see the “Design Library Rule”).
+
+## Adding pages/routes
+
+- Create routes as folders in `src/app/<segment>/page.tsx`.
+- Use server components by default; add `"use client"` only when needed (state/effects/refs or browser APIs).
+- Export `metadata` from `layout.tsx` or route files when needed.
+
+## Component organization
+
+- Prefer colocating small components next to their route when specific to that route.
+- Put shared, reusable components in `src/components/` with strongly typed props.
+
+## Images and assets
+
+- Prefer `next/image` with explicit `alt`, `width`, and `height`.
+
+## Styling
+
+- Use Tailwind classes directly in JSX. Favor semantic, commonly used colors and dark mode variants (`dark:`). Avoid inline styles unless necessary.

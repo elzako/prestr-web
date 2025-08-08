@@ -1,0 +1,28 @@
+---
+globs: *.ts,*.tsx
+---
+
+# Next.js + TypeScript conventions
+
+- Use App Router patterns (server components by default). Add `"use client"` only when needed.
+- Prefer `next/link` and `next/navigation` for routing, `next/image` for images.
+- Co-locate small, route-only components with their routes; put shared UI in `src/components/`.
+- Export `metadata` from routes/layouts when needed.
+
+## TypeScript
+
+- Strongly type public component props and exported functions. Avoid `any`.
+- Prefer explicit component props types over `React.FC`.
+- Use meaningful names: functions are verbs; variables are descriptive nouns.
+- Handle edge cases early; return early to avoid deep nesting.
+
+## Data and side effects
+
+- Keep components pure; move imperative logic to helpers.
+- For async work in server components, use `async`/`await` and native `fetch` with caching options when applicable.
+
+## Safety and quality
+
+- Never leave TODOs; fully implement requested functionality.
+- Avoid `dangerouslySetInnerHTML`. If unavoidable, sanitize inputs first.
+- Use `headers()`/`cookies()` from `next/headers` only in server contexts.

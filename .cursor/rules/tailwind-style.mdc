@@ -1,0 +1,14 @@
+---
+globs: *.tsx,*.jsx
+---
+
+# Tailwind CSS guidelines
+
+- Use Tailwind classes directly in JSX; avoid inline styles.
+- Prefer common color scales: `slate/gray/zinc` for neutrals; brand accent `indigo` by default; `rose` for destructive; `emerald` for success; `amber` for warnings.
+- Support dark mode with `dark:` variants for backgrounds, text, borders, and focus states.
+- Responsive first: use `sm / md / lg / xl / 2xl` breakpoints; design web-first.
+- Use consistent spacing (`px-`, `py-`, `gap-`, `space-*`) and radius (`rounded-*`).
+- Include accessible focus styles: `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500` (and dark variants as needed).
+- Prefer semantic utilities (`text-sm`, `font-medium`, `leading-6`) over arbitrary values.
+- Group stateful variants consistently: `disabled:`, `aria-checked:`, `data-[state=...]` when applicable.
