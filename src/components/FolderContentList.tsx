@@ -28,6 +28,7 @@ interface FolderContent {
 interface FolderContentListProps {
   content: FolderContent
   organizationName: string
+  currentFolderPath: string
 }
 
 function FolderCard({
@@ -117,11 +118,22 @@ function FolderCard({
   )
 }
 
-function PresentationCard({ presentation }: { presentation: Presentation }) {
+function PresentationCard({
+  presentation,
+  organizationName,
+  currentFolderPath,
+}: {
+  presentation: Presentation
+  organizationName: string
+  currentFolderPath: string
+}) {
   const metadata = presentation.metadata as { description?: string } | null
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
+    <Link
+      href={`/${organizationName}/${currentFolderPath}/${presentation.presentation_name}.presentation`}
+      className="block rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
+    >
       <div className="flex items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="flex items-center">
@@ -152,22 +164,33 @@ function PresentationCard({ presentation }: { presentation: Presentation }) {
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <button className="text-sm font-medium text-sky-600 hover:text-sky-500">
+        <span className="text-sm font-medium text-sky-600">
           View presentation →
-        </button>
+        </span>
         <div className="text-xs text-gray-400">
           {new Date(presentation.created_at).toLocaleDateString()}
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
-function SlideCard({ slide }: { slide: Slide }) {
+function SlideCard({
+  slide,
+  organizationName,
+  currentFolderPath,
+}: {
+  slide: Slide
+  organizationName: string
+  currentFolderPath: string
+}) {
   const metadata = slide.metadata as { textContent?: string[] } | null
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
+    <Link
+      href={`/${organizationName}/${currentFolderPath}/${slide.slide_name}.slide`}
+      className="block rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
+    >
       <div className="flex items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="flex items-center">
@@ -181,7 +204,7 @@ function SlideCard({ slide }: { slide: Slide }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2v12a2 2 0 002 2z"
               />
             </svg>
             <h3 className="truncate text-lg font-semibold text-gray-900">
@@ -198,20 +221,19 @@ function SlideCard({ slide }: { slide: Slide }) {
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <button className="text-sm font-medium text-sky-600 hover:text-sky-500">
-          View slide →
-        </button>
+        <span className="text-sm font-medium text-sky-600">View slide →</span>
         <div className="text-xs text-gray-400">
           {new Date(slide.created_at).toLocaleDateString()}
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
 export default function FolderContentList({
   content,
   organizationName,
+  currentFolderPath,
 }: FolderContentListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState<string>('all')
@@ -412,6 +434,8 @@ export default function FolderContentList({
                           <PresentationCard
                             key={presentation.id}
                             presentation={presentation}
+                            organizationName={organizationName}
+                            currentFolderPath={currentFolderPath}
                           />
                         ))}
                     </div>
@@ -450,7 +474,12 @@ export default function FolderContentList({
                             .includes(searchTerm.toLowerCase()),
                         )
                         .map((slide) => (
-                          <SlideCard key={slide.id} slide={slide} />
+                          <SlideCard
+                            key={slide.id}
+                            slide={slide}
+                            organizationName={organizationName}
+                            currentFolderPath={currentFolderPath}
+                          />
                         ))}
                     </div>
                   </div>
