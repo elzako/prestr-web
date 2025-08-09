@@ -45,13 +45,17 @@ export default function Example() {
       <header className="absolute inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center gap-x-6">
-            <button type="button" onClick={() => setMobileMenuOpen(true)} className="-m-3 p-3 md:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="-m-3 p-3 md:hidden"
+            >
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="size-5 text-gray-900" />
             </button>
             <img
               alt="Your Company"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
               className="h-8 w-auto"
             />
           </div>
@@ -63,7 +67,10 @@ export default function Example() {
             ))}
           </nav>
           <div className="flex flex-1 items-center justify-end gap-x-8">
-            <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+            <button
+              type="button"
+              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+            >
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="size-6" />
             </button>
@@ -77,11 +84,19 @@ export default function Example() {
             </a>
           </div>
         </div>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+        <Dialog
+          open={mobileMenuOpen}
+          onClose={setMobileMenuOpen}
+          className="lg:hidden"
+        >
           <div className="fixed inset-0 z-50" />
           <DialogPanel className="fixed inset-y-0 left-0 z-50 w-full overflow-y-auto bg-white px-4 pb-6 sm:max-w-sm sm:px-6 sm:ring-1 sm:ring-gray-900/10">
             <div className="relative -ml-0.5 flex h-16 items-center gap-x-6">
-              <button type="button" onClick={() => setMobileMenuOpen(false)} className="-m-2.5 p-2.5 text-gray-700">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="-m-2.5 p-2.5 text-gray-700"
+              >
                 <span className="sr-only">Close menu</span>
                 <XMarkIcon aria-hidden="true" className="size-6" />
               </button>
@@ -90,7 +105,7 @@ export default function Example() {
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
                     className="h-8 w-auto"
                   />
                 </a>
@@ -116,22 +131,27 @@ export default function Example() {
 
         <aside className="flex overflow-x-auto border-b border-gray-900/5 py-4 lg:block lg:w-64 lg:flex-none lg:border-0 lg:py-20">
           <nav className="flex-none px-4 sm:px-6 lg:px-0">
-            <ul role="list" className="flex gap-x-3 gap-y-1 whitespace-nowrap lg:flex-col">
+            <ul
+              role="list"
+              className="flex gap-x-3 gap-y-1 whitespace-nowrap lg:flex-col"
+            >
               {secondaryNavigation.map((item) => (
                 <li key={item.name}>
                   <a
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? 'bg-gray-50 text-indigo-600'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                        ? 'bg-gray-50 text-sky-600'
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-sky-600',
                       'group flex gap-x-3 rounded-md py-2 pr-3 pl-2 text-sm/6 font-semibold',
                     )}
                   >
                     <item.icon
                       aria-hidden="true"
                       className={classNames(
-                        item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                        item.current
+                          ? 'text-sky-600'
+                          : 'text-gray-400 group-hover:text-sky-600',
                         'size-6 shrink-0',
                       )}
                     />
@@ -146,35 +166,53 @@ export default function Example() {
         <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20">
           <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
             <div>
-              <h2 className="text-base/7 font-semibold text-gray-900">Profile</h2>
+              <h2 className="text-base/7 font-semibold text-gray-900">
+                Profile
+              </h2>
               <p className="mt-1 text-sm/6 text-gray-500">
-                This information will be displayed publicly so be careful what you share.
+                This information will be displayed publicly so be careful what
+                you share.
               </p>
 
               <dl className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6">
                 <div className="py-6 sm:flex">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">Full name</dt>
+                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                    Full name
+                  </dt>
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                     <div className="text-gray-900">Tom Cook</div>
-                    <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <button
+                      type="button"
+                      className="font-semibold text-sky-600 hover:text-sky-500"
+                    >
                       Update
                     </button>
                   </dd>
                 </div>
                 <div className="py-6 sm:flex">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">Email address</dt>
+                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                    Email address
+                  </dt>
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                     <div className="text-gray-900">tom.cook@example.com</div>
-                    <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <button
+                      type="button"
+                      className="font-semibold text-sky-600 hover:text-sky-500"
+                    >
                       Update
                     </button>
                   </dd>
                 </div>
                 <div className="py-6 sm:flex">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">Title</dt>
+                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                    Title
+                  </dt>
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                     <div className="text-gray-900">Human Resources Manager</div>
-                    <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <button
+                      type="button"
+                      className="font-semibold text-sky-600 hover:text-sky-500"
+                    >
                       Update
                     </button>
                   </dd>
@@ -183,80 +221,128 @@ export default function Example() {
             </div>
 
             <div>
-              <h2 className="text-base/7 font-semibold text-gray-900">Bank accounts</h2>
-              <p className="mt-1 text-sm/6 text-gray-500">Connect bank accounts to your account.</p>
+              <h2 className="text-base/7 font-semibold text-gray-900">
+                Bank accounts
+              </h2>
+              <p className="mt-1 text-sm/6 text-gray-500">
+                Connect bank accounts to your account.
+              </p>
 
-              <ul role="list" className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6">
+              <ul
+                role="list"
+                className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6"
+              >
                 <li className="flex justify-between gap-x-6 py-6">
-                  <div className="font-medium text-gray-900">TD Canada Trust</div>
-                  <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <div className="font-medium text-gray-900">
+                    TD Canada Trust
+                  </div>
+                  <button
+                    type="button"
+                    className="font-semibold text-sky-600 hover:text-sky-500"
+                  >
                     Update
                   </button>
                 </li>
                 <li className="flex justify-between gap-x-6 py-6">
-                  <div className="font-medium text-gray-900">Royal Bank of Canada</div>
-                  <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <div className="font-medium text-gray-900">
+                    Royal Bank of Canada
+                  </div>
+                  <button
+                    type="button"
+                    className="font-semibold text-sky-600 hover:text-sky-500"
+                  >
                     Update
                   </button>
                 </li>
               </ul>
 
               <div className="flex border-t border-gray-100 pt-6">
-                <button type="button" className="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500">
+                <button
+                  type="button"
+                  className="text-sm/6 font-semibold text-sky-600 hover:text-sky-500"
+                >
                   <span aria-hidden="true">+</span> Add another bank
                 </button>
               </div>
             </div>
 
             <div>
-              <h2 className="text-base/7 font-semibold text-gray-900">Integrations</h2>
-              <p className="mt-1 text-sm/6 text-gray-500">Connect applications to your account.</p>
+              <h2 className="text-base/7 font-semibold text-gray-900">
+                Integrations
+              </h2>
+              <p className="mt-1 text-sm/6 text-gray-500">
+                Connect applications to your account.
+              </p>
 
-              <ul role="list" className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6">
+              <ul
+                role="list"
+                className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6"
+              >
                 <li className="flex justify-between gap-x-6 py-6">
                   <div className="font-medium text-gray-900">QuickBooks</div>
-                  <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <button
+                    type="button"
+                    className="font-semibold text-sky-600 hover:text-sky-500"
+                  >
                     Update
                   </button>
                 </li>
               </ul>
 
               <div className="flex border-t border-gray-100 pt-6">
-                <button type="button" className="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500">
+                <button
+                  type="button"
+                  className="text-sm/6 font-semibold text-sky-600 hover:text-sky-500"
+                >
                   <span aria-hidden="true">+</span> Add another application
                 </button>
               </div>
             </div>
 
             <div>
-              <h2 className="text-base/7 font-semibold text-gray-900">Language and dates</h2>
+              <h2 className="text-base/7 font-semibold text-gray-900">
+                Language and dates
+              </h2>
               <p className="mt-1 text-sm/6 text-gray-500">
-                Choose what language and date format to use throughout your account.
+                Choose what language and date format to use throughout your
+                account.
               </p>
 
               <dl className="mt-6 divide-y divide-gray-100 border-t border-gray-200 text-sm/6">
                 <div className="py-6 sm:flex">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">Language</dt>
+                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                    Language
+                  </dt>
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                     <div className="text-gray-900">English</div>
-                    <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <button
+                      type="button"
+                      className="font-semibold text-sky-600 hover:text-sky-500"
+                    >
                       Update
                     </button>
                   </dd>
                 </div>
                 <div className="py-6 sm:flex">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">Date format</dt>
+                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                    Date format
+                  </dt>
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                     <div className="text-gray-900">DD-MM-YYYY</div>
-                    <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <button
+                      type="button"
+                      className="font-semibold text-sky-600 hover:text-sky-500"
+                    >
                       Update
                     </button>
                   </dd>
                 </div>
                 <div className="flex pt-6">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">Automatic timezone</dt>
+                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                    Automatic timezone
+                  </dt>
                   <dd className="flex flex-auto items-center justify-end">
-                    <div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-indigo-600 transition-colors duration-200 ease-in-out has-checked:bg-indigo-600 has-focus-visible:outline-2">
+                    <div className="group relative inline-flex w-8 shrink-0 rounded-full bg-gray-200 p-px inset-ring inset-ring-gray-900/5 outline-offset-2 outline-sky-600 transition-colors duration-200 ease-in-out has-checked:bg-sky-600 has-focus-visible:outline-2">
                       <span className="size-4 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-3.5" />
                       <input
                         defaultChecked

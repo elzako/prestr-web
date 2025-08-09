@@ -33,12 +33,16 @@ export default function Example() {
                     />
                   </div>
                   <div className="ml-3 w-0 flex-1">
-                    <p className="text-sm font-medium text-gray-900">Emilia Gates</p>
-                    <p className="mt-1 text-sm text-gray-500">Sent you an invite to connect.</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Emilia Gates
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Sent you an invite to connect.
+                    </p>
                     <div className="mt-4 flex">
                       <button
                         type="button"
-                        className="inline-flex items-center rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="inline-flex items-center rounded-md bg-sky-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                       >
                         Accept
                       </button>
@@ -56,7 +60,7 @@ export default function Example() {
                       onClick={() => {
                         setShow(false)
                       }}
-                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
                     >
                       <span className="sr-only">Close</span>
                       <XMarkIcon aria-hidden="true" className="size-5" />

@@ -32,8 +32,12 @@ export default function Example() {
                     />
                   </div>
                   <div className="ml-3 w-0 flex-1">
-                    <p className="text-sm font-medium text-gray-900">Emilia Gates</p>
-                    <p className="mt-1 text-sm text-gray-500">Sure! 8:30pm works great!</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Emilia Gates
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Sure! 8:30pm works great!
+                    </p>
                   </div>
                 </div>
               </div>
@@ -43,7 +47,7 @@ export default function Example() {
                   onClick={() => {
                     setShow(false)
                   }}
-                  className="flex w-full items-center justify-center rounded-none rounded-r-lg p-4 text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-2 focus:outline-indigo-500"
+                  className="flex w-full items-center justify-center rounded-none rounded-r-lg p-4 text-sm font-medium text-sky-600 hover:text-sky-500 focus:outline-2 focus:outline-sky-500"
                 >
                   Reply
                 </button>

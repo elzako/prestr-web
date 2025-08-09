@@ -6,8 +6,19 @@
 'use client'
 
 import { useState } from 'react'
-import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
-import { CalendarIcon, PaperClipIcon, TagIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import {
+  Label,
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/react'
+import {
+  CalendarIcon,
+  PaperClipIcon,
+  TagIcon,
+  UserCircleIcon,
+} from '@heroicons/react/20/solid'
 
 const assignees = [
   { name: 'Unassigned', value: null },
@@ -55,7 +66,7 @@ export default function Example() {
 
   return (
     <form action="#" className="relative">
-      <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+      <div className="rounded-lg bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-sky-600">
         <label htmlFor="title" className="sr-only">
           Title
         </label>
@@ -95,14 +106,26 @@ export default function Example() {
       <div className="absolute inset-x-px bottom-0">
         {/* Actions: These are just examples to demonstrate the concept, replace/wire these up however makes sense for your project. */}
         <div className="flex flex-nowrap justify-end space-x-2 px-2 py-2 sm:px-3">
-          <Listbox as="div" value={assigned} onChange={setAssigned} className="shrink-0">
+          <Listbox
+            as="div"
+            value={assigned}
+            onChange={setAssigned}
+            className="shrink-0"
+          >
             <Label className="sr-only">Assign</Label>
             <div className="relative">
               <ListboxButton className="relative inline-flex items-center rounded-full bg-gray-50 px-2 py-2 text-sm font-medium whitespace-nowrap text-gray-500 hover:bg-gray-100 sm:px-3">
                 {assigned.value === null ? (
-                  <UserCircleIcon aria-hidden="true" className="size-5 shrink-0 text-gray-300 sm:-ml-1" />
+                  <UserCircleIcon
+                    aria-hidden="true"
+                    className="size-5 shrink-0 text-gray-300 sm:-ml-1"
+                  />
                 ) : (
-                  <img alt="" src={assigned.avatar} className="size-5 shrink-0 rounded-full" />
+                  <img
+                    alt=""
+                    src={assigned.avatar}
+                    className="size-5 shrink-0 rounded-full"
+                  />
                 )}
 
                 <span
@@ -133,10 +156,15 @@ export default function Example() {
                           className="size-5 shrink-0 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
                         />
                       ) : (
-                        <UserCircleIcon aria-hidden="true" className="size-5 shrink-0 text-gray-400" />
+                        <UserCircleIcon
+                          aria-hidden="true"
+                          className="size-5 shrink-0 text-gray-400"
+                        />
                       )}
 
-                      <span className="ml-3 block truncate font-medium">{assignee.name}</span>
+                      <span className="ml-3 block truncate font-medium">
+                        {assignee.name}
+                      </span>
                     </div>
                   </ListboxOption>
                 ))}
@@ -144,7 +172,12 @@ export default function Example() {
             </div>
           </Listbox>
 
-          <Listbox as="div" value={labelled} onChange={setLabelled} className="shrink-0">
+          <Listbox
+            as="div"
+            value={labelled}
+            onChange={setLabelled}
+            className="shrink-0"
+          >
             <Label className="sr-only">Add a label</Label>
             <div className="relative">
               <ListboxButton className="relative inline-flex items-center rounded-full bg-gray-50 px-2 py-2 text-sm font-medium whitespace-nowrap text-gray-500 hover:bg-gray-100 sm:px-3">
@@ -176,7 +209,9 @@ export default function Example() {
                     className="cursor-default bg-white px-3 py-2 select-none data-focus:relative data-focus:bg-gray-100 data-focus:hover:outline-hidden"
                   >
                     <div className="flex items-center">
-                      <span className="block truncate font-medium">{label.name}</span>
+                      <span className="block truncate font-medium">
+                        {label.name}
+                      </span>
                     </div>
                   </ListboxOption>
                 ))}
@@ -184,7 +219,12 @@ export default function Example() {
             </div>
           </Listbox>
 
-          <Listbox as="div" value={dated} onChange={setDated} className="shrink-0">
+          <Listbox
+            as="div"
+            value={dated}
+            onChange={setDated}
+            className="shrink-0"
+          >
             <Label className="sr-only">Add a due date</Label>
             <div className="relative">
               <ListboxButton className="relative inline-flex items-center rounded-full bg-gray-50 px-2 py-2 text-sm font-medium whitespace-nowrap text-gray-500 hover:bg-gray-100 sm:px-3">
@@ -216,7 +256,9 @@ export default function Example() {
                     className="cursor-default bg-white px-3 py-2 select-none data-focus:relative data-focus:bg-gray-100 data-focus:hover:outline-hidden"
                   >
                     <div className="flex items-center">
-                      <span className="block truncate font-medium">{dueDate.name}</span>
+                      <span className="block truncate font-medium">
+                        {dueDate.name}
+                      </span>
                     </div>
                   </ListboxOption>
                 ))}
@@ -230,14 +272,19 @@ export default function Example() {
               type="button"
               className="group -my-2 -ml-2 inline-flex items-center rounded-full px-3 py-2 text-left text-gray-400"
             >
-              <PaperClipIcon aria-hidden="true" className="mr-2 -ml-1 size-5 group-hover:text-gray-500" />
-              <span className="text-sm text-gray-500 italic group-hover:text-gray-600">Attach a file</span>
+              <PaperClipIcon
+                aria-hidden="true"
+                className="mr-2 -ml-1 size-5 group-hover:text-gray-500"
+              />
+              <span className="text-sm text-gray-500 italic group-hover:text-gray-600">
+                Attach a file
+              </span>
             </button>
           </div>
           <div className="shrink-0">
             <button
               type="submit"
-              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
             >
               Create
             </button>

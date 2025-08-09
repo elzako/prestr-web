@@ -3,7 +3,12 @@
  * @tags data display, calendars, year, view, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/data-display/calendars
  */
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EllipsisHorizontalIcon,
+} from '@heroicons/react/20/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 const months = [
@@ -611,7 +616,10 @@ export default function Example() {
                 className="flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50"
               >
                 Year view
-                <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+                <ChevronDownIcon
+                  aria-hidden="true"
+                  className="-mr-1 size-5 text-gray-400"
+                />
               </MenuButton>
 
               <MenuItems
@@ -657,7 +665,7 @@ export default function Example() {
             <div className="ml-6 h-6 w-px bg-gray-300" />
             <button
               type="button"
-              className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="ml-6 rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
             >
               Add event
             </button>
@@ -737,7 +745,9 @@ export default function Example() {
         <div className="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4">
           {months.map((month) => (
             <section key={month.name} className="text-center">
-              <h2 className="text-sm font-semibold text-gray-900">{month.name}</h2>
+              <h2 className="text-sm font-semibold text-gray-900">
+                {month.name}
+              </h2>
               <div className="mt-6 grid grid-cols-7 text-xs/6 text-gray-500">
                 <div>M</div>
                 <div>T</div>
@@ -758,7 +768,7 @@ export default function Example() {
                   >
                     <time
                       dateTime={day.date}
-                      className="mx-auto flex size-7 items-center justify-center rounded-full in-data-is-today:bg-indigo-600 in-data-is-today:font-semibold in-data-is-today:text-white"
+                      className="mx-auto flex size-7 items-center justify-center rounded-full in-data-is-today:bg-sky-600 in-data-is-today:font-semibold in-data-is-today:text-white"
                     >
                       {day.date.split('-').pop().replace(/^0/, '')}
                     </time>

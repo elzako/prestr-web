@@ -3,7 +3,15 @@
  * @tags application shells, stacked, brand, nav, with, overlap, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/application-shells/stacked
  */
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -42,15 +50,18 @@ export default function Example() {
         ```
       */}
       <div className="min-h-full">
-        <div className="bg-indigo-600 pb-32">
-          <Disclosure as="nav" className="border-b border-indigo-300/25 bg-indigo-600 lg:border-none">
+        <div className="bg-sky-600 pb-32">
+          <Disclosure
+            as="nav"
+            className="border-b border-sky-300/25 bg-sky-600 lg:border-none"
+          >
             <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-              <div className="relative flex h-16 items-center justify-between lg:border-b lg:border-indigo-400/25">
+              <div className="relative flex h-16 items-center justify-between lg:border-b lg:border-sky-400/25">
                 <div className="flex items-center px-2 lg:px-0">
                   <div className="shrink-0">
                     <img
                       alt="Your Company"
-                      src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=300"
+                      src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=300"
                       className="block size-8"
                     />
                   </div>
@@ -62,7 +73,9 @@ export default function Example() {
                           href={item.href}
                           aria-current={item.current ? 'page' : undefined}
                           className={classNames(
-                            item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500/75',
+                            item.current
+                              ? 'bg-sky-700 text-white'
+                              : 'text-white hover:bg-sky-500/75',
                             'rounded-md px-3 py-2 text-sm font-medium',
                           )}
                         >
@@ -78,7 +91,7 @@ export default function Example() {
                       name="search"
                       placeholder="Search"
                       aria-label="Search"
-                      className="col-start-1 row-start-1 block w-full rounded-md bg-indigo-500/75 py-1.5 pr-3 pl-10 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-white/75 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
+                      className="col-start-1 row-start-1 block w-full rounded-md bg-sky-500/75 py-1.5 pr-3 pl-10 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-white/75 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
                     />
                     <MagnifyingGlassIcon
                       aria-hidden="true"
@@ -88,18 +101,24 @@ export default function Example() {
                 </div>
                 <div className="flex lg:hidden">
                   {/* Mobile menu button */}
-                  <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-indigo-200 hover:bg-indigo-500/75 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white">
+                  <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-sky-600 p-2 text-sky-200 hover:bg-sky-500/75 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
-                    <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                    <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                    <Bars3Icon
+                      aria-hidden="true"
+                      className="block size-6 group-data-open:hidden"
+                    />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="hidden size-6 group-data-open:block"
+                    />
                   </DisclosureButton>
                 </div>
                 <div className="hidden lg:ml-4 lg:block">
                   <div className="flex items-center">
                     <button
                       type="button"
-                      className="relative shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
+                      className="relative shrink-0 rounded-full p-1 text-sky-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
                     >
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">View notifications</span>
@@ -148,7 +167,9 @@ export default function Example() {
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500/75',
+                      item.current
+                        ? 'bg-sky-700 text-white'
+                        : 'text-white hover:bg-sky-500/75',
                       'block rounded-md px-3 py-2 text-base font-medium',
                     )}
                   >
@@ -156,7 +177,7 @@ export default function Example() {
                   </DisclosureButton>
                 ))}
               </div>
-              <div className="border-t border-indigo-700 pt-4 pb-3">
+              <div className="border-t border-sky-700 pt-4 pb-3">
                 <div className="flex items-center px-5">
                   <div className="shrink-0">
                     <img
@@ -166,12 +187,16 @@ export default function Example() {
                     />
                   </div>
                   <div className="ml-3">
-                    <div className="text-base font-medium text-white">{user.name}</div>
-                    <div className="text-sm font-medium text-indigo-300">{user.email}</div>
+                    <div className="text-base font-medium text-white">
+                      {user.name}
+                    </div>
+                    <div className="text-sm font-medium text-sky-300">
+                      {user.email}
+                    </div>
                   </div>
                   <button
                     type="button"
-                    className="relative ml-auto shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
+                    className="relative ml-auto shrink-0 rounded-full p-1 text-sky-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
@@ -184,7 +209,7 @@ export default function Example() {
                       key={item.name}
                       as="a"
                       href={item.href}
-                      className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500/75"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-sky-500/75"
                     >
                       {item.name}
                     </DisclosureButton>
@@ -195,14 +220,18 @@ export default function Example() {
           </Disclosure>
           <header className="py-10">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-white">
+                Dashboard
+              </h1>
             </div>
           </header>
         </div>
 
         <main className="-mt-32">
           <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-            <div className="rounded-lg bg-white px-5 py-6 shadow-sm sm:px-6">{/* Your content */}</div>
+            <div className="rounded-lg bg-white px-5 py-6 shadow-sm sm:px-6">
+              {/* Your content */}
+            </div>
           </div>
         </main>
       </div>

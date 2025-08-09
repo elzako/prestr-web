@@ -4,7 +4,11 @@
  * @source https://tailwindui.com/components/application-ui/lists/feeds
  */
 import { Fragment } from 'react'
-import { ChatBubbleLeftEllipsisIcon, TagIcon, UserCircleIcon } from '@heroicons/react/20/solid'
+import {
+  ChatBubbleLeftEllipsisIcon,
+  TagIcon,
+  UserCircleIcon,
+} from '@heroicons/react/20/solid'
 
 const activity = [
   {
@@ -30,7 +34,7 @@ const activity = [
     person: { name: 'Hilary Mahy', href: '#' },
     tags: [
       { name: 'Bug', href: '#', color: 'fill-red-500' },
-      { name: 'Accessibility', href: '#', color: 'fill-indigo-500' },
+      { name: 'Accessibility', href: '#', color: 'fill-sky-500' },
     ],
     date: '6h ago',
   },
@@ -58,7 +62,10 @@ export default function Example() {
           <li key={activityItem.id}>
             <div className="relative pb-8">
               {activityItemIdx !== activity.length - 1 ? (
-                <span aria-hidden="true" className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200" />
+                <span
+                  aria-hidden="true"
+                  className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200"
+                />
               ) : null}
               <div className="relative flex items-start space-x-3">
                 {activityItem.type === 'comment' ? (
@@ -71,17 +78,25 @@ export default function Example() {
                       />
 
                       <span className="absolute -right-1 -bottom-0.5 rounded-tl bg-white px-0.5 py-px">
-                        <ChatBubbleLeftEllipsisIcon aria-hidden="true" className="size-5 text-gray-400" />
+                        <ChatBubbleLeftEllipsisIcon
+                          aria-hidden="true"
+                          className="size-5 text-gray-400"
+                        />
                       </span>
                     </div>
                     <div className="min-w-0 flex-1">
                       <div>
                         <div className="text-sm">
-                          <a href={activityItem.person.href} className="font-medium text-gray-900">
+                          <a
+                            href={activityItem.person.href}
+                            className="font-medium text-gray-900"
+                          >
                             {activityItem.person.name}
                           </a>
                         </div>
-                        <p className="mt-0.5 text-sm text-gray-500">Commented {activityItem.date}</p>
+                        <p className="mt-0.5 text-sm text-gray-500">
+                          Commented {activityItem.date}
+                        </p>
                       </div>
                       <div className="mt-2 text-sm text-gray-700">
                         <p>{activityItem.comment}</p>
@@ -93,20 +108,31 @@ export default function Example() {
                     <div>
                       <div className="relative px-1">
                         <div className="flex size-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-                          <UserCircleIcon aria-hidden="true" className="size-5 text-gray-500" />
+                          <UserCircleIcon
+                            aria-hidden="true"
+                            className="size-5 text-gray-500"
+                          />
                         </div>
                       </div>
                     </div>
                     <div className="min-w-0 flex-1 py-1.5">
                       <div className="text-sm text-gray-500">
-                        <a href={activityItem.person.href} className="font-medium text-gray-900">
+                        <a
+                          href={activityItem.person.href}
+                          className="font-medium text-gray-900"
+                        >
                           {activityItem.person.name}
                         </a>{' '}
                         assigned{' '}
-                        <a href={activityItem.assigned.href} className="font-medium text-gray-900">
+                        <a
+                          href={activityItem.assigned.href}
+                          className="font-medium text-gray-900"
+                        >
                           {activityItem.assigned.name}
                         </a>{' '}
-                        <span className="whitespace-nowrap">{activityItem.date}</span>
+                        <span className="whitespace-nowrap">
+                          {activityItem.date}
+                        </span>
                       </div>
                     </div>
                   </>
@@ -115,14 +141,20 @@ export default function Example() {
                     <div>
                       <div className="relative px-1">
                         <div className="flex size-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
-                          <TagIcon aria-hidden="true" className="size-5 text-gray-500" />
+                          <TagIcon
+                            aria-hidden="true"
+                            className="size-5 text-gray-500"
+                          />
                         </div>
                       </div>
                     </div>
                     <div className="min-w-0 flex-1 py-0">
                       <div className="text-sm/8 text-gray-500">
                         <span className="mr-0.5">
-                          <a href={activityItem.person.href} className="font-medium text-gray-900">
+                          <a
+                            href={activityItem.person.href}
+                            className="font-medium text-gray-900"
+                          >
                             {activityItem.person.name}
                           </a>{' '}
                           added tags
@@ -134,7 +166,11 @@ export default function Example() {
                                 href={tag.href}
                                 className="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-gray-900 inset-ring inset-ring-gray-200"
                               >
-                                <svg viewBox="0 0 6 6" aria-hidden="true" className={classNames(tag.color, 'size-1.5')}>
+                                <svg
+                                  viewBox="0 0 6 6"
+                                  aria-hidden="true"
+                                  className={classNames(tag.color, 'size-1.5')}
+                                >
                                   <circle r={3} cx={3} cy={3} />
                                 </svg>
                                 {tag.name}
@@ -142,7 +178,9 @@ export default function Example() {
                             </Fragment>
                           ))}
                         </span>
-                        <span className="whitespace-nowrap">{activityItem.date}</span>
+                        <span className="whitespace-nowrap">
+                          {activityItem.date}
+                        </span>
                       </div>
                     </div>
                   </>

@@ -6,7 +6,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  TransitionChild,
+} from '@headlessui/react'
 import {
   Bars3Icon,
   CalendarIcon,
@@ -45,7 +50,11 @@ export default function Example() {
         ```
       */}
       <div>
-        <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
+        <Dialog
+          open={sidebarOpen}
+          onClose={setSidebarOpen}
+          className="relative z-50 lg:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
@@ -58,9 +67,16 @@ export default function Example() {
             >
               <TransitionChild>
                 <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarOpen(false)}
+                    className="-m-2.5 p-2.5"
+                  >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="size-6 text-white"
+                    />
                   </button>
                 </div>
               </TransitionChild>
@@ -69,7 +85,7 @@ export default function Example() {
                 <div className="flex h-16 shrink-0 items-center">
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                     className="h-8 w-auto"
                   />
                 </div>
@@ -86,7 +102,10 @@ export default function Example() {
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
-                          <item.icon aria-hidden="true" className="size-6 shrink-0" />
+                          <item.icon
+                            aria-hidden="true"
+                            className="size-6 shrink-0"
+                          />
                           {item.name}
                         </a>
                       </li>
@@ -103,7 +122,7 @@ export default function Example() {
           <div className="flex h-16 shrink-0 items-center justify-center">
             <img
               alt="Your Company"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
               className="h-8 w-auto"
             />
           </div>
@@ -114,7 +133,9 @@ export default function Example() {
                   <a
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                      item.current
+                        ? 'bg-gray-800 text-white'
+                        : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                       'group flex gap-x-3 rounded-md p-3 text-sm/6 font-semibold',
                     )}
                   >
@@ -128,11 +149,17 @@ export default function Example() {
         </div>
 
         <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-900 px-4 py-4 shadow-xs sm:px-6 lg:hidden">
-          <button type="button" onClick={() => setSidebarOpen(true)} className="-m-2.5 p-2.5 text-gray-400 lg:hidden">
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="-m-2.5 p-2.5 text-gray-400 lg:hidden"
+          >
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon aria-hidden="true" className="size-6" />
           </button>
-          <div className="flex-1 text-sm/6 font-semibold text-white">Dashboard</div>
+          <div className="flex-1 text-sm/6 font-semibold text-white">
+            Dashboard
+          </div>
           <a href="#">
             <span className="sr-only">Your profile</span>
             <img
@@ -145,7 +172,9 @@ export default function Example() {
 
         <main className="lg:pl-20">
           <div className="xl:pl-96">
-            <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">{/* Main area */}</div>
+            <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
+              {/* Main area */}
+            </div>
           </div>
         </main>
 

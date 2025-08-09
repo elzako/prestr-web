@@ -112,7 +112,9 @@ const days = [
 export default function Example() {
   return (
     <div>
-      <h2 className="text-base font-semibold text-gray-900">Upcoming meetings</h2>
+      <h2 className="text-base font-semibold text-gray-900">
+        Upcoming meetings
+      </h2>
       <div className="lg:grid lg:grid-cols-12 lg:gap-x-16">
         <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9">
           <div className="flex items-center text-gray-900">
@@ -149,11 +151,11 @@ export default function Example() {
                 data-is-today={day.isToday ? '' : undefined}
                 data-is-selected={day.isSelected ? '' : undefined}
                 data-is-current-month={day.isCurrentMonth ? '' : undefined}
-                className="py-1.5 not-data-is-current-month:bg-gray-50 not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-400 first:rounded-tl-lg last:rounded-br-lg hover:bg-gray-100 focus:z-10 data-is-current-month:bg-white not-data-is-selected:data-is-current-month:not-data-is-today:text-gray-900 data-is-current-month:hover:bg-gray-100 data-is-selected:font-semibold data-is-selected:text-white data-is-today:font-semibold data-is-today:not-data-is-selected:text-indigo-600 nth-36:rounded-bl-lg nth-7:rounded-tr-lg"
+                className="py-1.5 not-data-is-current-month:bg-gray-50 not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-400 first:rounded-tl-lg last:rounded-br-lg hover:bg-gray-100 focus:z-10 data-is-current-month:bg-white not-data-is-selected:data-is-current-month:not-data-is-today:text-gray-900 data-is-current-month:hover:bg-gray-100 data-is-selected:font-semibold data-is-selected:text-white data-is-today:font-semibold data-is-today:not-data-is-selected:text-sky-600 nth-36:rounded-bl-lg nth-7:rounded-tr-lg"
               >
                 <time
                   dateTime={day.date}
-                  className="mx-auto flex size-7 items-center justify-center rounded-full in-data-is-selected:not-in-data-is-today:bg-gray-900 in-data-is-selected:in-data-is-today:bg-indigo-600"
+                  className="mx-auto flex size-7 items-center justify-center rounded-full in-data-is-selected:not-in-data-is-today:bg-gray-900 in-data-is-selected:in-data-is-today:bg-sky-600"
                 >
                   {day.date.split('-').pop().replace(/^0/, '')}
                 </time>
@@ -162,22 +164,34 @@ export default function Example() {
           </div>
           <button
             type="button"
-            className="mt-8 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="mt-8 w-full rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
           >
             Add event
           </button>
         </div>
         <ol className="mt-4 divide-y divide-gray-100 text-sm/6 lg:col-span-7 xl:col-span-8">
           {meetings.map((meeting) => (
-            <li key={meeting.id} className="relative flex gap-x-6 py-6 xl:static">
-              <img alt="" src={meeting.imageUrl} className="size-14 flex-none rounded-full" />
+            <li
+              key={meeting.id}
+              className="relative flex gap-x-6 py-6 xl:static"
+            >
+              <img
+                alt=""
+                src={meeting.imageUrl}
+                className="size-14 flex-none rounded-full"
+              />
               <div className="flex-auto">
-                <h3 className="pr-10 font-semibold text-gray-900 xl:pr-0">{meeting.name}</h3>
+                <h3 className="pr-10 font-semibold text-gray-900 xl:pr-0">
+                  {meeting.name}
+                </h3>
                 <dl className="mt-2 flex flex-col text-gray-500 xl:flex-row">
                   <div className="flex items-start gap-x-3">
                     <dt className="mt-0.5">
                       <span className="sr-only">Date</span>
-                      <CalendarIcon aria-hidden="true" className="size-5 text-gray-400" />
+                      <CalendarIcon
+                        aria-hidden="true"
+                        className="size-5 text-gray-400"
+                      />
                     </dt>
                     <dd>
                       <time dateTime={meeting.datetime}>
@@ -188,17 +202,26 @@ export default function Example() {
                   <div className="mt-2 flex items-start gap-x-3 xl:mt-0 xl:ml-3.5 xl:border-l xl:border-gray-400/50 xl:pl-3.5">
                     <dt className="mt-0.5">
                       <span className="sr-only">Location</span>
-                      <MapPinIcon aria-hidden="true" className="size-5 text-gray-400" />
+                      <MapPinIcon
+                        aria-hidden="true"
+                        className="size-5 text-gray-400"
+                      />
                     </dt>
                     <dd>{meeting.location}</dd>
                   </div>
                 </dl>
               </div>
-              <Menu as="div" className="absolute top-6 right-0 xl:relative xl:top-auto xl:right-auto xl:self-center">
+              <Menu
+                as="div"
+                className="absolute top-6 right-0 xl:relative xl:top-auto xl:right-auto xl:self-center"
+              >
                 <MenuButton className="relative flex items-center rounded-full text-gray-500 hover:text-gray-600">
                   <span className="absolute -inset-2" />
                   <span className="sr-only">Open options</span>
-                  <EllipsisHorizontalIcon aria-hidden="true" className="size-5" />
+                  <EllipsisHorizontalIcon
+                    aria-hidden="true"
+                    className="size-5"
+                  />
                 </MenuButton>
 
                 <MenuItems

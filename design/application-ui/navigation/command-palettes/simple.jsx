@@ -74,12 +74,15 @@ export default function Example() {
             </div>
 
             {filteredPeople.length > 0 && (
-              <ComboboxOptions static className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800">
+              <ComboboxOptions
+                static
+                className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
+              >
                 {filteredPeople.map((person) => (
                   <ComboboxOption
                     key={person.id}
                     value={person}
-                    className="cursor-default px-4 py-2 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+                    className="cursor-default px-4 py-2 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
                   >
                     {person.name}
                   </ComboboxOption>

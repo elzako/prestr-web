@@ -15,11 +15,20 @@ import {
   DialogBackdrop,
 } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { ExclamationTriangleIcon, FolderIcon, LifebuoyIcon } from '@heroicons/react/24/outline'
+import {
+  ExclamationTriangleIcon,
+  FolderIcon,
+  LifebuoyIcon,
+} from '@heroicons/react/24/outline'
 import { useState } from 'react'
 
 const projects = [
-  { id: 1, name: 'Workflow Inc. / Website Redesign', category: 'Projects', url: '#' },
+  {
+    id: 1,
+    name: 'Workflow Inc. / Website Redesign',
+    category: 'Projects',
+    url: '#',
+  },
   // More projects...
 ]
 
@@ -48,7 +57,9 @@ export default function Example() {
       ? projects
       : query === '' || rawQuery.startsWith('>')
         ? []
-        : projects.filter((project) => project.name.toLowerCase().includes(query))
+        : projects.filter((project) =>
+            project.name.toLowerCase().includes(query),
+          )
 
   const filteredUsers =
     rawQuery === '>'
@@ -105,20 +116,24 @@ export default function Example() {
               >
                 {filteredProjects.length > 0 && (
                   <li>
-                    <h2 className="text-xs font-semibold text-gray-900">Projects</h2>
+                    <h2 className="text-xs font-semibold text-gray-900">
+                      Projects
+                    </h2>
                     <ul className="-mx-4 mt-2 text-sm text-gray-700">
                       {filteredProjects.map((project) => (
                         <ComboboxOption
                           as="li"
                           key={project.id}
                           value={project}
-                          className="group flex cursor-default items-center px-4 py-2 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+                          className="group flex cursor-default items-center px-4 py-2 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
                         >
                           <FolderIcon
                             className="size-6 flex-none text-gray-400 group-data-focus:text-white forced-colors:group-data-focus:text-[Highlight]"
                             aria-hidden="true"
                           />
-                          <span className="ml-3 flex-auto truncate">{project.name}</span>
+                          <span className="ml-3 flex-auto truncate">
+                            {project.name}
+                          </span>
                         </ComboboxOption>
                       ))}
                     </ul>
@@ -126,21 +141,25 @@ export default function Example() {
                 )}
                 {filteredUsers.length > 0 && (
                   <li>
-                    <h2 className="text-xs font-semibold text-gray-900">Users</h2>
+                    <h2 className="text-xs font-semibold text-gray-900">
+                      Users
+                    </h2>
                     <ul className="-mx-4 mt-2 text-sm text-gray-700">
                       {filteredUsers.map((user) => (
                         <ComboboxOption
                           as="li"
                           key={user.id}
                           value={user}
-                          className="flex cursor-default items-center px-4 py-2 select-none data-focus:bg-indigo-600 data-focus:text-white"
+                          className="flex cursor-default items-center px-4 py-2 select-none data-focus:bg-sky-600 data-focus:text-white"
                         >
                           <img
                             src={user.imageUrl}
                             alt=""
                             className="size-6 flex-none rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
                           />
-                          <span className="ml-3 flex-auto truncate">{user.name}</span>
+                          <span className="ml-3 flex-auto truncate">
+                            {user.name}
+                          </span>
                         </ComboboxOption>
                       ))}
                     </ul>
@@ -151,29 +170,48 @@ export default function Example() {
 
             {rawQuery === '?' && (
               <div className="px-6 py-14 text-center text-sm sm:px-14">
-                <LifebuoyIcon className="mx-auto size-6 text-gray-400" aria-hidden="true" />
-                <p className="mt-4 font-semibold text-gray-900">Help with searching</p>
+                <LifebuoyIcon
+                  className="mx-auto size-6 text-gray-400"
+                  aria-hidden="true"
+                />
+                <p className="mt-4 font-semibold text-gray-900">
+                  Help with searching
+                </p>
                 <p className="mt-2 text-gray-500">
-                  Use this tool to quickly search for users and projects across our entire platform. You can also use
-                  the search modifiers found in the footer below to limit the results to just users or projects.
+                  Use this tool to quickly search for users and projects across
+                  our entire platform. You can also use the search modifiers
+                  found in the footer below to limit the results to just users
+                  or projects.
                 </p>
               </div>
             )}
 
-            {query !== '' && rawQuery !== '?' && filteredProjects.length === 0 && filteredUsers.length === 0 && (
-              <div className="px-6 py-14 text-center text-sm sm:px-14">
-                <ExclamationTriangleIcon className="mx-auto size-6 text-gray-400" aria-hidden="true" />
-                <p className="mt-4 font-semibold text-gray-900">No results found</p>
-                <p className="mt-2 text-gray-500">We couldn’t find anything with that term. Please try again.</p>
-              </div>
-            )}
+            {query !== '' &&
+              rawQuery !== '?' &&
+              filteredProjects.length === 0 &&
+              filteredUsers.length === 0 && (
+                <div className="px-6 py-14 text-center text-sm sm:px-14">
+                  <ExclamationTriangleIcon
+                    className="mx-auto size-6 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  <p className="mt-4 font-semibold text-gray-900">
+                    No results found
+                  </p>
+                  <p className="mt-2 text-gray-500">
+                    We couldn’t find anything with that term. Please try again.
+                  </p>
+                </div>
+              )}
 
             <div className="flex flex-wrap items-center bg-gray-50 px-4 py-2.5 text-xs text-gray-700">
               Type{' '}
               <kbd
                 className={classNames(
                   'mx-1 flex size-5 items-center justify-center rounded-sm border bg-white font-semibold sm:mx-2',
-                  rawQuery.startsWith('#') ? 'border-indigo-600 text-indigo-600' : 'border-gray-400 text-gray-900',
+                  rawQuery.startsWith('#')
+                    ? 'border-sky-600 text-sky-600'
+                    : 'border-gray-400 text-gray-900',
                 )}
               >
                 #
@@ -183,7 +221,9 @@ export default function Example() {
               <kbd
                 className={classNames(
                   'mx-1 flex size-5 items-center justify-center rounded-sm border bg-white font-semibold sm:mx-2',
-                  rawQuery.startsWith('>') ? 'border-indigo-600 text-indigo-600' : 'border-gray-400 text-gray-900',
+                  rawQuery.startsWith('>')
+                    ? 'border-sky-600 text-sky-600'
+                    : 'border-gray-400 text-gray-900',
                 )}
               >
                 &gt;
@@ -192,7 +232,9 @@ export default function Example() {
               <kbd
                 className={classNames(
                   'mx-1 flex size-5 items-center justify-center rounded-sm border bg-white font-semibold sm:mx-2',
-                  rawQuery === '?' ? 'border-indigo-600 text-indigo-600' : 'border-gray-400 text-gray-900',
+                  rawQuery === '?'
+                    ? 'border-sky-600 text-sky-600'
+                    : 'border-gray-400 text-gray-900',
                 )}
               >
                 ?

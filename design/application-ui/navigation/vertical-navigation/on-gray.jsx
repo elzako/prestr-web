@@ -15,15 +15,32 @@ import {
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, count: '5', current: true },
   { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, count: '12', current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, count: '20+', current: false },
+  {
+    name: 'Projects',
+    href: '#',
+    icon: FolderIcon,
+    count: '12',
+    current: false,
+  },
+  {
+    name: 'Calendar',
+    href: '#',
+    icon: CalendarIcon,
+    count: '20+',
+    current: false,
+  },
   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
 const secondaryNavigation = [
   { name: 'Website redesign', href: '#', initial: 'W', current: false },
   { name: 'GraphQL API', href: '#', initial: 'G', current: false },
-  { name: 'Customer migration guides', href: '#', initial: 'C', current: false },
+  {
+    name: 'Customer migration guides',
+    href: '#',
+    initial: 'C',
+    current: false,
+  },
   { name: 'Profit sharing program', href: '#', initial: 'P', current: false },
 ]
 
@@ -43,15 +60,17 @@ export default function Example() {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? 'bg-gray-100 text-indigo-600'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600',
+                      ? 'bg-gray-100 text-sky-600'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-sky-600',
                     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                   )}
                 >
                   <item.icon
                     aria-hidden="true"
                     className={classNames(
-                      item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                      item.current
+                        ? 'text-sky-600'
+                        : 'text-gray-400 group-hover:text-sky-600',
                       'size-6 shrink-0',
                     )}
                   />
@@ -78,16 +97,16 @@ export default function Example() {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? 'bg-gray-50 text-indigo-600'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600',
+                      ? 'bg-gray-50 text-sky-600'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-sky-600',
                     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                   )}
                 >
                   <span
                     className={classNames(
                       item.current
-                        ? 'border-indigo-600 text-indigo-600'
-                        : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                        ? 'border-sky-600 text-sky-600'
+                        : 'border-gray-200 text-gray-400 group-hover:border-sky-600 group-hover:text-sky-600',
                       'flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium',
                     )}
                   >

@@ -24,19 +24,31 @@ export default function Example() {
         </h2>
         <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
           <div className="mt-2 flex items-center text-sm text-gray-400">
-            <BriefcaseIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-500" />
+            <BriefcaseIcon
+              aria-hidden="true"
+              className="mr-1.5 size-5 shrink-0 text-gray-500"
+            />
             Full-time
           </div>
           <div className="mt-2 flex items-center text-sm text-gray-400">
-            <MapPinIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-500" />
+            <MapPinIcon
+              aria-hidden="true"
+              className="mr-1.5 size-5 shrink-0 text-gray-500"
+            />
             Remote
           </div>
           <div className="mt-2 flex items-center text-sm text-gray-400">
-            <CurrencyDollarIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-500" />
+            <CurrencyDollarIcon
+              aria-hidden="true"
+              className="mr-1.5 size-5 shrink-0 text-gray-500"
+            />
             $120k &ndash; $140k
           </div>
           <div className="mt-2 flex items-center text-sm text-gray-400">
-            <CalendarIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-500" />
+            <CalendarIcon
+              aria-hidden="true"
+              className="mr-1.5 size-5 shrink-0 text-gray-500"
+            />
             Closing on January 9, 2020
           </div>
         </div>
@@ -47,7 +59,10 @@ export default function Example() {
             type="button"
             className="inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"
           >
-            <PencilIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5 text-white" />
+            <PencilIcon
+              aria-hidden="true"
+              className="mr-1.5 -ml-0.5 size-5 text-white"
+            />
             Edit
           </button>
         </span>
@@ -57,7 +72,10 @@ export default function Example() {
             type="button"
             className="inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20"
           >
-            <LinkIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5 text-white" />
+            <LinkIcon
+              aria-hidden="true"
+              className="mr-1.5 -ml-0.5 size-5 text-white"
+            />
             View
           </button>
         </span>
@@ -65,7 +83,7 @@ export default function Example() {
         <span className="sm:ml-3">
           <button
             type="button"
-            className="inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            className="inline-flex items-center rounded-md bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
           >
             <CheckIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5" />
             Publish
@@ -76,7 +94,10 @@ export default function Example() {
         <Menu as="div" className="relative ml-3 sm:hidden">
           <MenuButton className="inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20">
             More
-            <ChevronDownIcon aria-hidden="true" className="-mr-1 ml-1.5 size-5 text-white" />
+            <ChevronDownIcon
+              aria-hidden="true"
+              className="-mr-1 ml-1.5 size-5 text-white"
+            />
           </MenuButton>
 
           <MenuItems

@@ -3,7 +3,15 @@
  * @tags application shells, stacked, with, overlap, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/application-shells/stacked
  */
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const user = {
@@ -50,7 +58,7 @@ export default function Example() {
                     <div className="shrink-0">
                       <img
                         alt="Your Company"
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                         className="size-8"
                       />
                     </div>
@@ -78,7 +86,7 @@ export default function Example() {
                     <div className="ml-4 flex items-center md:ml-6">
                       <button
                         type="button"
-                        className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                        className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
                       >
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">View notifications</span>
@@ -87,7 +95,7 @@ export default function Example() {
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
-                        <MenuButton className="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                        <MenuButton className="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500">
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <img
@@ -117,11 +125,17 @@ export default function Example() {
                   </div>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
-                    <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
+                    <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-sky-500">
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Open main menu</span>
-                      <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                      <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                      <Bars3Icon
+                        aria-hidden="true"
+                        className="block size-6 group-data-open:hidden"
+                      />
+                      <XMarkIcon
+                        aria-hidden="true"
+                        className="hidden size-6 group-data-open:block"
+                      />
                     </DisclosureButton>
                   </div>
                 </div>
@@ -137,7 +151,9 @@ export default function Example() {
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
+                      item.current
+                        ? 'bg-gray-900 text-white'
+                        : 'text-gray-300 hover:bg-white/5 hover:text-white',
                       'block rounded-md px-3 py-2 text-base font-medium',
                     )}
                   >
@@ -155,12 +171,16 @@ export default function Example() {
                     />
                   </div>
                   <div className="ml-3">
-                    <div className="text-base/5 font-medium text-white">{user.name}</div>
-                    <div className="text-sm font-medium text-gray-400">{user.email}</div>
+                    <div className="text-base/5 font-medium text-white">
+                      {user.name}
+                    </div>
+                    <div className="text-sm font-medium text-gray-400">
+                      {user.email}
+                    </div>
                   </div>
                   <button
                     type="button"
-                    className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                    className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
@@ -184,14 +204,18 @@ export default function Example() {
           </Disclosure>
           <header className="py-10">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-white">
+                Dashboard
+              </h1>
             </div>
           </header>
         </div>
 
         <main className="relative -mt-32">
           <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-            <div className="rounded-lg bg-white px-5 py-6 shadow-sm sm:px-6">{/* Your content */}</div>
+            <div className="rounded-lg bg-white px-5 py-6 shadow-sm sm:px-6">
+              {/* Your content */}
+            </div>
           </div>
         </main>
       </div>

@@ -66,7 +66,11 @@ export default function Example() {
         ```
       */}
       <div>
-        <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
+        <Dialog
+          open={sidebarOpen}
+          onClose={setSidebarOpen}
+          className="relative z-50 lg:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
@@ -79,9 +83,16 @@ export default function Example() {
             >
               <TransitionChild>
                 <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarOpen(false)}
+                    className="-m-2.5 p-2.5"
+                  >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="size-6 text-white"
+                    />
                   </button>
                 </div>
               </TransitionChild>
@@ -91,7 +102,7 @@ export default function Example() {
                 <div className="relative flex h-16 shrink-0 items-center">
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                     className="h-8 w-auto"
                   />
                 </div>
@@ -110,7 +121,10 @@ export default function Example() {
                                 'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                               )}
                             >
-                              <item.icon aria-hidden="true" className="size-6 shrink-0" />
+                              <item.icon
+                                aria-hidden="true"
+                                className="size-6 shrink-0"
+                              />
                               {item.name}
                             </a>
                           </li>
@@ -118,7 +132,9 @@ export default function Example() {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                      <div className="text-xs/6 font-semibold text-gray-400">
+                        Your teams
+                      </div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
@@ -145,7 +161,10 @@ export default function Example() {
                         href="#"
                         className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-white/5 hover:text-white"
                       >
-                        <Cog6ToothIcon aria-hidden="true" className="size-6 shrink-0" />
+                        <Cog6ToothIcon
+                          aria-hidden="true"
+                          className="size-6 shrink-0"
+                        />
                         Settings
                       </a>
                     </li>
@@ -163,7 +182,7 @@ export default function Example() {
             <div className="flex h-16 shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                 className="h-8 w-auto"
               />
             </div>
@@ -176,11 +195,16 @@ export default function Example() {
                         <a
                           href={item.href}
                           className={classNames(
-                            item.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            item.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
-                          <item.icon aria-hidden="true" className="size-6 shrink-0" />
+                          <item.icon
+                            aria-hidden="true"
+                            className="size-6 shrink-0"
+                          />
                           {item.name}
                         </a>
                       </li>
@@ -188,14 +212,18 @@ export default function Example() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                  <div className="text-xs/6 font-semibold text-gray-400">
+                    Your teams
+                  </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
                         <a
                           href={team.href}
                           className={classNames(
-                            team.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            team.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
@@ -213,7 +241,10 @@ export default function Example() {
                     href="#"
                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-white/5 hover:text-white"
                   >
-                    <Cog6ToothIcon aria-hidden="true" className="size-6 shrink-0" />
+                    <Cog6ToothIcon
+                      aria-hidden="true"
+                      className="size-6 shrink-0"
+                    />
                     Settings
                   </a>
                 </li>
@@ -234,7 +265,10 @@ export default function Example() {
             </button>
 
             {/* Separator */}
-            <div aria-hidden="true" className="h-6 w-px bg-gray-900/10 lg:hidden" />
+            <div
+              aria-hidden="true"
+              className="h-6 w-px bg-gray-900/10 lg:hidden"
+            />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
               <form action="#" method="GET" className="grid flex-1 grid-cols-1">
@@ -250,13 +284,19 @@ export default function Example() {
                 />
               </form>
               <div className="flex items-center gap-x-4 lg:gap-x-6">
-                <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+                <button
+                  type="button"
+                  className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                >
                   <span className="sr-only">View notifications</span>
                   <BellIcon aria-hidden="true" className="size-6" />
                 </button>
 
                 {/* Separator */}
-                <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" />
+                <div
+                  aria-hidden="true"
+                  className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
+                />
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
@@ -269,10 +309,16 @@ export default function Example() {
                       className="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5"
                     />
                     <span className="hidden lg:flex lg:items-center">
-                      <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900">
+                      <span
+                        aria-hidden="true"
+                        className="ml-4 text-sm/6 font-semibold text-gray-900"
+                      >
                         Tom Cook
                       </span>
-                      <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
+                      <ChevronDownIcon
+                        aria-hidden="true"
+                        className="ml-2 size-5 text-gray-400"
+                      />
                     </span>
                   </MenuButton>
                   <MenuItems

@@ -109,7 +109,9 @@ export default function Example() {
     <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
       <div className="md:pr-14">
         <div className="flex items-center">
-          <h2 className="flex-auto text-sm font-semibold text-gray-900">January 2022</h2>
+          <h2 className="flex-auto text-sm font-semibold text-gray-900">
+            January 2022
+          </h2>
           <button
             type="button"
             className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
@@ -146,9 +148,11 @@ export default function Example() {
                 data-is-today={day.isToday ? '' : undefined}
                 data-is-selected={day.isSelected ? '' : undefined}
                 data-is-current-month={day.isCurrentMonth ? '' : undefined}
-                className="mx-auto flex size-8 items-center justify-center rounded-full not-data-is-selected:not-data-is-today:not-data-is-current-month:text-gray-400 not-data-is-selected:hover:bg-gray-200 not-data-is-selected:not-data-is-today:data-is-current-month:text-gray-900 data-is-selected:font-semibold data-is-selected:text-white data-is-selected:not-data-is-today:bg-gray-900 data-is-today:font-semibold not-data-is-selected:data-is-today:text-indigo-600 data-is-selected:data-is-today:bg-indigo-600"
+                className="mx-auto flex size-8 items-center justify-center rounded-full not-data-is-selected:not-data-is-today:not-data-is-current-month:text-gray-400 not-data-is-selected:hover:bg-gray-200 not-data-is-selected:not-data-is-today:data-is-current-month:text-gray-900 data-is-selected:font-semibold data-is-selected:text-white data-is-selected:not-data-is-today:bg-gray-900 data-is-today:font-semibold not-data-is-selected:data-is-today:text-sky-600 data-is-selected:data-is-today:bg-sky-600"
               >
-                <time dateTime={day.date}>{day.date.split('-').pop().replace(/^0/, '')}</time>
+                <time dateTime={day.date}>
+                  {day.date.split('-').pop().replace(/^0/, '')}
+                </time>
               </button>
             </div>
           ))}
@@ -164,15 +168,22 @@ export default function Example() {
               key={meeting.id}
               className="group flex items-center gap-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100"
             >
-              <img alt="" src={meeting.imageUrl} className="size-10 flex-none rounded-full" />
+              <img
+                alt=""
+                src={meeting.imageUrl}
+                className="size-10 flex-none rounded-full"
+              />
               <div className="flex-auto">
                 <p className="text-gray-900">{meeting.name}</p>
                 <p className="mt-0.5">
-                  <time dateTime={meeting.startDatetime}>{meeting.start}</time> -{' '}
-                  <time dateTime={meeting.endDatetime}>{meeting.end}</time>
+                  <time dateTime={meeting.startDatetime}>{meeting.start}</time>{' '}
+                  - <time dateTime={meeting.endDatetime}>{meeting.end}</time>
                 </p>
               </div>
-              <Menu as="div" className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100">
+              <Menu
+                as="div"
+                className="relative opacity-0 group-hover:opacity-100 focus-within:opacity-100"
+              >
                 <MenuButton className="relative flex items-center rounded-full text-gray-500 outline-offset-6 hover:text-gray-600">
                   <span className="absolute -inset-2" />
                   <span className="sr-only">Open options</span>

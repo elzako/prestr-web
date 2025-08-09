@@ -3,7 +3,15 @@
  * @tags navigation, navbars, dark, with, search, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/navigation/navbars
  */
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -16,14 +24,17 @@ export default function Example() {
             <div className="shrink-0">
               <img
                 alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                 className="h-8 w-auto"
               />
             </div>
             <div className="hidden lg:ml-6 lg:block">
               <div className="flex space-x-4">
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" */}
-                <a href="#" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">
+                <a
+                  href="#"
+                  className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                >
                   Dashboard
                 </a>
                 <a
@@ -53,7 +64,7 @@ export default function Example() {
                 name="search"
                 placeholder="Search"
                 aria-label="Search"
-                className="col-start-1 row-start-1 block w-full rounded-md bg-white/5 py-1.5 pr-3 pl-10 text-base text-white outline -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:text-white focus:outline-2 focus:outline-indigo-500 sm:text-sm/6"
+                className="col-start-1 row-start-1 block w-full rounded-md bg-white/5 py-1.5 pr-3 pl-10 text-base text-white outline -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:text-white focus:outline-2 focus:outline-sky-500 sm:text-sm/6"
               />
               <MagnifyingGlassIcon
                 aria-hidden="true"
@@ -63,18 +74,24 @@ export default function Example() {
           </div>
           <div className="flex lg:hidden">
             {/* Mobile menu button */}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-indigo-500">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-sky-500">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-              <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+              <Bars3Icon
+                aria-hidden="true"
+                className="block size-6 group-data-open:hidden"
+              />
+              <XMarkIcon
+                aria-hidden="true"
+                className="hidden size-6 group-data-open:block"
+              />
             </DisclosureButton>
           </div>
           <div className="hidden lg:ml-4 lg:block">
             <div className="flex items-center">
               <button
                 type="button"
-                className="relative shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                className="relative shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
               >
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">View notifications</span>
@@ -83,7 +100,7 @@ export default function Example() {
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-4 shrink-0">
-                <MenuButton className="relative flex rounded-full text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                <MenuButton className="relative flex rounded-full text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <img
@@ -171,11 +188,13 @@ export default function Example() {
             </div>
             <div className="ml-3">
               <div className="text-base font-medium text-white">Tom Cook</div>
-              <div className="text-sm font-medium text-gray-400">tom@example.com</div>
+              <div className="text-sm font-medium text-gray-400">
+                tom@example.com
+              </div>
             </div>
             <button
               type="button"
-              className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+              className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>

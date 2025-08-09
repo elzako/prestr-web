@@ -13,8 +13,20 @@ import {
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 const events = [
-  { id: 1, name: 'Maple syrup museum', time: '3PM', datetime: '2022-01-15T09:00', href: '#' },
-  { id: 2, name: 'Hockey game', time: '7PM', datetime: '2022-01-22T19:00', href: '#' },
+  {
+    id: 1,
+    name: 'Maple syrup museum',
+    time: '3PM',
+    datetime: '2022-01-15T09:00',
+    href: '#',
+  },
+  {
+    id: 2,
+    name: 'Hockey game',
+    time: '7PM',
+    datetime: '2022-01-22T19:00',
+    href: '#',
+  },
 ]
 const days = [
   { date: '2021-12-27', events: [] },
@@ -28,8 +40,20 @@ const days = [
     date: '2022-01-03',
     isCurrentMonth: true,
     events: [
-      { id: 1, name: 'Design review', time: '10AM', datetime: '2022-01-03T10:00', href: '#' },
-      { id: 2, name: 'Sales meeting', time: '2PM', datetime: '2022-01-03T14:00', href: '#' },
+      {
+        id: 1,
+        name: 'Design review',
+        time: '10AM',
+        datetime: '2022-01-03T10:00',
+        href: '#',
+      },
+      {
+        id: 2,
+        name: 'Sales meeting',
+        time: '2PM',
+        datetime: '2022-01-03T14:00',
+        href: '#',
+      },
     ],
   },
   { date: '2022-01-04', isCurrentMonth: true, events: [] },
@@ -38,7 +62,15 @@ const days = [
   {
     date: '2022-01-07',
     isCurrentMonth: true,
-    events: [{ id: 3, name: 'Date night', time: '6PM', datetime: '2022-01-08T18:00', href: '#' }],
+    events: [
+      {
+        id: 3,
+        name: 'Date night',
+        time: '6PM',
+        datetime: '2022-01-08T18:00',
+        href: '#',
+      },
+    ],
   },
   { date: '2022-01-08', isCurrentMonth: true, events: [] },
   { date: '2022-01-09', isCurrentMonth: true, events: [] },
@@ -48,7 +80,15 @@ const days = [
     date: '2022-01-12',
     isCurrentMonth: true,
     isToday: true,
-    events: [{ id: 6, name: "Sam's birthday party", time: '2PM', datetime: '2022-01-25T14:00', href: '#' }],
+    events: [
+      {
+        id: 6,
+        name: "Sam's birthday party",
+        time: '2PM',
+        datetime: '2022-01-25T14:00',
+        href: '#',
+      },
+    ],
   },
   { date: '2022-01-13', isCurrentMonth: true, events: [] },
   { date: '2022-01-14', isCurrentMonth: true, events: [] },
@@ -64,8 +104,20 @@ const days = [
     isCurrentMonth: true,
     isSelected: true,
     events: [
-      { id: 4, name: 'Maple syrup museum', time: '3PM', datetime: '2022-01-22T15:00', href: '#' },
-      { id: 5, name: 'Hockey game', time: '7PM', datetime: '2022-01-22T19:00', href: '#' },
+      {
+        id: 4,
+        name: 'Maple syrup museum',
+        time: '3PM',
+        datetime: '2022-01-22T15:00',
+        href: '#',
+      },
+      {
+        id: 5,
+        name: 'Hockey game',
+        time: '7PM',
+        datetime: '2022-01-22T19:00',
+        href: '#',
+      },
     ],
   },
   { date: '2022-01-23', isCurrentMonth: true, events: [] },
@@ -82,7 +134,15 @@ const days = [
   { date: '2022-02-03', events: [] },
   {
     date: '2022-02-04',
-    events: [{ id: 7, name: 'Cinema with friends', time: '9PM', datetime: '2022-02-04T21:00', href: '#' }],
+    events: [
+      {
+        id: 7,
+        name: 'Cinema with friends',
+        time: '9PM',
+        datetime: '2022-02-04T21:00',
+        href: '#',
+      },
+    ],
   },
   { date: '2022-02-05', events: [] },
   { date: '2022-02-06', events: [] },
@@ -126,7 +186,10 @@ export default function Example() {
                 className="flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50"
               >
                 Month view
-                <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+                <ChevronDownIcon
+                  aria-hidden="true"
+                  className="-mr-1 size-5 text-gray-400"
+                />
               </MenuButton>
 
               <MenuItems
@@ -172,7 +235,7 @@ export default function Example() {
             <div className="ml-6 h-6 w-px bg-gray-300" />
             <button
               type="button"
-              className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="ml-6 rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
             >
               Add event
             </button>
@@ -287,7 +350,7 @@ export default function Example() {
               >
                 <time
                   dateTime={day.date}
-                  className="relative group-not-data-is-current-month:opacity-75 in-data-is-today:flex in-data-is-today:size-6 in-data-is-today:items-center in-data-is-today:justify-center in-data-is-today:rounded-full in-data-is-today:bg-indigo-600 in-data-is-today:font-semibold in-data-is-today:text-white"
+                  className="relative group-not-data-is-current-month:opacity-75 in-data-is-today:flex in-data-is-today:size-6 in-data-is-today:items-center in-data-is-today:justify-center in-data-is-today:rounded-full in-data-is-today:bg-sky-600 in-data-is-today:font-semibold in-data-is-today:text-white"
                 >
                   {day.date.split('-').pop().replace(/^0/, '')}
                 </time>
@@ -296,19 +359,23 @@ export default function Example() {
                     {day.events.slice(0, 2).map((event) => (
                       <li key={event.id}>
                         <a href={event.href} className="group flex">
-                          <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
+                          <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-sky-600">
                             {event.name}
                           </p>
                           <time
                             dateTime={event.datetime}
-                            className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block"
+                            className="ml-3 hidden flex-none text-gray-500 group-hover:text-sky-600 xl:block"
                           >
                             {event.time}
                           </time>
                         </a>
                       </li>
                     ))}
-                    {day.events.length > 2 ? <li className="text-gray-500">+ {day.events.length - 2} more</li> : null}
+                    {day.events.length > 2 ? (
+                      <li className="text-gray-500">
+                        + {day.events.length - 2} more
+                      </li>
+                    ) : null}
                   </ol>
                 ) : null}
               </div>
@@ -322,11 +389,11 @@ export default function Example() {
                 data-is-today={day.isToday ? '' : undefined}
                 data-is-selected={day.isSelected ? '' : undefined}
                 data-is-current-month={day.isCurrentMonth ? '' : undefined}
-                className="group relative flex h-14 flex-col px-3 py-2 not-data-is-current-month:bg-gray-50 not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-500 hover:bg-gray-100 focus:z-10 data-is-current-month:bg-white not-data-is-selected:data-is-current-month:not-data-is-today:text-gray-900 data-is-current-month:hover:bg-gray-100 data-is-selected:font-semibold data-is-selected:text-white data-is-today:font-semibold not-data-is-selected:data-is-today:text-indigo-600"
+                className="group relative flex h-14 flex-col px-3 py-2 not-data-is-current-month:bg-gray-50 not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-500 hover:bg-gray-100 focus:z-10 data-is-current-month:bg-white not-data-is-selected:data-is-current-month:not-data-is-today:text-gray-900 data-is-current-month:hover:bg-gray-100 data-is-selected:font-semibold data-is-selected:text-white data-is-today:font-semibold not-data-is-selected:data-is-today:text-sky-600"
               >
                 <time
                   dateTime={day.date}
-                  className="ml-auto group-not-data-is-current-month:opacity-75 in-data-is-selected:flex in-data-is-selected:size-6 in-data-is-selected:items-center in-data-is-selected:justify-center in-data-is-selected:rounded-full in-data-is-selected:not-in-data-is-today:bg-gray-900 in-data-is-selected:in-data-is-today:bg-indigo-600"
+                  className="ml-auto group-not-data-is-current-month:opacity-75 in-data-is-selected:flex in-data-is-selected:size-6 in-data-is-selected:items-center in-data-is-selected:justify-center in-data-is-selected:rounded-full in-data-is-selected:not-in-data-is-today:bg-gray-900 in-data-is-selected:in-data-is-today:bg-sky-600"
                 >
                   {day.date.split('-').pop().replace(/^0/, '')}
                 </time>
@@ -334,7 +401,10 @@ export default function Example() {
                 {day.events.length > 0 ? (
                   <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
                     {day.events.map((event) => (
-                      <span key={event.id} className="mx-0.5 mb-1 size-1.5 rounded-full bg-gray-400" />
+                      <span
+                        key={event.id}
+                        className="mx-0.5 mb-1 size-1.5 rounded-full bg-gray-400"
+                      />
                     ))}
                   </span>
                 ) : null}
@@ -346,11 +416,20 @@ export default function Example() {
       <div className="relative px-4 py-10 sm:px-6 lg:hidden">
         <ol className="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow-sm outline-1 outline-black/5">
           {events.map((event) => (
-            <li key={event.id} className="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
+            <li
+              key={event.id}
+              className="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50"
+            >
               <div className="flex-auto">
                 <p className="font-semibold text-gray-900">{event.name}</p>
-                <time dateTime={event.datetime} className="mt-2 flex items-center text-gray-700">
-                  <ClockIcon aria-hidden="true" className="mr-2 size-5 text-gray-400" />
+                <time
+                  dateTime={event.datetime}
+                  className="mt-2 flex items-center text-gray-700"
+                >
+                  <ClockIcon
+                    aria-hidden="true"
+                    className="mr-2 size-5 text-gray-400"
+                  />
                   {event.time}
                 </time>
               </div>

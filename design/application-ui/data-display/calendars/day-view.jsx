@@ -3,7 +3,12 @@
  * @tags data display, calendars, day, view, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/data-display/calendars
  */
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EllipsisHorizontalIcon,
+} from '@heroicons/react/20/solid'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 const days = [
@@ -97,7 +102,10 @@ export default function Example() {
                 className="flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50"
               >
                 Day view
-                <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+                <ChevronDownIcon
+                  aria-hidden="true"
+                  className="-mr-1 size-5 text-gray-400"
+                />
               </MenuButton>
 
               <MenuItems
@@ -143,7 +151,7 @@ export default function Example() {
             <div className="ml-6 h-6 w-px bg-gray-300" />
             <button
               type="button"
-              className="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="ml-6 rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
             >
               Add event
             </button>
@@ -222,44 +230,65 @@ export default function Example() {
       <div className="isolate flex flex-auto overflow-hidden bg-white">
         <div className="flex flex-auto flex-col overflow-auto">
           <div className="sticky top-0 z-10 grid flex-none grid-cols-7 bg-white text-xs text-gray-500 shadow-sm ring-1 ring-black/5 md:hidden">
-            <button type="button" className="flex flex-col items-center pt-3 pb-1.5">
+            <button
+              type="button"
+              className="flex flex-col items-center pt-3 pb-1.5"
+            >
               <span>W</span>
-              {/* Default: "text-gray-900", Selected: "bg-gray-900 text-white", Today (Not Selected): "text-indigo-600", Today (Selected): "bg-indigo-600 text-white" */}
+              {/* Default: "text-gray-900", Selected: "bg-gray-900 text-white", Today (Not Selected): "text-sky-600", Today (Selected): "bg-sky-600 text-white" */}
               <span className="mt-3 flex size-8 items-center justify-center rounded-full text-base font-semibold text-gray-900">
                 19
               </span>
             </button>
-            <button type="button" className="flex flex-col items-center pt-3 pb-1.5">
+            <button
+              type="button"
+              className="flex flex-col items-center pt-3 pb-1.5"
+            >
               <span>T</span>
-              <span className="mt-3 flex size-8 items-center justify-center rounded-full text-base font-semibold text-indigo-600">
+              <span className="mt-3 flex size-8 items-center justify-center rounded-full text-base font-semibold text-sky-600">
                 20
               </span>
             </button>
-            <button type="button" className="flex flex-col items-center pt-3 pb-1.5">
+            <button
+              type="button"
+              className="flex flex-col items-center pt-3 pb-1.5"
+            >
               <span>F</span>
               <span className="mt-3 flex size-8 items-center justify-center rounded-full text-base font-semibold text-gray-900">
                 21
               </span>
             </button>
-            <button type="button" className="flex flex-col items-center pt-3 pb-1.5">
+            <button
+              type="button"
+              className="flex flex-col items-center pt-3 pb-1.5"
+            >
               <span>S</span>
               <span className="mt-3 flex size-8 items-center justify-center rounded-full bg-gray-900 text-base font-semibold text-white">
                 22
               </span>
             </button>
-            <button type="button" className="flex flex-col items-center pt-3 pb-1.5">
+            <button
+              type="button"
+              className="flex flex-col items-center pt-3 pb-1.5"
+            >
               <span>S</span>
               <span className="mt-3 flex size-8 items-center justify-center rounded-full text-base font-semibold text-gray-900">
                 23
               </span>
             </button>
-            <button type="button" className="flex flex-col items-center pt-3 pb-1.5">
+            <button
+              type="button"
+              className="flex flex-col items-center pt-3 pb-1.5"
+            >
               <span>M</span>
               <span className="mt-3 flex size-8 items-center justify-center rounded-full text-base font-semibold text-gray-900">
                 24
               </span>
             </button>
-            <button type="button" className="flex flex-col items-center pt-3 pb-1.5">
+            <button
+              type="button"
+              className="flex flex-col items-center pt-3 pb-1.5"
+            >
               <span>T</span>
               <span className="mt-3 flex size-8 items-center justify-center rounded-full text-base font-semibold text-gray-900">
                 25
@@ -276,125 +305,185 @@ export default function Example() {
               >
                 <div className="row-end-1 h-7" />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">12AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    12AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">1AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    1AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">2AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    2AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">3AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    3AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">4AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    4AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">5AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    5AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">6AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    6AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">7AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    7AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">8AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    8AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">9AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    9AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">10AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    10AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">11AM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    11AM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">12PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    12PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">1PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    1PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">2PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    2PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">3PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    3PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">4PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    4PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">5PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    5PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">6PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    6PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">7PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    7PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">8PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    8PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">9PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    9PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">10PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    10PM
+                  </div>
                 </div>
                 <div />
                 <div>
-                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">11PM</div>
+                  <div className="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs/5 text-gray-400">
+                    11PM
+                  </div>
                 </div>
                 <div />
               </div>
 
               {/* Events */}
               <ol
-                style={{ gridTemplateRows: '1.75rem repeat(288, minmax(0, 1fr)) auto' }}
+                style={{
+                  gridTemplateRows: '1.75rem repeat(288, minmax(0, 1fr)) auto',
+                }}
                 className="col-start-1 col-end-2 row-start-1 grid grid-cols-1"
               >
-                <li style={{ gridRow: '74 / span 12' }} className="relative mt-px flex">
+                <li
+                  style={{ gridRow: '74 / span 12' }}
+                  className="relative mt-px flex"
+                >
                   <a
                     href="#"
                     className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs/5 hover:bg-blue-100"
                   >
-                    <p className="order-1 font-semibold text-blue-700">Breakfast</p>
+                    <p className="order-1 font-semibold text-blue-700">
+                      Breakfast
+                    </p>
                     <p className="text-blue-500 group-hover:text-blue-700">
                       <time dateTime="2022-01-22T06:00">6:00 AM</time>
                     </p>
                   </a>
                 </li>
-                <li style={{ gridRow: '92 / span 30' }} className="relative mt-px flex">
+                <li
+                  style={{ gridRow: '92 / span 30' }}
+                  className="relative mt-px flex"
+                >
                   <a
                     href="#"
                     className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-pink-50 p-2 text-xs/5 hover:bg-pink-100"
                   >
-                    <p className="order-1 font-semibold text-pink-700">Flight to Paris</p>
+                    <p className="order-1 font-semibold text-pink-700">
+                      Flight to Paris
+                    </p>
                     <p className="order-1 text-pink-500 group-hover:text-pink-700">
                       John F. Kennedy International Airport
                     </p>
@@ -403,14 +492,21 @@ export default function Example() {
                     </p>
                   </a>
                 </li>
-                <li style={{ gridRow: '134 / span 18' }} className="relative mt-px flex">
+                <li
+                  style={{ gridRow: '134 / span 18' }}
+                  className="relative mt-px flex"
+                >
                   <a
                     href="#"
-                    className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-indigo-50 p-2 text-xs/5 hover:bg-indigo-100"
+                    className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-sky-50 p-2 text-xs/5 hover:bg-sky-100"
                   >
-                    <p className="order-1 font-semibold text-indigo-700">Sightseeing</p>
-                    <p className="order-1 text-indigo-500 group-hover:text-indigo-700">Eiffel Tower</p>
-                    <p className="text-indigo-500 group-hover:text-indigo-700">
+                    <p className="order-1 font-semibold text-sky-700">
+                      Sightseeing
+                    </p>
+                    <p className="order-1 text-sky-500 group-hover:text-sky-700">
+                      Eiffel Tower
+                    </p>
+                    <p className="text-sky-500 group-hover:text-sky-700">
                       <time dateTime="2022-01-22T11:00">11:00 AM</time>
                     </p>
                   </a>
@@ -454,11 +550,11 @@ export default function Example() {
                 data-is-today={day.isToday ? '' : undefined}
                 data-is-selected={day.isSelected ? '' : undefined}
                 data-is-current-month={day.isCurrentMonth ? '' : undefined}
-                className="py-1.5 not-data-is-current-month:bg-gray-50 not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-400 first:rounded-tl-lg last:rounded-br-lg hover:bg-gray-100 focus:z-10 data-is-current-month:bg-white not-data-is-selected:data-is-current-month:not-data-is-today:text-gray-900 data-is-current-month:hover:bg-gray-100 data-is-selected:font-semibold data-is-selected:text-white data-is-today:font-semibold data-is-today:not-data-is-selected:text-indigo-600 nth-36:rounded-bl-lg nth-7:rounded-tr-lg"
+                className="py-1.5 not-data-is-current-month:bg-gray-50 not-data-is-selected:not-data-is-current-month:not-data-is-today:text-gray-400 first:rounded-tl-lg last:rounded-br-lg hover:bg-gray-100 focus:z-10 data-is-current-month:bg-white not-data-is-selected:data-is-current-month:not-data-is-today:text-gray-900 data-is-current-month:hover:bg-gray-100 data-is-selected:font-semibold data-is-selected:text-white data-is-today:font-semibold data-is-today:not-data-is-selected:text-sky-600 nth-36:rounded-bl-lg nth-7:rounded-tr-lg"
               >
                 <time
                   dateTime={day.date}
-                  className="mx-auto flex size-7 items-center justify-center rounded-full in-data-is-selected:not-in-data-is-today:bg-gray-900 in-data-is-selected:in-data-is-today:bg-indigo-600"
+                  className="mx-auto flex size-7 items-center justify-center rounded-full in-data-is-selected:not-in-data-is-today:bg-gray-900 in-data-is-selected:in-data-is-today:bg-sky-600"
                 >
                   {day.date.split('-').pop().replace(/^0/, '')}
                 </time>

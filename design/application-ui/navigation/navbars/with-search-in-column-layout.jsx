@@ -3,7 +3,15 @@
  * @tags navigation, navbars, with, search, column, layout, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/navigation/navbars
  */
-import { Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+} from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -44,7 +52,7 @@ export default function Example() {
                 <a href="#">
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
                     className="h-8 w-auto"
                   />
                 </a>
@@ -56,7 +64,7 @@ export default function Example() {
                   <input
                     name="search"
                     placeholder="Search"
-                    className="col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pr-3 pl-10 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    className="col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pr-3 pl-10 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6"
                   />
                   <MagnifyingGlassIcon
                     aria-hidden="true"
@@ -67,17 +75,23 @@ export default function Example() {
             </div>
             <div className="flex items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
               {/* Mobile menu button */}
-              <PopoverButton className="group relative -mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-600">
+              <PopoverButton className="group relative -mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-2 focus:-outline-offset-1 focus:outline-sky-600">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
-                <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                <Bars3Icon
+                  aria-hidden="true"
+                  className="block size-6 group-data-open:hidden"
+                />
+                <XMarkIcon
+                  aria-hidden="true"
+                  className="hidden size-6 group-data-open:block"
+                />
               </PopoverButton>
             </div>
             <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
               <button
                 type="button"
-                className="relative ml-5 shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                className="relative ml-5 shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
               >
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">View notifications</span>
@@ -86,7 +100,7 @@ export default function Example() {
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-5 shrink-0">
-                <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <img
@@ -115,7 +129,7 @@ export default function Example() {
 
               <a
                 href="#"
-                className="ml-6 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="ml-6 inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
               >
                 New Project
               </a>
@@ -135,7 +149,9 @@ export default function Example() {
                 href={item.href}
                 aria-current={item.current ? 'page' : undefined}
                 className={classNames(
-                  item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50',
+                  item.current
+                    ? 'bg-gray-100 text-gray-900'
+                    : 'text-gray-900 hover:bg-gray-50',
                   'block rounded-md px-3 py-2 text-base font-medium',
                 )}
               >
@@ -153,12 +169,16 @@ export default function Example() {
                 />
               </div>
               <div className="ml-3">
-                <div className="text-base font-medium text-gray-800">{user.name}</div>
-                <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                <div className="text-base font-medium text-gray-800">
+                  {user.name}
+                </div>
+                <div className="text-sm font-medium text-gray-500">
+                  {user.email}
+                </div>
               </div>
               <button
                 type="button"
-                className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
               >
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">View notifications</span>

@@ -4,7 +4,11 @@
  * @source https://tailwindui.com/components/application-ui/lists/tables
  */
 import { Fragment } from 'react'
-import { ArrowDownCircleIcon, ArrowPathIcon, ArrowUpCircleIcon } from '@heroicons/react/20/solid'
+import {
+  ArrowDownCircleIcon,
+  ArrowPathIcon,
+  ArrowUpCircleIcon,
+} from '@heroicons/react/20/solid'
 
 const days = [
   {
@@ -87,7 +91,11 @@ export default function Example() {
                 {days.map((day) => (
                   <Fragment key={day.dateTime}>
                     <tr className="text-sm/6 text-gray-900">
-                      <th scope="colgroup" colSpan={3} className="relative isolate py-2 font-semibold">
+                      <th
+                        scope="colgroup"
+                        colSpan={3}
+                        className="relative isolate py-2 font-semibold"
+                      >
                         <time dateTime={day.dateTime}>{day.date}</time>
                         <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                         <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
@@ -103,7 +111,9 @@ export default function Example() {
                             />
                             <div className="flex-auto">
                               <div className="flex items-start gap-x-3">
-                                <div className="text-sm/6 font-medium text-gray-900">{transaction.amount}</div>
+                                <div className="text-sm/6 font-medium text-gray-900">
+                                  {transaction.amount}
+                                </div>
                                 {transaction.status === 'Paid' ? (
                                   <div className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">
                                     {transaction.status}
@@ -121,7 +131,9 @@ export default function Example() {
                                 ) : null}
                               </div>
                               {transaction.tax ? (
-                                <div className="mt-1 text-xs/5 text-gray-500">{transaction.tax} tax</div>
+                                <div className="mt-1 text-xs/5 text-gray-500">
+                                  {transaction.tax} tax
+                                </div>
                               ) : null}
                             </div>
                           </div>
@@ -129,23 +141,35 @@ export default function Example() {
                           <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
                         </td>
                         <td className="hidden py-5 pr-6 sm:table-cell">
-                          <div className="text-sm/6 text-gray-900">{transaction.client}</div>
-                          <div className="mt-1 text-xs/5 text-gray-500">{transaction.description}</div>
+                          <div className="text-sm/6 text-gray-900">
+                            {transaction.client}
+                          </div>
+                          <div className="mt-1 text-xs/5 text-gray-500">
+                            {transaction.description}
+                          </div>
                         </td>
                         <td className="py-5 text-right">
                           <div className="flex justify-end">
                             <a
                               href={transaction.href}
-                              className="text-sm/6 font-medium text-indigo-600 hover:text-indigo-500"
+                              className="text-sm/6 font-medium text-sky-600 hover:text-sky-500"
                             >
-                              View<span className="hidden sm:inline"> transaction</span>
+                              View
+                              <span className="hidden sm:inline">
+                                {' '}
+                                transaction
+                              </span>
                               <span className="sr-only">
-                                , invoice #{transaction.invoiceNumber}, {transaction.client}
+                                , invoice #{transaction.invoiceNumber},{' '}
+                                {transaction.client}
                               </span>
                             </a>
                           </div>
                           <div className="mt-1 text-xs/5 text-gray-500">
-                            Invoice <span className="text-gray-900">#{transaction.invoiceNumber}</span>
+                            Invoice{' '}
+                            <span className="text-gray-900">
+                              #{transaction.invoiceNumber}
+                            </span>
                           </div>
                         </td>
                       </tr>

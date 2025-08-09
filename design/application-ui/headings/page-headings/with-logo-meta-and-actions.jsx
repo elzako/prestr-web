@@ -20,19 +20,27 @@ export default function Example() {
             <div className="text-sm/6 text-gray-500">
               Invoice <span className="text-gray-700">#00011</span>
             </div>
-            <div className="mt-1 text-base font-semibold text-gray-900">Tuple, Inc</div>
+            <div className="mt-1 text-base font-semibold text-gray-900">
+              Tuple, Inc
+            </div>
           </h1>
         </div>
         <div className="flex items-center gap-x-4 sm:gap-x-6">
-          <button type="button" className="hidden text-sm/6 font-semibold text-gray-900 sm:block">
+          <button
+            type="button"
+            className="hidden text-sm/6 font-semibold text-gray-900 sm:block"
+          >
             Copy URL
           </button>
-          <a href="#" className="hidden text-sm/6 font-semibold text-gray-900 sm:block">
+          <a
+            href="#"
+            className="hidden text-sm/6 font-semibold text-gray-900 sm:block"
+          >
             Edit
           </a>
           <a
             href="#"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
           >
             Send
           </a>
@@ -41,7 +49,10 @@ export default function Example() {
             <MenuButton className="relative block">
               <span className="absolute -inset-3" />
               <span className="sr-only">More</span>
-              <EllipsisVerticalIcon aria-hidden="true" className="size-5 text-gray-500" />
+              <EllipsisVerticalIcon
+                aria-hidden="true"
+                className="size-5 text-gray-500"
+              />
             </MenuButton>
 
             <MenuItems

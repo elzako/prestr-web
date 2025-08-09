@@ -15,7 +15,13 @@ import {
   DialogBackdrop,
 } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { DocumentPlusIcon, FolderIcon, FolderPlusIcon, HashtagIcon, TagIcon } from '@heroicons/react/24/outline'
+import {
+  DocumentPlusIcon,
+  FolderIcon,
+  FolderPlusIcon,
+  HashtagIcon,
+  TagIcon,
+} from '@heroicons/react/24/outline'
 import { useState } from 'react'
 
 const projects = [
@@ -82,29 +88,39 @@ export default function Example() {
             </div>
 
             {(query === '' || filteredProjects.length > 0) && (
-              <ComboboxOptions static as="ul" className="max-h-80 scroll-py-2 divide-y divide-gray-100 overflow-y-auto">
+              <ComboboxOptions
+                static
+                as="ul"
+                className="max-h-80 scroll-py-2 divide-y divide-gray-100 overflow-y-auto"
+              >
                 <li className="p-2">
                   {query === '' && (
-                    <h2 className="mt-4 mb-2 px-3 text-xs font-semibold text-gray-500">Recent searches</h2>
+                    <h2 className="mt-4 mb-2 px-3 text-xs font-semibold text-gray-500">
+                      Recent searches
+                    </h2>
                   )}
                   <ul className="text-sm text-gray-700">
-                    {(query === '' ? recent : filteredProjects).map((project) => (
-                      <ComboboxOption
-                        as="li"
-                        key={project.id}
-                        value={project}
-                        className="group flex cursor-default items-center rounded-md px-3 py-2 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
-                      >
-                        <FolderIcon
-                          className="size-6 flex-none text-gray-400 group-data-focus:text-white forced-colors:group-data-focus:text-[Highlight]"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-3 flex-auto truncate">{project.name}</span>
-                        <span className="ml-3 hidden flex-none text-indigo-100 group-data-focus:inline">
-                          Jump to...
-                        </span>
-                      </ComboboxOption>
-                    ))}
+                    {(query === '' ? recent : filteredProjects).map(
+                      (project) => (
+                        <ComboboxOption
+                          as="li"
+                          key={project.id}
+                          value={project}
+                          className="group flex cursor-default items-center rounded-md px-3 py-2 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
+                        >
+                          <FolderIcon
+                            className="size-6 flex-none text-gray-400 group-data-focus:text-white forced-colors:group-data-focus:text-[Highlight]"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 flex-auto truncate">
+                            {project.name}
+                          </span>
+                          <span className="ml-3 hidden flex-none text-sky-100 group-data-focus:inline">
+                            Jump to...
+                          </span>
+                        </ComboboxOption>
+                      ),
+                    )}
                   </ul>
                 </li>
                 {query === '' && (
@@ -116,14 +132,16 @@ export default function Example() {
                           as="li"
                           key={action.shortcut}
                           value={action}
-                          className="group flex cursor-default items-center rounded-md px-3 py-2 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+                          className="group flex cursor-default items-center rounded-md px-3 py-2 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
                         >
                           <action.icon
                             className="size-6 flex-none text-gray-400 group-data-focus:text-white forced-colors:group-data-focus:text-[Highlight]"
                             aria-hidden="true"
                           />
-                          <span className="ml-3 flex-auto truncate">{action.name}</span>
-                          <span className="ml-3 flex-none text-xs font-semibold text-gray-400 group-data-focus:text-indigo-100">
+                          <span className="ml-3 flex-auto truncate">
+                            {action.name}
+                          </span>
+                          <span className="ml-3 flex-none text-xs font-semibold text-gray-400 group-data-focus:text-sky-100">
                             <kbd className="font-sans">⌘</kbd>
                             <kbd className="font-sans">{action.shortcut}</kbd>
                           </span>
@@ -137,9 +155,13 @@ export default function Example() {
 
             {query !== '' && filteredProjects.length === 0 && (
               <div className="px-6 py-14 text-center sm:px-14">
-                <FolderIcon className="mx-auto size-6 text-gray-400" aria-hidden="true" />
+                <FolderIcon
+                  className="mx-auto size-6 text-gray-400"
+                  aria-hidden="true"
+                />
                 <p className="mt-4 text-sm text-gray-900">
-                  We couldn’t find any projects with that term. Please try again.
+                  We couldn’t find any projects with that term. Please try
+                  again.
                 </p>
               </div>
             )}

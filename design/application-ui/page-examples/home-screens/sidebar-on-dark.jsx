@@ -25,7 +25,12 @@ import {
   SignalIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { Bars3Icon, ChevronRightIcon, ChevronUpDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import {
+  Bars3Icon,
+  ChevronRightIcon,
+  ChevronUpDownIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/20/solid'
 
 const navigation = [
   { name: 'Projects', href: '#', icon: FolderIcon, current: false },
@@ -47,7 +52,7 @@ const statuses = {
 }
 const environments = {
   Preview: 'text-gray-400 bg-gray-400/10 ring-gray-400/20',
-  Production: 'text-indigo-400 bg-indigo-400/10 ring-indigo-400/30',
+  Production: 'text-sky-400 bg-sky-400/10 ring-sky-400/30',
 }
 const deployments = [
   {
@@ -248,7 +253,11 @@ export default function Example() {
         ```
       */}
       <div>
-        <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 xl:hidden">
+        <Dialog
+          open={sidebarOpen}
+          onClose={setSidebarOpen}
+          className="relative z-50 xl:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
@@ -261,9 +270,16 @@ export default function Example() {
             >
               <TransitionChild>
                 <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarOpen(false)}
+                    className="-m-2.5 p-2.5"
+                  >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="size-6 text-white"
+                    />
                   </button>
                 </div>
               </TransitionChild>
@@ -273,7 +289,7 @@ export default function Example() {
                 <div className="relative flex h-16 shrink-0 items-center">
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                     className="h-8 w-auto"
                   />
                 </div>
@@ -295,7 +311,9 @@ export default function Example() {
                               <item.icon
                                 aria-hidden="true"
                                 className={classNames(
-                                  item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                                  item.current
+                                    ? 'text-white'
+                                    : 'text-gray-400 group-hover:text-white',
                                   'size-6 shrink-0',
                                 )}
                               />
@@ -306,7 +324,9 @@ export default function Example() {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                      <div className="text-xs/6 font-semibold text-gray-400">
+                        Your teams
+                      </div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
@@ -363,7 +383,7 @@ export default function Example() {
             <div className="flex h-16 shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                 className="h-8 w-auto"
               />
             </div>
@@ -376,14 +396,18 @@ export default function Example() {
                         <a
                           href={item.href}
                           className={classNames(
-                            item.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            item.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
                           <item.icon
                             aria-hidden="true"
                             className={classNames(
-                              item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                              item.current
+                                ? 'text-white'
+                                : 'text-gray-400 group-hover:text-white',
                               'size-6 shrink-0',
                             )}
                           />
@@ -394,14 +418,18 @@ export default function Example() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                  <div className="text-xs/6 font-semibold text-gray-400">
+                    Your teams
+                  </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
                         <a
                           href={team.href}
                           className={classNames(
-                            team.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            team.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
@@ -443,7 +471,11 @@ export default function Example() {
         <div className="xl:pl-72">
           {/* Sticky search header */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 sm:px-6 lg:px-8">
-            <button type="button" onClick={() => setSidebarOpen(true)} className="-m-2.5 p-2.5 text-white xl:hidden">
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="-m-2.5 p-2.5 text-white xl:hidden"
+            >
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon aria-hidden="true" className="size-5" />
             </button>
@@ -466,13 +498,18 @@ export default function Example() {
 
           <main className="lg:pr-96">
             <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-              <h1 className="text-base/7 font-semibold text-white">Deployments</h1>
+              <h1 className="text-base/7 font-semibold text-white">
+                Deployments
+              </h1>
 
               {/* Sort dropdown */}
               <Menu as="div" className="relative">
                 <MenuButton className="flex items-center gap-x-1 text-sm/6 font-medium text-white">
                   Sort by
-                  <ChevronUpDownIcon aria-hidden="true" className="size-5 text-gray-500" />
+                  <ChevronUpDownIcon
+                    aria-hidden="true"
+                    className="size-5 text-gray-500"
+                  />
                 </MenuButton>
                 <MenuItems
                   transition
@@ -509,27 +546,44 @@ export default function Example() {
             {/* Deployment list */}
             <ul role="list" className="divide-y divide-white/5">
               {deployments.map((deployment) => (
-                <li key={deployment.id} className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8">
+                <li
+                  key={deployment.id}
+                  className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8"
+                >
                   <div className="min-w-0 flex-auto">
                     <div className="flex items-center gap-x-3">
-                      <div className={classNames(statuses[deployment.status], 'flex-none rounded-full p-1')}>
+                      <div
+                        className={classNames(
+                          statuses[deployment.status],
+                          'flex-none rounded-full p-1',
+                        )}
+                      >
                         <div className="size-2 rounded-full bg-current" />
                       </div>
                       <h2 className="min-w-0 text-sm/6 font-semibold text-white">
                         <a href={deployment.href} className="flex gap-x-2">
-                          <span className="truncate">{deployment.teamName}</span>
+                          <span className="truncate">
+                            {deployment.teamName}
+                          </span>
                           <span className="text-gray-400">/</span>
-                          <span className="whitespace-nowrap">{deployment.projectName}</span>
+                          <span className="whitespace-nowrap">
+                            {deployment.projectName}
+                          </span>
                           <span className="absolute inset-0" />
                         </a>
                       </h2>
                     </div>
                     <div className="mt-3 flex items-center gap-x-2.5 text-xs/5 text-gray-400">
                       <p className="truncate">{deployment.description}</p>
-                      <svg viewBox="0 0 2 2" className="size-0.5 flex-none fill-gray-500">
+                      <svg
+                        viewBox="0 0 2 2"
+                        className="size-0.5 flex-none fill-gray-500"
+                      >
                         <circle r={1} cx={1} cy={1} />
                       </svg>
-                      <p className="whitespace-nowrap">{deployment.statusText}</p>
+                      <p className="whitespace-nowrap">
+                        {deployment.statusText}
+                      </p>
                     </div>
                   </div>
                   <div
@@ -540,7 +594,10 @@ export default function Example() {
                   >
                     {deployment.environment}
                   </div>
-                  <ChevronRightIcon aria-hidden="true" className="size-5 flex-none text-gray-400" />
+                  <ChevronRightIcon
+                    aria-hidden="true"
+                    className="size-5 flex-none text-gray-400"
+                  />
                 </li>
               ))}
             </ul>
@@ -549,8 +606,10 @@ export default function Example() {
           {/* Activity feed */}
           <aside className="bg-black/10 lg:fixed lg:top-16 lg:right-0 lg:bottom-0 lg:w-96 lg:overflow-y-auto lg:border-l lg:border-white/5">
             <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-              <h2 className="text-base/7 font-semibold text-white">Activity feed</h2>
-              <a href="#" className="text-sm/6 font-semibold text-indigo-400">
+              <h2 className="text-base/7 font-semibold text-white">
+                Activity feed
+              </h2>
+              <a href="#" className="text-sm/6 font-semibold text-sky-400">
                 View all
               </a>
             </header>
@@ -563,15 +622,23 @@ export default function Example() {
                       src={item.user.imageUrl}
                       className="size-6 flex-none rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
                     />
-                    <h3 className="flex-auto truncate text-sm/6 font-semibold text-white">{item.user.name}</h3>
-                    <time dateTime={item.dateTime} className="flex-none text-xs text-gray-600">
+                    <h3 className="flex-auto truncate text-sm/6 font-semibold text-white">
+                      {item.user.name}
+                    </h3>
+                    <time
+                      dateTime={item.dateTime}
+                      className="flex-none text-xs text-gray-600"
+                    >
                       {item.date}
                     </time>
                   </div>
                   <p className="mt-3 truncate text-sm text-gray-500">
-                    Pushed to <span className="text-gray-400">{item.projectName}</span> (
-                    <span className="font-mono text-gray-400">{item.commit}</span> on{' '}
-                    <span className="text-gray-400">{item.branch}</span>)
+                    Pushed to{' '}
+                    <span className="text-gray-400">{item.projectName}</span> (
+                    <span className="font-mono text-gray-400">
+                      {item.commit}
+                    </span>{' '}
+                    on <span className="text-gray-400">{item.branch}</span>)
                   </p>
                 </li>
               ))}

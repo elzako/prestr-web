@@ -15,8 +15,20 @@ import {
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, count: '5', current: true },
   { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, count: '12', current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, count: '20+', current: false },
+  {
+    name: 'Projects',
+    href: '#',
+    icon: FolderIcon,
+    count: '12',
+    current: false,
+  },
+  {
+    name: 'Calendar',
+    href: '#',
+    icon: CalendarIcon,
+    count: '20+',
+    current: false,
+  },
   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
@@ -36,7 +48,7 @@ export default function Example() {
       <div className="relative flex h-16 shrink-0 items-center">
         <img
           alt="Your Company"
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
           className="h-8 w-auto"
         />
       </div>
@@ -49,7 +61,9 @@ export default function Example() {
                   <a
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                      item.current
+                        ? 'bg-white/5 text-white'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-white',
                       'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                     )}
                   >
@@ -69,14 +83,18 @@ export default function Example() {
             </ul>
           </li>
           <li>
-            <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+            <div className="text-xs/6 font-semibold text-gray-400">
+              Your teams
+            </div>
             <ul role="list" className="-mx-2 mt-2 space-y-1">
               {teams.map((team) => (
                 <li key={team.name}>
                   <a
                     href={team.href}
                     className={classNames(
-                      team.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                      team.current
+                        ? 'bg-white/5 text-white'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-white',
                       'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                     )}
                   >

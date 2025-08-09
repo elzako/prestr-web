@@ -6,7 +6,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  TransitionChild,
+} from '@headlessui/react'
 import {
   Bars3Icon,
   CalendarIcon,
@@ -50,7 +55,11 @@ export default function Example() {
         ```
       */}
       <div>
-        <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
+        <Dialog
+          open={sidebarOpen}
+          onClose={setSidebarOpen}
+          className="relative z-50 lg:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
@@ -63,15 +72,22 @@ export default function Example() {
             >
               <TransitionChild>
                 <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarOpen(false)}
+                    className="-m-2.5 p-2.5"
+                  >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="size-6 text-white"
+                    />
                   </button>
                 </div>
               </TransitionChild>
 
               {/* Sidebar component, swap this element with another sidebar if you like */}
-              <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-2">
+              <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-sky-600 px-6 pb-2">
                 <div className="flex h-16 shrink-0 items-center">
                   <img
                     alt="Your Company"
@@ -89,15 +105,17 @@ export default function Example() {
                               href={item.href}
                               className={classNames(
                                 item.current
-                                  ? 'bg-indigo-700 text-white'
-                                  : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                                  ? 'bg-sky-700 text-white'
+                                  : 'text-sky-200 hover:bg-sky-700 hover:text-white',
                                 'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                               )}
                             >
                               <item.icon
                                 aria-hidden="true"
                                 className={classNames(
-                                  item.current ? 'text-white' : 'text-indigo-200 group-hover:text-white',
+                                  item.current
+                                    ? 'text-white'
+                                    : 'text-sky-200 group-hover:text-white',
                                   'size-6 shrink-0',
                                 )}
                               />
@@ -108,7 +126,9 @@ export default function Example() {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs/6 font-semibold text-indigo-200">Your teams</div>
+                      <div className="text-xs/6 font-semibold text-sky-200">
+                        Your teams
+                      </div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
@@ -116,12 +136,12 @@ export default function Example() {
                               href={team.href}
                               className={classNames(
                                 team.current
-                                  ? 'bg-indigo-700 text-white'
-                                  : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                                  ? 'bg-sky-700 text-white'
+                                  : 'text-sky-200 hover:bg-sky-700 hover:text-white',
                                 'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                               )}
                             >
-                              <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                              <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-sky-400 bg-sky-500 text-[0.625rem] font-medium text-white">
                                 {team.initial}
                               </span>
                               <span className="truncate">{team.name}</span>
@@ -140,7 +160,7 @@ export default function Example() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6">
+          <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-sky-600 px-6">
             <div className="flex h-16 shrink-0 items-center">
               <img
                 alt="Your Company"
@@ -158,15 +178,17 @@ export default function Example() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? 'bg-indigo-700 text-white'
-                              : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                              ? 'bg-sky-700 text-white'
+                              : 'text-sky-200 hover:bg-sky-700 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
                           <item.icon
                             aria-hidden="true"
                             className={classNames(
-                              item.current ? 'text-white' : 'text-indigo-200 group-hover:text-white',
+                              item.current
+                                ? 'text-white'
+                                : 'text-sky-200 group-hover:text-white',
                               'size-6 shrink-0',
                             )}
                           />
@@ -177,7 +199,9 @@ export default function Example() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs/6 font-semibold text-indigo-200">Your teams</div>
+                  <div className="text-xs/6 font-semibold text-sky-200">
+                    Your teams
+                  </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
@@ -185,12 +209,12 @@ export default function Example() {
                           href={team.href}
                           className={classNames(
                             team.current
-                              ? 'bg-indigo-700 text-white'
-                              : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                              ? 'bg-sky-700 text-white'
+                              : 'text-sky-200 hover:bg-sky-700 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
-                          <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                          <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-sky-400 bg-sky-500 text-[0.625rem] font-medium text-white">
                             {team.initial}
                           </span>
                           <span className="truncate">{team.name}</span>
@@ -202,12 +226,12 @@ export default function Example() {
                 <li className="-mx-6 mt-auto">
                   <a
                     href="#"
-                    className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-indigo-700"
+                    className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-sky-700"
                   >
                     <img
                       alt=""
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      className="size-8 rounded-full bg-indigo-700 outline -outline-offset-1 outline-white/10"
+                      className="size-8 rounded-full bg-sky-700 outline -outline-offset-1 outline-white/10"
                     />
                     <span className="sr-only">Your profile</span>
                     <span aria-hidden="true">Tom Cook</span>
@@ -218,22 +242,24 @@ export default function Example() {
           </div>
         </div>
 
-        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-indigo-600 px-4 py-4 shadow-xs sm:px-6 lg:hidden">
+        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-sky-600 px-4 py-4 shadow-xs sm:px-6 lg:hidden">
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
-            className="-m-2.5 p-2.5 text-indigo-200 hover:text-white lg:hidden"
+            className="-m-2.5 p-2.5 text-sky-200 hover:text-white lg:hidden"
           >
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon aria-hidden="true" className="size-6" />
           </button>
-          <div className="flex-1 text-sm/6 font-semibold text-white">Dashboard</div>
+          <div className="flex-1 text-sm/6 font-semibold text-white">
+            Dashboard
+          </div>
           <a href="#">
             <span className="sr-only">Your profile</span>
             <img
               alt=""
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              className="size-8 rounded-full bg-indigo-700 outline -outline-offset-1 outline-white/10"
+              className="size-8 rounded-full bg-sky-700 outline -outline-offset-1 outline-white/10"
             />
           </a>
         </div>

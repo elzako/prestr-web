@@ -25,7 +25,7 @@ export default function Example() {
         <select
           defaultValue={tabs.find((tab) => tab.current).name}
           aria-label="Select a tab"
-          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600"
         >
           {tabs.map((tab) => (
             <option key={tab.name}>{tab.name}</option>
@@ -46,7 +46,7 @@ export default function Example() {
                 aria-current={tab.current ? 'page' : undefined}
                 className={classNames(
                   tab.current
-                    ? 'border-indigo-500 text-indigo-600'
+                    ? 'border-sky-500 text-sky-600'
                     : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700',
                   'flex border-b-2 px-1 py-4 text-sm font-medium whitespace-nowrap',
                 )}
@@ -55,7 +55,9 @@ export default function Example() {
                 {tab.count ? (
                   <span
                     className={classNames(
-                      tab.current ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-900',
+                      tab.current
+                        ? 'bg-sky-100 text-sky-600'
+                        : 'bg-gray-100 text-gray-900',
                       'ml-3 hidden rounded-full px-2.5 py-0.5 text-xs font-medium md:inline-block',
                     )}
                   >

@@ -14,7 +14,10 @@ import {
   DialogPanel,
   DialogBackdrop,
 } from '@headlessui/react'
-import { ChevronRightIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import {
+  ChevronRightIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/20/solid'
 import { UsersIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 
@@ -94,7 +97,12 @@ export default function Example() {
                   </div>
 
                   {(query === '' || filteredPeople.length > 0) && (
-                    <ComboboxOptions as="div" static hold className="flex transform-gpu divide-x divide-gray-100">
+                    <ComboboxOptions
+                      as="div"
+                      static
+                      hold
+                      className="flex transform-gpu divide-x divide-gray-100"
+                    >
                       <div
                         className={classNames(
                           'max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4',
@@ -102,28 +110,34 @@ export default function Example() {
                         )}
                       >
                         {query === '' && (
-                          <h2 className="mt-2 mb-4 text-xs font-semibold text-gray-500">Recent searches</h2>
+                          <h2 className="mt-2 mb-4 text-xs font-semibold text-gray-500">
+                            Recent searches
+                          </h2>
                         )}
                         <div className="-mx-2 text-sm text-gray-700">
-                          {(query === '' ? recent : filteredPeople).map((person) => (
-                            <ComboboxOption
-                              as="div"
-                              key={person.id}
-                              value={person}
-                              className="group flex cursor-default items-center rounded-md p-2 select-none data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-                            >
-                              <img
-                                src={person.imageUrl}
-                                alt=""
-                                className="size-6 flex-none rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
-                              />
-                              <span className="ml-3 flex-auto truncate">{person.name}</span>
-                              <ChevronRightIcon
-                                className="ml-3 hidden size-5 flex-none text-gray-400 group-data-focus:block"
-                                aria-hidden="true"
-                              />
-                            </ComboboxOption>
-                          ))}
+                          {(query === '' ? recent : filteredPeople).map(
+                            (person) => (
+                              <ComboboxOption
+                                as="div"
+                                key={person.id}
+                                value={person}
+                                className="group flex cursor-default items-center rounded-md p-2 select-none data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                              >
+                                <img
+                                  src={person.imageUrl}
+                                  alt=""
+                                  className="size-6 flex-none rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
+                                />
+                                <span className="ml-3 flex-auto truncate">
+                                  {person.name}
+                                </span>
+                                <ChevronRightIcon
+                                  className="ml-3 hidden size-5 flex-none text-gray-400 group-data-focus:block"
+                                  aria-hidden="true"
+                                />
+                              </ComboboxOption>
+                            ),
+                          )}
                         </div>
                       </div>
 
@@ -135,29 +149,45 @@ export default function Example() {
                               alt=""
                               className="mx-auto size-16 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
                             />
-                            <h2 className="mt-3 font-semibold text-gray-900">{activeOption.name}</h2>
-                            <p className="text-sm/6 text-gray-500">{activeOption.role}</p>
+                            <h2 className="mt-3 font-semibold text-gray-900">
+                              {activeOption.name}
+                            </h2>
+                            <p className="text-sm/6 text-gray-500">
+                              {activeOption.role}
+                            </p>
                           </div>
                           <div className="flex flex-auto flex-col justify-between p-6">
                             <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
-                              <dt className="col-end-1 font-semibold text-gray-900">Phone</dt>
+                              <dt className="col-end-1 font-semibold text-gray-900">
+                                Phone
+                              </dt>
                               <dd>{activeOption.phone}</dd>
-                              <dt className="col-end-1 font-semibold text-gray-900">URL</dt>
+                              <dt className="col-end-1 font-semibold text-gray-900">
+                                URL
+                              </dt>
                               <dd className="truncate">
-                                <a href={activeOption.url} className="text-indigo-600 underline">
+                                <a
+                                  href={activeOption.url}
+                                  className="text-sky-600 underline"
+                                >
                                   {activeOption.url}
                                 </a>
                               </dd>
-                              <dt className="col-end-1 font-semibold text-gray-900">Email</dt>
+                              <dt className="col-end-1 font-semibold text-gray-900">
+                                Email
+                              </dt>
                               <dd className="truncate">
-                                <a href={`mailto:${activeOption.email}`} className="text-indigo-600 underline">
+                                <a
+                                  href={`mailto:${activeOption.email}`}
+                                  className="text-sky-600 underline"
+                                >
                                   {activeOption.email}
                                 </a>
                               </dd>
                             </dl>
                             <button
                               type="button"
-                              className="mt-6 w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                              className="mt-6 w-full rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                             >
                               Send message
                             </button>
@@ -169,9 +199,17 @@ export default function Example() {
 
                   {query !== '' && filteredPeople.length === 0 && (
                     <div className="px-6 py-14 text-center text-sm sm:px-14">
-                      <UsersIcon className="mx-auto size-6 text-gray-400" aria-hidden="true" />
-                      <p className="mt-4 font-semibold text-gray-900">No people found</p>
-                      <p className="mt-2 text-gray-500">We couldn’t find anything with that term. Please try again.</p>
+                      <UsersIcon
+                        className="mx-auto size-6 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      <p className="mt-4 font-semibold text-gray-900">
+                        No people found
+                      </p>
+                      <p className="mt-2 text-gray-500">
+                        We couldn’t find anything with that term. Please try
+                        again.
+                      </p>
                     </div>
                   )}
                 </>

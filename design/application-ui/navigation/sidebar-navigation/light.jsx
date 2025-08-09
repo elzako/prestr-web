@@ -15,8 +15,20 @@ import {
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, count: '5', current: true },
   { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, count: '12', current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, count: '20+', current: false },
+  {
+    name: 'Projects',
+    href: '#',
+    icon: FolderIcon,
+    count: '12',
+    current: false,
+  },
+  {
+    name: 'Calendar',
+    href: '#',
+    icon: CalendarIcon,
+    count: '20+',
+    current: false,
+  },
   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
@@ -36,7 +48,7 @@ export default function Example() {
       <div className="relative flex h-16 shrink-0 items-center">
         <img
           alt="Your Company"
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
           className="h-8 w-auto"
         />
       </div>
@@ -50,15 +62,17 @@ export default function Example() {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? 'bg-gray-50 text-indigo-600'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                        ? 'bg-gray-50 text-sky-600'
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-sky-600',
                       'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                     )}
                   >
                     <item.icon
                       aria-hidden="true"
                       className={classNames(
-                        item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                        item.current
+                          ? 'text-sky-600'
+                          : 'text-gray-400 group-hover:text-sky-600',
                         'size-6 shrink-0',
                       )}
                     />
@@ -77,7 +91,9 @@ export default function Example() {
             </ul>
           </li>
           <li>
-            <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+            <div className="text-xs/6 font-semibold text-gray-400">
+              Your teams
+            </div>
             <ul role="list" className="-mx-2 mt-2 space-y-1">
               {teams.map((team) => (
                 <li key={team.name}>
@@ -85,16 +101,16 @@ export default function Example() {
                     href={team.href}
                     className={classNames(
                       team.current
-                        ? 'bg-gray-50 text-indigo-600'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+                        ? 'bg-gray-50 text-sky-600'
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-sky-600',
                       'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                     )}
                   >
                     <span
                       className={classNames(
                         team.current
-                          ? 'border-indigo-600 text-indigo-600'
-                          : 'border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600',
+                          ? 'border-sky-600 text-sky-600'
+                          : 'border-gray-200 text-gray-400 group-hover:border-sky-600 group-hover:text-sky-600',
                         'flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium',
                       )}
                     >

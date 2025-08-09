@@ -68,12 +68,15 @@ export default function Example() {
             />
 
             {filteredPeople.length > 0 && (
-              <ComboboxOptions static className="-mb-2 max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800">
+              <ComboboxOptions
+                static
+                className="-mb-2 max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
+              >
                 {filteredPeople.map((person) => (
                   <ComboboxOption
                     key={person.id}
                     value={person}
-                    className="cursor-default rounded-md px-4 py-2 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+                    className="cursor-default rounded-md px-4 py-2 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
                   >
                     {person.name}
                   </ComboboxOption>
@@ -83,8 +86,13 @@ export default function Example() {
 
             {query !== '' && filteredPeople.length === 0 && (
               <div className="px-4 py-14 text-center sm:px-14">
-                <UsersIcon className="mx-auto size-6 text-gray-400" aria-hidden="true" />
-                <p className="mt-4 text-sm text-gray-900">No people found using that search term.</p>
+                <UsersIcon
+                  className="mx-auto size-6 text-gray-400"
+                  aria-hidden="true"
+                />
+                <p className="mt-4 text-sm text-gray-900">
+                  No people found using that search term.
+                </p>
               </div>
             )}
           </Combobox>

@@ -3,7 +3,10 @@
  * @tags navigation, pagination, centered, page, numbers, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/navigation/pagination
  */
-import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid'
+import {
+  ArrowLongLeftIcon,
+  ArrowLongRightIcon,
+} from '@heroicons/react/20/solid'
 
 export default function Example() {
   return (
@@ -13,7 +16,10 @@ export default function Example() {
           href="#"
           className="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
         >
-          <ArrowLongLeftIcon aria-hidden="true" className="mr-3 size-5 text-gray-400" />
+          <ArrowLongLeftIcon
+            aria-hidden="true"
+            className="mr-3 size-5 text-gray-400"
+          />
           Previous
         </a>
       </div>
@@ -24,11 +30,11 @@ export default function Example() {
         >
           1
         </a>
-        {/* Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" */}
+        {/* Current: "border-sky-500 text-sky-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" */}
         <a
           href="#"
           aria-current="page"
-          className="inline-flex items-center border-t-2 border-indigo-500 px-4 pt-4 text-sm font-medium text-indigo-600"
+          className="inline-flex items-center border-t-2 border-sky-500 px-4 pt-4 text-sm font-medium text-sky-600"
         >
           2
         </a>
@@ -66,7 +72,10 @@ export default function Example() {
           className="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
         >
           Next
-          <ArrowLongRightIcon aria-hidden="true" className="ml-3 size-5 text-gray-400" />
+          <ArrowLongRightIcon
+            aria-hidden="true"
+            className="ml-3 size-5 text-gray-400"
+          />
         </a>
       </div>
     </nav>

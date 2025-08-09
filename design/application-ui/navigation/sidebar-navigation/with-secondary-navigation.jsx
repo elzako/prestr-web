@@ -3,7 +3,11 @@
  * @tags navigation, sidebar navigation, with, secondary, navigation, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
  */
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import {
   CalendarIcon,
@@ -52,7 +56,7 @@ export default function Example() {
       <div className="relative flex h-16 shrink-0 items-center">
         <img
           alt="Your Company"
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
           className="h-8 w-auto"
         />
       </div>
@@ -70,7 +74,10 @@ export default function Example() {
                         'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700',
                       )}
                     >
-                      <item.icon aria-hidden="true" className="size-6 shrink-0 text-gray-400" />
+                      <item.icon
+                        aria-hidden="true"
+                        className="size-6 shrink-0 text-gray-400"
+                      />
                       {item.name}
                     </a>
                   ) : (
@@ -81,7 +88,10 @@ export default function Example() {
                           'group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-700',
                         )}
                       >
-                        <item.icon aria-hidden="true" className="size-6 shrink-0 text-gray-400" />
+                        <item.icon
+                          aria-hidden="true"
+                          className="size-6 shrink-0 text-gray-400"
+                        />
                         {item.name}
                         <ChevronRightIcon
                           aria-hidden="true"
@@ -96,7 +106,9 @@ export default function Example() {
                               as="a"
                               href={subItem.href}
                               className={classNames(
-                                subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                                subItem.current
+                                  ? 'bg-gray-50'
+                                  : 'hover:bg-gray-50',
                                 'block rounded-md py-2 pr-2 pl-9 text-sm/6 text-gray-700',
                               )}
                             >

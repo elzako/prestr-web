@@ -6,7 +6,14 @@
 'use client'
 
 import { Fragment, useState } from 'react'
-import { Dialog, DialogPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Dialog,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import {
   ArrowDownCircleIcon,
   ArrowPathIcon,
@@ -29,10 +36,30 @@ const secondaryNavigation = [
   { name: 'All-time', href: '#', current: false },
 ]
 const stats = [
-  { name: 'Revenue', value: '$405,091.00', change: '+4.75%', changeType: 'positive' },
-  { name: 'Overdue invoices', value: '$12,787.00', change: '+54.02%', changeType: 'negative' },
-  { name: 'Outstanding invoices', value: '$245,988.00', change: '-1.39%', changeType: 'positive' },
-  { name: 'Expenses', value: '$30,156.00', change: '+10.18%', changeType: 'negative' },
+  {
+    name: 'Revenue',
+    value: '$405,091.00',
+    change: '+4.75%',
+    changeType: 'positive',
+  },
+  {
+    name: 'Overdue invoices',
+    value: '$12,787.00',
+    change: '+54.02%',
+    changeType: 'negative',
+  },
+  {
+    name: 'Outstanding invoices',
+    value: '$245,988.00',
+    change: '-1.39%',
+    changeType: 'positive',
+  },
+  {
+    name: 'Expenses',
+    value: '$30,156.00',
+    change: '+10.18%',
+    changeType: 'negative',
+  },
 ]
 const statuses = {
   Paid: 'text-green-700 bg-green-50 ring-green-600/20',
@@ -101,19 +128,35 @@ const clients = [
     id: 1,
     name: 'Tuple',
     imageUrl: 'https://tailwindcss.com/plus-assets/img/logos/48x48/tuple.svg',
-    lastInvoice: { date: 'December 13, 2022', dateTime: '2022-12-13', amount: '$2,000.00', status: 'Overdue' },
+    lastInvoice: {
+      date: 'December 13, 2022',
+      dateTime: '2022-12-13',
+      amount: '$2,000.00',
+      status: 'Overdue',
+    },
   },
   {
     id: 2,
     name: 'SavvyCal',
-    imageUrl: 'https://tailwindcss.com/plus-assets/img/logos/48x48/savvycal.svg',
-    lastInvoice: { date: 'January 22, 2023', dateTime: '2023-01-22', amount: '$14,000.00', status: 'Paid' },
+    imageUrl:
+      'https://tailwindcss.com/plus-assets/img/logos/48x48/savvycal.svg',
+    lastInvoice: {
+      date: 'January 22, 2023',
+      dateTime: '2023-01-22',
+      amount: '$14,000.00',
+      status: 'Paid',
+    },
   },
   {
     id: 3,
     name: 'Reform',
     imageUrl: 'https://tailwindcss.com/plus-assets/img/logos/48x48/reform.svg',
-    lastInvoice: { date: 'January 23, 2023', dateTime: '2023-01-23', amount: '$7,600.00', status: 'Paid' },
+    lastInvoice: {
+      date: 'January 23, 2023',
+      dateTime: '2023-01-23',
+      amount: '$7,600.00',
+      status: 'Paid',
+    },
   },
 ]
 
@@ -129,13 +172,17 @@ export default function Example() {
       <header className="absolute inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center gap-x-6">
-            <button type="button" onClick={() => setMobileMenuOpen(true)} className="-m-3 p-3 md:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="-m-3 p-3 md:hidden"
+            >
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="size-5 text-gray-900" />
             </button>
             <img
               alt="Your Company"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
               className="h-8 w-auto"
             />
           </div>
@@ -147,7 +194,10 @@ export default function Example() {
             ))}
           </nav>
           <div className="flex flex-1 items-center justify-end gap-x-8">
-            <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+            <button
+              type="button"
+              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+            >
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="size-6" />
             </button>
@@ -161,11 +211,19 @@ export default function Example() {
             </a>
           </div>
         </div>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+        <Dialog
+          open={mobileMenuOpen}
+          onClose={setMobileMenuOpen}
+          className="lg:hidden"
+        >
           <div className="fixed inset-0 z-50" />
           <DialogPanel className="fixed inset-y-0 left-0 z-50 w-full overflow-y-auto bg-white px-4 pb-6 sm:max-w-sm sm:px-6 sm:ring-1 sm:ring-gray-900/10">
             <div className="-ml-0.5 flex h-16 items-center gap-x-6">
-              <button type="button" onClick={() => setMobileMenuOpen(false)} className="-m-2.5 p-2.5 text-gray-700">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="-m-2.5 p-2.5 text-gray-700"
+              >
                 <span className="sr-only">Close menu</span>
                 <XMarkIcon aria-hidden="true" className="size-6" />
               </button>
@@ -174,7 +232,7 @@ export default function Example() {
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
                     className="h-8 w-auto"
                   />
                 </a>
@@ -200,17 +258,23 @@ export default function Example() {
           {/* Secondary navigation */}
           <header className="pt-6 pb-4 sm:pb-6">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
-              <h1 className="text-base/7 font-semibold text-gray-900">Cashflow</h1>
+              <h1 className="text-base/7 font-semibold text-gray-900">
+                Cashflow
+              </h1>
               <div className="order-last flex w-full gap-x-8 text-sm/6 font-semibold sm:order-0 sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:text-sm/7">
                 {secondaryNavigation.map((item) => (
-                  <a key={item.name} href={item.href} className={item.current ? 'text-indigo-600' : 'text-gray-700'}>
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={item.current ? 'text-sky-600' : 'text-gray-700'}
+                  >
                     {item.name}
                   </a>
                 ))}
               </div>
               <a
                 href="#"
-                className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="ml-auto flex items-center gap-x-1 rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
               >
                 <PlusSmallIcon aria-hidden="true" className="-ml-1.5 size-5" />
                 New invoice
@@ -225,14 +289,22 @@ export default function Example() {
                 <div
                   key={stat.name}
                   className={classNames(
-                    statIdx % 2 === 1 ? 'sm:border-l' : statIdx === 2 ? 'lg:border-l' : '',
+                    statIdx % 2 === 1
+                      ? 'sm:border-l'
+                      : statIdx === 2
+                        ? 'lg:border-l'
+                        : '',
                     'flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8',
                   )}
                 >
-                  <dt className="text-sm/6 font-medium text-gray-500">{stat.name}</dt>
+                  <dt className="text-sm/6 font-medium text-gray-500">
+                    {stat.name}
+                  </dt>
                   <dd
                     className={classNames(
-                      stat.changeType === 'negative' ? 'text-rose-600' : 'text-gray-700',
+                      stat.changeType === 'negative'
+                        ? 'text-rose-600'
+                        : 'text-gray-700',
                       'text-xs font-medium',
                     )}
                   >
@@ -283,7 +355,11 @@ export default function Example() {
                       {days.map((day) => (
                         <Fragment key={day.dateTime}>
                           <tr className="text-sm/6 text-gray-900">
-                            <th scope="colgroup" colSpan={3} className="relative isolate py-2 font-semibold">
+                            <th
+                              scope="colgroup"
+                              colSpan={3}
+                              className="relative isolate py-2 font-semibold"
+                            >
                               <time dateTime={day.dateTime}>{day.date}</time>
                               <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50" />
                               <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50" />
@@ -299,7 +375,9 @@ export default function Example() {
                                   />
                                   <div className="flex-auto">
                                     <div className="flex items-start gap-x-3">
-                                      <div className="text-sm/6 font-medium text-gray-900">{transaction.amount}</div>
+                                      <div className="text-sm/6 font-medium text-gray-900">
+                                        {transaction.amount}
+                                      </div>
                                       <div
                                         className={classNames(
                                           statuses[transaction.status],
@@ -310,7 +388,9 @@ export default function Example() {
                                       </div>
                                     </div>
                                     {transaction.tax ? (
-                                      <div className="mt-1 text-xs/5 text-gray-500">{transaction.tax} tax</div>
+                                      <div className="mt-1 text-xs/5 text-gray-500">
+                                        {transaction.tax} tax
+                                      </div>
                                     ) : null}
                                   </div>
                                 </div>
@@ -318,23 +398,35 @@ export default function Example() {
                                 <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
                               </td>
                               <td className="hidden py-5 pr-6 sm:table-cell">
-                                <div className="text-sm/6 text-gray-900">{transaction.client}</div>
-                                <div className="mt-1 text-xs/5 text-gray-500">{transaction.description}</div>
+                                <div className="text-sm/6 text-gray-900">
+                                  {transaction.client}
+                                </div>
+                                <div className="mt-1 text-xs/5 text-gray-500">
+                                  {transaction.description}
+                                </div>
                               </td>
                               <td className="py-5 text-right">
                                 <div className="flex justify-end">
                                   <a
                                     href={transaction.href}
-                                    className="text-sm/6 font-medium text-indigo-600 hover:text-indigo-500"
+                                    className="text-sm/6 font-medium text-sky-600 hover:text-sky-500"
                                   >
-                                    View<span className="hidden sm:inline"> transaction</span>
+                                    View
+                                    <span className="hidden sm:inline">
+                                      {' '}
+                                      transaction
+                                    </span>
                                     <span className="sr-only">
-                                      , invoice #{transaction.invoiceNumber}, {transaction.client}
+                                      , invoice #{transaction.invoiceNumber},{' '}
+                                      {transaction.client}
                                     </span>
                                   </a>
                                 </div>
                                 <div className="mt-1 text-xs/5 text-gray-500">
-                                  Invoice <span className="text-gray-900">#{transaction.invoiceNumber}</span>
+                                  Invoice{' '}
+                                  <span className="text-gray-900">
+                                    #{transaction.invoiceNumber}
+                                  </span>
                                 </div>
                               </td>
                             </tr>
@@ -352,26 +444,42 @@ export default function Example() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
               <div className="flex items-center justify-between">
-                <h2 className="text-base/7 font-semibold text-gray-900">Recent clients</h2>
-                <a href="#" className="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500">
+                <h2 className="text-base/7 font-semibold text-gray-900">
+                  Recent clients
+                </h2>
+                <a
+                  href="#"
+                  className="text-sm/6 font-semibold text-sky-600 hover:text-sky-500"
+                >
                   View all<span className="sr-only">, clients</span>
                 </a>
               </div>
-              <ul role="list" className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+              <ul
+                role="list"
+                className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8"
+              >
                 {clients.map((client) => (
-                  <li key={client.id} className="overflow-hidden rounded-xl outline outline-gray-200">
+                  <li
+                    key={client.id}
+                    className="overflow-hidden rounded-xl outline outline-gray-200"
+                  >
                     <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                       <img
                         alt={client.name}
                         src={client.imageUrl}
                         className="size-12 flex-none rounded-lg bg-white object-cover ring-1 ring-gray-900/10"
                       />
-                      <div className="text-sm/6 font-medium text-gray-900">{client.name}</div>
+                      <div className="text-sm/6 font-medium text-gray-900">
+                        {client.name}
+                      </div>
                       <Menu as="div" className="relative ml-auto">
                         <MenuButton className="relative block text-gray-400 hover:text-gray-500">
                           <span className="absolute -inset-2.5" />
                           <span className="sr-only">Open options</span>
-                          <EllipsisHorizontalIcon aria-hidden="true" className="size-5" />
+                          <EllipsisHorizontalIcon
+                            aria-hidden="true"
+                            className="size-5"
+                          />
                         </MenuButton>
                         <MenuItems
                           transition
@@ -382,7 +490,8 @@ export default function Example() {
                               href="#"
                               className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-gray-50 data-focus:outline-hidden"
                             >
-                              View<span className="sr-only">, {client.name}</span>
+                              View
+                              <span className="sr-only">, {client.name}</span>
                             </a>
                           </MenuItem>
                           <MenuItem>
@@ -390,7 +499,8 @@ export default function Example() {
                               href="#"
                               className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-gray-50 data-focus:outline-hidden"
                             >
-                              Edit<span className="sr-only">, {client.name}</span>
+                              Edit
+                              <span className="sr-only">, {client.name}</span>
                             </a>
                           </MenuItem>
                         </MenuItems>
@@ -400,13 +510,17 @@ export default function Example() {
                       <div className="flex justify-between gap-x-4 py-3">
                         <dt className="text-gray-500">Last invoice</dt>
                         <dd className="text-gray-700">
-                          <time dateTime={client.lastInvoice.dateTime}>{client.lastInvoice.date}</time>
+                          <time dateTime={client.lastInvoice.dateTime}>
+                            {client.lastInvoice.date}
+                          </time>
                         </dd>
                       </div>
                       <div className="flex justify-between gap-x-4 py-3">
                         <dt className="text-gray-500">Amount</dt>
                         <dd className="flex items-start gap-x-2">
-                          <div className="font-medium text-gray-900">{client.lastInvoice.amount}</div>
+                          <div className="font-medium text-gray-900">
+                            {client.lastInvoice.amount}
+                          </div>
                           <div
                             className={classNames(
                               statuses[client.lastInvoice.status],

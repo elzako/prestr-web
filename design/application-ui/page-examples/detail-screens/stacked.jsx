@@ -33,7 +33,10 @@ import {
   UserCircleIcon,
   XMarkIcon as XMarkIconMini,
 } from '@heroicons/react/20/solid'
-import { BellIcon, XMarkIcon as XMarkIconOutline } from '@heroicons/react/24/outline'
+import {
+  BellIcon,
+  XMarkIcon as XMarkIconOutline,
+} from '@heroicons/react/24/outline'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 
 const navigation = [
@@ -82,9 +85,27 @@ const invoice = {
   ],
 }
 const activity = [
-  { id: 1, type: 'created', person: { name: 'Chelsea Hagon' }, date: '7d ago', dateTime: '2023-01-23T10:32' },
-  { id: 2, type: 'edited', person: { name: 'Chelsea Hagon' }, date: '6d ago', dateTime: '2023-01-23T11:03' },
-  { id: 3, type: 'sent', person: { name: 'Chelsea Hagon' }, date: '6d ago', dateTime: '2023-01-23T11:24' },
+  {
+    id: 1,
+    type: 'created',
+    person: { name: 'Chelsea Hagon' },
+    date: '7d ago',
+    dateTime: '2023-01-23T10:32',
+  },
+  {
+    id: 2,
+    type: 'edited',
+    person: { name: 'Chelsea Hagon' },
+    date: '6d ago',
+    dateTime: '2023-01-23T11:03',
+  },
+  {
+    id: 3,
+    type: 'sent',
+    person: { name: 'Chelsea Hagon' },
+    date: '6d ago',
+    dateTime: '2023-01-23T11:24',
+  },
   {
     id: 4,
     type: 'commented',
@@ -93,20 +114,69 @@ const activity = [
       imageUrl:
         'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
-    comment: 'Called client, they reassured me the invoice would be paid by the 25th.',
+    comment:
+      'Called client, they reassured me the invoice would be paid by the 25th.',
     date: '3d ago',
     dateTime: '2023-01-23T15:56',
   },
-  { id: 5, type: 'viewed', person: { name: 'Alex Curren' }, date: '2d ago', dateTime: '2023-01-24T09:12' },
-  { id: 6, type: 'paid', person: { name: 'Alex Curren' }, date: '1d ago', dateTime: '2023-01-24T09:20' },
+  {
+    id: 5,
+    type: 'viewed',
+    person: { name: 'Alex Curren' },
+    date: '2d ago',
+    dateTime: '2023-01-24T09:12',
+  },
+  {
+    id: 6,
+    type: 'paid',
+    person: { name: 'Alex Curren' },
+    date: '1d ago',
+    dateTime: '2023-01-24T09:20',
+  },
 ]
 const moods = [
-  { name: 'Excited', value: 'excited', icon: FireIcon, iconColor: 'text-white', bgColor: 'bg-red-500' },
-  { name: 'Loved', value: 'loved', icon: HeartIcon, iconColor: 'text-white', bgColor: 'bg-pink-400' },
-  { name: 'Happy', value: 'happy', icon: FaceSmileIcon, iconColor: 'text-white', bgColor: 'bg-green-400' },
-  { name: 'Sad', value: 'sad', icon: FaceFrownIcon, iconColor: 'text-white', bgColor: 'bg-yellow-400' },
-  { name: 'Thumbsy', value: 'thumbsy', icon: HandThumbUpIcon, iconColor: 'text-white', bgColor: 'bg-blue-500' },
-  { name: 'I feel nothing', value: null, icon: XMarkIconMini, iconColor: 'text-gray-400', bgColor: 'bg-transparent' },
+  {
+    name: 'Excited',
+    value: 'excited',
+    icon: FireIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-red-500',
+  },
+  {
+    name: 'Loved',
+    value: 'loved',
+    icon: HeartIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-pink-400',
+  },
+  {
+    name: 'Happy',
+    value: 'happy',
+    icon: FaceSmileIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-green-400',
+  },
+  {
+    name: 'Sad',
+    value: 'sad',
+    icon: FaceFrownIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-yellow-400',
+  },
+  {
+    name: 'Thumbsy',
+    value: 'thumbsy',
+    icon: HandThumbUpIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-blue-500',
+  },
+  {
+    name: 'I feel nothing',
+    value: null,
+    icon: XMarkIconMini,
+    iconColor: 'text-gray-400',
+    bgColor: 'bg-transparent',
+  },
 ]
 
 function classNames(...classes) {
@@ -122,13 +192,17 @@ export default function Example() {
       <header className="absolute inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center gap-x-6">
-            <button type="button" onClick={() => setMobileMenuOpen(true)} className="-m-3 p-3 md:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="-m-3 p-3 md:hidden"
+            >
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="size-5 text-gray-900" />
             </button>
             <img
               alt="Your Company"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
               className="h-8 w-auto"
             />
           </div>
@@ -140,7 +214,10 @@ export default function Example() {
             ))}
           </nav>
           <div className="flex flex-1 items-center justify-end gap-x-8">
-            <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+            <button
+              type="button"
+              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+            >
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="size-6" />
             </button>
@@ -154,11 +231,19 @@ export default function Example() {
             </a>
           </div>
         </div>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+        <Dialog
+          open={mobileMenuOpen}
+          onClose={setMobileMenuOpen}
+          className="lg:hidden"
+        >
           <div className="fixed inset-0 z-50" />
           <DialogPanel className="fixed inset-y-0 left-0 z-50 w-full overflow-y-auto bg-white px-4 pb-6 sm:max-w-sm sm:px-6 sm:ring-1 sm:ring-gray-900/10">
             <div className="-ml-0.5 flex h-16 items-center gap-x-6">
-              <button type="button" onClick={() => setMobileMenuOpen(false)} className="-m-2.5 p-2.5 text-gray-700">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="-m-2.5 p-2.5 text-gray-700"
+              >
                 <span className="sr-only">Close menu</span>
                 <XMarkIconOutline aria-hidden="true" className="size-6" />
               </button>
@@ -167,7 +252,7 @@ export default function Example() {
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
                     className="h-8 w-auto"
                   />
                 </a>
@@ -190,7 +275,10 @@ export default function Example() {
 
       <main>
         <header className="relative isolate pt-16">
-          <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 overflow-hidden"
+          >
             <div className="absolute top-full left-16 -mt-16 transform-gpu opacity-50 blur-3xl xl:left-1/2 xl:-ml-80">
               <div
                 style={{
@@ -215,19 +303,27 @@ export default function Example() {
                   <div className="text-sm/6 text-gray-500">
                     Invoice <span className="text-gray-700">#00011</span>
                   </div>
-                  <div className="mt-1 text-base font-semibold text-gray-900">Tuple, Inc</div>
+                  <div className="mt-1 text-base font-semibold text-gray-900">
+                    Tuple, Inc
+                  </div>
                 </h1>
               </div>
               <div className="flex items-center gap-x-4 sm:gap-x-6">
-                <button type="button" className="hidden text-sm/6 font-semibold text-gray-900 sm:block">
+                <button
+                  type="button"
+                  className="hidden text-sm/6 font-semibold text-gray-900 sm:block"
+                >
                   Copy URL
                 </button>
-                <a href="#" className="hidden text-sm/6 font-semibold text-gray-900 sm:block">
+                <a
+                  href="#"
+                  className="hidden text-sm/6 font-semibold text-gray-900 sm:block"
+                >
                   Edit
                 </a>
                 <a
                   href="#"
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                 >
                   Send
                 </a>
@@ -236,7 +332,10 @@ export default function Example() {
                   <MenuButton className="relative block">
                     <span className="absolute -inset-3" />
                     <span className="sr-only">More</span>
-                    <EllipsisVerticalIcon aria-hidden="true" className="size-5 text-gray-500" />
+                    <EllipsisVerticalIcon
+                      aria-hidden="true"
+                      className="size-5 text-gray-500"
+                    />
                   </MenuButton>
 
                   <MenuItems
@@ -274,8 +373,12 @@ export default function Example() {
               <div className="rounded-lg bg-gray-50 shadow-xs outline-1 outline-gray-900/5">
                 <dl className="flex flex-wrap">
                   <div className="flex-auto pt-6 pl-6">
-                    <dt className="text-sm/6 font-semibold text-gray-900">Amount</dt>
-                    <dd className="mt-1 text-base font-semibold text-gray-900">$10,560.00</dd>
+                    <dt className="text-sm/6 font-semibold text-gray-900">
+                      Amount
+                    </dt>
+                    <dd className="mt-1 text-base font-semibold text-gray-900">
+                      $10,560.00
+                    </dd>
                   </div>
                   <div className="flex-none self-end px-6 pt-4">
                     <dt className="sr-only">Status</dt>
@@ -286,14 +389,22 @@ export default function Example() {
                   <div className="mt-6 flex w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-6">
                     <dt className="flex-none">
                       <span className="sr-only">Client</span>
-                      <UserCircleIcon aria-hidden="true" className="h-6 w-5 text-gray-400" />
+                      <UserCircleIcon
+                        aria-hidden="true"
+                        className="h-6 w-5 text-gray-400"
+                      />
                     </dt>
-                    <dd className="text-sm/6 font-medium text-gray-900">Alex Curren</dd>
+                    <dd className="text-sm/6 font-medium text-gray-900">
+                      Alex Curren
+                    </dd>
                   </div>
                   <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
                     <dt className="flex-none">
                       <span className="sr-only">Due date</span>
-                      <CalendarDaysIcon aria-hidden="true" className="h-6 w-5 text-gray-400" />
+                      <CalendarDaysIcon
+                        aria-hidden="true"
+                        className="h-6 w-5 text-gray-400"
+                      />
                     </dt>
                     <dd className="text-sm/6 text-gray-500">
                       <time dateTime="2023-01-31">January 31, 2023</time>
@@ -302,9 +413,14 @@ export default function Example() {
                   <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
                     <dt className="flex-none">
                       <span className="sr-only">Status</span>
-                      <CreditCardIcon aria-hidden="true" className="h-6 w-5 text-gray-400" />
+                      <CreditCardIcon
+                        aria-hidden="true"
+                        className="h-6 w-5 text-gray-400"
+                      />
                     </dt>
-                    <dd className="text-sm/6 text-gray-500">Paid with MasterCard</dd>
+                    <dd className="text-sm/6 text-gray-500">
+                      Paid with MasterCard
+                    </dd>
                   </div>
                 </dl>
                 <div className="mt-6 border-t border-gray-900/5 px-6 py-6">
@@ -334,7 +450,9 @@ export default function Example() {
                 <div className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
                   <dt className="font-semibold text-gray-900">From</dt>
                   <dd className="mt-2 text-gray-500">
-                    <span className="font-medium text-gray-900">Acme, Inc.</span>
+                    <span className="font-medium text-gray-900">
+                      Acme, Inc.
+                    </span>
                     <br />
                     7363 Cynthia Pass
                     <br />
@@ -344,7 +462,9 @@ export default function Example() {
                 <div className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pt-6 sm:pl-4">
                   <dt className="font-semibold text-gray-900">To</dt>
                   <dd className="mt-2 text-gray-500">
-                    <span className="font-medium text-gray-900">Tuple, Inc</span>
+                    <span className="font-medium text-gray-900">
+                      Tuple, Inc
+                    </span>
                     <br />
                     886 Walter Street
                     <br />
@@ -364,13 +484,22 @@ export default function Example() {
                     <th scope="col" className="px-0 py-3 font-semibold">
                       Projects
                     </th>
-                    <th scope="col" className="hidden py-3 pr-0 pl-8 text-right font-semibold sm:table-cell">
+                    <th
+                      scope="col"
+                      className="hidden py-3 pr-0 pl-8 text-right font-semibold sm:table-cell"
+                    >
                       Hours
                     </th>
-                    <th scope="col" className="hidden py-3 pr-0 pl-8 text-right font-semibold sm:table-cell">
+                    <th
+                      scope="col"
+                      className="hidden py-3 pr-0 pl-8 text-right font-semibold sm:table-cell"
+                    >
                       Rate
                     </th>
-                    <th scope="col" className="py-3 pr-0 pl-8 text-right font-semibold">
+                    <th
+                      scope="col"
+                      className="py-3 pr-0 pl-8 text-right font-semibold"
+                    >
                       Price
                     </th>
                   </tr>
@@ -379,8 +508,12 @@ export default function Example() {
                   {invoice.items.map((item) => (
                     <tr key={item.id} className="border-b border-gray-100">
                       <td className="max-w-0 px-0 py-5 align-top">
-                        <div className="truncate font-medium text-gray-900">{item.title}</div>
-                        <div className="truncate text-gray-500">{item.description}</div>
+                        <div className="truncate font-medium text-gray-900">
+                          {item.title}
+                        </div>
+                        <div className="truncate text-gray-500">
+                          {item.description}
+                        </div>
                       </td>
                       <td className="hidden py-5 pr-0 pl-8 text-right align-top text-gray-700 tabular-nums sm:table-cell">
                         {item.hours}
@@ -388,13 +521,18 @@ export default function Example() {
                       <td className="hidden py-5 pr-0 pl-8 text-right align-top text-gray-700 tabular-nums sm:table-cell">
                         {item.rate}
                       </td>
-                      <td className="py-5 pr-0 pl-8 text-right align-top text-gray-700 tabular-nums">{item.price}</td>
+                      <td className="py-5 pr-0 pl-8 text-right align-top text-gray-700 tabular-nums">
+                        {item.price}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th scope="row" className="px-0 pt-6 pb-0 font-normal text-gray-700 sm:hidden">
+                    <th
+                      scope="row"
+                      className="px-0 pt-6 pb-0 font-normal text-gray-700 sm:hidden"
+                    >
                       Subtotal
                     </th>
                     <th
@@ -404,10 +542,15 @@ export default function Example() {
                     >
                       Subtotal
                     </th>
-                    <td className="pt-6 pr-0 pb-0 pl-8 text-right text-gray-900 tabular-nums">{invoice.subTotal}</td>
+                    <td className="pt-6 pr-0 pb-0 pl-8 text-right text-gray-900 tabular-nums">
+                      {invoice.subTotal}
+                    </td>
                   </tr>
                   <tr>
-                    <th scope="row" className="pt-4 font-normal text-gray-700 sm:hidden">
+                    <th
+                      scope="row"
+                      className="pt-4 font-normal text-gray-700 sm:hidden"
+                    >
                       Tax
                     </th>
                     <th
@@ -417,10 +560,15 @@ export default function Example() {
                     >
                       Tax
                     </th>
-                    <td className="pt-4 pr-0 pb-0 pl-8 text-right text-gray-900 tabular-nums">{invoice.tax}</td>
+                    <td className="pt-4 pr-0 pb-0 pl-8 text-right text-gray-900 tabular-nums">
+                      {invoice.tax}
+                    </td>
                   </tr>
                   <tr>
-                    <th scope="row" className="pt-4 font-semibold text-gray-900 sm:hidden">
+                    <th
+                      scope="row"
+                      className="pt-4 font-semibold text-gray-900 sm:hidden"
+                    >
                       Total
                     </th>
                     <th
@@ -440,13 +588,17 @@ export default function Example() {
 
             <div className="lg:col-start-3">
               {/* Activity feed */}
-              <h2 className="text-sm/6 font-semibold text-gray-900">Activity</h2>
+              <h2 className="text-sm/6 font-semibold text-gray-900">
+                Activity
+              </h2>
               <ul role="list" className="mt-6 space-y-6">
                 {activity.map((activityItem, activityItemIdx) => (
                   <li key={activityItem.id} className="relative flex gap-x-4">
                     <div
                       className={classNames(
-                        activityItemIdx === activity.length - 1 ? 'h-6' : '-bottom-6',
+                        activityItemIdx === activity.length - 1
+                          ? 'h-6'
+                          : '-bottom-6',
                         'absolute top-0 left-0 flex w-6 justify-center',
                       )}
                     >
@@ -462,29 +614,45 @@ export default function Example() {
                         <div className="flex-auto rounded-md p-3 ring-1 ring-gray-200 ring-inset">
                           <div className="flex justify-between gap-x-4">
                             <div className="py-0.5 text-xs/5 text-gray-500">
-                              <span className="font-medium text-gray-900">{activityItem.person.name}</span> commented
+                              <span className="font-medium text-gray-900">
+                                {activityItem.person.name}
+                              </span>{' '}
+                              commented
                             </div>
-                            <time dateTime={activityItem.dateTime} className="flex-none py-0.5 text-xs/5 text-gray-500">
+                            <time
+                              dateTime={activityItem.dateTime}
+                              className="flex-none py-0.5 text-xs/5 text-gray-500"
+                            >
                               {activityItem.date}
                             </time>
                           </div>
-                          <p className="text-sm/6 text-gray-500">{activityItem.comment}</p>
+                          <p className="text-sm/6 text-gray-500">
+                            {activityItem.comment}
+                          </p>
                         </div>
                       </>
                     ) : (
                       <>
                         <div className="relative flex size-6 flex-none items-center justify-center bg-white">
                           {activityItem.type === 'paid' ? (
-                            <CheckCircleIcon aria-hidden="true" className="size-6 text-indigo-600" />
+                            <CheckCircleIcon
+                              aria-hidden="true"
+                              className="size-6 text-sky-600"
+                            />
                           ) : (
                             <div className="size-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300" />
                           )}
                         </div>
                         <p className="flex-auto py-0.5 text-xs/5 text-gray-500">
-                          <span className="font-medium text-gray-900">{activityItem.person.name}</span>{' '}
+                          <span className="font-medium text-gray-900">
+                            {activityItem.person.name}
+                          </span>{' '}
                           {activityItem.type} the invoice.
                         </p>
-                        <time dateTime={activityItem.dateTime} className="flex-none py-0.5 text-xs/5 text-gray-500">
+                        <time
+                          dateTime={activityItem.dateTime}
+                          className="flex-none py-0.5 text-xs/5 text-gray-500"
+                        >
                           {activityItem.date}
                         </time>
                       </>
@@ -501,7 +669,7 @@ export default function Example() {
                   className="size-6 flex-none rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
                 />
                 <form action="#" className="relative flex-auto">
-                  <div className="overflow-hidden rounded-lg pb-12 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                  <div className="overflow-hidden rounded-lg pb-12 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-sky-600">
                     <label htmlFor="comment" className="sr-only">
                       Add your comment
                     </label>
@@ -522,7 +690,10 @@ export default function Example() {
                           type="button"
                           className="-m-2.5 flex size-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
                         >
-                          <PaperClipIcon aria-hidden="true" className="size-5" />
+                          <PaperClipIcon
+                            aria-hidden="true"
+                            className="size-5"
+                          />
                           <span className="sr-only">Attach a file</span>
                         </button>
                       </div>
@@ -534,8 +705,13 @@ export default function Example() {
                               <span className="flex items-center justify-center">
                                 {selected.value === null ? (
                                   <span>
-                                    <FaceSmileIcon aria-hidden="true" className="size-5 shrink-0" />
-                                    <span className="sr-only">Add your mood</span>
+                                    <FaceSmileIcon
+                                      aria-hidden="true"
+                                      className="size-5 shrink-0"
+                                    />
+                                    <span className="sr-only">
+                                      Add your mood
+                                    </span>
                                   </span>
                                 ) : (
                                   <span>
@@ -545,9 +721,14 @@ export default function Example() {
                                         'flex size-8 items-center justify-center rounded-full',
                                       )}
                                     >
-                                      <selected.icon aria-hidden="true" className="size-5 shrink-0 text-white" />
+                                      <selected.icon
+                                        aria-hidden="true"
+                                        className="size-5 shrink-0 text-white"
+                                      />
                                     </span>
-                                    <span className="sr-only">{selected.name}</span>
+                                    <span className="sr-only">
+                                      {selected.name}
+                                    </span>
                                   </span>
                                 )}
                               </span>
@@ -572,10 +753,15 @@ export default function Example() {
                                     >
                                       <mood.icon
                                         aria-hidden="true"
-                                        className={classNames(mood.iconColor, 'size-5 shrink-0')}
+                                        className={classNames(
+                                          mood.iconColor,
+                                          'size-5 shrink-0',
+                                        )}
                                       />
                                     </div>
-                                    <span className="ml-3 block truncate font-medium">{mood.name}</span>
+                                    <span className="ml-3 block truncate font-medium">
+                                      {mood.name}
+                                    </span>
                                   </div>
                                 </ListboxOption>
                               ))}

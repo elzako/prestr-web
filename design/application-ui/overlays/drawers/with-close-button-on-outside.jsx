@@ -6,7 +6,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } from '@headlessui/react'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+  TransitionChild,
+} from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function Example() {
@@ -38,7 +44,7 @@ export default function Example() {
                     <button
                       type="button"
                       onClick={() => setOpen(false)}
-                      className="relative rounded-md text-gray-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      className="relative rounded-md text-gray-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                     >
                       <span className="absolute -inset-2.5" />
                       <span className="sr-only">Close panel</span>
@@ -48,9 +54,13 @@ export default function Example() {
                 </TransitionChild>
                 <div className="relative flex h-full flex-col overflow-y-auto bg-white py-6 shadow-xl">
                   <div className="px-4 sm:px-6">
-                    <DialogTitle className="text-base font-semibold text-gray-900">Panel title</DialogTitle>
+                    <DialogTitle className="text-base font-semibold text-gray-900">
+                      Panel title
+                    </DialogTitle>
                   </div>
-                  <div className="relative mt-6 flex-1 px-4 sm:px-6">{/* Your content */}</div>
+                  <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                    {/* Your content */}
+                  </div>
                 </div>
               </DialogPanel>
             </div>

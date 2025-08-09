@@ -6,7 +6,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  TransitionChild,
+} from '@headlessui/react'
 import {
   ChartBarSquareIcon,
   Cog6ToothIcon,
@@ -58,7 +63,11 @@ export default function Example() {
         ```
       */}
       <div>
-        <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 xl:hidden">
+        <Dialog
+          open={sidebarOpen}
+          onClose={setSidebarOpen}
+          className="relative z-50 xl:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
@@ -71,9 +80,16 @@ export default function Example() {
             >
               <TransitionChild>
                 <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarOpen(false)}
+                    className="-m-2.5 p-2.5"
+                  >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="size-6 text-white"
+                    />
                   </button>
                 </div>
               </TransitionChild>
@@ -83,7 +99,7 @@ export default function Example() {
                 <div className="relative flex h-16 shrink-0 items-center">
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                     className="h-8 w-auto"
                   />
                 </div>
@@ -105,7 +121,9 @@ export default function Example() {
                               <item.icon
                                 aria-hidden="true"
                                 className={classNames(
-                                  item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                                  item.current
+                                    ? 'text-white'
+                                    : 'text-gray-400 group-hover:text-white',
                                   'size-6 shrink-0',
                                 )}
                               />
@@ -116,7 +134,9 @@ export default function Example() {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                      <div className="text-xs/6 font-semibold text-gray-400">
+                        Your teams
+                      </div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
@@ -173,7 +193,7 @@ export default function Example() {
             <div className="flex h-16 shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                 className="h-8 w-auto"
               />
             </div>
@@ -186,14 +206,18 @@ export default function Example() {
                         <a
                           href={item.href}
                           className={classNames(
-                            item.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            item.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
                           <item.icon
                             aria-hidden="true"
                             className={classNames(
-                              item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                              item.current
+                                ? 'text-white'
+                                : 'text-gray-400 group-hover:text-white',
                               'size-6 shrink-0',
                             )}
                           />
@@ -204,14 +228,18 @@ export default function Example() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                  <div className="text-xs/6 font-semibold text-gray-400">
+                    Your teams
+                  </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
                         <a
                           href={team.href}
                           className={classNames(
-                            team.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            team.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
@@ -253,7 +281,11 @@ export default function Example() {
         <div className="xl:pl-72">
           {/* Sticky search header */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 sm:px-6 lg:px-8">
-            <button type="button" onClick={() => setSidebarOpen(true)} className="-m-2.5 p-2.5 text-white xl:hidden">
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="-m-2.5 p-2.5 text-white xl:hidden"
+            >
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon aria-hidden="true" className="size-5" />
             </button>
@@ -286,7 +318,10 @@ export default function Example() {
                 >
                   {secondaryNavigation.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className={item.current ? 'text-indigo-400' : ''}>
+                      <a
+                        href={item.href}
+                        className={item.current ? 'text-sky-400' : ''}
+                      >
                         {item.name}
                       </a>
                     </li>
@@ -299,8 +334,12 @@ export default function Example() {
             <div className="divide-y divide-white/10">
               <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                 <div>
-                  <h2 className="text-base/7 font-semibold text-white">Personal Information</h2>
-                  <p className="mt-1 text-sm/6 text-gray-400">Use a permanent address where you can receive mail.</p>
+                  <h2 className="text-base/7 font-semibold text-white">
+                    Personal Information
+                  </h2>
+                  <p className="mt-1 text-sm/6 text-gray-400">
+                    Use a permanent address where you can receive mail.
+                  </p>
                 </div>
 
                 <form className="md:col-span-2">
@@ -318,12 +357,17 @@ export default function Example() {
                         >
                           Change avatar
                         </button>
-                        <p className="mt-2 text-xs/5 text-gray-400">JPG, GIF or PNG. 1MB max.</p>
+                        <p className="mt-2 text-xs/5 text-gray-400">
+                          JPG, GIF or PNG. 1MB max.
+                        </p>
                       </div>
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label htmlFor="first-name" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="first-name"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         First name
                       </label>
                       <div className="mt-2">
@@ -332,13 +376,16 @@ export default function Example() {
                           name="first-name"
                           type="text"
                           autoComplete="given-name"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         />
                       </div>
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label htmlFor="last-name" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="last-name"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         Last name
                       </label>
                       <div className="mt-2">
@@ -347,13 +394,16 @@ export default function Example() {
                           name="last-name"
                           type="text"
                           autoComplete="family-name"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         />
                       </div>
                     </div>
 
                     <div className="col-span-full">
-                      <label htmlFor="email" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         Email address
                       </label>
                       <div className="mt-2">
@@ -362,18 +412,23 @@ export default function Example() {
                           name="email"
                           type="email"
                           autoComplete="email"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         />
                       </div>
                     </div>
 
                     <div className="col-span-full">
-                      <label htmlFor="username" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="username"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         Username
                       </label>
                       <div className="mt-2">
-                        <div className="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-white/10 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500 sm:text-sm/6">
-                          <div className="shrink-0 text-base text-gray-400 select-none sm:text-sm/6">example.com/</div>
+                        <div className="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-white/10 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-sky-500 sm:text-sm/6">
+                          <div className="shrink-0 text-base text-gray-400 select-none sm:text-sm/6">
+                            example.com/
+                          </div>
                           <input
                             id="username"
                             name="username"
@@ -386,14 +441,17 @@ export default function Example() {
                     </div>
 
                     <div className="col-span-full">
-                      <label htmlFor="timezone" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="timezone"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         Timezone
                       </label>
                       <div className="mt-2 grid grid-cols-1">
                         <select
                           id="timezone"
                           name="timezone"
-                          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         >
                           <option>Pacific Standard Time</option>
                           <option>Eastern Standard Time</option>
@@ -410,7 +468,7 @@ export default function Example() {
                   <div className="mt-8 flex">
                     <button
                       type="submit"
-                      className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                      className="rounded-md bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                     >
                       Save
                     </button>
@@ -420,14 +478,21 @@ export default function Example() {
 
               <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                 <div>
-                  <h2 className="text-base/7 font-semibold text-white">Change password</h2>
-                  <p className="mt-1 text-sm/6 text-gray-400">Update your password associated with your account.</p>
+                  <h2 className="text-base/7 font-semibold text-white">
+                    Change password
+                  </h2>
+                  <p className="mt-1 text-sm/6 text-gray-400">
+                    Update your password associated with your account.
+                  </p>
                 </div>
 
                 <form className="md:col-span-2">
                   <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                     <div className="col-span-full">
-                      <label htmlFor="current-password" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="current-password"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         Current password
                       </label>
                       <div className="mt-2">
@@ -436,13 +501,16 @@ export default function Example() {
                           name="current_password"
                           type="password"
                           autoComplete="current-password"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         />
                       </div>
                     </div>
 
                     <div className="col-span-full">
-                      <label htmlFor="new-password" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="new-password"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         New password
                       </label>
                       <div className="mt-2">
@@ -451,13 +519,16 @@ export default function Example() {
                           name="new_password"
                           type="password"
                           autoComplete="new-password"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         />
                       </div>
                     </div>
 
                     <div className="col-span-full">
-                      <label htmlFor="confirm-password" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="confirm-password"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         Confirm password
                       </label>
                       <div className="mt-2">
@@ -466,7 +537,7 @@ export default function Example() {
                           name="confirm_password"
                           type="password"
                           autoComplete="new-password"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         />
                       </div>
                     </div>
@@ -475,7 +546,7 @@ export default function Example() {
                   <div className="mt-8 flex">
                     <button
                       type="submit"
-                      className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                      className="rounded-md bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                     >
                       Save
                     </button>
@@ -485,17 +556,22 @@ export default function Example() {
 
               <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                 <div>
-                  <h2 className="text-base/7 font-semibold text-white">Log out other sessions</h2>
+                  <h2 className="text-base/7 font-semibold text-white">
+                    Log out other sessions
+                  </h2>
                   <p className="mt-1 text-sm/6 text-gray-400">
-                    Please enter your password to confirm you would like to log out of your other sessions across all of
-                    your devices.
+                    Please enter your password to confirm you would like to log
+                    out of your other sessions across all of your devices.
                   </p>
                 </div>
 
                 <form className="md:col-span-2">
                   <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                     <div className="col-span-full">
-                      <label htmlFor="logout-password" className="block text-sm/6 font-medium text-white">
+                      <label
+                        htmlFor="logout-password"
+                        className="block text-sm/6 font-medium text-white"
+                      >
                         Your password
                       </label>
                       <div className="mt-2">
@@ -504,7 +580,7 @@ export default function Example() {
                           name="password"
                           type="password"
                           autoComplete="current-password"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6"
                         />
                       </div>
                     </div>
@@ -513,7 +589,7 @@ export default function Example() {
                   <div className="mt-8 flex">
                     <button
                       type="submit"
-                      className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                      className="rounded-md bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                     >
                       Log out other sessions
                     </button>
@@ -523,10 +599,13 @@ export default function Example() {
 
               <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                 <div>
-                  <h2 className="text-base/7 font-semibold text-white">Delete account</h2>
+                  <h2 className="text-base/7 font-semibold text-white">
+                    Delete account
+                  </h2>
                   <p className="mt-1 text-sm/6 text-gray-400">
-                    No longer want to use our service? You can delete your account here. This action is not reversible.
-                    All information related to this account will be deleted permanently.
+                    No longer want to use our service? You can delete your
+                    account here. This action is not reversible. All information
+                    related to this account will be deleted permanently.
                   </p>
                 </div>
 

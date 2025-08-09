@@ -7,7 +7,13 @@
 
 import { useState } from 'react'
 import { PaperClipIcon } from '@heroicons/react/24/outline'
-import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
+import {
+  Label,
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/react'
 import {
   FaceFrownIcon,
   FaceSmileIcon,
@@ -18,12 +24,48 @@ import {
 } from '@heroicons/react/20/solid'
 
 const moods = [
-  { name: 'Excited', value: 'excited', icon: FireIcon, iconColor: 'text-white', bgColor: 'bg-red-500' },
-  { name: 'Loved', value: 'loved', icon: HeartIcon, iconColor: 'text-white', bgColor: 'bg-pink-400' },
-  { name: 'Happy', value: 'happy', icon: FaceSmileIcon, iconColor: 'text-white', bgColor: 'bg-green-400' },
-  { name: 'Sad', value: 'sad', icon: FaceFrownIcon, iconColor: 'text-white', bgColor: 'bg-yellow-400' },
-  { name: 'Thumbsy', value: 'thumbsy', icon: HandThumbUpIcon, iconColor: 'text-white', bgColor: 'bg-blue-500' },
-  { name: 'I feel nothing', value: null, icon: XMarkIcon, iconColor: 'text-gray-400', bgColor: 'bg-transparent' },
+  {
+    name: 'Excited',
+    value: 'excited',
+    icon: FireIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-red-500',
+  },
+  {
+    name: 'Loved',
+    value: 'loved',
+    icon: HeartIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-pink-400',
+  },
+  {
+    name: 'Happy',
+    value: 'happy',
+    icon: FaceSmileIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-green-400',
+  },
+  {
+    name: 'Sad',
+    value: 'sad',
+    icon: FaceFrownIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-yellow-400',
+  },
+  {
+    name: 'Thumbsy',
+    value: 'thumbsy',
+    icon: HandThumbUpIcon,
+    iconColor: 'text-white',
+    bgColor: 'bg-blue-500',
+  },
+  {
+    name: 'I feel nothing',
+    value: null,
+    icon: XMarkIcon,
+    iconColor: 'text-gray-400',
+    bgColor: 'bg-transparent',
+  },
 ]
 
 function classNames(...classes) {
@@ -44,7 +86,7 @@ export default function Example() {
       </div>
       <div className="min-w-0 flex-1">
         <form action="#">
-          <div className="border-b border-gray-200 pb-px focus-within:border-b-2 focus-within:border-indigo-600 focus-within:pb-0">
+          <div className="border-b border-gray-200 pb-px focus-within:border-b-2 focus-within:border-sky-600 focus-within:pb-0">
             <label htmlFor="comment" className="sr-only">
               Add your comment
             </label>
@@ -76,7 +118,10 @@ export default function Example() {
                       <span className="flex items-center justify-center">
                         {selected.value === null ? (
                           <span>
-                            <FaceSmileIcon aria-hidden="true" className="size-5 shrink-0" />
+                            <FaceSmileIcon
+                              aria-hidden="true"
+                              className="size-5 shrink-0"
+                            />
                             <span className="sr-only">Add your mood</span>
                           </span>
                         ) : (
@@ -87,7 +132,10 @@ export default function Example() {
                                 'flex size-8 items-center justify-center rounded-full',
                               )}
                             >
-                              <selected.icon aria-hidden="true" className="size-5 shrink-0 text-white" />
+                              <selected.icon
+                                aria-hidden="true"
+                                className="size-5 shrink-0 text-white"
+                              />
                             </span>
                             <span className="sr-only">{selected.name}</span>
                           </span>
@@ -112,9 +160,17 @@ export default function Example() {
                                 'flex size-8 items-center justify-center rounded-full',
                               )}
                             >
-                              <mood.icon aria-hidden="true" className={classNames(mood.iconColor, 'size-5 shrink-0')} />
+                              <mood.icon
+                                aria-hidden="true"
+                                className={classNames(
+                                  mood.iconColor,
+                                  'size-5 shrink-0',
+                                )}
+                              />
                             </div>
-                            <span className="ml-3 block truncate font-medium">{mood.name}</span>
+                            <span className="ml-3 block truncate font-medium">
+                              {mood.name}
+                            </span>
                           </div>
                         </ListboxOption>
                       ))}
@@ -126,7 +182,7 @@ export default function Example() {
             <div className="shrink-0">
               <button
                 type="submit"
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
               >
                 Post
               </button>

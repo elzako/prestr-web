@@ -15,8 +15,20 @@ import {
 const navigation = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, count: '5', current: true },
   { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, count: '12', current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, count: '20+', current: false },
+  {
+    name: 'Projects',
+    href: '#',
+    icon: FolderIcon,
+    count: '12',
+    current: false,
+  },
+  {
+    name: 'Calendar',
+    href: '#',
+    icon: CalendarIcon,
+    count: '20+',
+    current: false,
+  },
   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
@@ -32,7 +44,7 @@ function classNames(...classes) {
 
 export default function Example() {
   return (
-    <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6">
+    <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-sky-600 px-6">
       <div className="flex h-16 shrink-0 items-center">
         <img
           alt="Your Company"
@@ -50,15 +62,17 @@ export default function Example() {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? 'bg-indigo-700 text-white'
-                        : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                        ? 'bg-sky-700 text-white'
+                        : 'text-sky-200 hover:bg-sky-700 hover:text-white',
                       'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                     )}
                   >
                     <item.icon
                       aria-hidden="true"
                       className={classNames(
-                        item.current ? 'text-white' : 'text-indigo-200 group-hover:text-white',
+                        item.current
+                          ? 'text-white'
+                          : 'text-sky-200 group-hover:text-white',
                         'size-6 shrink-0',
                       )}
                     />
@@ -66,7 +80,7 @@ export default function Example() {
                     {item.count ? (
                       <span
                         aria-hidden="true"
-                        className="ml-auto w-9 min-w-max rounded-full bg-indigo-600 px-2.5 py-0.5 text-center text-xs/5 font-medium whitespace-nowrap text-white outline-1 -outline-offset-1 outline-indigo-500"
+                        className="ml-auto w-9 min-w-max rounded-full bg-sky-600 px-2.5 py-0.5 text-center text-xs/5 font-medium whitespace-nowrap text-white outline-1 -outline-offset-1 outline-sky-500"
                       >
                         {item.count}
                       </span>
@@ -77,7 +91,9 @@ export default function Example() {
             </ul>
           </li>
           <li>
-            <div className="text-xs/6 font-semibold text-indigo-200">Your teams</div>
+            <div className="text-xs/6 font-semibold text-sky-200">
+              Your teams
+            </div>
             <ul role="list" className="-mx-2 mt-2 space-y-1">
               {teams.map((team) => (
                 <li key={team.name}>
@@ -85,12 +101,12 @@ export default function Example() {
                     href={team.href}
                     className={classNames(
                       team.current
-                        ? 'bg-indigo-700 text-white'
-                        : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
+                        ? 'bg-sky-700 text-white'
+                        : 'text-sky-200 hover:bg-sky-700 hover:text-white',
                       'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                     )}
                   >
-                    <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                    <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-sky-400 bg-sky-500 text-[0.625rem] font-medium text-white">
                       {team.initial}
                     </span>
                     <span className="truncate">{team.name}</span>
@@ -102,12 +118,12 @@ export default function Example() {
           <li className="-mx-6 mt-auto">
             <a
               href="#"
-              className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-indigo-700"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-sky-700"
             >
               <img
                 alt=""
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                className="size-8 rounded-full bg-indigo-700 outline -outline-offset-1 outline-white/10"
+                className="size-8 rounded-full bg-sky-700 outline -outline-offset-1 outline-white/10"
               />
               <span className="sr-only">Your profile</span>
               <span aria-hidden="true">Tom Cook</span>

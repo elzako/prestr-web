@@ -3,7 +3,15 @@
  * @tags application shells, stacked, branded, nav, with, lighter, page, header, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/application-shells/stacked
  */
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const user = {
@@ -41,14 +49,14 @@ export default function Example() {
         ```
       */}
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-indigo-600">
+        <Disclosure as="nav" className="bg-sky-600">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="shrink-0">
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=300"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=300"
                     className="size-8"
                   />
                 </div>
@@ -60,7 +68,9 @@ export default function Example() {
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500/75',
+                          item.current
+                            ? 'bg-sky-700 text-white'
+                            : 'text-white hover:bg-sky-500/75',
                           'rounded-md px-3 py-2 text-sm font-medium',
                         )}
                       >
@@ -74,7 +84,7 @@ export default function Example() {
                 <div className="ml-4 flex items-center md:ml-6">
                   <button
                     type="button"
-                    className="relative rounded-full p-1 text-indigo-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
+                    className="relative rounded-full p-1 text-sky-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
@@ -113,11 +123,17 @@ export default function Example() {
               </div>
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-indigo-200 hover:bg-indigo-500/75 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-sky-600 p-2 text-sky-200 hover:bg-sky-500/75 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
-                  <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                  <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                  <Bars3Icon
+                    aria-hidden="true"
+                    className="block size-6 group-data-open:hidden"
+                  />
+                  <XMarkIcon
+                    aria-hidden="true"
+                    className="hidden size-6 group-data-open:block"
+                  />
                 </DisclosureButton>
               </div>
             </div>
@@ -132,7 +148,9 @@ export default function Example() {
                   href={item.href}
                   aria-current={item.current ? 'page' : undefined}
                   className={classNames(
-                    item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500/75',
+                    item.current
+                      ? 'bg-sky-700 text-white'
+                      : 'text-white hover:bg-sky-500/75',
                     'block rounded-md px-3 py-2 text-base font-medium',
                   )}
                 >
@@ -140,7 +158,7 @@ export default function Example() {
                 </DisclosureButton>
               ))}
             </div>
-            <div className="border-t border-indigo-700 pt-4 pb-3">
+            <div className="border-t border-sky-700 pt-4 pb-3">
               <div className="flex items-center px-5">
                 <div className="shrink-0">
                   <img
@@ -150,12 +168,16 @@ export default function Example() {
                   />
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium text-white">{user.name}</div>
-                  <div className="text-sm font-medium text-indigo-300">{user.email}</div>
+                  <div className="text-base font-medium text-white">
+                    {user.name}
+                  </div>
+                  <div className="text-sm font-medium text-sky-300">
+                    {user.email}
+                  </div>
                 </div>
                 <button
                   type="button"
-                  className="relative ml-auto shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
+                  className="relative ml-auto shrink-0 rounded-full p-1 text-sky-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-white"
                 >
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
@@ -168,7 +190,7 @@ export default function Example() {
                     key={item.name}
                     as="a"
                     href={item.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500/75"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-sky-500/75"
                   >
                     {item.name}
                   </DisclosureButton>
@@ -180,11 +202,15 @@ export default function Example() {
 
         <header className="relative bg-white shadow-sm">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+              Dashboard
+            </h1>
           </div>
         </header>
         <main>
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            {/* Your content */}
+          </div>
         </main>
       </div>
     </>

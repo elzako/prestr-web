@@ -6,9 +6,27 @@
 import { CheckIcon } from '@heroicons/react/24/solid'
 
 const steps = [
-  { id: '01', name: 'Job Details', description: 'Vitae sed mi luctus laoreet.', href: '#', status: 'complete' },
-  { id: '02', name: 'Application form', description: 'Cursus semper viverra.', href: '#', status: 'current' },
-  { id: '03', name: 'Preview', description: 'Penatibus eu quis ante.', href: '#', status: 'upcoming' },
+  {
+    id: '01',
+    name: 'Job Details',
+    description: 'Vitae sed mi luctus laoreet.',
+    href: '#',
+    status: 'complete',
+  },
+  {
+    id: '02',
+    name: 'Application form',
+    description: 'Cursus semper viverra.',
+    href: '#',
+    status: 'current',
+  },
+  {
+    id: '03',
+    name: 'Preview',
+    description: 'Penatibus eu quis ante.',
+    href: '#',
+    status: 'upcoming',
+  },
 ]
 
 function classNames(...classes) {
@@ -18,7 +36,10 @@ function classNames(...classes) {
 export default function Example() {
   return (
     <div className="lg:border-t lg:border-b lg:border-gray-200">
-      <nav aria-label="Progress" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <nav
+        aria-label="Progress"
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      >
         <ol
           role="list"
           className="overflow-hidden rounded-md lg:flex lg:rounded-none lg:border-r lg:border-l lg:border-gray-200"
@@ -45,13 +66,20 @@ export default function Example() {
                       )}
                     >
                       <span className="shrink-0">
-                        <span className="flex size-10 items-center justify-center rounded-full bg-indigo-600">
-                          <CheckIcon aria-hidden="true" className="size-6 text-white" />
+                        <span className="flex size-10 items-center justify-center rounded-full bg-sky-600">
+                          <CheckIcon
+                            aria-hidden="true"
+                            className="size-6 text-white"
+                          />
                         </span>
                       </span>
                       <span className="mt-0.5 ml-4 flex min-w-0 flex-col">
-                        <span className="text-sm font-medium text-gray-900">{step.name}</span>
-                        <span className="text-sm font-medium text-gray-500">{step.description}</span>
+                        <span className="text-sm font-medium text-gray-900">
+                          {step.name}
+                        </span>
+                        <span className="text-sm font-medium text-gray-500">
+                          {step.description}
+                        </span>
                       </span>
                     </span>
                   </a>
@@ -59,7 +87,7 @@ export default function Example() {
                   <a href={step.href} aria-current="step">
                     <span
                       aria-hidden="true"
-                      className="absolute top-0 left-0 h-full w-1 bg-indigo-600 lg:top-auto lg:bottom-0 lg:h-1 lg:w-full"
+                      className="absolute top-0 left-0 h-full w-1 bg-sky-600 lg:top-auto lg:bottom-0 lg:h-1 lg:w-full"
                     />
                     <span
                       className={classNames(
@@ -68,13 +96,17 @@ export default function Example() {
                       )}
                     >
                       <span className="shrink-0">
-                        <span className="flex size-10 items-center justify-center rounded-full border-2 border-indigo-600">
-                          <span className="text-indigo-600">{step.id}</span>
+                        <span className="flex size-10 items-center justify-center rounded-full border-2 border-sky-600">
+                          <span className="text-sky-600">{step.id}</span>
                         </span>
                       </span>
                       <span className="mt-0.5 ml-4 flex min-w-0 flex-col">
-                        <span className="text-sm font-medium text-indigo-600">{step.name}</span>
-                        <span className="text-sm font-medium text-gray-500">{step.description}</span>
+                        <span className="text-sm font-medium text-sky-600">
+                          {step.name}
+                        </span>
+                        <span className="text-sm font-medium text-gray-500">
+                          {step.description}
+                        </span>
                       </span>
                     </span>
                   </a>
@@ -96,8 +128,12 @@ export default function Example() {
                         </span>
                       </span>
                       <span className="mt-0.5 ml-4 flex min-w-0 flex-col">
-                        <span className="text-sm font-medium text-gray-500">{step.name}</span>
-                        <span className="text-sm font-medium text-gray-500">{step.description}</span>
+                        <span className="text-sm font-medium text-gray-500">
+                          {step.name}
+                        </span>
+                        <span className="text-sm font-medium text-gray-500">
+                          {step.description}
+                        </span>
                       </span>
                     </span>
                   </a>
@@ -106,14 +142,21 @@ export default function Example() {
                 {stepIdx !== 0 ? (
                   <>
                     {/* Separator */}
-                    <div aria-hidden="true" className="absolute inset-0 top-0 left-0 hidden w-3 lg:block">
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 top-0 left-0 hidden w-3 lg:block"
+                    >
                       <svg
                         fill="none"
                         viewBox="0 0 12 82"
                         preserveAspectRatio="none"
                         className="size-full text-gray-300"
                       >
-                        <path d="M0.5 0V31L10.5 41L0.5 51V82" stroke="currentcolor" vectorEffect="non-scaling-stroke" />
+                        <path
+                          d="M0.5 0V31L10.5 41L0.5 51V82"
+                          stroke="currentcolor"
+                          vectorEffect="non-scaling-stroke"
+                        />
                       </svg>
                     </div>
                   </>

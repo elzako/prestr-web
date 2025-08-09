@@ -27,11 +27,18 @@ export default function Example() {
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="shrink-0">
-                    <CheckCircleIcon aria-hidden="true" className="size-6 text-green-400" />
+                    <CheckCircleIcon
+                      aria-hidden="true"
+                      className="size-6 text-green-400"
+                    />
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">Successfully saved!</p>
-                    <p className="mt-1 text-sm text-gray-500">Anyone with a link can now view this file.</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Successfully saved!
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Anyone with a link can now view this file.
+                    </p>
                   </div>
                   <div className="ml-4 flex shrink-0">
                     <button
@@ -39,7 +46,7 @@ export default function Example() {
                       onClick={() => {
                         setShow(false)
                       }}
-                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
                     >
                       <span className="sr-only">Close</span>
                       <XMarkIcon aria-hidden="true" className="size-5" />

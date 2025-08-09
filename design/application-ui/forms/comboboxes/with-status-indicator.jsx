@@ -5,7 +5,14 @@
  */
 'use client'
 
-import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Label } from '@headlessui/react'
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+  Label,
+} from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
 
@@ -38,16 +45,21 @@ export default function Example() {
         setSelectedPerson(person)
       }}
     >
-      <Label className="block text-sm/6 font-medium text-gray-900">Assigned to</Label>
+      <Label className="block text-sm/6 font-medium text-gray-900">
+        Assigned to
+      </Label>
       <div className="relative mt-2">
         <ComboboxInput
-          className="block w-full rounded-md bg-white py-1.5 pr-12 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+          className="block w-full rounded-md bg-white py-1.5 pr-12 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6"
           onChange={(event) => setQuery(event.target.value)}
           onBlur={() => setQuery('')}
           displayValue={(person) => person?.name}
         />
         <ComboboxButton className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-hidden">
-          <ChevronDownIcon className="size-5 text-gray-400" aria-hidden="true" />
+          <ChevronDownIcon
+            className="size-5 text-gray-400"
+            aria-hidden="true"
+          />
         </ComboboxButton>
 
         <ComboboxOptions
@@ -57,7 +69,7 @@ export default function Example() {
           {query.length > 0 && (
             <ComboboxOption
               value={{ id: null, name: query }}
-              className="cursor-default px-3 py-2 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+              className="cursor-default px-3 py-2 text-gray-900 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
             >
               <div className="flex items-center">
                 <span
@@ -72,7 +84,7 @@ export default function Example() {
             <ComboboxOption
               key={person.id}
               value={person}
-              className="cursor-default px-3 py-2 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+              className="cursor-default px-3 py-2 text-gray-900 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
             >
               <div className="flex items-center">
                 <span
@@ -84,7 +96,10 @@ export default function Example() {
                 />
                 <span className="ml-3 block truncate">
                   {person.name}
-                  <span className="sr-only"> is {person.online ? 'online' : 'offline'}</span>
+                  <span className="sr-only">
+                    {' '}
+                    is {person.online ? 'online' : 'offline'}
+                  </span>
                 </span>
               </div>
             </ComboboxOption>

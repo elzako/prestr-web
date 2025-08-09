@@ -6,7 +6,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Dialog,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 
@@ -34,14 +41,17 @@ export default function Example() {
                 <div className="relative flex h-full flex-col overflow-y-auto bg-white shadow-xl">
                   <div className="px-4 py-6 sm:px-6">
                     <div className="flex items-start justify-between">
-                      <h2 id="slide-over-heading" className="text-base font-semibold text-gray-900">
+                      <h2
+                        id="slide-over-heading"
+                        className="text-base font-semibold text-gray-900"
+                      >
                         Profile
                       </h2>
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
                           onClick={() => setOpen(false)}
-                          className="relative rounded-md text-gray-400 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          className="relative rounded-md text-gray-400 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                         >
                           <span className="absolute -inset-2.5" />
                           <span className="sr-only">Close panel</span>
@@ -65,17 +75,21 @@ export default function Example() {
                           <div className="sm:flex-1">
                             <div>
                               <div className="flex items-center">
-                                <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">Ashley Porter</h3>
+                                <h3 className="text-xl font-bold text-gray-900 sm:text-2xl">
+                                  Ashley Porter
+                                </h3>
                                 <span className="ml-2.5 inline-block size-2 shrink-0 rounded-full bg-green-400">
                                   <span className="sr-only">Online</span>
                                 </span>
                               </div>
-                              <p className="text-sm text-gray-500">@ashleyporter</p>
+                              <p className="text-sm text-gray-500">
+                                @ashleyporter
+                              </p>
                             </div>
                             <div className="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3">
                               <button
                                 type="button"
-                                className="inline-flex w-full shrink-0 items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:flex-1"
+                                className="inline-flex w-full shrink-0 items-center justify-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 sm:flex-1"
                               >
                                 Message
                               </button>
@@ -86,11 +100,19 @@ export default function Example() {
                                 Call
                               </button>
                               <div className="ml-3 inline-flex sm:ml-0">
-                                <Menu as="div" className="relative inline-block text-left">
+                                <Menu
+                                  as="div"
+                                  className="relative inline-block text-left"
+                                >
                                   <MenuButton className="relative inline-flex items-center rounded-md bg-white p-2 text-gray-400 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50">
                                     <span className="absolute -inset-1" />
-                                    <span className="sr-only">Open options menu</span>
-                                    <EllipsisVerticalIcon aria-hidden="true" className="size-5" />
+                                    <span className="sr-only">
+                                      Open options menu
+                                    </span>
+                                    <EllipsisVerticalIcon
+                                      aria-hidden="true"
+                                      className="size-5"
+                                    />
                                   </MenuButton>
                                   <MenuItems
                                     transition
@@ -125,25 +147,38 @@ export default function Example() {
                     <div className="px-4 pt-5 pb-5 sm:px-0 sm:pt-0">
                       <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
                         <div>
-                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">Bio</dt>
+                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">
+                            Bio
+                          </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
                             <p>
-                              Enim feugiat ut ipsum, neque ut. Tristique mi id elementum praesent. Gravida in tempus
-                              feugiat netus enim aliquet a, quam scelerisque. Dictumst in convallis nec in bibendum
-                              aenean arcu.
+                              Enim feugiat ut ipsum, neque ut. Tristique mi id
+                              elementum praesent. Gravida in tempus feugiat
+                              netus enim aliquet a, quam scelerisque. Dictumst
+                              in convallis nec in bibendum aenean arcu.
                             </p>
                           </dd>
                         </div>
                         <div>
-                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">Location</dt>
-                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">New York, NY, USA</dd>
+                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">
+                            Location
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                            New York, NY, USA
+                          </dd>
                         </div>
                         <div>
-                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">Website</dt>
-                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">ashleyporter.com</dd>
+                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">
+                            Website
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                            ashleyporter.com
+                          </dd>
                         </div>
                         <div>
-                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">Birthday</dt>
+                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:shrink-0">
+                            Birthday
+                          </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
                             <time dateTime="1988-06-23">June 23, 1988</time>
                           </dd>

@@ -35,7 +35,10 @@ export default function Example() {
         })
 
   const groups = filteredItems.reduce((groups, item) => {
-    return { ...groups, [item.category]: [...(groups[item.category] || []), item] }
+    return {
+      ...groups,
+      [item.category]: [...(groups[item.category] || []), item],
+    }
   }, {})
 
   return (
@@ -81,9 +84,17 @@ export default function Example() {
 
             {query === '' && (
               <div className="border-t border-gray-100 px-6 py-14 text-center text-sm sm:px-14">
-                <GlobeAmericasIcon className="mx-auto size-6 text-gray-400" aria-hidden="true" />
-                <p className="mt-4 font-semibold text-gray-900">Search for clients and projects</p>
-                <p className="mt-2 text-gray-500">Quickly access clients and projects by running a global search.</p>
+                <GlobeAmericasIcon
+                  className="mx-auto size-6 text-gray-400"
+                  aria-hidden="true"
+                />
+                <p className="mt-4 font-semibold text-gray-900">
+                  Search for clients and projects
+                </p>
+                <p className="mt-2 text-gray-500">
+                  Quickly access clients and projects by running a global
+                  search.
+                </p>
               </div>
             )}
 
@@ -95,13 +106,15 @@ export default function Example() {
               >
                 {Object.entries(groups).map(([category, items]) => (
                   <li key={category}>
-                    <h2 className="bg-gray-100 px-4 py-2.5 text-xs font-semibold text-gray-900">{category}</h2>
+                    <h2 className="bg-gray-100 px-4 py-2.5 text-xs font-semibold text-gray-900">
+                      {category}
+                    </h2>
                     <ul className="mt-2 text-sm text-gray-800">
                       {items.map((item) => (
                         <ComboboxOption
                           key={item.id}
                           value={item}
-                          className="cursor-default px-4 py-2 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
+                          className="cursor-default px-4 py-2 select-none data-focus:bg-sky-600 data-focus:text-white data-focus:outline-hidden"
                         >
                           {item.name}
                         </ComboboxOption>
@@ -114,9 +127,16 @@ export default function Example() {
 
             {query !== '' && filteredItems.length === 0 && (
               <div className="border-t border-gray-100 px-6 py-14 text-center text-sm sm:px-14">
-                <FaceFrownIcon className="mx-auto size-6 text-gray-400" aria-hidden="true" />
-                <p className="mt-4 font-semibold text-gray-900">No results found</p>
-                <p className="mt-2 text-gray-500">We couldn’t find anything with that term. Please try again.</p>
+                <FaceFrownIcon
+                  className="mx-auto size-6 text-gray-400"
+                  aria-hidden="true"
+                />
+                <p className="mt-4 font-semibold text-gray-900">
+                  No results found
+                </p>
+                <p className="mt-2 text-gray-500">
+                  We couldn’t find anything with that term. Please try again.
+                </p>
               </div>
             )}
           </Combobox>

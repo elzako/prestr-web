@@ -26,10 +26,12 @@ export default function Example() {
               <div className="p-4">
                 <div className="flex items-center">
                   <div className="flex w-0 flex-1 justify-between">
-                    <p className="w-0 flex-1 text-sm font-medium text-gray-900">Discussion archived</p>
+                    <p className="w-0 flex-1 text-sm font-medium text-gray-900">
+                      Discussion archived
+                    </p>
                     <button
                       type="button"
-                      className="ml-3 shrink-0 rounded-md bg-white text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                      className="ml-3 shrink-0 rounded-md bg-white text-sm font-medium text-sky-600 hover:text-sky-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
                     >
                       Undo
                     </button>
@@ -40,7 +42,7 @@ export default function Example() {
                       onClick={() => {
                         setShow(false)
                       }}
-                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
                     >
                       <span className="sr-only">Close</span>
                       <XMarkIcon aria-hidden="true" className="size-5" />

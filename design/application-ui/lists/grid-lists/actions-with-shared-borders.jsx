@@ -52,8 +52,8 @@ const actions = [
     title: 'Training',
     href: '#',
     icon: AcademicCapIcon,
-    iconForeground: 'text-indigo-700',
-    iconBackground: 'bg-indigo-50',
+    iconForeground: 'text-sky-700',
+    iconBackground: 'bg-sky-50',
   },
 ]
 
@@ -68,15 +68,25 @@ export default function Example() {
         <div
           key={action.title}
           className={classNames(
-            actionIdx === 0 ? 'rounded-tl-lg rounded-tr-lg sm:rounded-tr-none' : '',
+            actionIdx === 0
+              ? 'rounded-tl-lg rounded-tr-lg sm:rounded-tr-none'
+              : '',
             actionIdx === 1 ? 'sm:rounded-tr-lg' : '',
             actionIdx === actions.length - 2 ? 'sm:rounded-bl-lg' : '',
-            actionIdx === actions.length - 1 ? 'rounded-br-lg rounded-bl-lg sm:rounded-bl-none' : '',
-            'group relative border-gray-200 bg-white p-6 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 sm:odd:not-nth-last-2:border-b sm:even:border-l sm:even:not-last:border-b',
+            actionIdx === actions.length - 1
+              ? 'rounded-br-lg rounded-bl-lg sm:rounded-bl-none'
+              : '',
+            'group relative border-gray-200 bg-white p-6 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-sky-600 sm:odd:not-nth-last-2:border-b sm:even:border-l sm:even:not-last:border-b',
           )}
         >
           <div>
-            <span className={classNames(action.iconBackground, action.iconForeground, 'inline-flex rounded-lg p-3')}>
+            <span
+              className={classNames(
+                action.iconBackground,
+                action.iconForeground,
+                'inline-flex rounded-lg p-3',
+              )}
+            >
               <action.icon aria-hidden="true" className="size-6" />
             </span>
           </div>
@@ -89,8 +99,8 @@ export default function Example() {
               </a>
             </h3>
             <p className="mt-2 text-sm text-gray-500">
-              Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendus qui ut at blanditiis et
-              quo et molestiae.
+              Doloribus dolores nostrum quia qui natus officia quod et dolorem.
+              Sit repellendus qui ut at blanditiis et quo et molestiae.
             </p>
           </div>
           <span

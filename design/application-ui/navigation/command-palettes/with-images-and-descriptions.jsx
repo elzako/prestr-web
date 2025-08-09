@@ -36,7 +36,7 @@ const items = [
     name: 'Text',
     description: 'Add freeform text with basic formatting options.',
     url: '#',
-    color: 'bg-indigo-500',
+    color: 'bg-sky-500',
     icon: PencilSquareIcon,
   },
   // More items...
@@ -98,7 +98,10 @@ export default function Example() {
             </div>
 
             {filteredItems.length > 0 && (
-              <ComboboxOptions static className="max-h-96 transform-gpu scroll-py-3 overflow-y-auto p-3">
+              <ComboboxOptions
+                static
+                className="max-h-96 transform-gpu scroll-py-3 overflow-y-auto p-3"
+              >
                 {filteredItems.map((item) => (
                   <ComboboxOption
                     key={item.id}
@@ -111,11 +114,18 @@ export default function Example() {
                         item.color,
                       )}
                     >
-                      <item.icon className="size-6 text-white" aria-hidden="true" />
+                      <item.icon
+                        className="size-6 text-white"
+                        aria-hidden="true"
+                      />
                     </div>
                     <div className="ml-4 flex-auto">
-                      <p className="text-sm font-medium text-gray-700 group-data-focus:text-gray-900">{item.name}</p>
-                      <p className="text-sm text-gray-500 group-data-focus:text-gray-700">{item.description}</p>
+                      <p className="text-sm font-medium text-gray-700 group-data-focus:text-gray-900">
+                        {item.name}
+                      </p>
+                      <p className="text-sm text-gray-500 group-data-focus:text-gray-700">
+                        {item.description}
+                      </p>
                     </div>
                   </ComboboxOption>
                 ))}
@@ -129,8 +139,12 @@ export default function Example() {
                   name="exclamation-circle"
                   className="mx-auto size-6 text-gray-400"
                 />
-                <p className="mt-4 font-semibold text-gray-900">No results found</p>
-                <p className="mt-2 text-gray-500">No components found for this search term. Please try again.</p>
+                <p className="mt-4 font-semibold text-gray-900">
+                  No results found
+                </p>
+                <p className="mt-2 text-gray-500">
+                  No components found for this search term. Please try again.
+                </p>
               </div>
             )}
           </Combobox>

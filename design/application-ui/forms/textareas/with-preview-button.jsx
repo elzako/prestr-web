@@ -4,7 +4,11 @@
  * @source https://tailwindui.com/components/application-ui/forms/textareas
  */
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import { AtSymbolIcon, CodeBracketIcon, LinkIcon } from '@heroicons/react/20/solid'
+import {
+  AtSymbolIcon,
+  CodeBracketIcon,
+  LinkIcon,
+} from '@heroicons/react/20/solid'
 
 export default function Example() {
   return (
@@ -62,14 +66,16 @@ export default function Example() {
                 name="comment"
                 rows={5}
                 placeholder="Add your comment..."
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6"
                 defaultValue={''}
               />
             </div>
           </TabPanel>
           <TabPanel className="-m-0.5 rounded-lg p-0.5">
             <div className="border-b border-gray-200">
-              <div className="mx-px mt-px px-3 pt-2 pb-12 text-sm text-gray-800">Preview content will render here.</div>
+              <div className="mx-px mt-px px-3 pt-2 pb-12 text-sm text-gray-800">
+                Preview content will render here.
+              </div>
             </div>
           </TabPanel>
         </TabPanels>
@@ -77,7 +83,7 @@ export default function Example() {
       <div className="mt-2 flex justify-end">
         <button
           type="submit"
-          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
         >
           Post
         </button>

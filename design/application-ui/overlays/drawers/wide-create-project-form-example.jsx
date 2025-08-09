@@ -8,7 +8,11 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/20/solid'
+import {
+  LinkIcon,
+  PlusIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/20/solid'
 
 const team = [
   {
@@ -75,16 +79,19 @@ export default function Example() {
                     <div className="bg-gray-50 px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between space-x-3">
                         <div className="space-y-1">
-                          <DialogTitle className="text-base font-semibold text-gray-900">New project</DialogTitle>
+                          <DialogTitle className="text-base font-semibold text-gray-900">
+                            New project
+                          </DialogTitle>
                           <p className="text-sm text-gray-500">
-                            Get started by filling in the information below to create your new project.
+                            Get started by filling in the information below to
+                            create your new project.
                           </p>
                         </div>
                         <div className="flex h-7 items-center">
                           <button
                             type="button"
                             onClick={() => setOpen(false)}
-                            className="relative rounded-md text-gray-400 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="relative rounded-md text-gray-400 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                           >
                             <span className="absolute -inset-2.5" />
                             <span className="sr-only">Close panel</span>
@@ -99,7 +106,10 @@ export default function Example() {
                       {/* Project name */}
                       <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
                         <div>
-                          <label htmlFor="project-name" className="block text-sm/6 font-medium text-gray-900 sm:mt-1.5">
+                          <label
+                            htmlFor="project-name"
+                            className="block text-sm/6 font-medium text-gray-900 sm:mt-1.5"
+                          >
                             Project name
                           </label>
                         </div>
@@ -108,7 +118,7 @@ export default function Example() {
                             id="project-name"
                             name="project-name"
                             type="text"
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm/6"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sky-600 sm:text-sm/6"
                           />
                         </div>
                       </div>
@@ -128,7 +138,7 @@ export default function Example() {
                             id="project-description"
                             name="project-description"
                             rows={3}
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm/6"
+                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sky-600 sm:text-sm/6"
                             defaultValue={''}
                           />
                         </div>
@@ -137,7 +147,9 @@ export default function Example() {
                       {/* Team members */}
                       <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
                         <div>
-                          <h3 className="text-sm/6 font-medium text-gray-900">Team Members</h3>
+                          <h3 className="text-sm/6 font-medium text-gray-900">
+                            Team Members
+                          </h3>
                         </div>
                         <div className="sm:col-span-2">
                           <div className="flex space-x-2">
@@ -157,7 +169,7 @@ export default function Example() {
 
                             <button
                               type="button"
-                              className="relative inline-flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-gray-200 bg-white text-gray-400 hover:border-gray-300 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                              className="relative inline-flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-gray-200 bg-white text-gray-400 hover:border-gray-300 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                             >
                               <span className="absolute -inset-2" />
                               <span className="sr-only">Add team member</span>
@@ -170,7 +182,10 @@ export default function Example() {
                       {/* Privacy */}
                       <fieldset className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
                         <legend className="sr-only">Privacy</legend>
-                        <div aria-hidden="true" className="text-sm/6 font-medium text-gray-900">
+                        <div
+                          aria-hidden="true"
+                          className="text-sm/6 font-medium text-gray-900"
+                        >
                           Privacy
                         </div>
                         <div className="space-y-5 sm:col-span-2">
@@ -184,14 +199,20 @@ export default function Example() {
                                   name="privacy"
                                   type="radio"
                                   aria-describedby="privacy-public-description"
-                                  className="relative size-4 appearance-none rounded-full border border-gray-300 before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                                  className="relative size-4 appearance-none rounded-full border border-gray-300 before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-sky-600 checked:bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                                 />
                               </div>
                               <div className="pl-7 text-sm/6">
-                                <label htmlFor="privacy-public" className="font-medium text-gray-900">
+                                <label
+                                  htmlFor="privacy-public"
+                                  className="font-medium text-gray-900"
+                                >
                                   Public access
                                 </label>
-                                <p id="privacy-public-description" className="text-gray-500">
+                                <p
+                                  id="privacy-public-description"
+                                  className="text-gray-500"
+                                >
                                   Everyone with the link will see this project.
                                 </p>
                               </div>
@@ -204,15 +225,22 @@ export default function Example() {
                                   name="privacy"
                                   type="radio"
                                   aria-describedby="privacy-private-to-project-description"
-                                  className="relative size-4 appearance-none rounded-full border border-gray-300 before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                                  className="relative size-4 appearance-none rounded-full border border-gray-300 before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-sky-600 checked:bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                                 />
                               </div>
                               <div className="pl-7 text-sm/6">
-                                <label htmlFor="privacy-private-to-project" className="font-medium text-gray-900">
+                                <label
+                                  htmlFor="privacy-private-to-project"
+                                  className="font-medium text-gray-900"
+                                >
                                   Private to project members
                                 </label>
-                                <p id="privacy-private-to-project-description" className="text-gray-500">
-                                  Only members of this project would be able to access.
+                                <p
+                                  id="privacy-private-to-project-description"
+                                  className="text-gray-500"
+                                >
+                                  Only members of this project would be able to
+                                  access.
                                 </p>
                               </div>
                             </div>
@@ -224,15 +252,22 @@ export default function Example() {
                                   name="privacy"
                                   type="radio"
                                   aria-describedby="privacy-private-to-project-description"
-                                  className="relative size-4 appearance-none rounded-full border border-gray-300 before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                                  className="relative size-4 appearance-none rounded-full border border-gray-300 before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-sky-600 checked:bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                                 />
                               </div>
                               <div className="pl-7 text-sm/6">
-                                <label htmlFor="privacy-private" className="font-medium text-gray-900">
+                                <label
+                                  htmlFor="privacy-private"
+                                  className="font-medium text-gray-900"
+                                >
                                   Private to you
                                 </label>
-                                <p id="privacy-private-description" className="text-gray-500">
-                                  You are the only one able to access this project.
+                                <p
+                                  id="privacy-private-description"
+                                  className="text-gray-500"
+                                >
+                                  You are the only one able to access this
+                                  project.
                                 </p>
                               </div>
                             </div>
@@ -242,11 +277,11 @@ export default function Example() {
                             <div>
                               <a
                                 href="#"
-                                className="group flex items-center space-x-2.5 text-sm font-medium text-indigo-600 hover:text-indigo-900"
+                                className="group flex items-center space-x-2.5 text-sm font-medium text-sky-600 hover:text-sky-900"
                               >
                                 <LinkIcon
                                   aria-hidden="true"
-                                  className="size-5 text-indigo-500 group-hover:text-indigo-900"
+                                  className="size-5 text-sky-500 group-hover:text-sky-900"
                                 />
                                 <span>Copy link</span>
                               </a>
@@ -281,7 +316,7 @@ export default function Example() {
                       </button>
                       <button
                         type="submit"
-                        className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="inline-flex justify-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                       >
                         Create
                       </button>

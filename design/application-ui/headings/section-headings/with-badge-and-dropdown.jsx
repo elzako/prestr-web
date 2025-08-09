@@ -11,10 +11,15 @@ export default function Example() {
     <div className="border-b border-gray-200 pb-5">
       <div className="sm:flex sm:items-baseline sm:justify-between">
         <div className="sm:w-0 sm:flex-1">
-          <h1 id="message-heading" className="text-base font-semibold text-gray-900">
+          <h1
+            id="message-heading"
+            className="text-base font-semibold text-gray-900"
+          >
             Full-Stack Developer
           </h1>
-          <p className="mt-1 truncate text-sm text-gray-500">Checkout and Payments Team</p>
+          <p className="mt-1 truncate text-sm text-gray-500">
+            Checkout and Payments Team
+          </p>
         </div>
 
         <div className="mt-4 flex items-center justify-between sm:mt-0 sm:ml-6 sm:shrink-0 sm:justify-start">
@@ -23,7 +28,7 @@ export default function Example() {
           </span>
           <div className="-my-2 ml-3 inline-block text-left">
             <Menu as="div" className="relative">
-              <MenuButton className="flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-indigo-500">
+              <MenuButton className="flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-sky-500">
                 <span className="sr-only">Open options</span>
                 <EllipsisVerticalIcon aria-hidden="true" className="size-5" />
               </MenuButton>

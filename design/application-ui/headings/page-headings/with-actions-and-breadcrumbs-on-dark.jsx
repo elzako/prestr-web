@@ -10,8 +10,14 @@ export default function Example() {
     <div>
       <div>
         <nav aria-label="Back" className="sm:hidden">
-          <a href="#" className="flex items-center text-sm font-medium text-gray-400 hover:text-gray-300">
-            <ChevronLeftIcon aria-hidden="true" className="mr-1 -ml-1 size-5 shrink-0 text-gray-500" />
+          <a
+            href="#"
+            className="flex items-center text-sm font-medium text-gray-400 hover:text-gray-300"
+          >
+            <ChevronLeftIcon
+              aria-hidden="true"
+              className="mr-1 -ml-1 size-5 shrink-0 text-gray-500"
+            />
             Back
           </a>
         </nav>
@@ -19,23 +25,39 @@ export default function Example() {
           <ol role="list" className="flex items-center space-x-4">
             <li>
               <div className="flex">
-                <a href="#" className="text-sm font-medium text-gray-400 hover:text-gray-300">
+                <a
+                  href="#"
+                  className="text-sm font-medium text-gray-400 hover:text-gray-300"
+                >
                   Jobs
                 </a>
               </div>
             </li>
             <li>
               <div className="flex items-center">
-                <ChevronRightIcon aria-hidden="true" className="size-5 shrink-0 text-gray-500" />
-                <a href="#" className="ml-4 text-sm font-medium text-gray-400 hover:text-gray-300">
+                <ChevronRightIcon
+                  aria-hidden="true"
+                  className="size-5 shrink-0 text-gray-500"
+                />
+                <a
+                  href="#"
+                  className="ml-4 text-sm font-medium text-gray-400 hover:text-gray-300"
+                >
                   Engineering
                 </a>
               </div>
             </li>
             <li>
               <div className="flex items-center">
-                <ChevronRightIcon aria-hidden="true" className="size-5 shrink-0 text-gray-500" />
-                <a href="#" aria-current="page" className="ml-4 text-sm font-medium text-gray-400 hover:text-gray-300">
+                <ChevronRightIcon
+                  aria-hidden="true"
+                  className="size-5 shrink-0 text-gray-500"
+                />
+                <a
+                  href="#"
+                  aria-current="page"
+                  className="ml-4 text-sm font-medium text-gray-400 hover:text-gray-300"
+                >
                   Back End Developer
                 </a>
               </div>
@@ -58,7 +80,7 @@ export default function Example() {
           </button>
           <button
             type="button"
-            className="ml-3 inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            className="ml-3 inline-flex items-center rounded-md bg-sky-500 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
           >
             Publish
           </button>

@@ -3,7 +3,15 @@
  * @tags navigation, navbars, with, quick, action, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/navigation/navbars
  */
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/20/solid'
 
@@ -15,25 +23,31 @@ export default function Example() {
           <div className="flex">
             <div className="mr-2 -ml-2 flex items-center md:hidden">
               {/* Mobile menu button */}
-              <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-indigo-600 focus:outline-hidden focus:ring-inset">
+              <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-sky-600 focus:outline-hidden focus:ring-inset">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open main menu</span>
-                <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                <Bars3Icon
+                  aria-hidden="true"
+                  className="block size-6 group-data-open:hidden"
+                />
+                <XMarkIcon
+                  aria-hidden="true"
+                  className="hidden size-6 group-data-open:block"
+                />
               </DisclosureButton>
             </div>
             <div className="flex shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
                 className="h-8 w-auto"
               />
             </div>
             <div className="hidden md:ml-6 md:flex md:space-x-8">
-              {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+              {/* Current: "border-sky-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
               <a
                 href="#"
-                className="inline-flex items-center border-b-2 border-indigo-600 px-1 pt-1 text-sm font-medium text-gray-900"
+                className="inline-flex items-center border-b-2 border-sky-600 px-1 pt-1 text-sm font-medium text-gray-900"
               >
                 Dashboard
               </a>
@@ -61,7 +75,7 @@ export default function Example() {
             <div className="shrink-0">
               <button
                 type="button"
-                className="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="relative inline-flex items-center gap-x-1.5 rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
               >
                 <PlusIcon aria-hidden="true" className="-ml-0.5 size-5" />
                 New Job
@@ -70,7 +84,7 @@ export default function Example() {
             <div className="hidden md:ml-4 md:flex md:shrink-0 md:items-center">
               <button
                 type="button"
-                className="relative rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                className="relative rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
               >
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">View notifications</span>
@@ -79,7 +93,7 @@ export default function Example() {
 
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
-                <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <img
@@ -126,11 +140,11 @@ export default function Example() {
 
       <DisclosurePanel className="md:hidden">
         <div className="space-y-1 pt-2 pb-3">
-          {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
+          {/* Current: "bg-sky-50 border-sky-500 text-sky-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
           <DisclosureButton
             as="a"
             href="#"
-            className="block border-l-4 border-indigo-600 bg-indigo-50 py-2 pr-4 pl-3 text-base font-medium text-indigo-700 sm:pr-6 sm:pl-5"
+            className="block border-l-4 border-sky-600 bg-sky-50 py-2 pr-4 pl-3 text-base font-medium text-sky-700 sm:pr-6 sm:pl-5"
           >
             Dashboard
           </DisclosureButton>
@@ -166,12 +180,16 @@ export default function Example() {
               />
             </div>
             <div className="ml-3">
-              <div className="text-base font-medium text-gray-800">Tom Cook</div>
-              <div className="text-sm font-medium text-gray-500">tom@example.com</div>
+              <div className="text-base font-medium text-gray-800">
+                Tom Cook
+              </div>
+              <div className="text-sm font-medium text-gray-500">
+                tom@example.com
+              </div>
             </div>
             <button
               type="button"
-              className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+              className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>

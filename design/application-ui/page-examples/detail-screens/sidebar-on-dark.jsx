@@ -6,7 +6,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  TransitionChild,
+} from '@headlessui/react'
 import {
   ChartBarSquareIcon,
   Cog6ToothIcon,
@@ -44,7 +49,10 @@ const stats = [
   { name: 'Number of servers', value: '3' },
   { name: 'Success rate', value: '98.5%' },
 ]
-const statuses = { Completed: 'text-green-400 bg-green-400/10', Error: 'text-rose-400 bg-rose-400/10' }
+const statuses = {
+  Completed: 'text-green-400 bg-green-400/10',
+  Error: 'text-rose-400 bg-rose-400/10',
+}
 const activityItems = [
   {
     user: {
@@ -170,7 +178,11 @@ export default function Example() {
         ```
       */}
       <div>
-        <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 xl:hidden">
+        <Dialog
+          open={sidebarOpen}
+          onClose={setSidebarOpen}
+          className="relative z-50 xl:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
@@ -183,9 +195,16 @@ export default function Example() {
             >
               <TransitionChild>
                 <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarOpen(false)}
+                    className="-m-2.5 p-2.5"
+                  >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="size-6 text-white"
+                    />
                   </button>
                 </div>
               </TransitionChild>
@@ -195,7 +214,7 @@ export default function Example() {
                 <div className="relative flex h-16 shrink-0 items-center">
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                     className="h-8 w-auto"
                   />
                 </div>
@@ -217,7 +236,9 @@ export default function Example() {
                               <item.icon
                                 aria-hidden="true"
                                 className={classNames(
-                                  item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                                  item.current
+                                    ? 'text-white'
+                                    : 'text-gray-400 group-hover:text-white',
                                   'size-6 shrink-0',
                                 )}
                               />
@@ -228,7 +249,9 @@ export default function Example() {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                      <div className="text-xs/6 font-semibold text-gray-400">
+                        Your teams
+                      </div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
@@ -285,7 +308,7 @@ export default function Example() {
             <div className="flex h-16 shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
                 className="h-8 w-auto"
               />
             </div>
@@ -298,14 +321,18 @@ export default function Example() {
                         <a
                           href={item.href}
                           className={classNames(
-                            item.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            item.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
                           <item.icon
                             aria-hidden="true"
                             className={classNames(
-                              item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                              item.current
+                                ? 'text-white'
+                                : 'text-gray-400 group-hover:text-white',
                               'size-6 shrink-0',
                             )}
                           />
@@ -316,14 +343,18 @@ export default function Example() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                  <div className="text-xs/6 font-semibold text-gray-400">
+                    Your teams
+                  </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
                         <a
                           href={team.href}
                           className={classNames(
-                            team.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                            team.current
+                              ? 'bg-white/5 text-white'
+                              : 'text-gray-400 hover:bg-white/5 hover:text-white',
                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                           )}
                         >
@@ -365,7 +396,11 @@ export default function Example() {
         <div className="xl:pl-72">
           {/* Sticky search header */}
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 sm:px-6 lg:px-8">
-            <button type="button" onClick={() => setSidebarOpen(true)} className="-m-2.5 p-2.5 text-white xl:hidden">
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="-m-2.5 p-2.5 text-white xl:hidden"
+            >
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon aria-hidden="true" className="size-5" />
             </button>
@@ -396,7 +431,10 @@ export default function Example() {
                 >
                   {secondaryNavigation.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className={item.current ? 'text-indigo-400' : ''}>
+                      <a
+                        href={item.href}
+                        className={item.current ? 'text-sky-400' : ''}
+                      >
                         {item.name}
                       </a>
                     </li>
@@ -412,14 +450,20 @@ export default function Example() {
                       <div className="size-2 rounded-full bg-current" />
                     </div>
                     <h1 className="flex gap-x-3 text-base/7">
-                      <span className="font-semibold text-white">Planetaria</span>
+                      <span className="font-semibold text-white">
+                        Planetaria
+                      </span>
                       <span className="text-gray-600">/</span>
-                      <span className="font-semibold text-white">mobile-api</span>
+                      <span className="font-semibold text-white">
+                        mobile-api
+                      </span>
                     </h1>
                   </div>
-                  <p className="mt-2 text-xs/6 text-gray-400">Deploys from GitHub via main branch</p>
+                  <p className="mt-2 text-xs/6 text-gray-400">
+                    Deploys from GitHub via main branch
+                  </p>
                 </div>
-                <div className="order-first flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 ring-1 ring-indigo-400/30 ring-inset sm:order-0">
+                <div className="order-first flex-none rounded-full bg-sky-400/10 px-2 py-1 text-xs font-medium text-sky-400 ring-1 ring-sky-400/30 ring-inset sm:order-0">
                   Production
                 </div>
               </div>
@@ -430,14 +474,26 @@ export default function Example() {
                   <div
                     key={stat.name}
                     className={classNames(
-                      statIdx % 2 === 1 ? 'sm:border-l' : statIdx === 2 ? 'lg:border-l' : '',
+                      statIdx % 2 === 1
+                        ? 'sm:border-l'
+                        : statIdx === 2
+                          ? 'lg:border-l'
+                          : '',
                       'border-t border-white/5 px-4 py-6 sm:px-6 lg:px-8',
                     )}
                   >
-                    <p className="text-sm/6 font-medium text-gray-400">{stat.name}</p>
+                    <p className="text-sm/6 font-medium text-gray-400">
+                      {stat.name}
+                    </p>
                     <p className="mt-2 flex items-baseline gap-x-2">
-                      <span className="text-4xl font-semibold tracking-tight text-white">{stat.value}</span>
-                      {stat.unit ? <span className="text-sm text-gray-400">{stat.unit}</span> : null}
+                      <span className="text-4xl font-semibold tracking-tight text-white">
+                        {stat.value}
+                      </span>
+                      {stat.unit ? (
+                        <span className="text-sm text-gray-400">
+                          {stat.unit}
+                        </span>
+                      ) : null}
                     </p>
                   </div>
                 ))}
@@ -446,7 +502,9 @@ export default function Example() {
 
             {/* Activity list */}
             <div className="border-t border-white/10 pt-11">
-              <h2 className="px-4 text-base/7 font-semibold text-white sm:px-6 lg:px-8">Latest activity</h2>
+              <h2 className="px-4 text-base/7 font-semibold text-white sm:px-6 lg:px-8">
+                Latest activity
+              </h2>
               <table className="mt-6 w-full text-left whitespace-nowrap">
                 <colgroup>
                   <col className="w-full sm:w-4/12" />
@@ -457,16 +515,28 @@ export default function Example() {
                 </colgroup>
                 <thead className="border-b border-white/10 text-sm/6 text-white">
                   <tr>
-                    <th scope="col" className="py-2 pr-8 pl-4 font-semibold sm:pl-6 lg:pl-8">
+                    <th
+                      scope="col"
+                      className="py-2 pr-8 pl-4 font-semibold sm:pl-6 lg:pl-8"
+                    >
                       User
                     </th>
-                    <th scope="col" className="hidden py-2 pr-8 pl-0 font-semibold sm:table-cell">
+                    <th
+                      scope="col"
+                      className="hidden py-2 pr-8 pl-0 font-semibold sm:table-cell"
+                    >
                       Commit
                     </th>
-                    <th scope="col" className="py-2 pr-4 pl-0 text-right font-semibold sm:pr-8 sm:text-left lg:pr-20">
+                    <th
+                      scope="col"
+                      className="py-2 pr-4 pl-0 text-right font-semibold sm:pr-8 sm:text-left lg:pr-20"
+                    >
                       Status
                     </th>
-                    <th scope="col" className="hidden py-2 pr-8 pl-0 font-semibold md:table-cell lg:pr-20">
+                    <th
+                      scope="col"
+                      className="hidden py-2 pr-8 pl-0 font-semibold md:table-cell lg:pr-20"
+                    >
                       Duration
                     </th>
                     <th
@@ -487,12 +557,16 @@ export default function Example() {
                             src={item.user.imageUrl}
                             className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
                           />
-                          <div className="truncate text-sm/6 font-medium text-white">{item.user.name}</div>
+                          <div className="truncate text-sm/6 font-medium text-white">
+                            {item.user.name}
+                          </div>
                         </div>
                       </td>
                       <td className="hidden py-4 pr-4 pl-0 sm:table-cell sm:pr-8">
                         <div className="flex gap-x-3">
-                          <div className="font-mono text-sm/6 text-gray-400">{item.commit}</div>
+                          <div className="font-mono text-sm/6 text-gray-400">
+                            {item.commit}
+                          </div>
                           <span className="inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-400 ring-1 ring-gray-400/20 ring-inset">
                             {item.branch}
                           </span>
@@ -500,13 +574,23 @@ export default function Example() {
                       </td>
                       <td className="py-4 pr-4 pl-0 text-sm/6 sm:pr-8 lg:pr-20">
                         <div className="flex items-center justify-end gap-x-2 sm:justify-start">
-                          <time dateTime={item.dateTime} className="text-gray-400 sm:hidden">
+                          <time
+                            dateTime={item.dateTime}
+                            className="text-gray-400 sm:hidden"
+                          >
                             {item.date}
                           </time>
-                          <div className={classNames(statuses[item.status], 'flex-none rounded-full p-1')}>
+                          <div
+                            className={classNames(
+                              statuses[item.status],
+                              'flex-none rounded-full p-1',
+                            )}
+                          >
                             <div className="size-1.5 rounded-full bg-current" />
                           </div>
-                          <div className="hidden text-white sm:block">{item.status}</div>
+                          <div className="hidden text-white sm:block">
+                            {item.status}
+                          </div>
                         </div>
                       </td>
                       <td className="hidden py-4 pr-8 pl-0 text-sm/6 text-gray-400 md:table-cell lg:pr-20">

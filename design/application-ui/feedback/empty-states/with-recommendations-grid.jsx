@@ -64,11 +64,15 @@ export default function Example() {
               strokeLinejoin="round"
             />
           </svg>
-          <h2 className="mt-2 text-base font-semibold text-gray-900">Add team members</h2>
-          <p className="mt-1 text-sm text-gray-500">You haven’t added any team members to your project yet.</p>
+          <h2 className="mt-2 text-base font-semibold text-gray-900">
+            Add team members
+          </h2>
+          <p className="mt-1 text-sm text-gray-500">
+            You haven’t added any team members to your project yet.
+          </p>
         </div>
         <form action="#" className="mt-6 sm:flex sm:items-center">
-          <div className="flex grow items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+          <div className="flex grow items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-sky-600">
             <input
               name="emails"
               type="text"
@@ -80,7 +84,7 @@ export default function Example() {
               <select
                 name="role"
                 aria-label="Role"
-                className="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6"
               >
                 <option>Can edit</option>
                 <option>Can view</option>
@@ -94,7 +98,7 @@ export default function Example() {
           <div className="mt-3 sm:mt-0 sm:ml-4 sm:shrink-0">
             <button
               type="submit"
-              className="block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="block w-full rounded-md bg-sky-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
             >
               Send invite
             </button>
@@ -102,25 +106,38 @@ export default function Example() {
         </form>
       </div>
       <div className="mt-10">
-        <h3 className="text-sm font-medium text-gray-500">Recommended team members</h3>
+        <h3 className="text-sm font-medium text-gray-500">
+          Recommended team members
+        </h3>
         <ul role="list" className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {people.map((person, personIdx) => (
             <li key={personIdx}>
               <button
                 type="button"
-                className="group focus:outline-offset-white flex w-full items-center justify-between space-x-3 rounded-full border border-gray-300 p-2 text-left shadow-xs hover:bg-gray-50 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                className="group focus:outline-offset-white flex w-full items-center justify-between space-x-3 rounded-full border border-gray-300 p-2 text-left shadow-xs hover:bg-gray-50 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
               >
                 <span className="flex min-w-0 flex-1 items-center space-x-3">
                   <span className="block shrink-0">
-                    <img alt="" src={person.imageUrl} className="size-10 rounded-full" />
+                    <img
+                      alt=""
+                      src={person.imageUrl}
+                      className="size-10 rounded-full"
+                    />
                   </span>
                   <span className="block min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-gray-900">{person.name}</span>
-                    <span className="block truncate text-sm font-medium text-gray-500">{person.role}</span>
+                    <span className="block truncate text-sm font-medium text-gray-900">
+                      {person.name}
+                    </span>
+                    <span className="block truncate text-sm font-medium text-gray-500">
+                      {person.role}
+                    </span>
                   </span>
                 </span>
                 <span className="inline-flex size-10 shrink-0 items-center justify-center">
-                  <PlusIcon aria-hidden="true" className="size-5 text-gray-400 group-hover:text-gray-500" />
+                  <PlusIcon
+                    aria-hidden="true"
+                    className="size-5 text-gray-400 group-hover:text-gray-500"
+                  />
                 </span>
               </button>
             </li>

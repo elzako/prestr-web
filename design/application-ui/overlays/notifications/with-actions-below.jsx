@@ -27,23 +27,29 @@ export default function Example() {
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="shrink-0">
-                    <InboxIcon aria-hidden="true" className="size-6 text-gray-400" />
+                    <InboxIcon
+                      aria-hidden="true"
+                      className="size-6 text-gray-400"
+                    />
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">Discussion moved</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Discussion moved
+                    </p>
                     <p className="mt-1 text-sm text-gray-500">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit oluptatum tenetur.
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit
+                      oluptatum tenetur.
                     </p>
                     <div className="mt-3 flex space-x-7">
                       <button
                         type="button"
-                        className="rounded-md text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                        className="rounded-md text-sm font-medium text-sky-600 hover:text-sky-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
                       >
                         Undo
                       </button>
                       <button
                         type="button"
-                        className="rounded-md text-sm font-medium text-gray-700 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                        className="rounded-md text-sm font-medium text-gray-700 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
                       >
                         Dismiss
                       </button>
@@ -55,7 +61,7 @@ export default function Example() {
                       onClick={() => {
                         setShow(false)
                       }}
-                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600"
+                      className="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
                     >
                       <span className="sr-only">Close</span>
                       <XMarkIcon aria-hidden="true" className="size-5" />

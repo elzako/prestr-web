@@ -3,7 +3,11 @@
  * @tags navigation, sidebar navigation, with, expandable, sections, tailwind-ui, component
  * @source https://tailwindui.com/components/application-ui/navigation/sidebar-navigation
  */
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const navigation = [
@@ -42,7 +46,7 @@ export default function Example() {
       <div className="relative flex h-16 shrink-0 items-center">
         <img
           alt="Your Company"
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
           className="h-8 w-auto"
         />
       </div>
@@ -83,7 +87,9 @@ export default function Example() {
                               as="a"
                               href={subItem.href}
                               className={classNames(
-                                subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                                subItem.current
+                                  ? 'bg-gray-50'
+                                  : 'hover:bg-gray-50',
                                 'block rounded-md py-2 pr-2 pl-9 text-sm/6 text-gray-700',
                               )}
                             >

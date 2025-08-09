@@ -24,7 +24,7 @@ export default function Example() {
         <select
           defaultValue={tabs.find((tab) => tab.current).name}
           aria-label="Select a tab"
-          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600"
         >
           {tabs.map((tab) => (
             <option key={tab.name}>{tab.name}</option>
@@ -36,14 +36,19 @@ export default function Example() {
         />
       </div>
       <div className="hidden sm:block">
-        <nav aria-label="Tabs" className="isolate flex divide-x divide-gray-200 rounded-lg bg-white shadow-sm">
+        <nav
+          aria-label="Tabs"
+          className="isolate flex divide-x divide-gray-200 rounded-lg bg-white shadow-sm"
+        >
           {tabs.map((tab, tabIdx) => (
             <a
               key={tab.name}
               href={tab.href}
               aria-current={tab.current ? 'page' : undefined}
               className={classNames(
-                tab.current ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700',
+                tab.current
+                  ? 'text-gray-900'
+                  : 'text-gray-500 hover:text-gray-700',
                 tabIdx === 0 ? 'rounded-l-lg' : '',
                 tabIdx === tabs.length - 1 ? 'rounded-r-lg' : '',
                 'group relative min-w-0 flex-1 overflow-hidden px-4 py-4 text-center text-sm font-medium hover:bg-gray-50 focus:z-10',
@@ -53,7 +58,7 @@ export default function Example() {
               <span
                 aria-hidden="true"
                 className={classNames(
-                  tab.current ? 'bg-indigo-500' : 'bg-transparent',
+                  tab.current ? 'bg-sky-500' : 'bg-transparent',
                   'absolute inset-x-0 bottom-0 h-0.5',
                 )}
               />

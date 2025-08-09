@@ -6,7 +6,15 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
@@ -47,7 +55,7 @@ export default function Example() {
         ```
       */}
       <div className="min-h-full">
-        <header className="bg-indigo-600 pb-24">
+        <header className="bg-sky-600 pb-24">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="relative flex items-center justify-center py-5 lg:justify-between">
               {/* Logo */}
@@ -56,7 +64,7 @@ export default function Example() {
                   <span className="sr-only">Your Company</span>
                   <img
                     alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=300"
+                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=300"
                     className="h-8 w-auto"
                   />
                 </a>
@@ -66,7 +74,7 @@ export default function Example() {
               <div className="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
                 <button
                   type="button"
-                  className="relative shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-2 focus:outline-white"
+                  className="relative shrink-0 rounded-full p-1 text-sky-200 hover:text-white focus:outline-2 focus:outline-white"
                 >
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
@@ -75,7 +83,7 @@ export default function Example() {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-4 shrink-0">
-                  <MenuButton className="relative flex max-w-xs items-center rounded-full bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                  <MenuButton className="relative flex max-w-xs items-center rounded-full bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
                     <img
@@ -110,7 +118,7 @@ export default function Example() {
                     name="search"
                     placeholder="Search"
                     aria-label="Search"
-                    className="col-start-1 row-start-1 block w-full rounded-md bg-indigo-500/75 py-1.5 pr-3 pl-10 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-white/75 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
+                    className="col-start-1 row-start-1 block w-full rounded-md bg-sky-500/75 py-1.5 pr-3 pl-10 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-white/75 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
                   />
                   <MagnifyingGlassIcon
                     aria-hidden="true"
@@ -124,7 +132,7 @@ export default function Example() {
                 {/* Mobile menu button */}
                 <button
                   onClick={() => setOpen(true)}
-                  className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-indigo-200 hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-white"
+                  className="relative inline-flex items-center justify-center rounded-md bg-transparent p-2 text-sky-200 hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-white"
                 >
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
@@ -142,8 +150,8 @@ export default function Example() {
                         href={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'text-white' : 'text-indigo-100',
-                          'rounded-md px-3 py-2 text-sm font-medium hover:bg-indigo-500/75',
+                          item.current ? 'text-white' : 'text-sky-100',
+                          'rounded-md px-3 py-2 text-sm font-medium hover:bg-sky-500/75',
                         )}
                       >
                         {item.name}
@@ -156,7 +164,7 @@ export default function Example() {
                     name="search"
                     placeholder="Search"
                     aria-label="Search"
-                    className="col-start-1 row-start-1 block w-full rounded-md bg-indigo-500/75 py-1.5 pr-3 pl-10 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-white/75 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
+                    className="col-start-1 row-start-1 block w-full rounded-md bg-sky-500/75 py-1.5 pr-3 pl-10 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-white/75 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
                   />
                   <MagnifyingGlassIcon
                     aria-hidden="true"
@@ -183,7 +191,7 @@ export default function Example() {
                     <div>
                       <img
                         alt="Your Company"
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=600"
                         className="h-8 w-auto"
                       />
                     </div>
@@ -241,12 +249,16 @@ export default function Example() {
                       />
                     </div>
                     <div className="ml-3 min-w-0 flex-1">
-                      <div className="truncate text-base font-medium text-gray-800">{user.name}</div>
-                      <div className="truncate text-sm font-medium text-gray-500">{user.email}</div>
+                      <div className="truncate text-base font-medium text-gray-800">
+                        {user.name}
+                      </div>
+                      <div className="truncate text-sm font-medium text-gray-500">
+                        {user.email}
+                      </div>
                     </div>
                     <button
                       type="button"
-                      className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                      className="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-sky-500"
                     >
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">View notifications</span>
@@ -303,7 +315,9 @@ export default function Example() {
         <footer>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="border-t border-gray-200 py-8 text-center text-sm text-gray-500 sm:text-left">
-              <span className="block sm:inline">&copy; 2021 Your Company, Inc.</span>{' '}
+              <span className="block sm:inline">
+                &copy; 2021 Your Company, Inc.
+              </span>{' '}
               <span className="block sm:inline">All rights reserved.</span>
             </div>
           </div>

@@ -21,11 +21,14 @@ export default function Example() {
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
             <img
               alt="Your Company"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=sky&shade=500"
               className="h-8 w-auto"
             />
             <div className="flex items-center gap-x-8">
-              <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-300">
+              <button
+                type="button"
+                className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-300"
+              >
                 <span className="sr-only">View notifications</span>
                 <BellIcon aria-hidden="true" className="size-6" />
               </button>
@@ -49,7 +52,9 @@ export default function Example() {
               {/* Left column area */}
             </div>
 
-            <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">{/* Main area */}</div>
+            <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
+              {/* Main area */}
+            </div>
           </div>
 
           <div className="shrink-0 border-t border-gray-200 px-4 py-6 sm:px-6 lg:w-96 lg:border-t-0 lg:border-l lg:pr-8 xl:pr-6">

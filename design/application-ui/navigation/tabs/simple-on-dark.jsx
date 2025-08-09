@@ -21,7 +21,7 @@ export default function Example() {
           <select
             defaultValue={tabs.find((tab) => tab.current).name}
             aria-label="Select a tab"
-            className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-2 pr-8 pl-3 text-base text-gray-100 outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+            className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-2 pr-8 pl-3 text-base text-gray-100 outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500"
           >
             {tabs.map((tab) => (
               <option key={tab.name}>{tab.name}</option>
@@ -34,10 +34,18 @@ export default function Example() {
         </div>
         <div className="hidden sm:block">
           <nav className="flex border-b border-white/10 py-4">
-            <ul role="list" className="flex min-w-full flex-none gap-x-8 px-2 text-sm/6 font-semibold text-gray-400">
+            <ul
+              role="list"
+              className="flex min-w-full flex-none gap-x-8 px-2 text-sm/6 font-semibold text-gray-400"
+            >
               {tabs.map((tab) => (
                 <li key={tab.name}>
-                  <a href={tab.href} className={tab.current ? 'text-indigo-400' : 'hover:text-white'}>
+                  <a
+                    href={tab.href}
+                    className={
+                      tab.current ? 'text-sky-400' : 'hover:text-white'
+                    }
+                  >
                     {tab.name}
                   </a>
                 </li>

@@ -41,7 +41,7 @@ const items = [
     title: 'Create a Spreadsheet',
     description: 'Lots of numbers and things — good for nerds.',
     icon: TableCellsIcon,
-    background: 'bg-indigo-500',
+    background: 'bg-sky-500',
   },
   {
     title: 'Create a Timeline',
@@ -60,14 +60,21 @@ export default function Example() {
     <div>
       <h2 className="text-base font-semibold text-gray-900">Projects</h2>
       <p className="mt-1 text-sm text-gray-500">
-        You haven’t created a project yet. Get started by selecting a template or start from an empty project.
+        You haven’t created a project yet. Get started by selecting a template
+        or start from an empty project.
       </p>
-      <ul role="list" className="mt-6 grid grid-cols-1 gap-6 border-y border-gray-200 py-6 sm:grid-cols-2">
+      <ul
+        role="list"
+        className="mt-6 grid grid-cols-1 gap-6 border-y border-gray-200 py-6 sm:grid-cols-2"
+      >
         {items.map((item, itemIdx) => (
           <li key={itemIdx} className="flow-root">
-            <div className="relative -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:outline-2 focus-within:outline-indigo-600 hover:bg-gray-50">
+            <div className="relative -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:outline-2 focus-within:outline-sky-600 hover:bg-gray-50">
               <div
-                className={classNames(item.background, 'flex size-16 shrink-0 items-center justify-center rounded-lg')}
+                className={classNames(
+                  item.background,
+                  'flex size-16 shrink-0 items-center justify-center rounded-lg',
+                )}
               >
                 <item.icon aria-hidden="true" className="size-6 text-white" />
               </div>
@@ -86,7 +93,10 @@ export default function Example() {
         ))}
       </ul>
       <div className="mt-4 flex">
-        <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+        <a
+          href="#"
+          className="text-sm font-medium text-sky-600 hover:text-sky-500"
+        >
           Or start from an empty project
           <span aria-hidden="true"> &rarr;</span>
         </a>

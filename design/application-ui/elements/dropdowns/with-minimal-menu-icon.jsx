@@ -9,7 +9,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 export default function Example() {
   return (
     <Menu as="div" className="relative inline-block">
-      <MenuButton className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      <MenuButton className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
         <span className="sr-only">Open options</span>
         <EllipsisVerticalIcon aria-hidden="true" className="size-5" />
       </MenuButton>

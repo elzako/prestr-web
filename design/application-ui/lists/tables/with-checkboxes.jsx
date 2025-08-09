@@ -28,7 +28,8 @@ export default function Example() {
   const [selectedPeople, setSelectedPeople] = useState([])
 
   useLayoutEffect(() => {
-    const isIndeterminate = selectedPeople.length > 0 && selectedPeople.length < people.length
+    const isIndeterminate =
+      selectedPeople.length > 0 && selectedPeople.length < people.length
     setChecked(selectedPeople.length === people.length)
     setIndeterminate(isIndeterminate)
     checkbox.current.indeterminate = isIndeterminate
@@ -46,13 +47,14 @@ export default function Example() {
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold text-gray-900">Users</h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title, email and role.
+            A list of all the users in your account including their name, title,
+            email and role.
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button
             type="button"
-            className="block rounded-md bg-indigo-600 px-3 py-1.5 text-center text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="block rounded-md bg-sky-600 px-3 py-1.5 text-center text-sm/6 font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
           >
             Add user
           </button>
@@ -83,7 +85,7 @@ export default function Example() {
                       <div className="group absolute top-1/2 left-4 -mt-2 grid size-4 grid-cols-1">
                         <input
                           type="checkbox"
-                          className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                          className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-sky-600 checked:bg-sky-600 indeterminate:border-sky-600 indeterminate:bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                           ref={checkbox}
                           checked={checked}
                           onChange={toggleAll}
@@ -110,16 +112,28 @@ export default function Example() {
                         </svg>
                       </div>
                     </th>
-                    <th scope="col" className="min-w-48 py-3.5 pr-3 text-left text-sm font-semibold text-gray-900">
+                    <th
+                      scope="col"
+                      className="min-w-48 py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
+                    >
                       Name
                     </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
                       Title
                     </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
                       Email
                     </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
                       Role
                     </th>
                     <th scope="col" className="py-3.5 pr-4 pl-3 sm:pr-3">
@@ -129,14 +143,17 @@ export default function Example() {
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {people.map((person) => (
-                    <tr key={person.email} className="group has-checked:bg-gray-50">
+                    <tr
+                      key={person.email}
+                      className="group has-checked:bg-gray-50"
+                    >
                       <td className="relative px-7 sm:w-12 sm:px-6">
-                        <div className="absolute inset-y-0 left-0 hidden w-0.5 bg-indigo-600 group-has-checked:block" />
+                        <div className="absolute inset-y-0 left-0 hidden w-0.5 bg-sky-600 group-has-checked:block" />
 
                         <div className="absolute top-1/2 left-4 -mt-2 grid size-4 grid-cols-1">
                           <input
                             type="checkbox"
-                            className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                            className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-sky-600 checked:bg-sky-600 indeterminate:border-sky-600 indeterminate:bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                             value={person.email}
                             checked={selectedPeople.includes(person)}
                             onChange={(e) =>
@@ -169,14 +186,20 @@ export default function Example() {
                           </svg>
                         </div>
                       </td>
-                      <td className="py-4 pr-3 text-sm font-medium whitespace-nowrap text-gray-900 group-has-checked:text-indigo-600">
+                      <td className="py-4 pr-3 text-sm font-medium whitespace-nowrap text-gray-900 group-has-checked:text-sky-600">
                         {person.name}
                       </td>
-                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{person.title}</td>
-                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{person.email}</td>
-                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{person.role}</td>
+                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">
+                        {person.title}
+                      </td>
+                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">
+                        {person.email}
+                      </td>
+                      <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">
+                        {person.role}
+                      </td>
                       <td className="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-3">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                        <a href="#" className="text-sky-600 hover:text-sky-900">
                           Edit<span className="sr-only">, {person.name}</span>
                         </a>
                       </td>

@@ -6,7 +6,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  TransitionChild,
+} from '@headlessui/react'
 import { HeartIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { PencilIcon, PlusIcon } from '@heroicons/react/20/solid'
 
@@ -39,7 +44,7 @@ export default function Example() {
                     <button
                       type="button"
                       onClick={() => setOpen(false)}
-                      className="relative rounded-md text-gray-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      className="relative rounded-md text-gray-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                     >
                       <span className="absolute -inset-2.5" />
                       <span className="sr-only">Close panel</span>
@@ -58,13 +63,16 @@ export default function Example() {
                       <div className="mt-4 flex items-start justify-between">
                         <div>
                           <h2 className="text-base font-semibold text-gray-900">
-                            <span className="sr-only">Details for </span>IMG_4985.HEIC
+                            <span className="sr-only">Details for </span>
+                            IMG_4985.HEIC
                           </h2>
-                          <p className="text-sm font-medium text-gray-500">3.9 MB</p>
+                          <p className="text-sm font-medium text-gray-500">
+                            3.9 MB
+                          </p>
                         </div>
                         <button
                           type="button"
-                          className="relative ml-4 flex size-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-indigo-600"
+                          className="relative ml-4 flex size-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-sky-600"
                         >
                           <span className="absolute -inset-1.5" />
                           <HeartIcon aria-hidden="true" className="size-6" />
@@ -100,10 +108,12 @@ export default function Example() {
                     <div>
                       <h3 className="font-medium text-gray-900">Description</h3>
                       <div className="mt-2 flex items-center justify-between">
-                        <p className="text-sm text-gray-500 italic">Add a description to this image.</p>
+                        <p className="text-sm text-gray-500 italic">
+                          Add a description to this image.
+                        </p>
                         <button
                           type="button"
-                          className="relative -mr-2 flex size-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-indigo-600"
+                          className="relative -mr-2 flex size-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-sky-600"
                         >
                           <span className="absolute -inset-1.5" />
                           <PencilIcon aria-hidden="true" className="size-5" />
@@ -113,7 +123,10 @@ export default function Example() {
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Shared with</h3>
-                      <ul role="list" className="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200">
+                      <ul
+                        role="list"
+                        className="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200"
+                      >
                         <li className="flex items-center justify-between py-3">
                           <div className="flex items-center">
                             <img
@@ -121,13 +134,16 @@ export default function Example() {
                               src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=1024&h=1024&q=80"
                               className="size-8 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
                             />
-                            <p className="ml-4 text-sm font-medium text-gray-900">Aimee Douglas</p>
+                            <p className="ml-4 text-sm font-medium text-gray-900">
+                              Aimee Douglas
+                            </p>
                           </div>
                           <button
                             type="button"
-                            className="ml-6 rounded-md text-sm font-medium text-indigo-600 hover:text-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="ml-6 rounded-md text-sm font-medium text-sky-600 hover:text-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                           >
-                            Remove<span className="sr-only"> Aimee Douglas</span>
+                            Remove
+                            <span className="sr-only"> Aimee Douglas</span>
                           </button>
                         </li>
                         <li className="flex items-center justify-between py-3">
@@ -137,24 +153,27 @@ export default function Example() {
                               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=oilqXxSqey&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                               className="size-8 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
                             />
-                            <p className="ml-4 text-sm font-medium text-gray-900">Andrea McMillan</p>
+                            <p className="ml-4 text-sm font-medium text-gray-900">
+                              Andrea McMillan
+                            </p>
                           </div>
                           <button
                             type="button"
-                            className="ml-6 rounded-md text-sm font-medium text-indigo-600 hover:text-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="ml-6 rounded-md text-sm font-medium text-sky-600 hover:text-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                           >
-                            Remove<span className="sr-only"> Andrea McMillan</span>
+                            Remove
+                            <span className="sr-only"> Andrea McMillan</span>
                           </button>
                         </li>
                         <li className="flex items-center justify-between py-2">
                           <button
                             type="button"
-                            className="group -ml-1 flex items-center rounded-md p-1 focus-visible:outline-2 focus-visible:outline-indigo-600"
+                            className="group -ml-1 flex items-center rounded-md p-1 focus-visible:outline-2 focus-visible:outline-sky-600"
                           >
                             <span className="flex size-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400">
                               <PlusIcon aria-hidden="true" className="size-5" />
                             </span>
-                            <span className="ml-4 text-sm font-medium text-indigo-600 group-hover:text-indigo-500">
+                            <span className="ml-4 text-sm font-medium text-sky-600 group-hover:text-sky-500">
                               Share
                             </span>
                           </button>
@@ -164,7 +183,7 @@ export default function Example() {
                     <div className="flex">
                       <button
                         type="button"
-                        className="flex-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="flex-1 rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                       >
                         Download
                       </button>

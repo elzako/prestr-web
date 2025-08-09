@@ -31,14 +31,16 @@ export default function Example() {
                 className="pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-closed:translate-x-full sm:duration-700"
               >
                 <div className="relative flex h-full flex-col overflow-y-auto bg-white shadow-xl">
-                  <div className="bg-indigo-700 px-4 py-6 sm:px-6">
+                  <div className="bg-sky-700 px-4 py-6 sm:px-6">
                     <div className="flex items-center justify-between">
-                      <DialogTitle className="text-base font-semibold text-white">Panel title</DialogTitle>
+                      <DialogTitle className="text-base font-semibold text-white">
+                        Panel title
+                      </DialogTitle>
                       <div className="ml-3 flex h-7 items-center">
                         <button
                           type="button"
                           onClick={() => setOpen(false)}
-                          className="relative rounded-md text-indigo-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                          className="relative rounded-md text-sky-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                         >
                           <span className="absolute -inset-2.5" />
                           <span className="sr-only">Close panel</span>
@@ -47,12 +49,15 @@ export default function Example() {
                       </div>
                     </div>
                     <div className="mt-1">
-                      <p className="text-sm text-indigo-300">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit aliquam ad hic recusandae soluta.
+                      <p className="text-sm text-sky-300">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit
+                        aliquam ad hic recusandae soluta.
                       </p>
                     </div>
                   </div>
-                  <div className="relative flex-1 px-4 py-6 sm:px-6">{/* Your content */}</div>
+                  <div className="relative flex-1 px-4 py-6 sm:px-6">
+                    {/* Your content */}
+                  </div>
                 </div>
               </DialogPanel>
             </div>

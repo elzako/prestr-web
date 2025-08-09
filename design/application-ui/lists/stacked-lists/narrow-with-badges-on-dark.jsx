@@ -52,7 +52,10 @@ export default function Example() {
   return (
     <ul role="list" className="divide-y divide-white/5">
       {deployments.map((deployment) => (
-        <li key={deployment.id} className="relative flex items-center space-x-4 py-4">
+        <li
+          key={deployment.id}
+          className="relative flex items-center space-x-4 py-4"
+        >
           <div className="min-w-0 flex-auto">
             <div className="flex items-center gap-x-3">
               {deployment.status === 'offline' ? (
@@ -74,14 +77,19 @@ export default function Example() {
                 <a href={deployment.href} className="flex gap-x-2">
                   <span className="truncate">{deployment.teamName}</span>
                   <span className="text-gray-400">/</span>
-                  <span className="whitespace-nowrap">{deployment.projectName}</span>
+                  <span className="whitespace-nowrap">
+                    {deployment.projectName}
+                  </span>
                   <span className="absolute inset-0" />
                 </a>
               </h2>
             </div>
             <div className="mt-3 flex items-center gap-x-2.5 text-xs/5 text-gray-400">
               <p className="truncate">{deployment.description}</p>
-              <svg viewBox="0 0 2 2" className="size-0.5 flex-none fill-gray-300">
+              <svg
+                viewBox="0 0 2 2"
+                className="size-0.5 flex-none fill-gray-300"
+              >
                 <circle r={1} cx={1} cy={1} />
               </svg>
               <p className="whitespace-nowrap">{deployment.statusText}</p>
@@ -93,11 +101,14 @@ export default function Example() {
             </div>
           ) : null}
           {deployment.environment === 'Production' ? (
-            <div className="flex-none rounded-full bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 inset-ring inset-ring-indigo-400/30">
+            <div className="flex-none rounded-full bg-sky-400/10 px-2 py-1 text-xs font-medium text-sky-400 inset-ring inset-ring-sky-400/30">
               {deployment.environment}
             </div>
           ) : null}
-          <ChevronRightIcon aria-hidden="true" className="size-5 flex-none text-gray-400" />
+          <ChevronRightIcon
+            aria-hidden="true"
+            className="size-5 flex-none text-gray-400"
+          />
         </li>
       ))}
     </ul>
