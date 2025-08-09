@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import type { Tables } from '../../types/database.types'
 
 type Folder = Pick<
@@ -10,9 +11,16 @@ type Folder = Pick<
 
 interface ProjectListProps {
   projects: Folder[]
+  organizationName: string
 }
 
-function ProjectCard({ project }: { project: Folder }) {
+function ProjectCard({
+  project,
+  organizationName,
+}: {
+  project: Folder
+  organizationName: string
+}) {
   const visibilityColors = {
     public: 'bg-green-100 text-green-800',
     private: 'bg-red-100 text-red-800',
@@ -24,7 +32,10 @@ function ProjectCard({ project }: { project: Folder }) {
     : 'bg-gray-100 text-gray-800'
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
+    <Link
+      href={`/${organizationName}/${project.folder_name}`}
+      className="block rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
+    >
       <div className="flex items-start justify-between">
         <div className="min-w-0 flex-1">
           <h3 className="truncate text-lg font-semibold text-gray-900">
@@ -68,20 +79,21 @@ function ProjectCard({ project }: { project: Folder }) {
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <button className="text-sm font-medium text-sky-600 hover:text-sky-500">
-          View project →
-        </button>
+        <span className="text-sm font-medium text-sky-600">View project →</span>
 
         <div className="text-xs text-gray-400">
           {/* Placeholder for additional metadata like last updated */}
           Project
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
-export default function ProjectList({ projects }: ProjectListProps) {
+export default function ProjectList({
+  projects,
+  organizationName,
+}: ProjectListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedVisibility, setSelectedVisibility] = useState<string>('all')
 
@@ -191,7 +203,11 @@ export default function ProjectList({ projects }: ProjectListProps) {
       {filteredProjects.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              organizationName={organizationName}
+            />
           ))}
         </div>
       ) : searchTerm || selectedVisibility !== 'all' ? (

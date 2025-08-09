@@ -114,7 +114,10 @@ export default async function OrganizationPage({ params }: PageProps) {
             </div>
           </div>
 
-          <ProjectList projects={projects} />
+          <ProjectList
+            projects={projects}
+            organizationName={organizationName}
+          />
         </div>
       </div>
     </div>
