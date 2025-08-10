@@ -3,6 +3,15 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import type { Tables } from '../../types/database.types'
+import ActionDropdown, { ActionItem } from './ActionDropdown'
+import ConfirmDialog from './ConfirmDialog'
+import {
+  PencilIcon,
+  FolderIcon,
+  ArrowUpTrayIcon,
+  TrashIcon,
+  DocumentDuplicateIcon,
+} from '@heroicons/react/20/solid'
 
 type Folder = Pick<
   Tables<'folders'>,
@@ -31,12 +40,25 @@ interface FolderContentListProps {
   currentFolderPath: string
 }
 
+interface ActionStates {
+  deleteConfirm: {
+    open: boolean
+    item: {
+      id: string
+      name: string
+      type: 'folder' | 'presentation' | 'slide'
+    } | null
+  }
+}
+
 function FolderCard({
   folder,
   organizationName,
+  onDelete,
 }: {
   folder: Folder
   organizationName: string
+  onDelete: (id: string, name: string) => void
 }) {
   const visibilityColors = {
     public: 'bg-green-100 text-green-800',
@@ -48,11 +70,36 @@ function FolderCard({
     ? visibilityColors[folder.visibility]
     : 'bg-gray-100 text-gray-800'
 
+  const actionItems: ActionItem[] = [
+    {
+      id: 'rename',
+      label: 'Rename folder',
+      icon: <PencilIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement rename functionality
+    },
+    {
+      id: 'create-subfolder',
+      label: 'Create subfolder',
+      icon: <FolderIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement create subfolder
+    },
+    {
+      id: 'upload',
+      label: 'Upload content',
+      icon: <ArrowUpTrayIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement upload
+    },
+    {
+      id: 'delete',
+      label: 'Delete folder',
+      icon: <TrashIcon className="h-5 w-5" />,
+      onClick: () => onDelete(folder.id, folder.folder_name),
+      variant: 'danger' as const,
+    },
+  ]
+
   return (
-    <Link
-      href={`/${organizationName}/${folder.folder_name}`}
-      className="block rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
-    >
+    <div className="group relative rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="flex items-center">
@@ -69,7 +116,7 @@ function FolderCard({
                 d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-5l-2-2H5a2 2 0 00-2 2z"
               />
             </svg>
-            <h3 className="truncate text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-gray-900">
               {folder.folder_name}
             </h3>
           </div>
@@ -100,21 +147,32 @@ function FolderCard({
           )}
         </div>
 
-        {/* Visibility Badge */}
-        {folder.visibility && (
-          <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${visibilityColor}`}
-          >
-            {folder.visibility}
-          </span>
-        )}
+        <div className="flex items-center space-x-2">
+          {/* Visibility Badge */}
+          {folder.visibility && (
+            <span
+              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${visibilityColor}`}
+            >
+              {folder.visibility}
+            </span>
+          )}
+          {/* Actions Menu */}
+          <div className="opacity-0 transition-opacity group-hover:opacity-100">
+            <ActionDropdown items={actionItems} />
+          </div>
+        </div>
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <span className="text-sm font-medium text-sky-600">Open folder →</span>
+        <Link
+          href={`/${organizationName}/${folder.folder_name}`}
+          className="text-sm font-medium text-sky-600 hover:text-sky-800"
+        >
+          Open folder →
+        </Link>
         <div className="text-xs text-gray-400">Folder</div>
       </div>
-    </Link>
+    </div>
   )
 }
 
@@ -122,18 +180,39 @@ function PresentationCard({
   presentation,
   organizationName,
   currentFolderPath,
+  onDelete,
 }: {
   presentation: Presentation
   organizationName: string
   currentFolderPath: string
+  onDelete: (id: string, name: string) => void
 }) {
   const metadata = presentation.metadata as { description?: string } | null
 
+  const actionItems: ActionItem[] = [
+    {
+      id: 'rename',
+      label: 'Rename presentation',
+      icon: <PencilIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement rename functionality
+    },
+    {
+      id: 'duplicate',
+      label: 'Duplicate',
+      icon: <DocumentDuplicateIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement duplicate
+    },
+    {
+      id: 'delete',
+      label: 'Delete presentation',
+      icon: <TrashIcon className="h-5 w-5" />,
+      onClick: () => onDelete(presentation.id, presentation.presentation_name),
+      variant: 'danger' as const,
+    },
+  ]
+
   return (
-    <Link
-      href={`/${organizationName}/${currentFolderPath}/${presentation.presentation_name}.presentation`}
-      className="block rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
-    >
+    <div className="group relative rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="flex items-center">
@@ -150,7 +229,7 @@ function PresentationCard({
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <h3 className="truncate text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-gray-900">
               {presentation.presentation_name}
             </h3>
           </div>
@@ -161,17 +240,24 @@ function PresentationCard({
             </p>
           )}
         </div>
+        {/* Actions Menu */}
+        <div className="opacity-0 transition-opacity group-hover:opacity-100">
+          <ActionDropdown items={actionItems} />
+        </div>
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <span className="text-sm font-medium text-sky-600">
+        <Link
+          href={`/${organizationName}/${currentFolderPath}/${presentation.presentation_name}.presentation`}
+          className="text-sm font-medium text-sky-600 hover:text-sky-800"
+        >
           View presentation →
-        </span>
+        </Link>
         <div className="text-xs text-gray-400">
           {new Date(presentation.created_at).toLocaleDateString()}
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
@@ -179,18 +265,39 @@ function SlideCard({
   slide,
   organizationName,
   currentFolderPath,
+  onDelete,
 }: {
   slide: Slide
   organizationName: string
   currentFolderPath: string
+  onDelete: (id: string, name: string) => void
 }) {
   const metadata = slide.metadata as { textContent?: string[] } | null
 
+  const actionItems: ActionItem[] = [
+    {
+      id: 'rename',
+      label: 'Rename slide',
+      icon: <PencilIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement rename functionality
+    },
+    {
+      id: 'duplicate',
+      label: 'Duplicate',
+      icon: <DocumentDuplicateIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement duplicate
+    },
+    {
+      id: 'delete',
+      label: 'Delete slide',
+      icon: <TrashIcon className="h-5 w-5" />,
+      onClick: () => onDelete(slide.id, slide.slide_name || ''),
+      variant: 'danger' as const,
+    },
+  ]
+
   return (
-    <Link
-      href={`/${organizationName}/${currentFolderPath}/${slide.slide_name}.slide`}
-      className="block rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
-    >
+    <div className="group relative rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="flex items-center">
@@ -207,8 +314,8 @@ function SlideCard({
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2v12a2 2 0 002 2z"
               />
             </svg>
-            <h3 className="truncate text-lg font-semibold text-gray-900">
-              {slide.slide_name}
+            <h3 className="text-lg font-semibold text-gray-900">
+              {slide.slide_name || 'Untitled Slide'}
             </h3>
           </div>
 
@@ -218,15 +325,24 @@ function SlideCard({
             </p>
           )}
         </div>
+        {/* Actions Menu */}
+        <div className="opacity-0 transition-opacity group-hover:opacity-100">
+          <ActionDropdown items={actionItems} />
+        </div>
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <span className="text-sm font-medium text-sky-600">View slide →</span>
+        <Link
+          href={`/${organizationName}/${currentFolderPath}/${slide.slide_name}.slide`}
+          className="text-sm font-medium text-sky-600 hover:text-sky-800"
+        >
+          View slide →
+        </Link>
         <div className="text-xs text-gray-400">
           {new Date(slide.created_at).toLocaleDateString()}
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
@@ -237,6 +353,47 @@ export default function FolderContentList({
 }: FolderContentListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState<string>('all')
+  const [actionStates, setActionStates] = useState<ActionStates>({
+    deleteConfirm: { open: false, item: null },
+  })
+
+  const handleDelete = (
+    id: string,
+    name: string,
+    type: 'folder' | 'presentation' | 'slide',
+  ) => {
+    setActionStates({
+      ...actionStates,
+      deleteConfirm: { open: true, item: { id, name, type } },
+    })
+  }
+
+  const confirmDelete = async () => {
+    const { item } = actionStates.deleteConfirm
+    if (!item) return
+
+    try {
+      // TODO: Implement API call to delete item
+      console.log(`Deleting ${item.type} ${item.id}`)
+      // This would be replaced with actual API call
+      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
+
+      // Close dialog
+      setActionStates({
+        ...actionStates,
+        deleteConfirm: { open: false, item: null },
+      })
+    } catch (error) {
+      console.error('Failed to delete item:', error)
+    }
+  }
+
+  const closeDeleteDialog = () => {
+    setActionStates({
+      ...actionStates,
+      deleteConfirm: { open: false, item: null },
+    })
+  }
 
   // Combine all content for filtering
   const allItems = [
@@ -394,6 +551,9 @@ export default function FolderContentList({
                             key={folder.id}
                             folder={folder}
                             organizationName={organizationName}
+                            onDelete={(id, name) =>
+                              handleDelete(id, name, 'folder')
+                            }
                           />
                         ))}
                     </div>
@@ -436,6 +596,9 @@ export default function FolderContentList({
                             presentation={presentation}
                             organizationName={organizationName}
                             currentFolderPath={currentFolderPath}
+                            onDelete={(id, name) =>
+                              handleDelete(id, name, 'presentation')
+                            }
                           />
                         ))}
                     </div>
@@ -479,6 +642,9 @@ export default function FolderContentList({
                             slide={slide}
                             organizationName={organizationName}
                             currentFolderPath={currentFolderPath}
+                            onDelete={(id, name) =>
+                              handleDelete(id, name, 'slide')
+                            }
                           />
                         ))}
                     </div>
@@ -510,6 +676,17 @@ export default function FolderContentList({
           </p>
         </div>
       ) : null}
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={actionStates.deleteConfirm.open}
+        onClose={closeDeleteDialog}
+        onConfirm={confirmDelete}
+        title={`Delete ${actionStates.deleteConfirm.item?.type}`}
+        message={`Are you sure you want to delete "${actionStates.deleteConfirm.item?.name}"? This action cannot be undone.`}
+        confirmLabel="Delete"
+        variant="danger"
+      />
     </div>
   )
 }

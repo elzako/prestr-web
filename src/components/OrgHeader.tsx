@@ -1,5 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import type { Tables } from '../../types/database.types'
+import ActionDropdown, { ActionItem } from './ActionDropdown'
+import { PencilIcon, CogIcon, UserGroupIcon } from '@heroicons/react/20/solid'
 
 type Organization = Pick<
   Tables<'organizations'>,
@@ -26,6 +30,27 @@ export default function OrgHeader({ organization }: OrgHeaderProps) {
   const website = metadata?.website
   const location = metadata?.location
 
+  const actionItems: ActionItem[] = [
+    {
+      id: 'edit-profile',
+      label: 'Edit profile',
+      icon: <PencilIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement edit profile modal
+    },
+    {
+      id: 'manage-members',
+      label: 'Manage members',
+      icon: <UserGroupIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement member management
+    },
+    {
+      id: 'settings',
+      label: 'Organization settings',
+      icon: <CogIcon className="h-5 w-5" />,
+      onClick: () => {}, // TODO: Implement settings page
+    },
+  ]
+
   return (
     <div className="rounded-lg bg-white shadow">
       <div className="px-6 py-8">
@@ -51,9 +76,16 @@ export default function OrgHeader({ organization }: OrgHeaderProps) {
 
           {/* Organization Info */}
           <div className="min-w-0 flex-1">
-            <h1 className="truncate text-3xl font-bold text-gray-900">
-              {displayName}
-            </h1>
+            <div className="flex items-start justify-between">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-3xl font-bold text-gray-900">
+                  {displayName}
+                </h1>
+              </div>
+              <div className="ml-4">
+                <ActionDropdown items={actionItems} />
+              </div>
+            </div>
 
             {about && (
               <p className="mt-2 text-lg leading-relaxed text-gray-600">
