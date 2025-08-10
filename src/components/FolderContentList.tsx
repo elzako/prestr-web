@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { Tables } from '../../types/database.types'
 import ActionDropdown, { ActionItem } from './ActionDropdown'
 import ConfirmDialog from './ConfirmDialog'
+import UploadModal from './UploadModal'
 import {
   PencilIcon,
   FolderIcon,
@@ -38,6 +39,7 @@ interface FolderContentListProps {
   content: FolderContent
   organizationName: string
   currentFolderPath: string
+  organizationId?: string
 }
 
 interface ActionStates {
@@ -49,16 +51,22 @@ interface ActionStates {
       type: 'folder' | 'presentation' | 'slide'
     } | null
   }
+  uploadModal: {
+    open: boolean
+    folderId: string | null
+  }
 }
 
 function FolderCard({
   folder,
   organizationName,
   onDelete,
+  onUpload,
 }: {
   folder: Folder
   organizationName: string
   onDelete: (id: string, name: string) => void
+  onUpload: (folderId: string) => void
 }) {
   const visibilityColors = {
     public: 'bg-green-100 text-green-800',
@@ -87,7 +95,7 @@ function FolderCard({
       id: 'upload',
       label: 'Upload content',
       icon: <ArrowUpTrayIcon className="h-5 w-5" />,
-      onClick: () => {}, // TODO: Implement upload
+      onClick: () => onUpload(folder.id),
     },
     {
       id: 'delete',
@@ -350,11 +358,13 @@ export default function FolderContentList({
   content,
   organizationName,
   currentFolderPath,
+  organizationId,
 }: FolderContentListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState<string>('all')
   const [actionStates, setActionStates] = useState<ActionStates>({
     deleteConfirm: { open: false, item: null },
+    uploadModal: { open: false, folderId: null },
   })
 
   const handleDelete = (
@@ -365,6 +375,13 @@ export default function FolderContentList({
     setActionStates({
       ...actionStates,
       deleteConfirm: { open: true, item: { id, name, type } },
+    })
+  }
+
+  const handleUpload = (folderId: string) => {
+    setActionStates({
+      ...actionStates,
+      uploadModal: { open: true, folderId },
     })
   }
 
@@ -393,6 +410,20 @@ export default function FolderContentList({
       ...actionStates,
       deleteConfirm: { open: false, item: null },
     })
+  }
+
+  const closeUploadModal = () => {
+    setActionStates({
+      ...actionStates,
+      uploadModal: { open: false, folderId: null },
+    })
+  }
+
+  const handleUploadSuccess = () => {
+    // Close the modal
+    closeUploadModal()
+    // Refresh the page or update the state
+    window.location.reload()
   }
 
   // Combine all content for filtering
@@ -554,6 +585,7 @@ export default function FolderContentList({
                             onDelete={(id, name) =>
                               handleDelete(id, name, 'folder')
                             }
+                            onUpload={handleUpload}
                           />
                         ))}
                     </div>
@@ -687,6 +719,17 @@ export default function FolderContentList({
         confirmLabel="Delete"
         variant="danger"
       />
+
+      {/* Upload Modal */}
+      {organizationId && actionStates.uploadModal.folderId && (
+        <UploadModal
+          isOpen={actionStates.uploadModal.open}
+          onClose={closeUploadModal}
+          organizationId={organizationId}
+          folderId={actionStates.uploadModal.folderId}
+          onUploadSuccess={handleUploadSuccess}
+        />
+      )}
     </div>
   )
 }
