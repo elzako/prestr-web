@@ -138,13 +138,14 @@ export default function PowerPointUpload({
 
       // Get API base URL from environment or use relative path
       const apiBaseUrl = process.env.NEXT_PUBLIC_PRESTR_API_URL || ''
-      const uploadUrl = `${apiBaseUrl}/api/upload`
+      const uploadUrl = `${apiBaseUrl}/api/presentations/upload`
 
       // Create query parameters
       const params = new URLSearchParams({
-        organization_id: organizationId,
-        folder_id: folderId,
-        user_id: userId,
+        organizationId: organizationId,
+        folderId: folderId,
+        userId: userId,
+        presentationName: file.name,
       })
 
       const fullUrl = `${uploadUrl}?${params.toString()}`
