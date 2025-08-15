@@ -20,6 +20,7 @@
     "next": "^15",
     "react": "^19",
     "react-dom": "^19",
+    "react-hook-form": "^7.62.0",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
   },

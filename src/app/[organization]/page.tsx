@@ -12,9 +12,16 @@ type Organization = Pick<
   Tables<'organizations'>,
   'id' | 'organization_name' | 'metadata' | 'tags'
 >
-type Folder = Pick<
+type Project = Pick<
   Tables<'folders'>,
-  'id' | 'folder_name' | 'full_path' | 'tags' | 'visibility'
+  | 'id'
+  | 'folder_name'
+  | 'full_path'
+  | 'tags'
+  | 'visibility'
+  | 'metadata'
+  | 'created_at'
+  | 'updated_at'
 >
 
 interface PageProps {
@@ -42,15 +49,18 @@ async function getOrganization(
   return data
 }
 
-async function getTopLevelProjects(organizationId: string): Promise<Folder[]> {
+async function getTopLevelProjects(organizationId: string): Promise<Project[]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase
     .from('folders')
-    .select('id, folder_name, full_path, tags, visibility')
+    .select(
+      'id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at',
+    )
     .eq('organization_id', organizationId)
     .is('parent_id', null)
-    .order('folder_name', { ascending: true })
+    .is('deleted_at', null)
+    .order('updated_at', { ascending: false })
 
   if (error) {
     console.error('Error fetching projects:', error)
