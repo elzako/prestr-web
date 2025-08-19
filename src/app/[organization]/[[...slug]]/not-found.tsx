@@ -24,8 +24,8 @@ export default function NotFound() {
             Content not found
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            The folder or slide you&apos;re looking for doesn&apos;t exist or
-            may have been moved.
+            The folder, slide, or presentation you&apos;re looking for
+            doesn&apos;t exist or may have been moved.
           </p>
         </div>
         <div className="mt-6 text-center">

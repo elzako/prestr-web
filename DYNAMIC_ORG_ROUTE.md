@@ -1,19 +1,28 @@
-# Dynamic Organization Route
+# Dynamic Organization Route with Nested Navigation
 
-This feature provides a dynamic route at `/:organization` that displays organization profiles and their projects.
+This feature provides a comprehensive nested routing system that supports:
+
+- `/:organization` - Organization root with top-level projects
+- `/:organization/project` - Project folders and content
+- `/:organization/project/subfolder` - Nested subfolders (unlimited depth)
+- `/:organization/project/subfolder/...` - Deep nested navigation
+
+The system supports unlimited nested folder depth with automatic path resolution.
 
 ## Files Created
 
 ### Core Route Files
 
-- `src/app/[organization]/page.tsx` - Main organization page with server-side rendering
-- `src/app/[organization]/loading.tsx` - Loading skeleton during navigation
-- `src/app/[organization]/not-found.tsx` - Custom 404 page for missing organizations
+- `src/app/[organization]/[[...slug]]/page.tsx` - Main nested route handler with SSR
+- `src/app/[organization]/[[...slug]]/loading.tsx` - Loading skeleton for all nested routes
+- `src/app/[organization]/[[...slug]]/not-found.tsx` - Custom 404 for missing folders/projects
 
 ### Components
 
 - `src/components/OrgHeader.tsx` - Organization profile header display
-- `src/components/ProjectList.tsx` - Project grid with search and filtering
+- `src/components/ProjectList.tsx` - Top-level project grid with management features
+- `src/components/FolderContent.tsx` - Nested folder content display (folders, presentations, slides)
+- `src/components/Breadcrumbs.tsx` - Navigation breadcrumb trail
 
 ### Configuration
 
@@ -105,13 +114,47 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 - No authentication required for viewing public organizations
 - Visibility filtering respects database enum constraints
 
+## Nested Routing Architecture
+
+### URL Structure
+
+```
+/:organization                    → Organization root with projects
+/:organization/project            → Project contents
+/:organization/project/subfolder  → Nested folder contents
+/:organization/project/.../deep   → Unlimited nesting depth
+```
+
+### Path Resolution Process
+
+1. Extract organization name from first URL segment
+2. Query `organizations` table by `organization_name`
+3. If path segments exist, build full path (e.g., "/project/subfolder")
+4. Call `get_folder_id_by_full_path(org_id, current_path)` RPC
+5. Query folder contents (subfolders, presentations, slides)
+6. Render appropriate content with breadcrumb navigation
+
+### Content Types Displayed
+
+- **Folders**: Clickable navigation to deeper levels
+- **Presentations**: Individual presentation files
+- **Slides**: Individual slide files
+
+### Navigation Features
+
+- **Breadcrumbs**: Full path navigation trail
+- **Search**: Cross-content type search within current folder
+- **Filtering**: Filter by content type (folders/presentations/slides)
+- **Responsive Grid**: Adaptive layout for different screen sizes
+
 ## Future Enhancements
 
 Possible improvements:
 
 - `generateStaticParams` for popular organizations (with privacy considerations)
-- Project detail pages (`/[organization]/[project]`)
+- Individual presentation and slide detail pages
 - Organization member listings (if `displayMembers` is true)
 - Project analytics and statistics
 - Advanced search with date filters
 - Bulk project operations
+- File upload and management interface

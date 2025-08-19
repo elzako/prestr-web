@@ -6,6 +6,9 @@ import type { Tables } from '../../types/database.types'
 import ActionDropdown, { ActionItem } from './ActionDropdown'
 import ConfirmDialog from './ConfirmDialog'
 import UploadModal from './UploadModal'
+import CreateFolderModal from './CreateFolderModal'
+import EditFolderModal from './EditFolderModal'
+import { deleteFolder } from '@/lib/folder-actions'
 import {
   PencilIcon,
   FolderIcon,
@@ -40,6 +43,7 @@ interface FolderContentListProps {
   organizationName: string
   currentFolderPath: string
   organizationId?: string
+  currentFolderId?: string
 }
 
 interface ActionStates {
@@ -55,18 +59,32 @@ interface ActionStates {
     open: boolean
     folderId: string | null
   }
+  createFolderModal: {
+    open: boolean
+    parentFolderId: string | null
+  }
+  editFolderModal: {
+    open: boolean
+    folderId: string | null
+  }
 }
 
 function FolderCard({
   folder,
   organizationName,
+  currentFolderPath,
   onDelete,
   onUpload,
+  onEdit,
+  onCreateSubfolder,
 }: {
   folder: Folder
   organizationName: string
+  currentFolderPath: string
   onDelete: (id: string, name: string) => void
   onUpload: (folderId: string) => void
+  onEdit: (folderId: string) => void
+  onCreateSubfolder: (parentFolderId: string) => void
 }) {
   const visibilityColors = {
     public: 'bg-green-100 text-green-800',
@@ -83,13 +101,13 @@ function FolderCard({
       id: 'rename',
       label: 'Rename folder',
       icon: <PencilIcon className="h-5 w-5" />,
-      onClick: () => {}, // TODO: Implement rename functionality
+      onClick: () => onEdit(folder.id),
     },
     {
       id: 'create-subfolder',
       label: 'Create subfolder',
       icon: <FolderIcon className="h-5 w-5" />,
-      onClick: () => {}, // TODO: Implement create subfolder
+      onClick: () => onCreateSubfolder(folder.id),
     },
     {
       id: 'upload',
@@ -173,7 +191,7 @@ function FolderCard({
 
       <div className="mt-4 flex items-center justify-between">
         <Link
-          href={`/${organizationName}/${folder.folder_name}`}
+          href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${folder.folder_name}`}
           className="text-sm font-medium text-sky-600 hover:text-sky-800"
         >
           Open folder →
@@ -256,7 +274,7 @@ function PresentationCard({
 
       <div className="mt-4 flex items-center justify-between">
         <Link
-          href={`/${organizationName}/${currentFolderPath}/${presentation.presentation_name}.presentation`}
+          href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${presentation.presentation_name}.presentation`}
           className="text-sm font-medium text-sky-600 hover:text-sky-800"
         >
           View presentation →
@@ -341,7 +359,7 @@ function SlideCard({
 
       <div className="mt-4 flex items-center justify-between">
         <Link
-          href={`/${organizationName}/${currentFolderPath}/${slide.slide_name}.slide`}
+          href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${slide.slide_name}.slide`}
           className="text-sm font-medium text-sky-600 hover:text-sky-800"
         >
           View slide →
@@ -359,12 +377,15 @@ export default function FolderContentList({
   organizationName,
   currentFolderPath,
   organizationId,
+  currentFolderId,
 }: FolderContentListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState<string>('all')
   const [actionStates, setActionStates] = useState<ActionStates>({
     deleteConfirm: { open: false, item: null },
     uploadModal: { open: false, folderId: null },
+    createFolderModal: { open: false, parentFolderId: null },
+    editFolderModal: { open: false, folderId: null },
   })
 
   const handleDelete = (
@@ -385,23 +406,47 @@ export default function FolderContentList({
     })
   }
 
+  const handleEditFolder = (folderId: string) => {
+    setActionStates({
+      ...actionStates,
+      editFolderModal: { open: true, folderId },
+    })
+  }
+
+  const handleCreateSubfolder = (parentFolderId: string) => {
+    setActionStates({
+      ...actionStates,
+      createFolderModal: { open: true, parentFolderId },
+    })
+  }
+
   const confirmDelete = async () => {
     const { item } = actionStates.deleteConfirm
     if (!item) return
 
     try {
-      // TODO: Implement API call to delete item
-      console.log(`Deleting ${item.type} ${item.id}`)
-      // This would be replaced with actual API call
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
+      if (item.type === 'folder') {
+        const result = await deleteFolder(organizationName, item.id)
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to delete folder')
+        }
+      } else {
+        // TODO: Implement API calls for presentations and slides
+        console.log(`Deleting ${item.type} ${item.id}`)
+        await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
+      }
 
-      // Close dialog
+      // Close dialog and refresh
       setActionStates({
         ...actionStates,
         deleteConfirm: { open: false, item: null },
       })
+
+      // Refresh the page to show updated content
+      window.location.reload()
     } catch (error) {
       console.error('Failed to delete item:', error)
+      // You could show an error toast here instead of console.error
     }
   }
 
@@ -419,10 +464,35 @@ export default function FolderContentList({
     })
   }
 
+  const closeCreateFolderModal = () => {
+    setActionStates({
+      ...actionStates,
+      createFolderModal: { open: false, parentFolderId: null },
+    })
+  }
+
+  const closeEditFolderModal = () => {
+    setActionStates({
+      ...actionStates,
+      editFolderModal: { open: false, folderId: null },
+    })
+  }
+
   const handleUploadSuccess = () => {
     // Close the modal
     closeUploadModal()
     // Refresh the page or update the state
+    window.location.reload()
+  }
+
+  const handleFolderSuccess = () => {
+    // Close any open folder modals
+    setActionStates({
+      ...actionStates,
+      createFolderModal: { open: false, parentFolderId: null },
+      editFolderModal: { open: false, folderId: null },
+    })
+    // Refresh the page to show updated content
     window.location.reload()
   }
 
@@ -582,10 +652,13 @@ export default function FolderContentList({
                             key={folder.id}
                             folder={folder}
                             organizationName={organizationName}
+                            currentFolderPath={currentFolderPath}
                             onDelete={(id, name) =>
                               handleDelete(id, name, 'folder')
                             }
                             onUpload={handleUpload}
+                            onEdit={handleEditFolder}
+                            onCreateSubfolder={handleCreateSubfolder}
                           />
                         ))}
                     </div>
@@ -728,6 +801,28 @@ export default function FolderContentList({
           organizationId={organizationId}
           folderId={actionStates.uploadModal.folderId}
           onUploadSuccess={handleUploadSuccess}
+        />
+      )}
+
+      {/* Create Folder Modal */}
+      {actionStates.createFolderModal.parentFolderId && (
+        <CreateFolderModal
+          isOpen={actionStates.createFolderModal.open}
+          onClose={closeCreateFolderModal}
+          organizationName={organizationName}
+          parentFolderId={actionStates.createFolderModal.parentFolderId}
+          onSuccess={handleFolderSuccess}
+        />
+      )}
+
+      {/* Edit Folder Modal */}
+      {actionStates.editFolderModal.folderId && (
+        <EditFolderModal
+          isOpen={actionStates.editFolderModal.open}
+          onClose={closeEditFolderModal}
+          organizationName={organizationName}
+          folderId={actionStates.editFolderModal.folderId}
+          onSuccess={handleFolderSuccess}
         />
       )}
     </div>
