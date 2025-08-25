@@ -17,13 +17,14 @@ export function getSlideImageUrl(
   slideId: string,
   objectId: string,
 ): string {
-  const publicId = `${organizationId}/${slideId}/${objectId}`
+  const publicId = `${organizationId}/${slideId}/${objectId}.png`
 
   // Let Cloudinary handle delivery; skip Next/Image optimization by using <img>
   return cloudinary.url(publicId, {
-    resource_type: 'image',
-    type: 'upload',
-    format: 'png',
+    type: 'authenticated',
+    sign_url: true,
+    quality: 'auto',
+    fetch_format: 'auto',
     secure: true,
   })
 }
