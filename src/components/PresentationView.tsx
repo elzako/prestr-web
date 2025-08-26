@@ -1,6 +1,5 @@
-'use client'
-
 import type { Tables } from '../../types/database.types'
+import { getSlideImageUrl } from '@/lib/cloudinary'
 
 type Organization = Pick<
   Tables<'organizations'>,
@@ -26,7 +25,7 @@ interface PresentationViewProps {
   folderPath: string
 }
 
-export default function PresentationView({
+export default async function PresentationView({
   presentation,
   organization,
   folderPath,
@@ -39,7 +38,7 @@ export default function PresentationView({
   const slides = presentation.slides as
     | {
         order: number
-        slide_key: string
+        slide_id: string
         object_id: string
         url?: string
       }[]
@@ -206,36 +205,54 @@ export default function PresentationView({
           {slides && slides.length > 0 && (
             <div className="mb-6">
               <h3 className="mb-3 text-lg font-medium text-gray-900">Slides</h3>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {slides
                   .sort((a, b) => a.order - b.order)
-                  .map((slide, index) => (
-                    <div
-                      key={slide.slide_key}
-                      className="rounded-lg border border-gray-200 bg-gray-50 p-4"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-medium text-indigo-600">
-                            {slide.order || index + 1}
-                          </div>
-                          <span className="ml-3 text-sm font-medium text-gray-900">
-                            Slide {slide.order || index + 1}
-                          </span>
+                  .map((slide, index) => {
+                    const slideImageUrl = getSlideImageUrl(
+                      organization.id,
+                      slide.slide_id,
+                      slide.object_id,
+                    )
+
+                    return (
+                      <div
+                        key={slide.slide_id}
+                        className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+                      >
+                        {/* Slide image */}
+                        <div className="mb-3">
+                          <img
+                            src={slideImageUrl}
+                            alt={`Slide ${slide.order || index + 1}`}
+                            className="w-full rounded-md border border-gray-200"
+                          />
                         </div>
-                        {slide.url && (
-                          <a
-                            href={slide.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-indigo-600 hover:text-indigo-500"
-                          >
-                            View
-                          </a>
-                        )}
+
+                        {/* Slide info */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 text-xs font-medium text-indigo-600">
+                              {slide.order || index + 1}
+                            </div>
+                            <span className="ml-2 text-sm font-medium text-gray-900">
+                              Slide {slide.order || index + 1}
+                            </span>
+                          </div>
+                          {slide.url && (
+                            <a
+                              href={slide.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-indigo-600 hover:text-indigo-500"
+                            >
+                              View
+                            </a>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
               </div>
             </div>
           )}

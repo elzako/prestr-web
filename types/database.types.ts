@@ -743,7 +743,7 @@ export type Database = {
           }
           slides?: {
             order: number
-            slide_key: string
+            slide_id: string
             object_id: string
             url?: string
           }[]
@@ -772,7 +772,7 @@ export type Database = {
           }
           slides?: {
             order: number
-            slide_key: string
+            slide_id: string
             object_id: string
             url?: string
           }[]
@@ -802,7 +802,7 @@ export type Database = {
           }
           slides?: {
             order: number
-            slide_key: string
+            slide_id: string
             object_id: string
             url?: string
           }[]
