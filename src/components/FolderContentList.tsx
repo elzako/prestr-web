@@ -8,7 +8,6 @@ import ConfirmDialog from './ConfirmDialog'
 import UploadModal from './UploadModal'
 import CreateFolderModal from './CreateFolderModal'
 import EditFolderModal from './EditFolderModal'
-import SearchResults from './SearchResults'
 import { deleteFolder } from '@/lib/folder-actions'
 import {
   PencilIcon,
@@ -16,7 +15,6 @@ import {
   ArrowUpTrayIcon,
   TrashIcon,
   DocumentDuplicateIcon,
-  MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
 
 type Folder = Pick<
@@ -381,9 +379,6 @@ export default function FolderContentList({
   organizationId,
   currentFolderId,
 }: FolderContentListProps) {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedType, setSelectedType] = useState<string>('all')
-  const [isSearchMode, setIsSearchMode] = useState(false)
   const [actionStates, setActionStates] = useState<ActionStates>({
     deleteConfirm: { open: false, item: null },
     uploadModal: { open: false, folderId: null },
@@ -499,33 +494,6 @@ export default function FolderContentList({
     window.location.reload()
   }
 
-  // Combine all content for filtering
-  const allItems = [
-    ...content.folders.map((f) => ({ ...f, type: 'folder' as const })),
-    ...content.presentations.map((p) => ({
-      ...p,
-      type: 'presentation' as const,
-    })),
-    ...content.slides.map((s) => ({ ...s, type: 'slide' as const })),
-  ]
-
-  // Filter items based on search term and type
-  const filteredItems = allItems.filter((item) => {
-    let name = ''
-    if (item.type === 'folder') {
-      name = (item as any).folder_name
-    } else if (item.type === 'presentation') {
-      name = (item as any).presentation_name
-    } else {
-      name = (item as any).slide_name
-    }
-
-    const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesType = selectedType === 'all' || item.type === selectedType
-
-    return matchesSearch && matchesType
-  })
-
   const totalItems =
     content.folders.length +
     content.presentations.length +
@@ -557,262 +525,73 @@ export default function FolderContentList({
 
   return (
     <div className="mt-6">
-      {/* Search and Filter Controls */}
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row">
-        <div className="flex-1">
-          <label htmlFor="search" className="sr-only">
-            Search content
-          </label>
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg
-                className="h-5 w-5 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      {/* Content Sections */}
+      <div className="space-y-8">
+        {/* Folders Section */}
+        {content.folders.length > 0 && (
+          <div>
+            <h3 className="mb-4 text-lg font-medium text-gray-900">
+              Folders ({content.folders.length})
+            </h3>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {content.folders.map((folder) => (
+                <FolderCard
+                  key={folder.id}
+                  folder={folder}
+                  organizationName={organizationName}
+                  currentFolderPath={currentFolderPath}
+                  onDelete={(id, name) => handleDelete(id, name, 'folder')}
+                  onUpload={handleUpload}
+                  onEdit={handleEditFolder}
+                  onCreateSubfolder={handleCreateSubfolder}
                 />
-              </svg>
+              ))}
             </div>
-            <input
-              id="search"
-              name="search"
-              type="text"
-              placeholder="Search folders, presentations, and slides..."
-              value={searchTerm}
-              onChange={(e) => {
-                const value = e.target.value
-                setSearchTerm(value)
-                setIsSearchMode(value.trim().length > 0)
-              }}
-              className="block w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-10 leading-5 placeholder-gray-500 focus:border-sky-500 focus:placeholder-gray-400 focus:ring-1 focus:ring-sky-500 focus:outline-none sm:text-sm"
-            />
           </div>
-        </div>
+        )}
 
-        <div className="sm:w-48">
-          <label htmlFor="type" className="sr-only">
-            Filter by type
-          </label>
-          <select
-            id="type"
-            name="type"
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
-          >
-            <option value="all">All types</option>
-            <option value="folder">Folders</option>
-            <option value="presentation">Presentations</option>
-            <option value="slide">Slides</option>
-          </select>
-        </div>
+        {/* Presentations Section */}
+        {content.presentations.length > 0 && (
+          <div>
+            <h3 className="mb-4 text-lg font-medium text-gray-900">
+              Presentations ({content.presentations.length})
+            </h3>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {content.presentations.map((presentation) => (
+                <PresentationCard
+                  key={presentation.id}
+                  presentation={presentation}
+                  organizationName={organizationName}
+                  currentFolderPath={currentFolderPath}
+                  onDelete={(id, name) =>
+                    handleDelete(id, name, 'presentation')
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Slides Section */}
+        {content.slides.length > 0 && (
+          <div>
+            <h3 className="mb-4 text-lg font-medium text-gray-900">
+              Slides ({content.slides.length})
+            </h3>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {content.slides.map((slide) => (
+                <SlideCard
+                  key={slide.id}
+                  slide={slide}
+                  organizationName={organizationName}
+                  currentFolderPath={currentFolderPath}
+                  onDelete={(id, name) => handleDelete(id, name, 'slide')}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Global Search Toggle */}
-      {searchTerm.trim() && (
-        <div className="mb-4 flex items-center gap-4">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={isSearchMode}
-              onChange={(e) => setIsSearchMode(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
-            />
-            <span className="text-sm font-medium text-gray-700">
-              Search across all slides with MeiliSearch
-            </span>
-            <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
-          </label>
-        </div>
-      )}
-
-      {/* Results count */}
-      {(searchTerm || selectedType !== 'all') && !isSearchMode && (
-        <div className="mb-4 text-sm text-gray-600">
-          {filteredItems.length === 0
-            ? 'No items match your filters'
-            : `${filteredItems.length} of ${totalItems} items`}
-        </div>
-      )}
-
-      {/* Search Results or Content Sections */}
-      {isSearchMode && organizationId ? (
-        <SearchResults
-          organizationName={organizationName}
-          organizationId={organizationId}
-          searchQuery={searchTerm}
-          isSearchMode={isSearchMode}
-        />
-      ) : filteredItems.length > 0 ? (
-        <div className="space-y-8">
-          {/* Folders Section */}
-          {(selectedType === 'all' || selectedType === 'folder') && (
-            <>
-              {content.folders.length > 0 &&
-                content.folders.some((f) =>
-                  f.folder_name
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()),
-                ) && (
-                  <div>
-                    <h3 className="mb-4 text-lg font-medium text-gray-900">
-                      Folders (
-                      {
-                        content.folders.filter((f) =>
-                          f.folder_name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()),
-                        ).length
-                      }
-                      )
-                    </h3>
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {content.folders
-                        .filter((f) =>
-                          f.folder_name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()),
-                        )
-                        .map((folder) => (
-                          <FolderCard
-                            key={folder.id}
-                            folder={folder}
-                            organizationName={organizationName}
-                            currentFolderPath={currentFolderPath}
-                            onDelete={(id, name) =>
-                              handleDelete(id, name, 'folder')
-                            }
-                            onUpload={handleUpload}
-                            onEdit={handleEditFolder}
-                            onCreateSubfolder={handleCreateSubfolder}
-                          />
-                        ))}
-                    </div>
-                  </div>
-                )}
-            </>
-          )}
-
-          {/* Presentations Section */}
-          {(selectedType === 'all' || selectedType === 'presentation') && (
-            <>
-              {content.presentations.length > 0 &&
-                content.presentations.some((p) =>
-                  p.presentation_name
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()),
-                ) && (
-                  <div>
-                    <h3 className="mb-4 text-lg font-medium text-gray-900">
-                      Presentations (
-                      {
-                        content.presentations.filter((p) =>
-                          p.presentation_name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()),
-                        ).length
-                      }
-                      )
-                    </h3>
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {content.presentations
-                        .filter((p) =>
-                          p.presentation_name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()),
-                        )
-                        .map((presentation) => (
-                          <PresentationCard
-                            key={presentation.id}
-                            presentation={presentation}
-                            organizationName={organizationName}
-                            currentFolderPath={currentFolderPath}
-                            onDelete={(id, name) =>
-                              handleDelete(id, name, 'presentation')
-                            }
-                          />
-                        ))}
-                    </div>
-                  </div>
-                )}
-            </>
-          )}
-
-          {/* Slides Section */}
-          {(selectedType === 'all' || selectedType === 'slide') && (
-            <>
-              {content.slides.length > 0 &&
-                content.slides.some((s) =>
-                  s.slide_name
-                    ?.toLowerCase()
-                    .includes(searchTerm.toLowerCase()),
-                ) && (
-                  <div>
-                    <h3 className="mb-4 text-lg font-medium text-gray-900">
-                      Slides (
-                      {
-                        content.slides.filter((s) =>
-                          s.slide_name
-                            ?.toLowerCase()
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()),
-                        ).length
-                      }
-                      )
-                    </h3>
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {content.slides
-                        .filter((s) =>
-                          s.slide_name
-                            ?.toLowerCase()
-                            .includes(searchTerm.toLowerCase()),
-                        )
-                        .map((slide) => (
-                          <SlideCard
-                            key={slide.id}
-                            slide={slide}
-                            organizationName={organizationName}
-                            currentFolderPath={currentFolderPath}
-                            onDelete={(id, name) =>
-                              handleDelete(id, name, 'slide')
-                            }
-                          />
-                        ))}
-                    </div>
-                  </div>
-                )}
-            </>
-          )}
-        </div>
-      ) : searchTerm || selectedType !== 'all' ? (
-        <div className="py-12 text-center">
-          <svg
-            className="mx-auto h-12 w-12 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            />
-          </svg>
-          <h3 className="mt-2 text-sm font-medium text-gray-900">
-            No matching content
-          </h3>
-          <p className="mt-1 text-sm text-gray-500">
-            Try adjusting your search or filter criteria.
-          </p>
-        </div>
-      ) : null}
 
       {/* Delete Confirmation Dialog */}
       <ConfirmDialog
