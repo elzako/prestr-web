@@ -8,6 +8,7 @@ import ConfirmDialog from './ConfirmDialog'
 import UploadModal from './UploadModal'
 import CreateFolderModal from './CreateFolderModal'
 import EditFolderModal from './EditFolderModal'
+import SearchResults from './SearchResults'
 import { deleteFolder } from '@/lib/folder-actions'
 import {
   PencilIcon,
@@ -15,6 +16,7 @@ import {
   ArrowUpTrayIcon,
   TrashIcon,
   DocumentDuplicateIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
 
 type Folder = Pick<
@@ -381,6 +383,7 @@ export default function FolderContentList({
 }: FolderContentListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState<string>('all')
+  const [isSearchMode, setIsSearchMode] = useState(false)
   const [actionStates, setActionStates] = useState<ActionStates>({
     deleteConfirm: { open: false, item: null },
     uploadModal: { open: false, folderId: null },
@@ -582,7 +585,11 @@ export default function FolderContentList({
               type="text"
               placeholder="Search folders, presentations, and slides..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+                setSearchTerm(value)
+                setIsSearchMode(value.trim().length > 0)
+              }}
               className="block w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-10 leading-5 placeholder-gray-500 focus:border-sky-500 focus:placeholder-gray-400 focus:ring-1 focus:ring-sky-500 focus:outline-none sm:text-sm"
             />
           </div>
@@ -607,8 +614,26 @@ export default function FolderContentList({
         </div>
       </div>
 
+      {/* Global Search Toggle */}
+      {searchTerm.trim() && (
+        <div className="mb-4 flex items-center gap-4">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={isSearchMode}
+              onChange={(e) => setIsSearchMode(e.target.checked)}
+              className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
+            />
+            <span className="text-sm font-medium text-gray-700">
+              Search across all slides with MeiliSearch
+            </span>
+            <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
+          </label>
+        </div>
+      )}
+
       {/* Results count */}
-      {(searchTerm || selectedType !== 'all') && (
+      {(searchTerm || selectedType !== 'all') && !isSearchMode && (
         <div className="mb-4 text-sm text-gray-600">
           {filteredItems.length === 0
             ? 'No items match your filters'
@@ -616,8 +641,15 @@ export default function FolderContentList({
         </div>
       )}
 
-      {/* Content Sections */}
-      {filteredItems.length > 0 ? (
+      {/* Search Results or Content Sections */}
+      {isSearchMode && organizationId ? (
+        <SearchResults
+          organizationName={organizationName}
+          organizationId={organizationId}
+          searchQuery={searchTerm}
+          isSearchMode={isSearchMode}
+        />
+      ) : filteredItems.length > 0 ? (
         <div className="space-y-8">
           {/* Folders Section */}
           {(selectedType === 'all' || selectedType === 'folder') && (

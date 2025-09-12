@@ -111,9 +111,7 @@ function ProjectCard({
             </h3>
 
             {projectDescription && (
-              <p className="mt-1 line-clamp-2 text-sm text-gray-500">
-                {projectDescription}
-              </p>
+              <p className="mt-1 text-sm text-gray-500">{projectDescription}</p>
             )}
 
             {/* Tags */}
