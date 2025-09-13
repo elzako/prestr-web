@@ -12,6 +12,7 @@ interface SearchResult {
   visibility: 'public' | 'private' | 'restricted'
   organization_id: string
   project_id: string
+  parent_path: string | null
   tags: string[] | null
   slide_text: string
   notes_text: string
@@ -68,108 +69,104 @@ function SearchResultCard({
   if (result.has_audio) features.push('Audio')
 
   return (
-    <div className="group relative rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
-      <div className="flex gap-4">
-        {/* Slide Image */}
-        {result.imageUrl && (
-          <div className="flex-shrink-0">
-            <div className="h-32 w-48 overflow-hidden rounded-lg bg-gray-100">
-              <img
-                src={result.imageUrl}
-                alt={result.slide_name}
-                className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                loading="lazy"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement
-                  target.style.display = 'none'
-                }}
+    <Link
+      href={`/${organizationName}${result.parent_path}/${result.slide_name}.slide`}
+      className="group relative block overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+    >
+      {/* Main Image */}
+      <div className="relative aspect-[16/9] overflow-hidden bg-gray-100">
+        {result.imageUrl ? (
+          <img
+            src={result.imageUrl}
+            alt={result.slide_name || 'Slide thumbnail'}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
+            <svg
+              className="h-16 w-16 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 01-2 2z"
               />
-            </div>
+            </svg>
           </div>
         )}
 
-        {/* Content */}
-        <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <h3 className="truncate text-lg font-semibold text-gray-900">
-                  {result.slide_name}
-                </h3>
-                <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${visibilityColor}`}
-                >
-                  {result.visibility}
-                </span>
-              </div>
-
-              {result.description && (
-                <p className="mt-1 line-clamp-2 text-sm text-gray-600">
-                  {result.description}
-                </p>
-              )}
-
-              {/* Layout and Theme */}
-              <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
-                <span>{result.layout_name}</span>
-                <span>•</span>
-                <span>{result.theme_name}</span>
-              </div>
-
-              {/* Content Features */}
-              {features.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-1">
-                  {features.slice(0, 4).map((feature, index) => (
-                    <span
-                      key={index}
-                      className="inline-flex items-center rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                  {features.length > 4 && (
-                    <span className="inline-flex items-center rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
-                      +{features.length - 4} more
-                    </span>
-                  )}
-                </div>
-              )}
-
-              {/* Tags */}
+        {/* Hover Overlay with Metadata */}
+        <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <div className="flex h-full flex-col justify-between p-4">
+            {/* Top section - Tags */}
+            <div>
               {result.tags && result.tags.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1">
                   {result.tags.slice(0, 3).map((tag, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800"
+                      className="inline-flex items-center rounded bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm"
                     >
                       {tag}
                     </span>
                   ))}
                   {result.tags.length > 3 && (
-                    <span className="inline-flex items-center rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
-                      +{result.tags.length - 3} more
+                    <span className="inline-flex items-center rounded bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                      +{result.tags.length - 3}
                     </span>
                   )}
                 </div>
               )}
             </div>
-          </div>
 
-          <div className="mt-4 flex items-center justify-between">
-            <Link
-              href={`/${organizationName}/${result.slide_name}.slide`}
-              className="text-sm font-medium text-sky-600 hover:text-sky-800"
-            >
-              View slide →
-            </Link>
-            <div className="text-xs text-gray-400">
-              {new Date(result.created_at).toLocaleDateString()}
+            {/* Middle section - Description/Content */}
+            <div className="flex flex-1 items-center justify-center">
+              {result.description && (
+                <p className="line-clamp-3 text-center text-sm text-white/90">
+                  {result.description}
+                </p>
+              )}
+            </div>
+
+            {/* Bottom section - Features and Visibility */}
+            <div className="flex items-end justify-between">
+              {/* Features */}
+              <div className="flex flex-wrap gap-1">
+                {features.slice(0, 3).map((feature) => (
+                  <span
+                    key={feature}
+                    className="inline-flex items-center rounded bg-blue-500/80 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm"
+                  >
+                    {feature}
+                  </span>
+                ))}
+                {features.length > 3 && (
+                  <span className="inline-flex items-center rounded bg-blue-500/80 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                    +{features.length - 3}
+                  </span>
+                )}
+              </div>
+
+              {/* Visibility badge */}
+              <span className="inline-flex items-center rounded bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                {result.visibility}
+              </span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Title - Always visible */}
+      <div className="p-3">
+        <h3 className="line-clamp-2 text-sm font-medium text-gray-900 group-hover:text-sky-600">
+          {result.slide_name || 'Untitled Slide'}
+        </h3>
+      </div>
+    </Link>
   )
 }
 
@@ -292,11 +289,12 @@ export default function SearchResults({
 
   return (
     <div className="mt-6">
-      <div className="mb-4 text-sm text-gray-600">
+      <div className="mb-6 text-sm text-gray-600">
         Found {total} result{total === 1 ? '' : 's'} for "{searchQuery}"
       </div>
 
-      <div className="space-y-4">
+      {/* Masonry-style grid */}
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         {results.map((result) => (
           <SearchResultCard
             key={result.id}
@@ -307,7 +305,7 @@ export default function SearchResults({
       </div>
 
       {results.length < total && (
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
             Showing {results.length} of {total} results
           </p>

@@ -8,6 +8,7 @@ import ConfirmDialog from './ConfirmDialog'
 import UploadModal from './UploadModal'
 import CreateFolderModal from './CreateFolderModal'
 import EditFolderModal from './EditFolderModal'
+import SearchResults from './SearchResults'
 import { deleteFolder } from '@/lib/folder-actions'
 import {
   PencilIcon,
@@ -15,6 +16,8 @@ import {
   ArrowUpTrayIcon,
   TrashIcon,
   DocumentDuplicateIcon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
 } from '@heroicons/react/20/solid'
 
 type Folder = Pick<
@@ -66,6 +69,10 @@ interface ActionStates {
   editFolderModal: {
     open: boolean
     folderId: string | null
+  }
+  search: {
+    isSearchMode: boolean
+    query: string
   }
 }
 
@@ -384,6 +391,7 @@ export default function FolderContentList({
     uploadModal: { open: false, folderId: null },
     createFolderModal: { open: false, parentFolderId: null },
     editFolderModal: { open: false, folderId: null },
+    search: { isSearchMode: false, query: '' },
   })
 
   const handleDelete = (
@@ -494,6 +502,28 @@ export default function FolderContentList({
     window.location.reload()
   }
 
+  const toggleSearchMode = () => {
+    setActionStates({
+      ...actionStates,
+      search: {
+        isSearchMode: !actionStates.search.isSearchMode,
+        query: actionStates.search.isSearchMode
+          ? ''
+          : actionStates.search.query,
+      },
+    })
+  }
+
+  const handleSearchQueryChange = (query: string) => {
+    setActionStates({
+      ...actionStates,
+      search: {
+        ...actionStates.search,
+        query,
+      },
+    })
+  }
+
   const totalItems =
     content.folders.length +
     content.presentations.length +
@@ -525,73 +555,127 @@ export default function FolderContentList({
 
   return (
     <div className="mt-6">
-      {/* Content Sections */}
-      <div className="space-y-8">
-        {/* Folders Section */}
-        {content.folders.length > 0 && (
-          <div>
-            <h3 className="mb-4 text-lg font-medium text-gray-900">
-              Folders ({content.folders.length})
-            </h3>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {content.folders.map((folder) => (
-                <FolderCard
-                  key={folder.id}
-                  folder={folder}
-                  organizationName={organizationName}
-                  currentFolderPath={currentFolderPath}
-                  onDelete={(id, name) => handleDelete(id, name, 'folder')}
-                  onUpload={handleUpload}
-                  onEdit={handleEditFolder}
-                  onCreateSubfolder={handleCreateSubfolder}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Presentations Section */}
-        {content.presentations.length > 0 && (
-          <div>
-            <h3 className="mb-4 text-lg font-medium text-gray-900">
-              Presentations ({content.presentations.length})
-            </h3>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {content.presentations.map((presentation) => (
-                <PresentationCard
-                  key={presentation.id}
-                  presentation={presentation}
-                  organizationName={organizationName}
-                  currentFolderPath={currentFolderPath}
-                  onDelete={(id, name) =>
-                    handleDelete(id, name, 'presentation')
-                  }
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Slides Section */}
-        {content.slides.length > 0 && (
-          <div>
-            <h3 className="mb-4 text-lg font-medium text-gray-900">
-              Slides ({content.slides.length})
-            </h3>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {content.slides.map((slide) => (
-                <SlideCard
-                  key={slide.id}
-                  slide={slide}
-                  organizationName={organizationName}
-                  currentFolderPath={currentFolderPath}
-                  onDelete={(id, name) => handleDelete(id, name, 'slide')}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+      {/* Search Toggle and Input */}
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={toggleSearchMode}
+            className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+              actionStates.search.isSearchMode
+                ? 'bg-sky-100 text-sky-700 hover:bg-sky-200'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            {actionStates.search.isSearchMode ? (
+              <>
+                <XMarkIcon className="h-4 w-4" />
+                Exit Search
+              </>
+            ) : (
+              <>
+                <MagnifyingGlassIcon className="h-4 w-4" />
+                Search Slides
+              </>
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* Search Input */}
+      {actionStates.search.isSearchMode && (
+        <div className="mb-6">
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search slides by content, tags, or features..."
+              value={actionStates.search.query}
+              onChange={(e) => handleSearchQueryChange(e.target.value)}
+              className="block w-full rounded-lg border border-gray-300 bg-white py-2 pr-3 pl-10 text-sm placeholder-gray-500 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
+              autoFocus
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Search Results or Content Sections */}
+      {actionStates.search.isSearchMode && organizationId ? (
+        <SearchResults
+          organizationName={organizationName}
+          organizationId={organizationId}
+          searchQuery={actionStates.search.query}
+          isSearchMode={actionStates.search.isSearchMode}
+        />
+      ) : (
+        <div className="space-y-8">
+          {/* Folders Section */}
+          {content.folders.length > 0 && (
+            <div>
+              <h3 className="mb-4 text-lg font-medium text-gray-900">
+                Folders ({content.folders.length})
+              </h3>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {content.folders.map((folder) => (
+                  <FolderCard
+                    key={folder.id}
+                    folder={folder}
+                    organizationName={organizationName}
+                    currentFolderPath={currentFolderPath}
+                    onDelete={(id, name) => handleDelete(id, name, 'folder')}
+                    onUpload={handleUpload}
+                    onEdit={handleEditFolder}
+                    onCreateSubfolder={handleCreateSubfolder}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Presentations Section */}
+          {content.presentations.length > 0 && (
+            <div>
+              <h3 className="mb-4 text-lg font-medium text-gray-900">
+                Presentations ({content.presentations.length})
+              </h3>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {content.presentations.map((presentation) => (
+                  <PresentationCard
+                    key={presentation.id}
+                    presentation={presentation}
+                    organizationName={organizationName}
+                    currentFolderPath={currentFolderPath}
+                    onDelete={(id, name) =>
+                      handleDelete(id, name, 'presentation')
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Slides Section */}
+          {content.slides.length > 0 && (
+            <div>
+              <h3 className="mb-4 text-lg font-medium text-gray-900">
+                Slides ({content.slides.length})
+              </h3>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {content.slides.map((slide) => (
+                  <SlideCard
+                    key={slide.id}
+                    slide={slide}
+                    organizationName={organizationName}
+                    currentFolderPath={currentFolderPath}
+                    onDelete={(id, name) => handleDelete(id, name, 'slide')}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Delete Confirmation Dialog */}
       <ConfirmDialog
