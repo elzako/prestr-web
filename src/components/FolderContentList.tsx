@@ -502,14 +502,22 @@ export default function FolderContentList({
     window.location.reload()
   }
 
-  const toggleSearchMode = () => {
+  const activateSearchMode = () => {
     setActionStates({
       ...actionStates,
       search: {
-        isSearchMode: !actionStates.search.isSearchMode,
-        query: actionStates.search.isSearchMode
-          ? ''
-          : actionStates.search.query,
+        ...actionStates.search,
+        isSearchMode: true,
+      },
+    })
+  }
+
+  const exitSearchMode = () => {
+    setActionStates({
+      ...actionStates,
+      search: {
+        isSearchMode: false,
+        query: '',
       },
     })
   }
@@ -555,50 +563,30 @@ export default function FolderContentList({
 
   return (
     <div className="mt-6">
-      {/* Search Toggle and Input */}
-      <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleSearchMode}
-            className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              actionStates.search.isSearchMode
-                ? 'bg-sky-100 text-sky-700 hover:bg-sky-200'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            {actionStates.search.isSearchMode ? (
-              <>
-                <XMarkIcon className="h-4 w-4" />
-                Exit Search
-              </>
-            ) : (
-              <>
-                <MagnifyingGlassIcon className="h-4 w-4" />
-                Search Slides
-              </>
-            )}
-          </button>
+      {/* Search Input */}
+      <div className="mb-6">
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search slides by content, tags, or features..."
+            value={actionStates.search.query}
+            onChange={(e) => handleSearchQueryChange(e.target.value)}
+            onFocus={activateSearchMode}
+            className="block w-full rounded-lg border border-gray-300 bg-white py-2 pr-10 pl-10 text-sm placeholder-gray-500 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
+          />
+          {actionStates.search.isSearchMode && actionStates.search.query && (
+            <button
+              onClick={exitSearchMode}
+              className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+            >
+              <XMarkIcon className="h-5 w-5" />
+            </button>
+          )}
         </div>
       </div>
-
-      {/* Search Input */}
-      {actionStates.search.isSearchMode && (
-        <div className="mb-6">
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              placeholder="Search slides by content, tags, or features..."
-              value={actionStates.search.query}
-              onChange={(e) => handleSearchQueryChange(e.target.value)}
-              className="block w-full rounded-lg border border-gray-300 bg-white py-2 pr-3 pl-10 text-sm placeholder-gray-500 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
-              autoFocus
-            />
-          </div>
-        </div>
-      )}
 
       {/* Search Results or Content Sections */}
       {actionStates.search.isSearchMode && organizationId ? (
