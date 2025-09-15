@@ -38,6 +38,7 @@ interface SearchResultsProps {
   organizationName: string
   organizationId: string
   projectId: string | null
+  subFolderIds: string[] | null
   searchQuery: string
   isSearchMode: boolean
 }
@@ -175,6 +176,7 @@ export default function SearchResults({
   organizationName,
   organizationId,
   projectId,
+  subFolderIds,
   searchQuery,
   isSearchMode,
 }: SearchResultsProps) {
@@ -202,6 +204,7 @@ export default function SearchResults({
         const response = await searchSlides({
           organizationId,
           projectId,
+          subFolderIds,
           query: debouncedQuery,
           limit: 20,
           offset: 0,

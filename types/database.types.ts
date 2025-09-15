@@ -1810,6 +1810,12 @@ export type Database = {
         }
         Returns: Partial<Tables<'slides'>>[]
       }
+      get_subfolder_ids_including_self: {
+        Args: {
+          p_folder_id: string
+        }
+        Returns: string[]
+      }
       get_user_notifications: {
         Args: {
           uid: string

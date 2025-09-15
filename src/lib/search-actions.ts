@@ -47,6 +47,7 @@ interface SearchResult extends MeiliSearchSlideResult {
 interface SearchOptions {
   organizationId: string
   projectId?: string | null
+  subFolderIds?: string[] | null
   query: string
   limit?: number
   offset?: number
@@ -62,6 +63,7 @@ export async function searchSlides(options: SearchOptions): Promise<{
   const {
     organizationId,
     projectId,
+    subFolderIds,
     query,
     limit = 20,
     offset = 0,
@@ -96,6 +98,11 @@ export async function searchSlides(options: SearchOptions): Promise<{
     // Add project filter if projectId is provided
     if (projectId) {
       filterArray.push(`project_id = "${projectId}"`)
+    }
+
+    // Add sub folder filters if subFolderIds is provided
+    if (subFolderIds && subFolderIds.length > 0) {
+      filterArray.push(`parent_id IN [${subFolderIds.join(',')}]`)
     }
 
     const allFilters = [...filterArray, ...filters].join(' AND ')

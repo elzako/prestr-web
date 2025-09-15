@@ -4,7 +4,7 @@ import type { Tables } from '../../../../types/database.types'
 import OrgHeader from '@/components/OrgHeader'
 import SlideView from '@/components/SlideView'
 import ProjectList from '@/components/ProjectList'
-import FolderViewClient from '@/components/FolderViewClient'
+import FolderView from '@/components/FolderView'
 import PresentationView from '@/components/PresentationView'
 
 // Disable caching for data freshness
@@ -149,6 +149,24 @@ async function getRootFolderId(folderId: string): Promise<string | null> {
   if (error) {
     console.error('Error fetching root folder ID:', error)
     return null
+  }
+
+  return data
+}
+
+async function getSubFolderIds(folderId: string): Promise<string[] | null> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase.rpc(
+    'get_subfolder_ids_including_self',
+    {
+      p_folder_id: folderId,
+    },
+  )
+
+  if (error) {
+    console.error('Error fetching sub folder IDs:', error)
+    return []
   }
 
   return data
@@ -389,9 +407,6 @@ export default async function OrganizationPage({ params }: PageProps) {
       notFound()
     }
 
-    console.log('folderId', folderId)
-    console.log('presentationName', presentationName)
-
     // Get presentation data
     const presentation = await getPresentationData(folderId, presentationName)
     if (!presentation) {
@@ -419,21 +434,23 @@ export default async function OrganizationPage({ params }: PageProps) {
       notFound()
     }
 
-    const [folderContent, projectId] = await Promise.all([
+    const [folderContent, projectId, subFolderIds] = await Promise.all([
       getFolderContent(folderId),
       getRootFolderId(folderId),
+      slug.length === 1 ? Promise.resolve([]) : getSubFolderIds(folderId),
     ])
 
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <OrgHeader organization={organization} />
-          <FolderViewClient
+          <FolderView
             organization={organization}
             folderId={folderId}
             folderPath={currentPath}
             content={folderContent}
             projectId={projectId}
+            subFolderIds={subFolderIds}
           />
         </div>
       </div>

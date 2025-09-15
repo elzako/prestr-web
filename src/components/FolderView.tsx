@@ -34,21 +34,23 @@ interface FolderContent {
   slides: Slide[]
 }
 
-interface FolderViewClientProps {
+interface FolderViewProps {
   organization: Organization
   folderId: string
   folderPath: string
   content: FolderContent
   projectId: string | null
+  subFolderIds: string[] | null
 }
 
-export default function FolderViewClient({
+export default function FolderView({
   organization,
   folderId,
   folderPath,
   content,
   projectId,
-}: FolderViewClientProps) {
+  subFolderIds,
+}: FolderViewProps) {
   const router = useRouter()
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
   const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false)
@@ -153,6 +155,7 @@ export default function FolderViewClient({
           organizationId={organization.id}
           currentFolderId={folderId}
           projectId={projectId}
+          subFolderIds={subFolderIds}
         />
       </div>
 
