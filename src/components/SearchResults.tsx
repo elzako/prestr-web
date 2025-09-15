@@ -37,6 +37,7 @@ interface SearchResult {
 interface SearchResultsProps {
   organizationName: string
   organizationId: string
+  projectId: string | null
   searchQuery: string
   isSearchMode: boolean
 }
@@ -173,6 +174,7 @@ function SearchResultCard({
 export default function SearchResults({
   organizationName,
   organizationId,
+  projectId,
   searchQuery,
   isSearchMode,
 }: SearchResultsProps) {
@@ -199,6 +201,7 @@ export default function SearchResults({
       try {
         const response = await searchSlides({
           organizationId,
+          projectId,
           query: debouncedQuery,
           limit: 20,
           offset: 0,

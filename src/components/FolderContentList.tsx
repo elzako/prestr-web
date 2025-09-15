@@ -47,6 +47,7 @@ interface FolderContentListProps {
   currentFolderPath: string
   organizationId?: string
   currentFolderId?: string
+  projectId?: string | null
 }
 
 interface ActionStates {
@@ -385,6 +386,7 @@ export default function FolderContentList({
   currentFolderPath,
   organizationId,
   currentFolderId,
+  projectId,
 }: FolderContentListProps) {
   const [actionStates, setActionStates] = useState<ActionStates>({
     deleteConfirm: { open: false, item: null },
@@ -593,6 +595,7 @@ export default function FolderContentList({
         <SearchResults
           organizationName={organizationName}
           organizationId={organizationId}
+          projectId={projectId || null}
           searchQuery={actionStates.search.query}
           isSearchMode={actionStates.search.isSearchMode}
         />

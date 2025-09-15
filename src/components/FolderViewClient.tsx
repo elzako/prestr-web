@@ -39,6 +39,7 @@ interface FolderViewClientProps {
   folderId: string
   folderPath: string
   content: FolderContent
+  projectId: string | null
 }
 
 export default function FolderViewClient({
@@ -46,6 +47,7 @@ export default function FolderViewClient({
   folderId,
   folderPath,
   content,
+  projectId,
 }: FolderViewClientProps) {
   const router = useRouter()
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
@@ -150,6 +152,7 @@ export default function FolderViewClient({
           currentFolderPath={folderPath}
           organizationId={organization.id}
           currentFolderId={folderId}
+          projectId={projectId}
         />
       </div>
 

@@ -139,6 +139,21 @@ async function getFolderId(
   return data
 }
 
+async function getRootFolderId(folderId: string): Promise<string | null> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase.rpc('get_root_folder_id', {
+    folder_id: folderId,
+  })
+
+  if (error) {
+    console.error('Error fetching root folder ID:', error)
+    return null
+  }
+
+  return data
+}
+
 async function getFolderContent(folderId: string): Promise<FolderContentData> {
   const supabase = await createClient()
 
@@ -404,7 +419,10 @@ export default async function OrganizationPage({ params }: PageProps) {
       notFound()
     }
 
-    const folderContent = await getFolderContent(folderId)
+    const [folderContent, projectId] = await Promise.all([
+      getFolderContent(folderId),
+      getRootFolderId(folderId),
+    ])
 
     return (
       <div className="min-h-screen bg-gray-50">
@@ -415,6 +433,7 @@ export default async function OrganizationPage({ params }: PageProps) {
             folderId={folderId}
             folderPath={currentPath}
             content={folderContent}
+            projectId={projectId}
           />
         </div>
       </div>

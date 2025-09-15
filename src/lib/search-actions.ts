@@ -46,6 +46,7 @@ interface SearchResult extends MeiliSearchSlideResult {
 
 interface SearchOptions {
   organizationId: string
+  projectId?: string | null
   query: string
   limit?: number
   offset?: number
@@ -60,6 +61,7 @@ export async function searchSlides(options: SearchOptions): Promise<{
 }> {
   const {
     organizationId,
+    projectId,
     query,
     limit = 20,
     offset = 0,
@@ -87,9 +89,16 @@ export async function searchSlides(options: SearchOptions): Promise<{
     // Get the slides index
     const index = client.index('slides')
 
-    // Build filter string for organization
+    // Build filter string for organization and project
     const orgFilter = `organization_id = "${organizationId}"`
-    const allFilters = [orgFilter, ...filters].join(' AND ')
+    const filterArray = [orgFilter]
+
+    // Add project filter if projectId is provided
+    if (projectId) {
+      filterArray.push(`project_id = "${projectId}"`)
+    }
+
+    const allFilters = [...filterArray, ...filters].join(' AND ')
 
     const supabase = await createClient()
 
