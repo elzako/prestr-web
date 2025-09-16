@@ -7,12 +7,15 @@ import {
   PencilIcon,
   TrashIcon,
   PlusIcon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import type { Tables } from '../../types/database.types'
 import CreateProjectModal from './CreateProjectModal'
 import EditProjectModal from './EditProjectModal'
 import ConfirmDialog from './ConfirmDialog'
+import SearchResults from './SearchResults'
 import { deleteProject, getUserOrganizationRole } from '@/lib/project-actions'
 
 type Project = Pick<
@@ -30,6 +33,7 @@ type Project = Pick<
 interface ProjectListProps {
   projects: Project[]
   organizationName: string
+  organizationId?: string
 }
 
 function ProjectCard({
@@ -161,14 +165,15 @@ function ProjectCard({
 export default function ProjectList({
   projects,
   organizationName,
+  organizationId,
 }: ProjectListProps) {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedVisibility, setSelectedVisibility] = useState<string>('all')
   const [userRole, setUserRole] = useState<string | null>(null)
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [editingProject, setEditingProject] = useState<Project | null>(null)
   const [deletingProject, setDeletingProject] = useState<Project | null>(null)
   const [deleteLoading, setDeleteLoading] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isSearchMode, setIsSearchMode] = useState(false)
 
   // Check user permissions
   useEffect(() => {
@@ -182,23 +187,6 @@ export default function ProjectList({
   }, [organizationName])
 
   const canManage = userRole === 'owner' || userRole === 'admin'
-
-  // Filter projects based on search term and visibility
-  const filteredProjects = projects.filter((project) => {
-    const projectDescription = (project.metadata as { description?: string })
-      ?.description
-    const matchesSearch =
-      project.folder_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      projectDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.tags?.some((tag) =>
-        tag.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-
-    const matchesVisibility =
-      selectedVisibility === 'all' || project.visibility === selectedVisibility
-
-    return matchesSearch && matchesVisibility
-  })
 
   const handleCreateSuccess = () => {
     // Refresh the page to show the new project
@@ -237,6 +225,19 @@ export default function ProjectList({
       setDeleteLoading(false)
       setDeletingProject(null)
     }
+  }
+
+  const activateSearchMode = () => {
+    setIsSearchMode(true)
+  }
+
+  const exitSearchMode = () => {
+    setIsSearchMode(false)
+    setSearchQuery('')
+  }
+
+  const handleSearchQueryChange = (query: string) => {
+    setSearchQuery(query)
   }
 
   if (projects.length === 0) {
@@ -307,90 +308,59 @@ export default function ProjectList({
   return (
     <div className="mt-6">
       {/* Header with Create Button */}
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="min-w-0 flex-1">
-          {/* Search and Filter Controls */}
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <div className="flex-1">
-              <label htmlFor="search" className="sr-only">
-                Search projects
-              </label>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <svg
-                    className="h-5 w-5 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  id="search"
-                  name="search"
-                  type="text"
-                  placeholder="Search projects..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-10 leading-5 placeholder-gray-500 focus:border-sky-500 focus:placeholder-gray-400 focus:ring-1 focus:ring-sky-500 focus:outline-none sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="sm:w-48">
-              <label htmlFor="visibility" className="sr-only">
-                Filter by visibility
-              </label>
-              <select
-                id="visibility"
-                name="visibility"
-                value={selectedVisibility}
-                onChange={(e) => setSelectedVisibility(e.target.value)}
-                className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
-              >
-                <option value="all">All visibility</option>
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-                <option value="restricted">Restricted</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-gray-900">Projects</h2>
         {/* Create Project Button */}
         {canManage && (
-          <div className="flex-shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsCreateModalOpen(true)}
-              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              <PlusIcon className="mr-1.5 -ml-0.5 h-5 w-5" aria-hidden="true" />
-              Create Project
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsCreateModalOpen(true)}
+            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <PlusIcon className="mr-1.5 -ml-0.5 h-5 w-5" aria-hidden="true" />
+            Create Project
+          </button>
         )}
       </div>
 
-      {/* Results count */}
-      {(searchTerm || selectedVisibility !== 'all') && (
-        <div className="mb-4 text-sm text-gray-600">
-          {filteredProjects.length === 0
-            ? 'No projects match your filters'
-            : `${filteredProjects.length} of ${projects.length} projects`}
+      {/* Search Input */}
+      <div className="mb-6">
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search slides by content, tags, or features..."
+            value={searchQuery}
+            onChange={(e) => handleSearchQueryChange(e.target.value)}
+            onFocus={activateSearchMode}
+            className="block w-full rounded-lg border border-gray-300 bg-white py-2 pr-10 pl-10 text-sm placeholder-gray-500 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:outline-none"
+          />
+          {isSearchMode && searchQuery && (
+            <button
+              onClick={exitSearchMode}
+              className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+            >
+              <XMarkIcon className="h-5 w-5" />
+            </button>
+          )}
         </div>
-      )}
+      </div>
 
-      {/* Projects Grid */}
-      {filteredProjects.length > 0 ? (
+      {/* Search Results or Projects Grid */}
+      {isSearchMode && organizationId ? (
+        <SearchResults
+          organizationName={organizationName}
+          organizationId={organizationId}
+          projectId={null}
+          subFolderIds={null}
+          searchQuery={searchQuery}
+          isSearchMode={isSearchMode}
+        />
+      ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((project) => (
+          {projects.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
@@ -401,29 +371,7 @@ export default function ProjectList({
             />
           ))}
         </div>
-      ) : searchTerm || selectedVisibility !== 'all' ? (
-        <div className="py-12 text-center">
-          <svg
-            className="mx-auto h-12 w-12 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            />
-          </svg>
-          <h3 className="mt-2 text-sm font-medium text-gray-900">
-            No matching projects
-          </h3>
-          <p className="mt-1 text-sm text-gray-500">
-            Try adjusting your search or filter criteria.
-          </p>
-        </div>
-      ) : null}
+      )}
 
       {/* Modals */}
       <CreateProjectModal

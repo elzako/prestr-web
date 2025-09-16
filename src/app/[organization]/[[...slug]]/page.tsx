@@ -344,22 +344,10 @@ export default async function OrganizationPage({ params }: PageProps) {
           <OrgHeader organization={organization} />
 
           <div className="mt-8">
-            <div className="sm:flex sm:items-center">
-              <div className="sm:flex-auto">
-                <h2 className="text-xl font-semibold text-gray-900">
-                  Projects
-                </h2>
-                <p className="mt-2 text-sm text-gray-700">
-                  {projects.length === 0
-                    ? 'No projects available yet.'
-                    : `${projects.length} project${projects.length === 1 ? '' : 's'} available`}
-                </p>
-              </div>
-            </div>
-
             <ProjectList
               projects={projects}
               organizationName={organizationName}
+              organizationId={organization.id}
             />
           </div>
         </div>
