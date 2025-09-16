@@ -7,6 +7,7 @@ import FolderContentList from './FolderContentList'
 import UploadModal from './UploadModal'
 import CreateFolderModal from './CreateFolderModal'
 import Breadcrumbs from './Breadcrumbs'
+import type { UserRoles } from '@/app/[organization]/[[...slug]]/page'
 
 type Organization = Pick<
   Tables<'organizations'>,
@@ -41,6 +42,7 @@ interface FolderViewProps {
   content: FolderContent
   projectId: string | null
   subFolderIds: string[] | null
+  userRoles: UserRoles | null
 }
 
 export default function FolderView({
@@ -50,6 +52,7 @@ export default function FolderView({
   content,
   projectId,
   subFolderIds,
+  userRoles,
 }: FolderViewProps) {
   const router = useRouter()
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
@@ -156,6 +159,7 @@ export default function FolderView({
           currentFolderId={folderId}
           projectId={projectId}
           subFolderIds={subFolderIds}
+          userRoles={userRoles}
         />
       </div>
 

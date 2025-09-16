@@ -17,6 +17,7 @@ import EditProjectModal from './EditProjectModal'
 import ConfirmDialog from './ConfirmDialog'
 import SearchResults from './SearchResults'
 import { deleteProject, getUserOrganizationRole } from '@/lib/project-actions'
+import type { UserRoles } from '@/app/[organization]/[[...slug]]/page'
 
 type Project = Pick<
   Tables<'folders'>,
@@ -34,6 +35,7 @@ interface ProjectListProps {
   projects: Project[]
   organizationName: string
   organizationId?: string
+  userRoles?: UserRoles | null
 }
 
 function ProjectCard({
@@ -166,6 +168,7 @@ export default function ProjectList({
   projects,
   organizationName,
   organizationId,
+  userRoles,
 }: ProjectListProps) {
   const [userRole, setUserRole] = useState<string | null>(null)
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -357,6 +360,7 @@ export default function ProjectList({
           subFolderIds={null}
           searchQuery={searchQuery}
           isSearchMode={isSearchMode}
+          userRoles={userRoles || null}
         />
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

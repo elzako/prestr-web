@@ -1,5 +1,6 @@
 'use client'
 
+import { UserRoles } from '@/app/[organization]/[[...slug]]/page'
 import { useDebounce } from '@/hooks/useDebounce'
 import { searchSlides } from '@/lib/search-actions'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
@@ -41,6 +42,7 @@ interface SearchResultsProps {
   subFolderIds: string[] | null
   searchQuery: string
   isSearchMode: boolean
+  userRoles: UserRoles | null
 }
 
 function SearchResultCard({
@@ -179,6 +181,7 @@ export default function SearchResults({
   subFolderIds,
   searchQuery,
   isSearchMode,
+  userRoles,
 }: SearchResultsProps) {
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
@@ -208,6 +211,7 @@ export default function SearchResults({
           query: debouncedQuery,
           limit: 20,
           offset: 0,
+          userRoles,
         })
 
         if (response.success) {

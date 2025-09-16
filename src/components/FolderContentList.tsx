@@ -10,6 +10,7 @@ import CreateFolderModal from './CreateFolderModal'
 import EditFolderModal from './EditFolderModal'
 import SearchResults from './SearchResults'
 import { deleteFolder } from '@/lib/folder-actions'
+import type { UserRoles } from '@/app/[organization]/[[...slug]]/page'
 import {
   PencilIcon,
   FolderIcon,
@@ -49,6 +50,7 @@ interface FolderContentListProps {
   currentFolderId?: string
   projectId?: string | null
   subFolderIds?: string[] | null
+  userRoles?: UserRoles | null
 }
 
 interface ActionStates {
@@ -389,6 +391,7 @@ export default function FolderContentList({
   currentFolderId,
   projectId,
   subFolderIds,
+  userRoles,
 }: FolderContentListProps) {
   const [actionStates, setActionStates] = useState<ActionStates>({
     deleteConfirm: { open: false, item: null },
@@ -601,6 +604,7 @@ export default function FolderContentList({
           subFolderIds={subFolderIds || null}
           searchQuery={actionStates.search.query}
           isSearchMode={actionStates.search.isSearchMode}
+          userRoles={userRoles || null}
         />
       ) : (
         <div className="space-y-8">

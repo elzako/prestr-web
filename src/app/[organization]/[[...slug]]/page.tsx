@@ -80,6 +80,11 @@ interface FolderContentData {
   slides: Slide[]
 }
 
+export interface UserRoles {
+  organizationRoles: string[]
+  folderRoles: { folder_id: string; user_role: string }[]
+}
+
 async function getOrganization(
   organizationName: string,
 ): Promise<Organization | null> {
@@ -97,6 +102,45 @@ async function getOrganization(
   }
 
   return data
+}
+
+async function getCurrentUserRoles(): Promise<UserRoles | null> {
+  const supabase = await createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return null
+  }
+
+  return await getUserRoles(user.id)
+}
+
+async function getUserRoles(userId: string): Promise<UserRoles> {
+  const supabase = await createClient()
+
+  // Get user organization roles
+  const { data: orgRoles } = await supabase
+    .from('user_organization_roles')
+    .select('organization_id, user_role')
+    .eq('user_id', userId)
+
+  // Get user folder roles
+  const { data: folderRoles } = await supabase
+    .from('user_folder_roles')
+    .select('folder_id, user_role')
+    .eq('user_id', userId)
+
+  return {
+    organizationRoles: orgRoles?.map((role) => role.organization_id) || [],
+    folderRoles:
+      folderRoles?.map((role) => ({
+        folder_id: role.folder_id,
+        user_role: role.user_role || 'member',
+      })) || [],
+  }
 }
 
 async function getTopLevelProjects(organizationId: string): Promise<Project[]> {
@@ -328,7 +372,10 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function OrganizationPage({ params }: PageProps) {
   const { organization: organizationName, slug } = await params
 
-  const organization = await getOrganization(organizationName)
+  const [organization, userRoles] = await Promise.all([
+    getOrganization(organizationName),
+    getCurrentUserRoles(),
+  ])
 
   if (!organization) {
     notFound()
@@ -348,6 +395,7 @@ export default async function OrganizationPage({ params }: PageProps) {
               projects={projects}
               organizationName={organizationName}
               organizationId={organization.id}
+              userRoles={userRoles}
             />
           </div>
         </div>
@@ -439,6 +487,7 @@ export default async function OrganizationPage({ params }: PageProps) {
             content={folderContent}
             projectId={projectId}
             subFolderIds={subFolderIds}
+            userRoles={userRoles}
           />
         </div>
       </div>
