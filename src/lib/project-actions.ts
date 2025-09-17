@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import type {
+  Enums,
   Tables,
   TablesInsert,
   TablesUpdate,
@@ -70,7 +71,7 @@ export async function createProject(
     folderName: string
     description?: string
     tags?: string[]
-    visibility?: 'public' | 'private' | 'restricted'
+    visibility?: Enums<'visibility_options'>
   },
 ) {
   try {
@@ -109,7 +110,7 @@ export async function createProject(
         ? { description: projectData.description }
         : undefined,
       tags: projectData.tags || [],
-      visibility: projectData.visibility || 'private',
+      visibility: projectData.visibility || 'internal',
     }
 
     const { data: project, error } = await supabase
@@ -144,7 +145,7 @@ export async function updateProject(
     folderName?: string
     description?: string
     tags?: string[]
-    visibility?: 'public' | 'private' | 'restricted'
+    visibility?: Enums<'visibility_options'>
   },
 ) {
   try {

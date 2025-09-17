@@ -99,8 +99,8 @@ function FolderCard({
 }) {
   const visibilityColors = {
     public: 'bg-green-100 text-green-800',
-    private: 'bg-red-100 text-red-800',
-    restricted: 'bg-yellow-100 text-yellow-800',
+    internal: 'bg-yellow-100 text-yellow-800',
+    restricted: 'bg-red-100 text-red-800',
   }
 
   const visibilityColor = folder.visibility

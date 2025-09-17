@@ -2301,7 +2301,7 @@ export type Database = {
       folder_role: 'admin' | 'contributor' | 'member'
       invitation_status: 'pending' | 'accepted' | 'expired' | 'failed'
       organization_role: 'owner' | 'admin' | 'member'
-      visibility_options: 'public' | 'private' | 'restricted'
+      visibility_options: 'public' | 'internal' | 'restricted'
     }
     CompositeTypes: {
       http_header: {

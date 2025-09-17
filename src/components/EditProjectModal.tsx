@@ -10,7 +10,7 @@ import {
 } from '@headlessui/react'
 import { PencilIcon } from '@heroicons/react/24/outline'
 import { updateProject } from '@/lib/project-actions'
-import type { Tables } from '../../types/database.types'
+import type { Enums, Tables } from '../../types/database.types'
 
 type Project = Pick<
   Tables<'folders'>,
@@ -21,7 +21,7 @@ interface FormData {
   folderName: string
   description: string
   tags: string
-  visibility: 'public' | 'private' | 'restricted'
+  visibility: Enums<'visibility_options'>
 }
 
 interface EditProjectModalProps {
@@ -53,7 +53,7 @@ export default function EditProjectModal({
       folderName: '',
       description: '',
       tags: '',
-      visibility: 'private',
+      visibility: 'internal',
     },
   })
 
@@ -67,7 +67,7 @@ export default function EditProjectModal({
       setValue('folderName', project.folder_name)
       setValue('description', description)
       setValue('tags', tags)
-      setValue('visibility', project.visibility || 'private')
+      setValue('visibility', project.visibility || 'internal')
       setError(null)
     }
   }, [project, isOpen, setValue])
@@ -244,7 +244,7 @@ export default function EditProjectModal({
                           {...register('visibility')}
                           className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none sm:text-sm"
                         >
-                          <option value="private">Private</option>
+                          <option value="internal">Internal</option>
                           <option value="restricted">Restricted</option>
                           <option value="public">Public</option>
                         </select>

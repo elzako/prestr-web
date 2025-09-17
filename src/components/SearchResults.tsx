@@ -6,11 +6,12 @@ import { searchSlides } from '@/lib/search-actions'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { Enums } from '../../types/database.types'
 
 interface SearchResult {
   id: string
   object_id: string
-  visibility: 'public' | 'private' | 'restricted'
+  visibility: Enums<'visibility_options'>
   organization_id: string
   project_id: string
   parent_path: string | null
@@ -54,7 +55,7 @@ function SearchResultCard({
 }) {
   const visibilityColors = {
     public: 'bg-green-100 text-green-800',
-    private: 'bg-red-100 text-red-800',
+    internal: 'bg-red-100 text-red-800',
     restricted: 'bg-yellow-100 text-yellow-800',
   }
 

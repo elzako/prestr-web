@@ -7,12 +7,12 @@
  *
  * Visibility Rules:
  * - PUBLIC slides: Visible to everyone (including unauthenticated users)
- * - PRIVATE slides: Only visible to users who have roles in the same organization as the slide
+ * - INTERNAL slides: Only visible to users who have roles in the same organization as the slide
  * - RESTRICTED slides: Only visible to users who have folder roles for the project_id of the slide
  *
  * Security Implementation:
  * - PUBLIC: No restrictions, available to all users
- * - PRIVATE: Requires user to have organization membership (user_organization_roles)
+ * - INTERNAL: Requires user to have organization membership (user_organization_roles)
  * - RESTRICTED: Requires user to have folder membership for the specific project (user_folder_roles)
  *
  * Performance Optimization:
@@ -25,6 +25,7 @@ import { MeiliSearch } from 'meilisearch'
 import { getSlideImageUrl } from './cloudinary'
 import { createClient } from './supabase/server'
 import { UserRoles } from '@/app/[organization]/[[...slug]]/page'
+import { Enums } from '../../types/database.types'
 
 interface MeiliSearchSlideResult {
   id: string
@@ -32,7 +33,7 @@ interface MeiliSearchSlideResult {
 
   parent_id: string
   parent_path: string | null
-  visibility: 'public' | 'private' | 'restricted'
+  visibility: Enums<'visibility_options'>
   organization_id: string
   project_id: string
   tags: string[] | null
@@ -130,14 +131,14 @@ export async function searchSlides(options: SearchOptions): Promise<{
       // 1. Public slides are always visible to authenticated users
       filterParts.push('visibility = "public"')
 
-      // 2. Private slides - visible to users with organization membership
-      // Example: User belongs to org "org-123" -> can see private slides from org-123
+      // 2. Internal slides - visible to users with organization membership
+      // Example: User belongs to org "org-123" -> can see internal slides from org-123
       if (userRoles.organizationRoles.length > 0) {
         const orgIds = userRoles.organizationRoles
           .map((id) => `"${id}"`)
           .join(',')
         filterParts.push(
-          `(visibility = "private" AND organization_id IN [${orgIds}])`,
+          `(visibility = "internal" AND organization_id IN [${orgIds}])`,
         )
       }
 
@@ -153,7 +154,7 @@ export async function searchSlides(options: SearchOptions): Promise<{
       }
 
       // Combine all visibility conditions with OR logic
-      // Final filter: (public) OR (private AND user_in_org) OR (restricted AND user_has_project_access)
+      // Final filter: (public) OR (internal AND user_in_org) OR (restricted AND user_has_project_access)
       if (filterParts.length > 0) {
         visibilityFilters.push(`(${filterParts.join(' OR ')})`)
       } else {

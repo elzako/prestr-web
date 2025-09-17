@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import type {
+  Enums,
   Tables,
   TablesInsert,
   TablesUpdate,
@@ -177,7 +178,7 @@ export async function createFolder(
   folderData: {
     folderName: string
     description?: string
-    visibility?: 'public' | 'private' | 'restricted'
+    visibility?: Enums<'visibility_options'>
   },
 ) {
   try {
@@ -233,7 +234,7 @@ export async function createFolder(
 
     // Determine visibility (inherit from parent if not specified)
     const visibility =
-      folderData.visibility || parentFolder.visibility || 'private'
+      folderData.visibility || parentFolder.visibility || 'internal'
 
     // Create the folder
     const folderInsert: FolderInsert = {
@@ -283,7 +284,7 @@ export async function updateFolder(
   updateData: {
     folderName?: string
     description?: string
-    visibility?: 'public' | 'private' | 'restricted'
+    visibility?: Enums<'visibility_options'>
   },
 ) {
   try {

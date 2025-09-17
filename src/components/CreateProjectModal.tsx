@@ -10,6 +10,7 @@ import {
 } from '@headlessui/react'
 import { FolderPlusIcon } from '@heroicons/react/24/outline'
 import { createProject } from '@/lib/project-actions'
+import { Enums } from '../../types/database.types'
 
 interface CreateProjectModalProps {
   isOpen: boolean
@@ -22,7 +23,7 @@ interface FormData {
   folderName: string
   description: string
   tags: string
-  visibility: 'public' | 'private' | 'restricted'
+  visibility: Enums<'visibility_options'>
 }
 
 export default function CreateProjectModal({
@@ -44,7 +45,7 @@ export default function CreateProjectModal({
       folderName: '',
       description: '',
       tags: '',
-      visibility: 'private',
+      visibility: 'internal',
     },
   })
 
@@ -218,7 +219,7 @@ export default function CreateProjectModal({
                           {...register('visibility')}
                           className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none sm:text-sm"
                         >
-                          <option value="private">Private</option>
+                          <option value="internal">Internal</option>
                           <option value="restricted">Restricted</option>
                           <option value="public">Public</option>
                         </select>

@@ -10,7 +10,7 @@ import {
 } from '@headlessui/react'
 import { PencilIcon } from '@heroicons/react/24/outline'
 import { updateFolder, getFolderById } from '@/lib/folder-actions'
-import type { Tables } from '../../types/database.types'
+import type { Enums, Tables } from '../../types/database.types'
 
 type Folder = Pick<
   Tables<'folders'>,
@@ -28,7 +28,7 @@ interface EditFolderModalProps {
 interface FormData {
   folderName: string
   description: string
-  visibility: 'public' | 'private' | 'restricted'
+  visibility: Enums<'visibility_options'>
 }
 
 export default function EditFolderModal({
@@ -52,7 +52,7 @@ export default function EditFolderModal({
     defaultValues: {
       folderName: '',
       description: '',
-      visibility: 'private',
+      visibility: 'internal',
     },
   })
 
@@ -70,7 +70,7 @@ export default function EditFolderModal({
         reset({
           folderName: result.folder.folder_name,
           description: metadata?.description || '',
-          visibility: result.folder.visibility || 'private',
+          visibility: result.folder.visibility || 'internal',
         })
       } else {
         setError(result.error || 'Failed to load folder data')
@@ -266,7 +266,7 @@ export default function EditFolderModal({
                             {...register('visibility')}
                             className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none sm:text-sm"
                           >
-                            <option value="private">Private</option>
+                            <option value="internal">Internal</option>
                             <option value="restricted">Restricted</option>
                             <option value="public">Public</option>
                           </select>
