@@ -6,11 +6,11 @@ import '@/styles/tailwind.css'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - TaxPal',
-    default: 'TaxPal - Accounting made simple for small businesses',
+    template: '%s - Prestr',
+    default: 'Prestr - The intelligent library for every slide',
   },
   description:
-    'Most bookkeeping software is accurate, but hard to use. We make the opposite trade-off, and hope you don’t get audited.',
+    'Prestr transforms your PowerPoint slides into a searchable, remixable library. Find any slide in seconds. Build better presentations in minutes.',
 }
 
 const inter = Inter({
