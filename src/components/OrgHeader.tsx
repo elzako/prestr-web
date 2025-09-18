@@ -1,18 +1,9 @@
 'use client'
 
+import type { OrgHeaderProps } from '@/types'
+import { CogIcon, PencilIcon, UserGroupIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
-import type { Tables } from '../../types/database.types'
 import ActionDropdown, { ActionItem } from './ActionDropdown'
-import { PencilIcon, CogIcon, UserGroupIcon } from '@heroicons/react/20/solid'
-
-type Organization = Pick<
-  Tables<'organizations'>,
-  'id' | 'organization_name' | 'metadata' | 'tags'
->
-
-interface OrgHeaderProps {
-  organization: Organization
-}
 
 export default function OrgHeader({ organization }: OrgHeaderProps) {
   const metadata = organization.metadata as {

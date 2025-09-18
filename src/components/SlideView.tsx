@@ -1,29 +1,6 @@
-import OrgHeader from './OrgHeader'
-import type { Tables } from '../../types/database.types'
 import { getSlideImageUrl } from '@/lib/cloudinary'
-
-type Organization = Pick<
-  Tables<'organizations'>,
-  'id' | 'organization_name' | 'metadata' | 'tags'
->
-
-type SlideDetail = Pick<
-  Tables<'slides'>,
-  | 'id'
-  | 'slide_name'
-  | 'metadata'
-  | 'created_at'
-  | 'updated_at'
-  | 'object_id'
-  | 'tags'
-  | 'visibility'
->
-
-interface SlideViewProps {
-  slide: SlideDetail
-  organization: Organization
-  folderPath: string
-}
+import type { SlideViewProps } from '@/types'
+import OrgHeader from './OrgHeader'
 
 export default async function SlideView({
   slide,

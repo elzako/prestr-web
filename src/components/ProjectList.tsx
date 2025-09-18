@@ -1,42 +1,22 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { deleteProject, getUserOrganizationRole } from '@/lib/project-actions'
+import type { Project, ProjectListProps } from '@/types'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
   EllipsisVerticalIcon,
-  PencilIcon,
-  TrashIcon,
-  PlusIcon,
   MagnifyingGlassIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import type { Tables } from '../../types/database.types'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import ConfirmDialog from './ConfirmDialog'
 import CreateProjectModal from './CreateProjectModal'
 import EditProjectModal from './EditProjectModal'
-import ConfirmDialog from './ConfirmDialog'
 import SearchResults from './SearchResults'
-import { deleteProject, getUserOrganizationRole } from '@/lib/project-actions'
-import type { UserRoles } from '@/app/[organization]/[[...slug]]/page'
-
-type Project = Pick<
-  Tables<'folders'>,
-  | 'id'
-  | 'folder_name'
-  | 'full_path'
-  | 'tags'
-  | 'visibility'
-  | 'metadata'
-  | 'created_at'
-  | 'updated_at'
->
-
-interface ProjectListProps {
-  projects: Project[]
-  organizationName: string
-  organizationId?: string
-  userRoles?: UserRoles | null
-}
 
 function ProjectCard({
   project,

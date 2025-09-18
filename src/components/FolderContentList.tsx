@@ -1,84 +1,30 @@
 'use client'
 
-import { useState } from 'react'
+import { deleteFolder } from '@/lib/folder-actions'
+import type {
+  ActionStates,
+  Folder,
+  FolderContentListProps,
+  Presentation,
+  Slide,
+} from '@/types'
+import {
+  ArrowUpTrayIcon,
+  DocumentDuplicateIcon,
+  FolderIcon,
+  MagnifyingGlassIcon,
+  PencilIcon,
+  TrashIcon,
+  XMarkIcon,
+} from '@heroicons/react/20/solid'
 import Link from 'next/link'
-import type { Tables } from '../../types/database.types'
+import { useState } from 'react'
 import ActionDropdown, { ActionItem } from './ActionDropdown'
 import ConfirmDialog from './ConfirmDialog'
-import UploadModal from './UploadModal'
 import CreateFolderModal from './CreateFolderModal'
 import EditFolderModal from './EditFolderModal'
 import SearchResults from './SearchResults'
-import { deleteFolder } from '@/lib/folder-actions'
-import type { UserRoles } from '@/app/[organization]/[[...slug]]/page'
-import {
-  PencilIcon,
-  FolderIcon,
-  ArrowUpTrayIcon,
-  TrashIcon,
-  DocumentDuplicateIcon,
-  MagnifyingGlassIcon,
-  XMarkIcon,
-} from '@heroicons/react/20/solid'
-
-type Folder = Pick<
-  Tables<'folders'>,
-  'id' | 'folder_name' | 'full_path' | 'tags' | 'visibility'
->
-
-type Presentation = Pick<
-  Tables<'presentations'>,
-  'id' | 'presentation_name' | 'metadata' | 'created_at'
->
-
-type Slide = Pick<
-  Tables<'slides'>,
-  'id' | 'slide_name' | 'metadata' | 'created_at'
->
-
-interface FolderContent {
-  folders: Folder[]
-  presentations: Presentation[]
-  slides: Slide[]
-}
-
-interface FolderContentListProps {
-  content: FolderContent
-  organizationName: string
-  currentFolderPath: string
-  organizationId?: string
-  currentFolderId?: string
-  projectId?: string | null
-  subFolderIds?: string[] | null
-  userRoles?: UserRoles | null
-}
-
-interface ActionStates {
-  deleteConfirm: {
-    open: boolean
-    item: {
-      id: string
-      name: string
-      type: 'folder' | 'presentation' | 'slide'
-    } | null
-  }
-  uploadModal: {
-    open: boolean
-    folderId: string | null
-  }
-  createFolderModal: {
-    open: boolean
-    parentFolderId: string | null
-  }
-  editFolderModal: {
-    open: boolean
-    folderId: string | null
-  }
-  search: {
-    isSearchMode: boolean
-    query: string
-  }
-}
+import UploadModal from './UploadModal'
 
 function FolderCard({
   folder,

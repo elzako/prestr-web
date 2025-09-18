@@ -1,15 +1,5 @@
+import type { BreadcrumbsProps } from '@/types'
 import Link from 'next/link'
-import type { Tables } from '../../types/database.types'
-
-type Organization = Pick<
-  Tables<'organizations'>,
-  'id' | 'organization_name' | 'metadata' | 'tags'
->
-
-interface BreadcrumbsProps {
-  organization: Organization
-  currentPath: string
-}
 
 export default function Breadcrumbs({
   organization,

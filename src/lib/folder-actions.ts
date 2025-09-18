@@ -1,17 +1,8 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import type { Enums, FolderInsert, FolderUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
-import type {
-  Enums,
-  Tables,
-  TablesInsert,
-  TablesUpdate,
-} from '../../types/database.types'
-
-export type Folder = Tables<'folders'>
-export type FolderInsert = TablesInsert<'folders'>
-export type FolderUpdate = TablesUpdate<'folders'>
 
 // Helper function to get current user
 async function getCurrentUser() {

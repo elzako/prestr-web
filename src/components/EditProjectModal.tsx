@@ -10,27 +10,13 @@ import {
 } from '@headlessui/react'
 import { PencilIcon } from '@heroicons/react/24/outline'
 import { updateProject } from '@/lib/project-actions'
-import type { Enums, Tables } from '../../types/database.types'
+import type {
+  Project,
+  EditProjectFormData,
+  EditProjectModalProps,
+} from '@/types'
 
-type Project = Pick<
-  Tables<'folders'>,
-  'id' | 'folder_name' | 'metadata' | 'tags' | 'visibility'
->
-
-interface FormData {
-  folderName: string
-  description: string
-  tags: string
-  visibility: Enums<'visibility_options'>
-}
-
-interface EditProjectModalProps {
-  isOpen: boolean
-  onClose: () => void
-  organizationName: string
-  project: Project | null
-  onSuccess?: () => void
-}
+type FormData = EditProjectFormData
 
 export default function EditProjectModal({
   isOpen,

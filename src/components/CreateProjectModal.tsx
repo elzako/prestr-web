@@ -10,21 +10,9 @@ import {
 } from '@headlessui/react'
 import { FolderPlusIcon } from '@heroicons/react/24/outline'
 import { createProject } from '@/lib/project-actions'
-import { Enums } from '../../types/database.types'
+import type { CreateProjectFormData, CreateProjectModalProps } from '@/types'
 
-interface CreateProjectModalProps {
-  isOpen: boolean
-  onClose: () => void
-  organizationName: string
-  onSuccess?: () => void
-}
-
-interface FormData {
-  folderName: string
-  description: string
-  tags: string
-  visibility: Enums<'visibility_options'>
-}
+type FormData = CreateProjectFormData
 
 export default function CreateProjectModal({
   isOpen,

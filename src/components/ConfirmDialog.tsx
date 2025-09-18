@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, ReactNode } from 'react'
+import type { ConfirmDialogProps } from '@/types'
 import {
   Dialog,
   DialogBackdrop,
@@ -8,19 +8,6 @@ import {
   DialogTitle,
 } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-
-interface ConfirmDialogProps {
-  isOpen: boolean
-  onClose: () => void
-  onConfirm: () => void
-  title: string
-  message: string
-  confirmLabel?: string
-  cancelLabel?: string
-  variant?: 'danger' | 'warning' | 'info'
-  icon?: ReactNode
-  loading?: boolean
-}
 
 export default function ConfirmDialog({
   isOpen,

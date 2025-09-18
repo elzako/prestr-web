@@ -1,27 +1,13 @@
 'use client'
 
+import type { ActionDropdownProps, ActionItem } from '@/types'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
   ChevronDownIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/20/solid'
-import { ReactNode } from 'react'
 
-export interface ActionItem {
-  id: string
-  label: string
-  icon: ReactNode
-  onClick: () => void
-  variant?: 'default' | 'danger'
-  disabled?: boolean
-}
-
-interface ActionDropdownProps {
-  items: ActionItem[]
-  trigger?: 'kebab' | 'button'
-  buttonLabel?: string
-  className?: string
-}
+export type { ActionItem }
 
 export default function ActionDropdown({
   items,

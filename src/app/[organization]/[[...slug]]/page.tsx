@@ -1,71 +1,22 @@
-import { notFound } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
-import type { Tables } from '../../../../types/database.types'
-import OrgHeader from '@/components/OrgHeader'
-import SlideView from '@/components/SlideView'
-import ProjectList from '@/components/ProjectList'
 import FolderView from '@/components/FolderView'
+import OrgHeader from '@/components/OrgHeader'
 import PresentationView from '@/components/PresentationView'
+import ProjectList from '@/components/ProjectList'
+import SlideView from '@/components/SlideView'
+import { createClient } from '@/lib/supabase/server'
+import type {
+  FolderContent,
+  Organization,
+  PresentationDetail,
+  Project,
+  SlideDetail,
+  UserRoles,
+} from '@/types'
+import { notFound } from 'next/navigation'
 
 // Disable caching for data freshness
 // In production, consider export const revalidate = 3600 for hourly updates
 export const revalidate = 0
-
-type Organization = Pick<
-  Tables<'organizations'>,
-  'id' | 'organization_name' | 'metadata' | 'tags'
->
-type Project = Pick<
-  Tables<'folders'>,
-  | 'id'
-  | 'folder_name'
-  | 'full_path'
-  | 'tags'
-  | 'visibility'
-  | 'metadata'
-  | 'created_at'
-  | 'updated_at'
->
-
-type Folder = Pick<
-  Tables<'folders'>,
-  'id' | 'folder_name' | 'full_path' | 'tags' | 'visibility'
->
-
-type Presentation = Pick<
-  Tables<'presentations'>,
-  'id' | 'presentation_name' | 'metadata' | 'created_at' | 'tags' | 'settings'
->
-
-type Slide = Pick<
-  Tables<'slides'>,
-  'id' | 'slide_name' | 'metadata' | 'created_at' | 'tags' | 'object_id'
->
-
-type SlideDetail = Pick<
-  Tables<'slides'>,
-  | 'id'
-  | 'slide_name'
-  | 'metadata'
-  | 'created_at'
-  | 'updated_at'
-  | 'object_id'
-  | 'tags'
-  | 'visibility'
->
-
-type PresentationDetail = Pick<
-  Tables<'presentations'>,
-  | 'id'
-  | 'presentation_name'
-  | 'metadata'
-  | 'created_at'
-  | 'updated_at'
-  | 'tags'
-  | 'slides'
-  | 'settings'
-  | 'version'
->
 
 interface PageProps {
   params: Promise<{
@@ -74,16 +25,8 @@ interface PageProps {
   }>
 }
 
-interface FolderContentData {
-  folders: Folder[]
-  presentations: Presentation[]
-  slides: Slide[]
-}
-
-export interface UserRoles {
-  organizationRoles: string[]
-  folderRoles: { folder_id: string; user_role: string }[]
-}
+// FolderContent and UserRoles are now imported from @/types
+type FolderContentData = FolderContent
 
 async function getOrganization(
   organizationName: string,

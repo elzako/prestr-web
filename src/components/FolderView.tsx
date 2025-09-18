@@ -1,49 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import type { FolderViewProps } from '@/types'
 import { useRouter } from 'next/navigation'
-import type { Tables } from '../../types/database.types'
+import { useState } from 'react'
+import Breadcrumbs from './Breadcrumbs'
+import CreateFolderModal from './CreateFolderModal'
 import FolderContentList from './FolderContentList'
 import UploadModal from './UploadModal'
-import CreateFolderModal from './CreateFolderModal'
-import Breadcrumbs from './Breadcrumbs'
-import type { UserRoles } from '@/app/[organization]/[[...slug]]/page'
-
-type Organization = Pick<
-  Tables<'organizations'>,
-  'id' | 'organization_name' | 'metadata' | 'tags'
->
-
-type Folder = Pick<
-  Tables<'folders'>,
-  'id' | 'folder_name' | 'full_path' | 'tags' | 'visibility'
->
-
-type Presentation = Pick<
-  Tables<'presentations'>,
-  'id' | 'presentation_name' | 'metadata' | 'created_at'
->
-
-type Slide = Pick<
-  Tables<'slides'>,
-  'id' | 'slide_name' | 'metadata' | 'created_at'
->
-
-interface FolderContent {
-  folders: Folder[]
-  presentations: Presentation[]
-  slides: Slide[]
-}
-
-interface FolderViewProps {
-  organization: Organization
-  folderId: string
-  folderPath: string
-  content: FolderContent
-  projectId: string | null
-  subFolderIds: string[] | null
-  userRoles: UserRoles | null
-}
 
 export default function FolderView({
   organization,

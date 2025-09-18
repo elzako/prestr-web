@@ -1,29 +1,5 @@
-import type { Tables } from '../../types/database.types'
 import { getSlideImageUrl } from '@/lib/cloudinary'
-
-type Organization = Pick<
-  Tables<'organizations'>,
-  'id' | 'organization_name' | 'metadata' | 'tags'
->
-
-type PresentationDetail = Pick<
-  Tables<'presentations'>,
-  | 'id'
-  | 'presentation_name'
-  | 'metadata'
-  | 'created_at'
-  | 'updated_at'
-  | 'tags'
-  | 'slides'
-  | 'settings'
-  | 'version'
->
-
-interface PresentationViewProps {
-  presentation: PresentationDetail
-  organization: Organization
-  folderPath: string
-}
+import type { PresentationViewProps } from '@/types'
 
 export default async function PresentationView({
   presentation,

@@ -6,28 +6,11 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
 } from '@heroicons/react/24/outline'
-
-interface PowerPointUploadProps {
-  organizationId: string
-  folderId: string
-  onUploadStart?: () => void
-  onUploadSuccess?: () => void
-  onUploadError?: (error: string) => void
-  className?: string
-}
-
-interface UploadProgress {
-  loaded: number
-  total: number
-  percentage: number
-}
-
-interface UploadState {
-  isUploading: boolean
-  progress: UploadProgress | null
-  error: string | null
-  success: boolean
-}
+import type {
+  PowerPointUploadProps,
+  UploadProgress,
+  UploadState,
+} from '@/types'
 
 export default function PowerPointUpload({
   organizationId,

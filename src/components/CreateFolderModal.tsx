@@ -10,21 +10,9 @@ import {
 } from '@headlessui/react'
 import { FolderPlusIcon } from '@heroicons/react/24/outline'
 import { createFolder } from '@/lib/folder-actions'
-import { Enums } from '../../types/database.types'
+import type { CreateFolderFormData, CreateFolderModalProps } from '@/types'
 
-interface CreateFolderModalProps {
-  isOpen: boolean
-  onClose: () => void
-  organizationName: string
-  parentFolderId: string
-  onSuccess?: () => void
-}
-
-interface FormData {
-  folderName: string
-  description: string
-  visibility: Enums<'visibility_options'>
-}
+type FormData = CreateFolderFormData
 
 export default function CreateFolderModal({
   isOpen,

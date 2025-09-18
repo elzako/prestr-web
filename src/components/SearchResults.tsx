@@ -1,50 +1,11 @@
 'use client'
 
-import { UserRoles } from '@/app/[organization]/[[...slug]]/page'
 import { useDebounce } from '@/hooks/useDebounce'
 import { searchSlides } from '@/lib/search-actions'
+import type { SearchResult, SearchResultsProps } from '@/types'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Enums } from '../../types/database.types'
-
-interface SearchResult {
-  id: string
-  object_id: string
-  visibility: Enums<'visibility_options'>
-  organization_id: string
-  project_id: string
-  parent_path: string | null
-  tags: string[] | null
-  slide_text: string
-  notes_text: string
-  has_chart: boolean
-  has_table: boolean
-  has_diagram: boolean
-  has_image: boolean
-  has_bullet: boolean
-  has_links: boolean
-  links: string[]
-  has_video: boolean
-  has_audio: boolean
-  layout_name: string
-  theme_name: string
-  slide_name: string
-  description: string
-  created_at: string
-  updated_at: string
-  imageUrl?: string
-}
-
-interface SearchResultsProps {
-  organizationName: string
-  organizationId: string
-  projectId: string | null
-  subFolderIds: string[] | null
-  searchQuery: string
-  isSearchMode: boolean
-  userRoles: UserRoles | null
-}
 
 function SearchResultCard({
   result,
@@ -301,7 +262,7 @@ export default function SearchResults({
   return (
     <div className="mt-6">
       <div className="mb-6 text-sm text-gray-600">
-        Found {total} result{total === 1 ? '' : 's'} for "{searchQuery}"
+        Found {total} result{total === 1 ? '' : 's'} for {searchQuery}
       </div>
 
       {/* Masonry-style grid */}

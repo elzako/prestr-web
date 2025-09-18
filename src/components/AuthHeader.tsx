@@ -15,22 +15,7 @@ import { Container } from '@/components/Container'
 import { Logo } from '@/components/Logo'
 import { NavLink } from '@/components/NavLink'
 import { logout } from '@/lib/auth-actions'
-
-interface AuthHeaderProps {
-  user: {
-    email?: string
-    user_metadata?: {
-      full_name?: string
-    }
-  }
-  userProfile?: {
-    metadata?: {
-      firstName?: string
-      lastName?: string
-      email?: string
-    }
-  }
-}
+import type { AuthHeaderProps } from '@/types'
 
 function MobileNavIcon({ open }: { open: boolean }) {
   return (

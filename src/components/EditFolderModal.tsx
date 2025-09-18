@@ -10,26 +10,9 @@ import {
 } from '@headlessui/react'
 import { PencilIcon } from '@heroicons/react/24/outline'
 import { updateFolder, getFolderById } from '@/lib/folder-actions'
-import type { Enums, Tables } from '../../types/database.types'
+import type { Folder, EditFolderFormData, EditFolderModalProps } from '@/types'
 
-type Folder = Pick<
-  Tables<'folders'>,
-  'id' | 'folder_name' | 'metadata' | 'visibility'
->
-
-interface EditFolderModalProps {
-  isOpen: boolean
-  onClose: () => void
-  organizationName: string
-  folderId: string
-  onSuccess?: () => void
-}
-
-interface FormData {
-  folderName: string
-  description: string
-  visibility: Enums<'visibility_options'>
-}
+type FormData = EditFolderFormData
 
 export default function EditFolderModal({
   isOpen,

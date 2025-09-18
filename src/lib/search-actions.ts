@@ -21,62 +21,14 @@
  * - Falls back to public-only access if no userRoles provided (unauthenticated users)
  */
 
+import type {
+  MeiliSearchSlideResult,
+  SearchOptions,
+  SearchResult,
+} from '@/types'
 import { MeiliSearch } from 'meilisearch'
 import { getSlideImageUrl } from './cloudinary'
 import { createClient } from './supabase/server'
-import { UserRoles } from '@/app/[organization]/[[...slug]]/page'
-import { Enums } from '../../types/database.types'
-
-interface MeiliSearchSlideResult {
-  id: string
-  object_id: string
-
-  parent_id: string
-  parent_path: string | null
-  visibility: Enums<'visibility_options'>
-  organization_id: string
-  project_id: string
-  tags: string[] | null
-  slide_text: string
-  notes_text: string
-  has_chart: boolean
-  has_table: boolean
-  has_diagram: boolean
-  has_image: boolean
-  has_bullet: boolean
-  has_links: boolean
-  links: string[]
-  has_video: boolean
-  has_audio: boolean
-  layout_name: string
-  theme_name: string
-  slide_name: string
-  description: string
-  created_at: string
-  updated_at: string
-}
-
-interface MeiliSearchResponse {
-  results: MeiliSearchSlideResult[]
-  offset: number
-  limit: number
-  total: number
-}
-
-interface SearchResult extends MeiliSearchSlideResult {
-  imageUrl?: string
-}
-
-interface SearchOptions {
-  organizationId: string
-  projectId?: string | null
-  subFolderIds?: string[] | null
-  query: string
-  limit?: number
-  offset?: number
-  filters?: string[]
-  userRoles?: UserRoles | null
-}
 
 export async function searchSlides(options: SearchOptions): Promise<{
   success: boolean

@@ -13,10 +13,11 @@ alwaysApply: true
   - [src/app/(auth)/login/page.tsx](<mdc:src/app/(auth)/login/page.tsx>)
   - [src/app/(auth)/register/page.tsx](<mdc:src/app/(auth)/register/page.tsx>)
 - Reusable UI lives in `src/components/` (e.g., [Header.tsx](mdc:src/components/Header.tsx), [Footer.tsx](mdc:src/components/Footer.tsx)).
+- **TypeScript types**: Centralized in `src/types/` with barrel exports for clean imports.
 - Static assets live in `src/images/`.
 - Tailwind entry: [src/styles/tailwind.css](mdc:src/styles/tailwind.css).
 - Configuration: [next.config.js](mdc:next.config.js), [tsconfig.json](mdc:tsconfig.json), [postcss.config.js](mdc:postcss.config.js), [prettier.config.js](mdc:prettier.config.js).
-- Tailwind UI reference library: [design/application-ui/](mdc:design/application-ui/). Never import from this folder; copy JSX into app code instead (see the “Design Library Rule”).
+- Tailwind UI reference library: [design/application-ui/](mdc:design/application-ui/). Never import from this folder; copy JSX into app code instead (see the "Design Library Rule").
 
 ## Adding pages/routes
 
@@ -32,6 +33,22 @@ alwaysApply: true
 ## Images and assets
 
 - Prefer `next/image` with explicit `alt`, `width`, and `height`.
+
+## TypeScript Types
+
+- **Centralized Type System**: All types live in `src/types/` with organized subfolders
+- **Barrel Exports**: Import from `@/types` for commonly used types
+- **Type Organization**:
+  - `src/types/entities/` - Database entity types (Organization, Project, Folder, etc.)
+  - `src/types/forms/` - Form-related types and validation schemas
+  - `src/types/api/` - API request/response types and search interfaces
+  - `src/types/components/` - Component prop interfaces and action types
+- **Usage**: `import type { Organization, Project, UserRoles } from '@/types'`
+- **Database Types**: Auto-generated types in `src/types/database.types.ts`
+- **Best Practices**:
+  - Use shared types instead of local duplicates
+  - Prefer explicit component prop types over `React.FC`
+  - Co-locate component-specific types only when they're truly unique to that component
 
 ## Styling
 

@@ -9,14 +9,7 @@ import {
 } from '@headlessui/react'
 import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import PowerPointUpload from './PowerPointUpload'
-
-interface UploadModalProps {
-  isOpen: boolean
-  onClose: () => void
-  organizationId: string
-  folderId: string
-  onUploadSuccess?: () => void
-}
+import type { UploadModalProps } from '@/types'
 
 export default function UploadModal({
   isOpen,
