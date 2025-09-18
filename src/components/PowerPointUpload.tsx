@@ -113,11 +113,26 @@ export default function PowerPointUpload({
     }
   }
 
+  const getRootVisbility = async () => {
+    const { createClient } = await import('@/lib/supabase/client')
+    const supabase = createClient()
+
+    const { data, error } = await supabase.rpc('get_effective_visibility', {
+      folder_id: folderId,
+    })
+    if (error) {
+      throw error
+    }
+    return data
+  }
+
   // Upload file to API
   const uploadFile = async (file: File) => {
     try {
-      // Get current user ID
-      const userId = await getCurrentUser()
+      const [userId, rootVisibility] = await Promise.all([
+        getCurrentUser(),
+        getRootVisbility(),
+      ])
 
       // Get API base URL from environment or use relative path
       const apiBaseUrl = process.env.NEXT_PUBLIC_PRESTR_API_URL || ''
@@ -129,6 +144,7 @@ export default function PowerPointUpload({
         folderId: folderId,
         userId: userId,
         presentationName: file.name,
+        visibility: rootVisibility,
       })
 
       const fullUrl = `${uploadUrl}?${params.toString()}`
