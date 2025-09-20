@@ -44,7 +44,7 @@ function MobileNavIcon({ open }: { open: boolean }) {
   )
 }
 
-function UserMenu({ user, userProfile }: AuthHeaderProps) {
+function UserMenu({ user, userProfile, userOrganization }: AuthHeaderProps) {
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const handleLogout = async () => {
@@ -83,18 +83,22 @@ function UserMenu({ user, userProfile }: AuthHeaderProps) {
 
       <PopoverBackdrop className="fixed inset-0 z-10" />
       <PopoverPanel className="ring-opacity-5 absolute right-0 z-20 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none">
+        {userOrganization && (
+          <Link
+            href={`/${userOrganization.organization_name}`}
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            Your Organization
+          </Link>
+        )}
+
         <Link
           href="/profile"
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
         >
           Your Profile
         </Link>
-        <Link
-          href="/settings"
-          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-        >
-          Settings
-        </Link>
+
         <button
           onClick={handleLogout}
           disabled={isLoggingOut}
@@ -107,7 +111,11 @@ function UserMenu({ user, userProfile }: AuthHeaderProps) {
   )
 }
 
-function MobileNavigation({ user, userProfile }: AuthHeaderProps) {
+function MobileNavigation({
+  user,
+  userProfile,
+  userOrganization,
+}: AuthHeaderProps) {
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const handleLogout = async () => {
@@ -134,6 +142,14 @@ function MobileNavigation({ user, userProfile }: AuthHeaderProps) {
         <Link href="/profile" className="block w-full p-2">
           Profile
         </Link>
+        {userOrganization && (
+          <Link
+            href={`/${userOrganization.organization_name}`}
+            className="block w-full p-2"
+          >
+            Your Organization
+          </Link>
+        )}
         <Link href="/settings" className="block w-full p-2">
           Settings
         </Link>
@@ -150,7 +166,11 @@ function MobileNavigation({ user, userProfile }: AuthHeaderProps) {
   )
 }
 
-export function AuthHeader({ user, userProfile }: AuthHeaderProps) {
+export function AuthHeader({
+  user,
+  userProfile,
+  userOrganization,
+}: AuthHeaderProps) {
   return (
     <header className="py-10">
       <Container>
@@ -167,10 +187,18 @@ export function AuthHeader({ user, userProfile }: AuthHeaderProps) {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <UserMenu user={user} userProfile={userProfile} />
+              <UserMenu
+                user={user}
+                userProfile={userProfile}
+                userOrganization={userOrganization}
+              />
             </div>
             <div className="-mr-1 md:hidden">
-              <MobileNavigation user={user} userProfile={userProfile} />
+              <MobileNavigation
+                user={user}
+                userProfile={userProfile}
+                userOrganization={userOrganization}
+              />
             </div>
           </div>
         </nav>

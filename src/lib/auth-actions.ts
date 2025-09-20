@@ -92,3 +92,43 @@ export async function getUserProfile() {
     return null
   }
 }
+
+export async function getUserOrganization() {
+  const supabase = await createClient()
+  const user = await getUser()
+
+  if (!user) return null
+
+  try {
+    const { data: organizationData, error } = await supabase
+      .from('user_organization_roles')
+      .select(
+        `
+        organization_id,
+        user_role,
+        organizations (
+          id,
+          organization_name
+        )
+      `,
+      )
+      .eq('user_id', user.id)
+      .single()
+
+    if (error) {
+      console.error('Error fetching user organization:', error)
+      return null
+    }
+
+    return organizationData?.organizations
+      ? {
+          id: organizationData.organizations.id,
+          organization_name: organizationData.organizations.organization_name,
+          user_role: organizationData.user_role,
+        }
+      : null
+  } catch (error) {
+    console.error('Error:', error)
+    return null
+  }
+}

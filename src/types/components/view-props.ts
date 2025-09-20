@@ -99,4 +99,9 @@ export interface AuthHeaderProps {
       email?: string
     }
   }
+  userOrganization?: {
+    id: string
+    organization_name: string
+    user_role: string | null
+  }
 }
