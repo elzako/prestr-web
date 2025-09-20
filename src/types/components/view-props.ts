@@ -79,6 +79,7 @@ export interface BreadcrumbsProps {
 // Organization header props
 export interface OrgHeaderProps {
   organization: Organization
+  userRole?: string | null
 }
 
 // Auth header props

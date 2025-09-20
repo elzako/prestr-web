@@ -4,6 +4,7 @@ import PresentationView from '@/components/PresentationView'
 import ProjectList from '@/components/ProjectList'
 import SlideView from '@/components/SlideView'
 import { createClient } from '@/lib/supabase/server'
+import { getUserOrganizationRole } from '@/lib/organization-server-actions'
 import type {
   FolderContent,
   Organization,
@@ -324,6 +325,12 @@ export default async function OrganizationPage({ params }: PageProps) {
     notFound()
   }
 
+  // Get user's role in this specific organization
+  const userOrgRoleResult = await getUserOrganizationRole(organization.id)
+  const userOrganizationRole = userOrgRoleResult.success
+    ? userOrgRoleResult.role
+    : null
+
   // If no slug, show organization root with top-level projects
   if (!slug || slug.length === 0) {
     const projects = await getTopLevelProjects(organization.id)
@@ -331,7 +338,10 @@ export default async function OrganizationPage({ params }: PageProps) {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <OrgHeader organization={organization} />
+          <OrgHeader
+            organization={organization}
+            userRole={userOrganizationRole}
+          />
 
           <div className="mt-8">
             <ProjectList
@@ -395,7 +405,10 @@ export default async function OrganizationPage({ params }: PageProps) {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <OrgHeader organization={organization} />
+          <OrgHeader
+            organization={organization}
+            userRole={userOrganizationRole}
+          />
           <PresentationView
             presentation={presentation}
             organization={organization}
@@ -422,7 +435,10 @@ export default async function OrganizationPage({ params }: PageProps) {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <OrgHeader organization={organization} />
+          <OrgHeader
+            organization={organization}
+            userRole={userOrganizationRole}
+          />
           <FolderView
             organization={organization}
             folderId={folderId}

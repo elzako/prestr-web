@@ -50,6 +50,9 @@ export type {
   EditFolderModalProps,
   FormState,
   BaseModalFormProps,
+  OrganizationProfileFormData,
+  OrganizationMetadata,
+  OrganizationUpdateData,
 } from './forms'
 
 // API types (commonly used in data fetching)

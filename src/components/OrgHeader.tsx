@@ -3,10 +3,15 @@
 import type { OrgHeaderProps } from '@/types'
 import { CogIcon, PencilIcon, UserGroupIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
+import { useState } from 'react'
 import ActionDropdown, { ActionItem } from './ActionDropdown'
+import OrganizationProfileModal from './OrganizationProfileModal'
 
-export default function OrgHeader({ organization }: OrgHeaderProps) {
-  const metadata = organization.metadata as {
+export default function OrgHeader({ organization, userRole }: OrgHeaderProps) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [currentOrganization, setCurrentOrganization] = useState(organization)
+
+  const metadata = currentOrganization.metadata as {
     name?: string
     about?: string
     website?: string
@@ -15,19 +20,31 @@ export default function OrgHeader({ organization }: OrgHeaderProps) {
     displayMembers?: boolean
   } | null
 
-  const displayName = metadata?.name || organization.organization_name
+  const displayName = metadata?.name || currentOrganization.organization_name
   const profilePicture = metadata?.profilePicture
   const about = metadata?.about
   const website = metadata?.website
   const location = metadata?.location
 
+  const handleEditProfile = () => {
+    setIsEditModalOpen(true)
+  }
+
+  const handleProfileUpdate = (updatedOrganization: typeof organization) => {
+    setCurrentOrganization(updatedOrganization)
+  }
+
   const actionItems: ActionItem[] = [
-    {
-      id: 'edit-profile',
-      label: 'Edit profile',
-      icon: <PencilIcon className="h-5 w-5" />,
-      onClick: () => {}, // TODO: Implement edit profile modal
-    },
+    ...(userRole === 'owner'
+      ? [
+          {
+            id: 'edit-profile',
+            label: 'Edit profile',
+            icon: <PencilIcon className="h-5 w-5" />,
+            onClick: handleEditProfile,
+          },
+        ]
+      : []),
     {
       id: 'manage-members',
       label: 'Manage members',
@@ -159,6 +176,14 @@ export default function OrgHeader({ organization }: OrgHeaderProps) {
           </div>
         </div>
       </div>
+
+      {/* Organization Profile Edit Modal */}
+      <OrganizationProfileModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        organization={currentOrganization}
+        onSuccess={handleProfileUpdate}
+      />
     </div>
   )
 }

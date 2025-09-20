@@ -32,3 +32,10 @@ export type {
   EditFolderModalProps,
   FolderFormValidation,
 } from './folder-forms'
+
+// Organization profile form types
+export type {
+  OrganizationProfileFormData,
+  OrganizationMetadata,
+  OrganizationUpdateData,
+} from './organization-profile'
