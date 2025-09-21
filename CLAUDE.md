@@ -48,7 +48,7 @@ npm run lint
 - **Layout Components**: `OrgHeader.tsx`, `Header.tsx`, `Footer.tsx` for consistent UI structure
 
 ### Data Layer
-- **Supabase Integration**: 
+- **Supabase Integration**:
   - Client: `src/lib/supabase/client.ts` for browser-side operations
   - Server: `src/lib/supabase/server.ts` for server-side operations
   - Database types: `types/database.types.ts` (auto-generated from Supabase schema)

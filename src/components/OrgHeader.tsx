@@ -153,7 +153,7 @@ export default function OrgHeader({ organization, userRole }: OrgHeaderProps) {
                       d="M12 9v3m0 0v3m0-3h3m-3 0H9m3-9a9 9 0 019 9v0a9 9 0 01-9 9v0a9 9 0 01-9-9v0a9 9 0 019-9z"
                     />
                   </svg>
-                  Website
+                  {website}
                 </a>
               )}
             </div>
