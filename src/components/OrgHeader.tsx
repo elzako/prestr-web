@@ -35,27 +35,17 @@ export default function OrgHeader({ organization, userRole }: OrgHeaderProps) {
   }
 
   const actionItems: ActionItem[] = [
-    ...(userRole === 'owner'
-      ? [
-          {
-            id: 'edit-profile',
-            label: 'Edit profile',
-            icon: <PencilIcon className="h-5 w-5" />,
-            onClick: handleEditProfile,
-          },
-        ]
-      : []),
+    {
+      id: 'edit-profile',
+      label: 'Edit profile',
+      icon: <PencilIcon className="h-5 w-5" />,
+      onClick: handleEditProfile,
+    },
     {
       id: 'manage-members',
       label: 'Manage members',
       icon: <UserGroupIcon className="h-5 w-5" />,
       onClick: () => {}, // TODO: Implement member management
-    },
-    {
-      id: 'settings',
-      label: 'Organization settings',
-      icon: <CogIcon className="h-5 w-5" />,
-      onClick: () => {}, // TODO: Implement settings page
     },
   ]
 
@@ -91,7 +81,7 @@ export default function OrgHeader({ organization, userRole }: OrgHeaderProps) {
                 </h1>
               </div>
               <div className="ml-4">
-                <ActionDropdown items={actionItems} />
+                {userRole === 'owner' && <ActionDropdown items={actionItems} />}
               </div>
             </div>
 

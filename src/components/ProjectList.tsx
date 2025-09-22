@@ -46,80 +46,37 @@ function ProjectCard({
 
   return (
     <div className="group relative rounded-lg border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md">
-      {/* Project Management Menu */}
-      {canManage && (
-        <div className="absolute top-4 right-4 opacity-0 transition-opacity group-hover:opacity-100">
-          <Menu as="div" className="relative">
-            <MenuButton className="flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none">
-              <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
-            </MenuButton>
-            <MenuItems
-              transition
-              className="ring-opacity-5 absolute right-0 z-10 mt-1 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
-            >
-              <MenuItem>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onEdit(project)
-                  }}
-                  className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      <div className="flex items-start justify-between">
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-lg font-semibold text-gray-900">
+            {project.folder_name}
+          </h3>
+
+          {projectDescription && (
+            <p className="mt-1 text-sm text-gray-500">{projectDescription}</p>
+          )}
+
+          {/* Tags */}
+          {project.tags && project.tags.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1">
+              {project.tags.slice(0, 3).map((tag, index) => (
+                <span
+                  key={index}
+                  className="inline-flex items-center rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800"
                 >
-                  <PencilIcon className="mr-3 h-4 w-4" aria-hidden="true" />
-                  Edit Project
-                </button>
-              </MenuItem>
-              <MenuItem>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onDelete(project)
-                  }}
-                  className="flex w-full items-center px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-                >
-                  <TrashIcon className="mr-3 h-4 w-4" aria-hidden="true" />
-                  Delete Project
-                </button>
-              </MenuItem>
-            </MenuItems>
-          </Menu>
+                  {tag}
+                </span>
+              ))}
+              {project.tags.length > 3 && (
+                <span className="inline-flex items-center rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
+                  +{project.tags.length - 3} more
+                </span>
+              )}
+            </div>
+          )}
         </div>
-      )}
 
-      <Link
-        href={`/${organizationName}/${project.folder_name}`}
-        className="block"
-      >
-        <div className="flex items-start justify-between">
-          <div className="min-w-0 flex-1 pr-8">
-            <h3 className="truncate text-lg font-semibold text-gray-900">
-              {project.folder_name}
-            </h3>
-
-            {projectDescription && (
-              <p className="mt-1 text-sm text-gray-500">{projectDescription}</p>
-            )}
-
-            {/* Tags */}
-            {project.tags && project.tags.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-1">
-                {project.tags.slice(0, 3).map((tag, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex items-center rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800"
-                  >
-                    {tag}
-                  </span>
-                ))}
-                {project.tags.length > 3 && (
-                  <span className="inline-flex items-center rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
-                    +{project.tags.length - 3} more
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
-
+        <div className="flex items-center space-x-2">
           {/* Visibility Badge */}
           {project.visibility && (
             <span
@@ -128,18 +85,63 @@ function ProjectCard({
               {project.visibility}
             </span>
           )}
+          {/* Actions Menu */}
+          {canManage && (
+            <div className="opacity-0 transition-opacity group-hover:opacity-100">
+              <Menu as="div" className="relative">
+                <MenuButton className="flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none">
+                  <EllipsisVerticalIcon
+                    className="h-5 w-5"
+                    aria-hidden="true"
+                  />
+                </MenuButton>
+                <MenuItems
+                  transition
+                  className="ring-opacity-5 absolute right-0 z-10 mt-1 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
+                >
+                  <MenuItem>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault()
+                        onEdit(project)
+                      }}
+                      className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <PencilIcon className="mr-3 h-4 w-4" aria-hidden="true" />
+                      Edit Project
+                    </button>
+                  </MenuItem>
+                  <MenuItem>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault()
+                        onDelete(project)
+                      }}
+                      className="flex w-full items-center px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                    >
+                      <TrashIcon className="mr-3 h-4 w-4" aria-hidden="true" />
+                      Delete Project
+                    </button>
+                  </MenuItem>
+                </MenuItems>
+              </Menu>
+            </div>
+          )}
         </div>
+      </div>
 
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-sm font-medium text-sky-600">
-            View project →
-          </span>
+      <div className="mt-4 flex items-center justify-between">
+        <Link
+          href={`/${organizationName}/${project.folder_name}`}
+          className="text-sm font-medium text-sky-600 hover:text-sky-800"
+        >
+          View project →
+        </Link>
 
-          <div className="text-xs text-gray-400">
-            Updated {new Date(project.updated_at).toLocaleDateString()}
-          </div>
+        <div className="text-xs text-gray-400">
+          Updated {new Date(project.updated_at).toLocaleDateString()}
         </div>
-      </Link>
+      </div>
     </div>
   )
 }
