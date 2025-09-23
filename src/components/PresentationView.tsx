@@ -110,29 +110,6 @@ export default async function PresentationView({
               </p>
             )}
           </div>
-          <div className="mt-4 flex items-center space-x-3 sm:mt-0 sm:ml-16 sm:flex-none">
-            {/* {presentation.locked && (
-                  <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
-                    <svg
-                      className="mr-1 h-3 w-3"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Locked
-                  </span>
-                )} */}
-            {presentation.version && (
-              <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
-                v{presentation.version}
-              </span>
-            )}
-          </div>
         </div>
       </div>
 

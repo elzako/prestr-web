@@ -17,7 +17,7 @@ import { notFound } from 'next/navigation'
 
 // Disable caching for data freshness
 // In production, consider export const revalidate = 3600 for hourly updates
-export const revalidate = 0
+export const revalidate = 3600
 
 interface PageProps {
   params: Promise<{

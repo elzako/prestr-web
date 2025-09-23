@@ -120,8 +120,8 @@ export default async function SlideView({
                       slide.visibility === 'public'
                         ? 'bg-green-100 text-green-800'
                         : slide.visibility === 'internal'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-yellow-100 text-yellow-800'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-red-100 text-red-800'
                     }`}
                   >
                     {slide.visibility}
