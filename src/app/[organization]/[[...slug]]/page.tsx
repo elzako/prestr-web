@@ -1,3 +1,4 @@
+import CompactOrgHeader from '@/components/CompactOrgHeader'
 import FolderView from '@/components/FolderView'
 import OrgHeader from '@/components/OrgHeader'
 import PresentationView from '@/components/PresentationView'
@@ -15,8 +16,6 @@ import type {
 } from '@/types'
 import { notFound } from 'next/navigation'
 
-// Disable caching for data freshness
-// In production, consider export const revalidate = 3600 for hourly updates
 export const revalidate = 3600
 
 interface PageProps {
@@ -26,7 +25,6 @@ interface PageProps {
   }>
 }
 
-// FolderContent and UserRoles are now imported from @/types
 type FolderContentData = FolderContent
 
 async function getOrganization(
@@ -252,9 +250,6 @@ async function getPresentationData(
   return data
 }
 
-// SlideView moved to src/components/SlideView.tsx
-// PresentationView moved to src/components/PresentationView.tsx
-
 export async function generateMetadata({ params }: PageProps) {
   const { organization: organizationName, slug } = await params
   const organization = await getOrganization(organizationName)
@@ -379,11 +374,17 @@ export default async function OrganizationPage({ params }: PageProps) {
     }
 
     return (
-      <SlideView
-        slide={slide}
-        organization={organization}
-        folderPath={folderPath}
-      />
+      <div className="min-h-screen bg-gray-50">
+        <CompactOrgHeader
+          organization={organization}
+          userRole={userOrganizationRole}
+        />
+        <SlideView
+          slide={slide}
+          organization={organization}
+          folderPath={folderPath}
+        />
+      </div>
     )
   } else if (isPresentationRoute) {
     // Handle presentation view
@@ -404,11 +405,11 @@ export default async function OrganizationPage({ params }: PageProps) {
 
     return (
       <div className="min-h-screen bg-gray-50">
+        <CompactOrgHeader
+          organization={organization}
+          userRole={userOrganizationRole}
+        />
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <OrgHeader
-            organization={organization}
-            userRole={userOrganizationRole}
-          />
           <PresentationView
             presentation={presentation}
             organization={organization}
