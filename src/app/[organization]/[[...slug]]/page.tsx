@@ -331,8 +331,8 @@ export default async function OrganizationPage({ params }: PageProps) {
     const projects = await getTopLevelProjects(organization.id)
 
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="bg-gray-50">
+        <div className="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <OrgHeader
             organization={organization}
             userRole={userOrganizationRole}
@@ -374,16 +374,18 @@ export default async function OrganizationPage({ params }: PageProps) {
     }
 
     return (
-      <div className="min-h-screen bg-gray-50">
-        <CompactOrgHeader
-          organization={organization}
-          userRole={userOrganizationRole}
-        />
-        <SlideView
-          slide={slide}
-          organization={organization}
-          folderPath={folderPath}
-        />
+      <div className="bg-gray-50">
+        <div className="min-h-screen">
+          <CompactOrgHeader
+            organization={organization}
+            userRole={userOrganizationRole}
+          />
+          <SlideView
+            slide={slide}
+            organization={organization}
+            folderPath={folderPath}
+          />
+        </div>
       </div>
     )
   } else if (isPresentationRoute) {
@@ -404,17 +406,19 @@ export default async function OrganizationPage({ params }: PageProps) {
     }
 
     return (
-      <div className="min-h-screen bg-gray-50">
-        <CompactOrgHeader
-          organization={organization}
-          userRole={userOrganizationRole}
-        />
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <PresentationView
-            presentation={presentation}
+      <div className="bg-gray-50">
+        <div className="min-h-screen">
+          <CompactOrgHeader
             organization={organization}
-            folderPath={folderPath}
+            userRole={userOrganizationRole}
           />
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <PresentationView
+              presentation={presentation}
+              organization={organization}
+              folderPath={folderPath}
+            />
+          </div>
         </div>
       </div>
     )
@@ -434,8 +438,8 @@ export default async function OrganizationPage({ params }: PageProps) {
     ])
 
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="bg-gray-50">
+        <div className="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <OrgHeader
             organization={organization}
             userRole={userOrganizationRole}
