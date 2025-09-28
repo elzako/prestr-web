@@ -147,12 +147,9 @@ export default function SlideView({
 
         {/* Slide Content */}
         <div className="rounded-lg bg-white shadow">
-          <div className="p-6">
+          <div className="p-3">
             {/* Header with lightbox toggle */}
-            <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-gray-900">
-                {slide.slide_name}
-              </h1>
+            <div className="mb-3 flex items-center justify-end">
               <button
                 onClick={toggleLightbox}
                 className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
