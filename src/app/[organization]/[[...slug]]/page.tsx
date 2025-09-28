@@ -6,6 +6,7 @@ import ProjectList from '@/components/ProjectList'
 import SlideView from '@/components/SlideView'
 import { createClient } from '@/lib/supabase/server'
 import { getUserOrganizationRole } from '@/lib/organization-server-actions'
+import { getSlideImageUrl } from '@/lib/cloudinary'
 import type {
   FolderContent,
   Organization,
@@ -373,6 +374,13 @@ export default async function OrganizationPage({ params }: PageProps) {
       notFound()
     }
 
+    // Generate image URL server-side
+    const imageUrl = await getSlideImageUrl(
+      organization.id,
+      String(slide.id),
+      slide.object_id,
+    )
+
     return (
       <div className="bg-gray-50">
         <div className="min-h-screen">
@@ -384,6 +392,7 @@ export default async function OrganizationPage({ params }: PageProps) {
             slide={slide}
             organization={organization}
             folderPath={folderPath}
+            imageUrl={imageUrl}
           />
         </div>
       </div>

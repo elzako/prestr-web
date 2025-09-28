@@ -1,11 +1,20 @@
-import { getSlideImageUrl } from '@/lib/cloudinary'
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import type { SlideViewProps } from '@/types'
 
-export default async function SlideView({
+export default function SlideView({
   slide,
   organization,
   folderPath,
+  imageUrl,
 }: SlideViewProps) {
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+
   const metadata =
     (slide.metadata as {
       slide_text?: string
@@ -17,12 +26,52 @@ export default async function SlideView({
       presentationFileName?: string
     } | null) || null
 
-  // Construct Cloudinary image URL server-side
-  const imageUrl = getSlideImageUrl(
-    organization.id,
-    String(slide.id),
-    slide.object_id,
-  )
+  // Check URL parameter for lightbox mode
+  useEffect(() => {
+    const lightboxParam = searchParams.get('lightbox')
+    if (lightboxParam === 'true') {
+      setIsLightboxOpen(true)
+    }
+  }, [searchParams])
+
+  // Update URL when lightbox state changes
+  const toggleLightbox = () => {
+    const newState = !isLightboxOpen
+    setIsLightboxOpen(newState)
+
+    const params = new URLSearchParams(searchParams.toString())
+    if (newState) {
+      params.set('lightbox', 'true')
+    } else {
+      params.delete('lightbox')
+    }
+
+    const newUrl = params.toString() ? `${pathname}?${params}` : pathname
+    router.replace(newUrl, { scroll: false })
+  }
+
+  // Handle escape key to close lightbox and prevent body scroll
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isLightboxOpen) {
+        toggleLightbox()
+      }
+    }
+
+    if (isLightboxOpen) {
+      document.addEventListener('keydown', handleEscape)
+      // Prevent body scroll when lightbox is open
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Restore body scroll
+      document.body.style.overflow = 'unset'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isLightboxOpen])
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -99,6 +148,32 @@ export default async function SlideView({
         {/* Slide Content */}
         <div className="rounded-lg bg-white shadow">
           <div className="p-6">
+            {/* Header with lightbox toggle */}
+            <div className="mb-6 flex items-center justify-between">
+              <h1 className="text-2xl font-bold text-gray-900">
+                {slide.slide_name}
+              </h1>
+              <button
+                onClick={toggleLightbox}
+                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                aria-label={isLightboxOpen ? 'Close lightbox' : 'Open lightbox'}
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+                  />
+                </svg>
+              </button>
+            </div>
+
             {/* Slide image */}
             <div className="mb-6">
               <img
@@ -106,7 +181,8 @@ export default async function SlideView({
                 alt={
                   metadata?.slide_text || `Slide image for ${slide.slide_name}`
                 }
-                className="w-full rounded-md border border-gray-200"
+                className="w-full cursor-pointer rounded-md border border-gray-200 transition-opacity hover:opacity-90"
+                onClick={toggleLightbox}
               />
             </div>
 
@@ -215,6 +291,62 @@ export default async function SlideView({
           </div>
         </div>
       </div>
+
+      {/* Lightbox Overlay */}
+      {isLightboxOpen && (
+        <div
+          className="bg-opacity-90 fixed inset-0 z-50 flex items-center justify-center bg-black"
+          onClick={toggleLightbox}
+        >
+          <div className="relative max-h-[90vh] max-w-[90vw]">
+            {/* Close button */}
+            <button
+              onClick={toggleLightbox}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 focus:ring-2 focus:ring-white focus:outline-none"
+              aria-label="Close lightbox"
+            >
+              <svg
+                className="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Lightbox image */}
+            <img
+              src={imageUrl}
+              alt={
+                metadata?.slide_text || `Slide image for ${slide.slide_name}`
+              }
+              className="max-h-full max-w-full object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            {/* Slide info overlay */}
+            {/* <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
+              <h2 className="text-xl font-semibold">{slide.slide_name}</h2>
+              {metadata?.slideNumber && (
+                <p className="text-sm text-gray-200">
+                  Slide {metadata.slideNumber}
+                </p>
+              )}
+              {metadata?.presentationTitle && (
+                <p className="text-sm text-gray-200">
+                  {metadata.presentationTitle}
+                </p>
+              )}
+            </div> */}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

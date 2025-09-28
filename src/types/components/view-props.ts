@@ -57,6 +57,7 @@ export interface SlideViewProps {
   slide: SlideDetail
   organization: Organization
   folderPath: string
+  imageUrl: string
 }
 
 // Search results props
