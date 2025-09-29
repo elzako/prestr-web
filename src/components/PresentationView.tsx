@@ -1,5 +1,6 @@
 import { getSlideImageUrl } from '@/lib/cloudinary'
 import type { PresentationViewProps } from '@/types'
+import SlideGallery from './SlideGallery'
 
 export default async function PresentationView({
   presentation,
@@ -19,6 +20,19 @@ export default async function PresentationView({
         url?: string
       }[]
     | null
+
+  // Prepare slide data with image URLs for client component
+  const slideData =
+    slides?.map((slide) => ({
+      order: slide.order,
+      slide_id: slide.slide_id,
+      object_id: slide.object_id,
+      imageUrl: getSlideImageUrl(
+        organization.id,
+        slide.slide_id,
+        slide.object_id,
+      ),
+    })) || []
 
   const settings = presentation.settings as {
     pptxDownloadRole: string
@@ -100,7 +114,7 @@ export default async function PresentationView({
       {/* Presentation Header */}
       <div className="mb-6">
         <div className="sm:flex sm:items-center sm:justify-between">
-          <div className="sm:flex-auto">
+          {/* <div className="sm:flex-auto">
             <h1 className="text-2xl font-bold text-gray-900">
               {presentation.presentation_name}
             </h1>
@@ -109,7 +123,7 @@ export default async function PresentationView({
                 {metadata.description}
               </p>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -117,7 +131,7 @@ export default async function PresentationView({
       <div className="rounded-lg bg-white shadow">
         <div className="p-6">
           {/* Presentation Metadata */}
-          <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <dt className="text-sm font-medium text-gray-500">
                 Created Date
@@ -152,63 +166,15 @@ export default async function PresentationView({
                 </dd>
               </div>
             )}
-          </div>
+          </div> */}
 
-          {/* Slides List */}
-          {slides && slides.length > 0 && (
-            <div className="mb-6">
-              <h3 className="mb-3 text-lg font-medium text-gray-900">Slides</h3>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {slides
-                  .sort((a, b) => a.order - b.order)
-                  .map((slide, index) => {
-                    const slideImageUrl = getSlideImageUrl(
-                      organization.id,
-                      slide.slide_id,
-                      slide.object_id,
-                    )
-
-                    return (
-                      <div
-                        key={slide.slide_id}
-                        className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
-                      >
-                        {/* Slide image */}
-                        <div className="mb-3">
-                          <img
-                            src={slideImageUrl}
-                            alt={`Slide ${slide.order || index + 1}`}
-                            className="w-full rounded-md border border-gray-200"
-                          />
-                        </div>
-
-                        {/* Slide info */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 text-xs font-medium text-indigo-600">
-                              {slide.order || index + 1}
-                            </div>
-                            <span className="ml-2 text-sm font-medium text-gray-900">
-                              Slide {slide.order || index + 1}
-                            </span>
-                          </div>
-                          {slide.url && (
-                            <a
-                              href={slide.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs text-indigo-600 hover:text-indigo-500"
-                            >
-                              View
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
-              </div>
-            </div>
-          )}
+          {/* Slides Gallery */}
+          <SlideGallery
+            slides={slideData}
+            organizationName={organization.organization_name}
+            folderPath={folderPath}
+            presentationName={presentation.presentation_name}
+          />
 
           {/* Tags */}
           {presentation.tags && presentation.tags.length > 0 && (
@@ -263,7 +229,7 @@ export default async function PresentationView({
               )} */}
 
           {/* Actions */}
-          <div className="mt-6 flex justify-end space-x-3">
+          {/* <div className="mt-6 flex justify-end space-x-3">
             <a
               href={`/${organization.organization_name}/${folderPath}`}
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
@@ -293,7 +259,7 @@ export default async function PresentationView({
                 </svg>
               </a>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
