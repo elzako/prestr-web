@@ -3,14 +3,21 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import type { SlideViewProps } from '@/types'
+import SlideEditForm from './SlideEditForm'
 
 export default function SlideView({
   slide,
   organization,
   folderPath,
   imageUrl,
+  canEdit,
 }: SlideViewProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState({
+    ...slide,
+    description: slide.description || null,
+  })
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -138,7 +145,7 @@ export default function SlideView({
                   />
                 </svg>
                 <span className="ml-4 text-sm font-medium text-gray-900">
-                  {slide.slide_name}
+                  {currentSlide.slide_name}
                 </span>
               </div>
             </li>
@@ -148,8 +155,29 @@ export default function SlideView({
         {/* Slide Content */}
         <div className="rounded-lg bg-white shadow">
           <div className="p-3">
-            {/* Header with lightbox toggle */}
-            <div className="mb-3 flex items-center justify-end">
+            {/* Header with action buttons */}
+            <div className="mb-3 flex items-center justify-end space-x-2">
+              {canEdit && (
+                <button
+                  onClick={() => setIsEditFormOpen(true)}
+                  className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  aria-label="Edit slide"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                    />
+                  </svg>
+                </button>
+              )}
               <button
                 onClick={toggleLightbox}
                 className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -176,7 +204,8 @@ export default function SlideView({
               <img
                 src={imageUrl}
                 alt={
-                  metadata?.slide_text || `Slide image for ${slide.slide_name}`
+                  metadata?.slide_text ||
+                  `Slide image for ${currentSlide.slide_name}`
                 }
                 className="w-full cursor-pointer rounded-md border border-gray-200 transition-opacity hover:opacity-90"
                 onClick={toggleLightbox}
@@ -197,12 +226,27 @@ export default function SlideView({
               </div>
             )}
 
+            {/* Description */}
+            {/* {currentSlide.description && (
+              <div className="mb-6">
+                <div>
+                  <dt className="text-sm font-medium text-gray-500">
+                    Description
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900">
+                    {currentSlide.description}
+                  </dd>
+                </div>
+              </div>
+            )} */}
+
             {/* Tags and Visibility */}
-            {(slide.tags && slide.tags.length > 0) || slide.visibility ? (
+            {(currentSlide.tags && currentSlide.tags.length > 0) ||
+            currentSlide.visibility ? (
               <div className="mb-6">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex flex-wrap gap-2">
-                    {slide.tags?.map((tag, index) => (
+                    {currentSlide.tags?.map((tag, index) => (
                       <span
                         key={index}
                         className="inline-flex items-center rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"
@@ -211,18 +255,18 @@ export default function SlideView({
                       </span>
                     ))}
                   </div>
-                  {slide.visibility && (
+                  {currentSlide.visibility && (
                     <div className="flex-shrink-0">
                       <span
                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          slide.visibility === 'public'
+                          currentSlide.visibility === 'public'
                             ? 'bg-green-100 text-green-800'
-                            : slide.visibility === 'internal'
+                            : currentSlide.visibility === 'internal'
                               ? 'bg-yellow-100 text-yellow-800'
                               : 'bg-red-100 text-red-800'
                         }`}
                       >
-                        {slide.visibility}
+                        {currentSlide.visibility}
                       </span>
                     </div>
                   )}
@@ -321,7 +365,8 @@ export default function SlideView({
             <img
               src={imageUrl}
               alt={
-                metadata?.slide_text || `Slide image for ${slide.slide_name}`
+                metadata?.slide_text ||
+                `Slide image for ${currentSlide.slide_name}`
               }
               className="max-h-full max-w-full object-contain"
               onClick={(e) => e.stopPropagation()}
@@ -329,7 +374,7 @@ export default function SlideView({
 
             {/* Slide info overlay */}
             {/* <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
-              <h2 className="text-xl font-semibold">{slide.slide_name}</h2>
+              <h2 className="text-xl font-semibold">{currentSlide.slide_name}</h2>
               {metadata?.slideNumber && (
                 <p className="text-sm text-gray-200">
                   Slide {metadata.slideNumber}
@@ -344,6 +389,35 @@ export default function SlideView({
           </div>
         </div>
       )}
+
+      {/* Edit Form Modal */}
+      <SlideEditForm
+        slide={{
+          id: currentSlide.id,
+          slide_name: currentSlide.slide_name,
+          description: currentSlide.description,
+          tags: currentSlide.tags || [],
+        }}
+        isOpen={isEditFormOpen}
+        onClose={() => setIsEditFormOpen(false)}
+        onSuccess={(updatedSlide) => {
+          // Update current slide data
+          setCurrentSlide((prev) => ({
+            ...prev,
+            slide_name: updatedSlide.slide_name,
+            description: updatedSlide.description,
+            tags: updatedSlide.tags,
+          }))
+
+          // If slide_name changed, redirect to new URL
+          if (updatedSlide.slide_name !== slide.slide_name) {
+            const pathSegments = pathname.split('/')
+            pathSegments[pathSegments.length - 1] = updatedSlide.slide_name
+            const newPath = pathSegments.join('/') + '.slide'
+            router.push(newPath)
+          }
+        }}
+      />
     </div>
   )
 }

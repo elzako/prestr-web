@@ -23,6 +23,7 @@ export type SlideSummary = Pick<
 export type SlideDetail = Pick<
   Tables<'slides'>,
   | 'id'
+  | 'parent_id'
   | 'slide_name'
   | 'metadata'
   | 'created_at'
@@ -30,6 +31,13 @@ export type SlideDetail = Pick<
   | 'object_id'
   | 'tags'
   | 'visibility'
+  | 'description'
+>
+
+// Slide type for editing with required fields
+export type SlideForEditing = Pick<
+  Tables<'slides'>,
+  'id' | 'slide_name' | 'description' | 'tags'
 >
 
 // Full slide type for comprehensive operations

@@ -214,7 +214,7 @@ async function getSlideData(
   const { data, error } = await supabase
     .from('slides')
     .select(
-      'id, slide_name, metadata, created_at, updated_at, object_id, tags, visibility',
+      'id, parent_id, slide_name, metadata, description, created_at, updated_at, object_id, tags, visibility',
     )
     .eq('parent_id', parentId)
     .eq('slide_name', slideName)
@@ -226,6 +226,27 @@ async function getSlideData(
   }
 
   return data
+}
+
+async function checkSlideEditPermissions(parentId: string): Promise<boolean> {
+  const [userRoles, rootFolderId] = await Promise.all([
+    getCurrentUserRoles(),
+    getRootFolderId(parentId),
+  ])
+
+  if (!userRoles || !rootFolderId) return false
+
+  const { organizationRoles, folderRoles } = userRoles
+
+  const isOrgAdmin = ['owner', 'admin'].some((role) =>
+    organizationRoles.includes(role),
+  )
+
+  if (isOrgAdmin) return true
+
+  const folderRole = folderRoles.find((r) => r.folder_id === rootFolderId)
+
+  return ['admin', 'contributor'].includes(folderRole?.user_role ?? '')
 }
 
 async function getPresentationData(
@@ -374,6 +395,9 @@ export default async function OrganizationPage({ params }: PageProps) {
       notFound()
     }
 
+    // Check if user can edit this slide
+    const canEdit = await checkSlideEditPermissions(slide.parent_id)
+
     // Generate image URL server-side
     const imageUrl = await getSlideImageUrl(
       organization.id,
@@ -393,6 +417,7 @@ export default async function OrganizationPage({ params }: PageProps) {
             organization={organization}
             folderPath={folderPath}
             imageUrl={imageUrl}
+            canEdit={canEdit}
           />
         </div>
       </div>

@@ -32,6 +32,7 @@ export type {
   PresentationDetail,
   Slide,
   SlideDetail,
+  SlideForEditing,
   UserRoles,
   AuthUser,
   UserProfile,

@@ -1091,7 +1091,7 @@ export type Database = {
             path?: string
           }
           object_id: string
-          parent_id: string | null
+          parent_id: string
           settings: Json | null
           slide_name: string | null
           sys_period: unknown
@@ -1128,7 +1128,7 @@ export type Database = {
             url?: string
           }
           object_id: string
-          parent_id?: string | null
+          parent_id: string
           settings?: Json | null
           slide_name?: string | null
           sys_period?: unknown
@@ -1165,7 +1165,7 @@ export type Database = {
             url?: string
           }
           object_id?: string
-          parent_id?: string | null
+          parent_id?: string
           settings?: Json | null
           slide_name?: string | null
           sys_period?: unknown
@@ -1270,7 +1270,7 @@ export type Database = {
             path?: string
           }
           object_id: string
-          parent_id: string | null
+          parent_id: string
           settings: Json | null
           slide_name: string | null
           sys_period: unknown
@@ -1292,7 +1292,7 @@ export type Database = {
           locked_by?: string | null
           metadata?: Json | null
           object_id: string
-          parent_id?: string | null
+          parent_id: string
           settings?: Json | null
           slide_name?: string | null
           sys_period: unknown
@@ -1314,7 +1314,7 @@ export type Database = {
           locked_by?: string | null
           metadata?: Json | null
           object_id?: string
-          parent_id?: string | null
+          parent_id: string
           settings?: Json | null
           slide_name?: string | null
           sys_period?: unknown

@@ -40,6 +40,7 @@ export type {
   Slide,
   SlideSummary,
   SlideDetail,
+  SlideForEditing,
   SlideFull,
   SlideMetadata,
 } from './slide'

@@ -58,6 +58,7 @@ export interface SlideViewProps {
   organization: Organization
   folderPath: string
   imageUrl: string
+  canEdit: boolean
 }
 
 // Search results props
