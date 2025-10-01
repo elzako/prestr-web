@@ -734,7 +734,7 @@ export type Database = {
           locked: boolean
           locked_by: string | null
           metadata?: { url?: string; description?: string }
-          parent_id: string | null
+          parent_id: string
           presentation_name: string
           settings: {
             pptxDownloadRole: Enums<'presentation_role'>
@@ -763,7 +763,7 @@ export type Database = {
           locked?: boolean
           locked_by?: string | null
           metadata?: { url?: string; description?: string }
-          parent_id?: string | null
+          parent_id?: string
           presentation_name?: string | null
           settings?: {
             pptxDownloadRole: Enums<'presentation_role'>

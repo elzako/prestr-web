@@ -23,6 +23,7 @@ export type PresentationSummary = Pick<
 export type PresentationDetail = Pick<
   Tables<'presentations'>,
   | 'id'
+  | 'parent_id'
   | 'presentation_name'
   | 'metadata'
   | 'created_at'

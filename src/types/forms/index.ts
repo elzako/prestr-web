@@ -33,6 +33,14 @@ export type {
   FolderFormValidation,
 } from './folder-forms'
 
+// Presentation form types
+export type {
+  EditPresentationFormData,
+  EditPresentationModalProps,
+  PresentationFormValidation,
+  PresentationUpdateResult,
+} from './presentation-forms'
+
 // Organization profile form types
 export type {
   OrganizationProfileFormData,

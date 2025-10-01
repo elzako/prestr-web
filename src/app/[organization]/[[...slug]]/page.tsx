@@ -228,7 +228,7 @@ async function getSlideData(
   return data
 }
 
-async function checkSlideEditPermissions(parentId: string): Promise<boolean> {
+async function checkEditPermissions(parentId: string): Promise<boolean> {
   const [userRoles, rootFolderId] = await Promise.all([
     getCurrentUserRoles(),
     getRootFolderId(parentId),
@@ -258,7 +258,7 @@ async function getPresentationData(
   const { data, error } = await supabase
     .from('presentations')
     .select(
-      'id, presentation_name, metadata, created_at, updated_at, tags, slides, settings, version',
+      'id, parent_id, presentation_name, metadata, created_at, updated_at, tags, slides, settings, version',
     )
     .eq('parent_id', parentId)
     .eq('presentation_name', presentationName)
@@ -396,7 +396,7 @@ export default async function OrganizationPage({ params }: PageProps) {
     }
 
     // Check if user can edit this slide
-    const canEdit = await checkSlideEditPermissions(slide.parent_id)
+    const canEdit = await checkEditPermissions(slide.parent_id)
 
     // Generate image URL server-side
     const imageUrl = await getSlideImageUrl(
@@ -439,6 +439,9 @@ export default async function OrganizationPage({ params }: PageProps) {
       notFound()
     }
 
+    // Check if user can edit this presentation (using same logic as slide edit permissions)
+    const canEdit = await checkEditPermissions(presentation.parent_id)
+
     return (
       <div className="bg-gray-50">
         <div className="min-h-screen">
@@ -451,6 +454,7 @@ export default async function OrganizationPage({ params }: PageProps) {
               presentation={presentation}
               organization={organization}
               folderPath={folderPath}
+              canEdit={canEdit}
             />
           </div>
         </div>
