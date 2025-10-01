@@ -6,7 +6,11 @@
       "Bash(do echo \"Processing: $file\")",
       "Bash(head:*)",
       "Bash(done)",
-      "Bash(echo)"
+      "Bash(echo)",
+      "Bash(npm install:*)",
+      "Bash(npm test)",
+      "Bash(npx playwright:*)",
+      "Bash(npm test:*)"
     ],
     "deny": []
   }

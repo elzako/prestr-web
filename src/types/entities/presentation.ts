@@ -10,7 +10,14 @@ import type { Tables } from '../database.types'
 // Base presentation type for lists and references
 export type Presentation = Pick<
   Tables<'presentations'>,
-  'id' | 'presentation_name' | 'metadata' | 'created_at'
+  | 'id'
+  | 'parent_id'
+  | 'presentation_name'
+  | 'metadata'
+  | 'tags'
+  | 'created_at'
+  | 'updated_at'
+  | 'deleted_at'
 >
 
 // Extended presentation type with additional fields

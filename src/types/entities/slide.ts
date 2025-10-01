@@ -10,7 +10,15 @@ import type { Tables } from '../database.types'
 // Base slide type for lists and references
 export type Slide = Pick<
   Tables<'slides'>,
-  'id' | 'slide_name' | 'metadata' | 'created_at'
+  | 'id'
+  | 'object_id'
+  | 'parent_id'
+  | 'slide_name'
+  | 'metadata'
+  | 'tags'
+  | 'created_at'
+  | 'updated_at'
+  | 'deleted_at'
 >
 
 // Extended slide type with additional fields

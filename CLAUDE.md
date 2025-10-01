@@ -41,18 +41,18 @@ npm run lint
 - **Auth confirmation**: `src/app/auth/confirm/route.ts` - Supabase auth callback
 
 ### Key Components Architecture
-- **View Components**: `SlideView.tsx`, `PresentationView.tsx`, `PresentationView.tsx` (externalized from main page)
-- **Modal Components**: Create/Edit modals for projects, folders with form handling
-- **Content Management**: `FolderViewClient.tsx`, `FolderContentList.tsx`, `ProjectList.tsx` for hierarchical content display
+- **View Components**: `SlideView.tsx`, `PresentationView.tsx`, `PresentationViewClient.tsx` (externalized from main page)
+- **Modal Components**: Create/Edit modals for projects, folders, presentations with form handling
+- **Content Management**: `FolderView.tsx`, `FolderContentList.tsx`, `ProjectList.tsx` for hierarchical content display
 - **Upload System**: `PowerPointUpload.tsx`, `UploadModal.tsx` with Cloudinary integration
-- **Layout Components**: `OrgHeader.tsx`, `Header.tsx`, `Footer.tsx` for consistent UI structure
+- **Layout Components**: `OrgHeader.tsx`, `CompactOrgHeader.tsx`, `AuthHeader.tsx`, `Footer.tsx` for consistent UI structure
 
 ### Data Layer
 - **Supabase Integration**:
   - Client: `src/lib/supabase/client.ts` for browser-side operations
   - Server: `src/lib/supabase/server.ts` for server-side operations
   - Database types: `types/database.types.ts` (auto-generated from Supabase schema)
-- **Action Files**: `auth-actions.ts`, `project-actions.ts`, `folder-actions.ts` for server actions
+- **Action Files**: `auth-actions.ts`, `project-actions.ts`, `folder-actions.ts`, `presentation-actions.ts`, `slide-actions.ts` for server actions
 - **Third-party APIs**: `cloudinary.ts` for image/file management
 
 ### Authentication & Routing
@@ -69,9 +69,26 @@ The app uses the following main entities:
 - **slides**: Individual slides within presentations
 - **access_tokens**: Temporary access for presentation sharing
 
+### Type System
+- **Centralized Types**: All types in `src/types/` with barrel exports from `@/types`
+- **Type Organization**:
+  - `entities/` - Database entity types (Organization, Project, Folder, Presentation, Slide)
+  - `forms/` - Form-related types and validation schemas
+  - `api/` - API request/response types and search interfaces (MeiliSearch integration)
+  - `components/` - Component prop interfaces and action types
+- **Usage**: Import from `@/types` for commonly used types
+- **Database Types**: Auto-generated in `database.types.ts` from Supabase schema
+
 ### Design System
-- **UI Components**: Located in `design/` directory with Tailwind Plus components
-- **Styling**: Tailwind CSS v4 with custom configuration, includes forms plugin
+- **UI Reference Library**: `design/application-ui/` contains Tailwind Plus components organized by category:
+  - `application-shells/` - Page layouts with sidebars, headers
+  - `overlays/` - Modals, dialogs, notifications
+  - `forms/` - Input groups, form layouts
+  - `data-display/` - Tables, lists, cards
+  - `navigation/` - Navbars, breadcrumbs, tabs
+  - `page-examples/` - Complete page templates
+- **IMPORTANT**: Never import from `design/` - copy JSX and adapt to TypeScript/Next.js
+- **Styling**: Tailwind CSS v4 with custom configuration, `@tailwindcss/forms` plugin
 - **Typography**: Inter (body) and Lexend (headings) fonts from Google Fonts
 
 ## Important Implementation Notes
@@ -89,6 +106,42 @@ The `[organization]/[[...slug]]` route handles complex nested routing:
 - Strict TypeScript configuration with proper path aliases (`@/*` maps to `./src/*`)
 
 ### Performance Considerations
-- Uses `revalidate = 0` for data freshness (consider changing to 3600 for production)
+- Uses `revalidate = 3600` for data freshness (1 hour cache)
 - Implements proper loading and error states
 - Uses Supabase RPC functions for complex queries (e.g., `get_folder_id_by_full_path`)
+
+## Coding Standards (from .cursor/rules)
+
+### Component Organization
+- Prefer colocating small components next to their route when specific to that route
+- Put shared, reusable components in `src/components/` with strongly typed props
+- Use server components by default; add `"use client"` only when needed (state/effects/refs)
+
+### TypeScript
+- Strongly type public component props and exported functions. Avoid `any`
+- Prefer explicit component props types over `React.FC`
+- Use meaningful names: functions are verbs; variables are descriptive nouns
+- Handle edge cases early; return early to avoid deep nesting
+
+### Design Library Usage
+- **Never import from `design/application-ui/`** - this is a reference library only
+- Instead: find component, confirm it matches use case, copy raw JSX, adapt to TypeScript/Next.js
+- Files use `@tags` for discovery; use keywords to match filenames
+- Convert to TSX: type component props, remove unused imports, replace placeholder data
+- Keep Tailwind classes; adjust brand colors if needed (primary: `indigo`, danger: `rose`, success: `emerald`)
+
+### Styling
+- Use Tailwind classes directly in JSX; avoid inline styles
+- Prefer common color scales: `slate/gray/zinc` for neutrals; `indigo` for brand accent
+- Support dark mode with `dark:` variants for backgrounds, text, borders, focus states
+- Include accessible focus styles: `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500`
+- Responsive first: use `sm / md / lg / xl / 2xl` breakpoints
+
+### Security & Accessibility
+- Avoid `dangerouslySetInnerHTML`; if required, sanitize inputs
+- Always include descriptive `alt` text for images
+- Use semantic elements (`button`, `nav`, `main`, `section`, `h1`–`h6`)
+- Ensure labels/aria for form controls; associate labels using `htmlFor`/`id`
+- Provide visible focus states; ensure sufficient contrast
+- Keyboard support: all interactive elements must be reachable via tab
+- Do not expose secrets to the client; read environment variables on the server only

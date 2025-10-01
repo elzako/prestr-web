@@ -21,6 +21,8 @@ import type {
 export type Project = Pick<
   Tables<'folders'>,
   | 'id'
+  | 'organization_id'
+  | 'parent_id'
   | 'folder_name'
   | 'full_path'
   | 'tags'
@@ -28,6 +30,7 @@ export type Project = Pick<
   | 'metadata'
   | 'created_at'
   | 'updated_at'
+  | 'deleted_at'
 >
 
 // Minimal project type for lists
@@ -39,7 +42,17 @@ export type ProjectSummary = Pick<
 // Base folder type (subfolders within projects)
 export type Folder = Pick<
   Tables<'folders'>,
-  'id' | 'folder_name' | 'full_path' | 'tags' | 'visibility'
+  | 'id'
+  | 'organization_id'
+  | 'parent_id'
+  | 'folder_name'
+  | 'full_path'
+  | 'tags'
+  | 'visibility'
+  | 'metadata'
+  | 'created_at'
+  | 'updated_at'
+  | 'deleted_at'
 >
 
 // Detailed folder type with timestamps
