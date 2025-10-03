@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -19,6 +19,13 @@ export default function UploadModal({
   onUploadSuccess,
 }: UploadModalProps) {
   const [isUploading, setIsUploading] = useState(false)
+
+  // Reset upload state when modal is closed
+  useEffect(() => {
+    if (!isOpen) {
+      setIsUploading(false)
+    }
+  }, [isOpen])
 
   const handleUploadStart = () => {
     setIsUploading(true)

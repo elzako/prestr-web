@@ -92,7 +92,7 @@ async function getTopLevelProjects(organizationId: string): Promise<Project[]> {
   const { data, error } = await supabase
     .from('folders')
     .select(
-      'id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at',
+      'id, organization_id, parent_id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at, deleted_at',
     )
     .eq('organization_id', organizationId)
     .is('parent_id', null)
@@ -165,7 +165,7 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
   // Fetch sub-folders
   const { data: folders, error: foldersError } = await supabase
     .from('folders')
-    .select('id, folder_name, full_path, tags, visibility')
+    .select('id, organization_id, parent_id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at, deleted_at')
     .eq('parent_id', folderId)
     .is('deleted_at', null)
     .order('folder_name', { ascending: true })
@@ -173,7 +173,7 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
   // Fetch presentations
   const { data: presentations, error: presentationsError } = await supabase
     .from('presentations')
-    .select('id, presentation_name, metadata, created_at, tags, settings')
+    .select('id, parent_id, presentation_name, metadata, created_at, updated_at, deleted_at, tags, settings')
     .eq('parent_id', folderId)
     .is('deleted_at', null)
     .order('presentation_name', { ascending: true })
@@ -181,7 +181,7 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
   // Fetch slides
   const { data: slides, error: slidesError } = await supabase
     .from('slides')
-    .select('id, slide_name, metadata, created_at, tags, object_id')
+    .select('id, object_id, parent_id, slide_name, metadata, tags, created_at, updated_at, deleted_at')
     .eq('parent_id', folderId)
     .is('deleted_at', null)
     .order('slide_name', { ascending: true })

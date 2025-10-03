@@ -32,13 +32,13 @@ export default function SlideGallery({
   // Handle URL parameter for direct slide access
   useEffect(() => {
     const slideParam = searchParams.get('slide')
-    if (slideParam) {
+    if (slideParam && slides) {
       const slideIndex = parseInt(slideParam, 10) - 1
       if (slideIndex >= 0 && slideIndex < slides.length) {
         setSelectedSlideIndex(slideIndex)
       }
     }
-  }, [searchParams, slides.length])
+  }, [searchParams, slides])
 
   const openLightbox = (index: number) => {
     setSelectedSlideIndex(index)
@@ -140,14 +140,14 @@ export default function SlideGallery({
               >
                 {/* Slide Number Badge */}
                 <div className="absolute top-2 left-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-xs font-semibold text-gray-700 shadow-sm backdrop-blur-sm">
-                  {slide.order || index + 1}
+                  {slide.order ?? index + 1}
                 </div>
 
                 {/* Slide Image */}
                 <div className="aspect-[16/9] overflow-hidden rounded-md bg-gray-100">
                   <img
                     src={slide.imageUrl}
-                    alt={`Slide ${slide.order || index + 1}`}
+                    alt={`Slide ${slide.order ?? index + 1}`}
                     className="h-full w-full object-cover object-top transition-transform duration-200 group-hover:scale-105"
                     loading="lazy"
                   />

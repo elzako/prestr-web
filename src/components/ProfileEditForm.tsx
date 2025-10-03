@@ -81,7 +81,11 @@ export function ProfileEditForm({
       setTimeout(() => setSuccessMessage(null), 3000)
     } catch (err) {
       console.error('Error updating profile:', err)
-      setError(err instanceof Error ? err.message : 'Failed to update profile')
+      // Handle both Error instances and Supabase error objects
+      const errorMessage = err instanceof Error
+        ? err.message
+        : (err as any)?.message || 'Failed to update profile'
+      setError(errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -172,7 +176,7 @@ export function ProfileEditForm({
               Account Created
             </dt>
             <dd className="text-sm text-gray-900">
-              {new Date(user.created_at).toLocaleDateString()}
+              {new Date(user.created_at).toLocaleDateString('en-US')}
             </dd>
           </div>
         </dl>
@@ -342,7 +346,7 @@ export function ProfileEditForm({
           <input
             type="text"
             id="accountCreated"
-            value={new Date(user.created_at).toLocaleDateString()}
+            value={new Date(user.created_at).toLocaleDateString('en-US')}
             disabled
             className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm sm:text-sm"
           />

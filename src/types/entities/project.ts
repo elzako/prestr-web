@@ -93,10 +93,25 @@ export interface FolderContent {
 // Import presentation and slide types (avoiding circular dependency)
 type Presentation = Pick<
   Tables<'presentations'>,
-  'id' | 'presentation_name' | 'metadata' | 'created_at'
+  | 'id'
+  | 'parent_id'
+  | 'presentation_name'
+  | 'metadata'
+  | 'tags'
+  | 'created_at'
+  | 'updated_at'
+  | 'deleted_at'
 >
 
 type Slide = Pick<
   Tables<'slides'>,
-  'id' | 'slide_name' | 'metadata' | 'created_at'
+  | 'id'
+  | 'object_id'
+  | 'parent_id'
+  | 'slide_name'
+  | 'metadata'
+  | 'tags'
+  | 'created_at'
+  | 'updated_at'
+  | 'deleted_at'
 >

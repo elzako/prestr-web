@@ -10,7 +10,21 @@
       "Bash(npm install:*)",
       "Bash(npm test)",
       "Bash(npx playwright:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(timeout 20 npm test:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(npx jest:*)",
+      "Bash(timeout 30 npm test -- --listTests)",
+      "Bash(timeout 180 npm test -- --no-coverage)",
+      "Bash(tee:*)",
+      "Bash(for file in __tests__/components/FolderContentList.test.tsx __tests__/components/ProjectList.test.tsx __tests__/components/SearchResults.test.tsx)",
+      "Bash(do)",
+      "Bash(timeout 120 npm test:*)",
+      "Bash(timeout 90 npm test:*)",
+      "Bash(cat:*)"
     ],
     "deny": []
   }

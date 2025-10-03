@@ -45,7 +45,8 @@ export default function OrganizationProfileModal({
     setError: setFormError,
     clearErrors,
   } = useForm<OrganizationProfileFormData>({
-    mode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     defaultValues: {
       name: metadata?.name || '',
       about: metadata?.about || '',
@@ -70,7 +71,8 @@ export default function OrganizationProfileModal({
       setError(null)
       setNameChanged(false)
     }
-  }, [isOpen, organization, metadata, reset])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, organization, metadata])
 
   // Check if organization name has changed
   useEffect(() => {
@@ -190,6 +192,7 @@ export default function OrganizationProfileModal({
                     type="button"
                     className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
                     onClick={handleCancel}
+                    aria-label="Close"
                   >
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -357,10 +360,12 @@ export default function OrganizationProfileModal({
                           type="url"
                           id="website"
                           {...register('website', {
-                            pattern: {
-                              value: /^https?:\/\/.+/,
-                              message:
-                                'Please enter a valid URL starting with http:// or https://',
+                            validate: (value) => {
+                              if (!value) return true // Empty is allowed
+                              return (
+                                /^https?:\/\/.+/.test(value) ||
+                                'Please enter a valid URL starting with http:// or https://'
+                              )
                             },
                           })}
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

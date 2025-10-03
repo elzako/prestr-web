@@ -11,7 +11,7 @@ import type { ReactNode } from 'react'
 export interface ActionItem {
   id: string
   label: string
-  icon: ReactNode
+  icon?: ReactNode
   onClick: () => void
   variant?: 'default' | 'danger'
   disabled?: boolean
