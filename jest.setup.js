@@ -1,6 +1,9 @@
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom'
 import { mockAnimationsApi } from 'jsdom-testing-mocks'
+import './__tests__/setup/polyfills'
+
+import { mswServer } from './__tests__/setup/msw/server'
 
 // Mock animations API for Headless UI components
 mockAnimationsApi()
@@ -56,3 +59,6 @@ global.mockWindowLocation = (properties = {}) => {
   return window.location
 }
 
+beforeAll(() => mswServer.listen({ onUnhandledRequest: 'error' }))
+afterEach(() => mswServer.resetHandlers())
+afterAll(() => mswServer.close())

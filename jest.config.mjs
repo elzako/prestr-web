@@ -1,22 +1,16 @@
 import nextJest from 'next/jest.js'
 
 const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
   dir: './',
 })
 
 /** @type {import('jest').Config} */
 const config = {
-  // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
-
-  // Module name mapper to handle path aliases
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/',
   },
-
-  // Coverage configuration
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
@@ -24,7 +18,6 @@ const config = {
     '!src/**/__tests__/**',
     '!src/types/**',
   ],
-
   coverageThreshold: {
     global: {
       branches: 70,
@@ -33,14 +26,10 @@ const config = {
       statements: 70,
     },
   },
-
-  // Test match patterns
   testMatch: [
     '**/__tests__/**/*.[jt]s?(x)',
     '**/?(*.)+(spec|test).[jt]s?(x)',
   ],
-
-  // Ignore patterns
   testPathIgnorePatterns: [
     '/node_modules/',
     '/.next/',
@@ -49,7 +38,7 @@ const config = {
     '/__tests__/setup/',
     '/e2e/',
   ],
+  transformIgnorePatterns: ['node_modules[/\\\\](?!(msw|@mswjs|until-async)[/\\\\])'],
 }
 
-// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
 export default createJestConfig(config)

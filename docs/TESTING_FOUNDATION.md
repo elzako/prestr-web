@@ -34,7 +34,7 @@
 - [ ] Create custom render function for Testing Library with common providers
 - [ ] Set up mock factory for Supabase client
 - [ ] Create test data factories/fixtures for common entities
-- [ ] Set up MSW (Mock Service Worker) for API mocking if needed
+- [x] Set up MSW (Mock Service Worker) for API mocking if needed
 - [ ] Create helpers for mocking Next.js router
 - [ ] Document testing utilities in `__tests__/README.md`
 
@@ -75,7 +75,7 @@
 - [x] Test Headless UI component integrations (dialogs, menus, transitions)
 - [ ] Test form components with react-hook-form integration
 - [x] Test accessibility features (ARIA labels, keyboard navigation)
-- [ ] Test responsive behavior where critical
+- [x] Test responsive behavior where critical
 - [x] Test loading and error states
 
 ### Form Testing
@@ -92,7 +92,7 @@
 - [ ] Test navigation components
 - [ ] Test layout rendering with different auth states
 - [ ] Test mobile menu behavior
-- [ ] Test route protection/redirects
+- [x] Test route protection/redirects
 
 ---
 
@@ -100,7 +100,7 @@
 
 ### Page Component Tests
 
-- [ ] Test homepage rendering
+- [x] Test homepage rendering
 - [ ] Test authenticated page access
 - [ ] Test unauthenticated redirects
 - [ ] Test data fetching and loading states
