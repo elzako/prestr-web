@@ -19,7 +19,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { reorderSlides } from '@/lib/presentation-actions'
+import { updatePresentationContent } from '@/lib/presentation-actions'
 import AddSlideModal from './AddSlideModal'
 
 interface SlideData {
@@ -78,11 +78,10 @@ function SortableSlide({
       style={style}
       className={`group relative rounded-lg border border-gray-200 bg-white p-3 shadow-sm transition-all duration-200 ${
         isEditMode
-          ? 'cursor-move hover:border-indigo-400 hover:shadow-lg'
+          ? 'hover:border-indigo-400 hover:shadow-lg'
           : 'cursor-pointer hover:border-indigo-300 hover:shadow-md'
       } ${isDragging ? 'z-50' : ''}`}
       onClick={!isEditMode ? onClick : undefined}
-      {...(isEditMode ? { ...attributes, ...listeners } : {})}
     >
       {/* Slide Number Badge */}
       <div className="absolute top-2 left-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-xs font-semibold text-gray-700 shadow-sm backdrop-blur-sm">
@@ -93,7 +92,13 @@ function SortableSlide({
       {isEditMode && (
         <>
           {/* Drag Handle Icon */}
-          <div className="absolute top-2 right-10 z-10 rounded-full bg-white/90 p-1.5 shadow-sm backdrop-blur-sm">
+          <button
+            type="button"
+            className="absolute top-2 right-10 z-10 cursor-move rounded-full bg-white/90 p-1.5 shadow-sm backdrop-blur-sm transition-colors hover:bg-indigo-100"
+            aria-label="Drag to reorder"
+            {...attributes}
+            {...listeners}
+          >
             <svg
               className="h-4 w-4 text-gray-600"
               fill="none"
@@ -107,7 +112,7 @@ function SortableSlide({
                 d="M4 8h16M4 16h16"
               />
             </svg>
-          </div>
+          </button>
 
           {/* Remove Button */}
           <button
@@ -350,7 +355,7 @@ export default function SlideGallery({
         object_id: slide.object_id,
       }))
 
-      await reorderSlides(presentationId, slidesData)
+      await updatePresentationContent(presentationId, slidesData)
 
       setOriginalSlides([...editedSlides])
       onExitEditMode?.()

@@ -62,12 +62,12 @@ Based on comprehensive analysis of the codebase, here's the implementation statu
 - **✅ Search respects project visibility**: Role-based filtering in `src/lib/search-actions.ts`
 - **✅ Role-based access**: Comprehensive public/internal/restricted visibility controls
 
-## ❌ NOT IMPLEMENTED
-
 ### Assembly Features
 
-- **❌ Assemble new presentation from uploaded slides**: Database schema supports it (`presentations.slides` array) but no UI/actions
-- **❌ Modify existing presentation**: No slide add/remove/reorder functionality
+- **✅ Assemble new presentation from uploaded slides**: Database schema supports it (`presentations.slides` array) but no UI/actions
+- **✅ Modify existing presentation**: Add/remove/reorder slides in a presentation
+
+## ❌ NOT IMPLEMENTED
 
 ### Update Features
 
@@ -78,6 +78,10 @@ Based on comprehensive analysis of the codebase, here's the implementation statu
 
 - **⚠️ Add/remove team members**: Database schema complete (`user_organization_roles`, `organization_invitations`) but UI is stubbed
 - **⚠️ Assign roles**: Role infrastructure exists but management interface not implemented
+
+### Pricing
+
+- **❌ Integration with Stripe Payment**: Individual Plan $20/month, Team Plan $40/month, 7 days free trial with credit card
 
 ## Architecture Strengths
 

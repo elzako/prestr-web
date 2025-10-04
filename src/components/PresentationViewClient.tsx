@@ -1,10 +1,10 @@
 'use client'
 
+import type { PresentationViewProps } from '@/types'
+import { PencilIcon, RectangleStackIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-import { PencilIcon } from '@heroicons/react/24/outline'
 import EditPresentationModal from './EditPresentationModal'
 import SlideGallery from './SlideGallery'
-import type { PresentationViewProps } from '@/types'
 
 interface SlideData {
   order: number
@@ -115,8 +115,8 @@ export default function PresentationViewClient({
                   onClick={() => setIsReorderMode(true)}
                   className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  <PencilIcon className="mr-1.5 -ml-0.5 h-4 w-4" />
-                  Edit Presentation
+                  <RectangleStackIcon className="mr-1.5 -ml-0.5 h-4 w-4" />
+                  Edit Content
                 </button>
               )}
               <button
