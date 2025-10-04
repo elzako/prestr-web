@@ -23,6 +23,7 @@ export default function PresentationViewClient({
   folderPath,
   canEdit = false,
   slideData,
+  projectId,
 }: PresentationViewClientProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isReorderMode, setIsReorderMode] = useState(false)
@@ -114,20 +115,8 @@ export default function PresentationViewClient({
                   onClick={() => setIsReorderMode(true)}
                   className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  <svg
-                    className="mr-1.5 -ml-0.5 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 8h16M4 16h16"
-                    />
-                  </svg>
-                  Reorder Slides
+                  <PencilIcon className="mr-1.5 -ml-0.5 h-4 w-4" />
+                  Edit Presentation
                 </button>
               )}
               <button
@@ -150,12 +139,14 @@ export default function PresentationViewClient({
           <SlideGallery
             slides={slideData}
             organizationName={organization.organization_name}
+            organizationId={organization.id}
             folderPath={folderPath}
             presentationName={presentation.presentation_name}
             presentationId={presentation.id}
+            projectId={projectId}
             canEdit={canEdit}
-            isReorderMode={isReorderMode}
-            onExitReorderMode={() => setIsReorderMode(false)}
+            isEditMode={isReorderMode}
+            onExitEditMode={() => setIsReorderMode(false)}
           />
 
           {/* Tags */}

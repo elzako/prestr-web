@@ -1,8 +1,8 @@
-# Slide Reordering Feature
+# Edit Presentation Feature
 
 ## Overview
 
-The slide reordering feature allows users with edit permissions to reorder slides within a presentation through an intuitive drag-and-drop interface. Changes are only persisted when explicitly saved, with the option to cancel and restore the original order.
+The Edit Presentation feature allows users with edit permissions to modify presentation structure in a dedicated edit mode. Users can reorder slides via drag-and-drop, remove slides from presentations, and add existing slides from the project library. All changes are only persisted when explicitly saved, with the option to cancel and restore the original state.
 
 ## Implementation Summary
 

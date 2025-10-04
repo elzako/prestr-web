@@ -51,6 +51,7 @@ export interface PresentationViewProps {
   organization: Organization
   folderPath: string
   canEdit?: boolean
+  projectId?: string
 }
 
 // Slide view props

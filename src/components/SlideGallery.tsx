@@ -20,6 +20,7 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { reorderSlides } from '@/lib/presentation-actions'
+import AddSlideModal from './AddSlideModal'
 
 interface SlideData {
   order: number
@@ -31,26 +32,30 @@ interface SlideData {
 interface SlideGalleryProps {
   slides: SlideData[]
   organizationName: string
+  organizationId: string
   folderPath: string
   presentationName: string
   presentationId?: string
+  projectId?: string
   canEdit?: boolean
-  isReorderMode?: boolean
-  onExitReorderMode?: () => void
+  isEditMode?: boolean
+  onExitEditMode?: () => void
 }
 
 interface SortableSlideProps {
   slide: SlideData
   index: number
-  isReorderMode: boolean
+  isEditMode: boolean
   onClick: () => void
+  onRemove?: () => void
 }
 
 function SortableSlide({
   slide,
   index,
-  isReorderMode,
+  isEditMode,
   onClick,
+  onRemove,
 }: SortableSlideProps) {
   const {
     attributes,
@@ -59,7 +64,7 @@ function SortableSlide({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: slide.slide_id, disabled: !isReorderMode })
+  } = useSortable({ id: slide.slide_id, disabled: !isEditMode })
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -72,35 +77,63 @@ function SortableSlide({
       ref={setNodeRef}
       style={style}
       className={`group relative rounded-lg border border-gray-200 bg-white p-3 shadow-sm transition-all duration-200 ${
-        isReorderMode
+        isEditMode
           ? 'cursor-move hover:border-indigo-400 hover:shadow-lg'
           : 'cursor-pointer hover:border-indigo-300 hover:shadow-md'
       } ${isDragging ? 'z-50' : ''}`}
-      onClick={!isReorderMode ? onClick : undefined}
-      {...(isReorderMode ? { ...attributes, ...listeners } : {})}
+      onClick={!isEditMode ? onClick : undefined}
+      {...(isEditMode ? { ...attributes, ...listeners } : {})}
     >
       {/* Slide Number Badge */}
       <div className="absolute top-2 left-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-xs font-semibold text-gray-700 shadow-sm backdrop-blur-sm">
         {slide.order ?? index + 1}
       </div>
 
-      {/* Drag Handle Icon (visible in reorder mode) */}
-      {isReorderMode && (
-        <div className="absolute top-2 right-2 z-10 rounded-full bg-white/90 p-1.5 shadow-sm backdrop-blur-sm">
-          <svg
-            className="h-4 w-4 text-gray-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+      {/* Edit Mode Controls */}
+      {isEditMode && (
+        <>
+          {/* Drag Handle Icon */}
+          <div className="absolute top-2 right-10 z-10 rounded-full bg-white/90 p-1.5 shadow-sm backdrop-blur-sm">
+            <svg
+              className="h-4 w-4 text-gray-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 8h16M4 16h16"
+              />
+            </svg>
+          </div>
+
+          {/* Remove Button */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              onRemove?.()
+            }}
+            className="absolute top-2 right-2 z-10 rounded-full bg-red-100 p-1.5 shadow-sm backdrop-blur-sm transition-colors hover:bg-red-200"
+            aria-label="Remove slide"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 8h16M4 16h16"
-            />
-          </svg>
-        </div>
+            <svg
+              className="h-4 w-4 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </>
       )}
 
       {/* Slide Image */}
@@ -114,7 +147,7 @@ function SortableSlide({
       </div>
 
       {/* Hover Overlay (only in normal mode) */}
-      {!isReorderMode && (
+      {!isEditMode && (
         <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/0 transition-all duration-200 group-hover:bg-black/20">
           <div className="rounded-full bg-white/90 p-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             <svg
@@ -146,19 +179,22 @@ function SortableSlide({
 export default function SlideGallery({
   slides,
   organizationName,
+  organizationId,
   folderPath,
   presentationName,
   presentationId,
+  projectId,
   canEdit = false,
-  isReorderMode = false,
-  onExitReorderMode,
+  isEditMode = false,
+  onExitEditMode,
 }: SlideGalleryProps) {
   const [selectedSlideIndex, setSelectedSlideIndex] = useState<number | null>(
     null,
   )
-  const [reorderedSlides, setReorderedSlides] = useState<SlideData[]>(slides)
+  const [editedSlides, setEditedSlides] = useState<SlideData[]>(slides)
   const [originalSlides, setOriginalSlides] = useState<SlideData[]>(slides)
   const [isSaving, setIsSaving] = useState(false)
+  const [isAddSlideModalOpen, setIsAddSlideModalOpen] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -169,20 +205,20 @@ export default function SlideGallery({
     }),
   )
 
-  // Update reordered slides when slides prop changes or when entering reorder mode
+  // Update edited slides when slides prop changes or when entering edit mode
   useEffect(() => {
-    setReorderedSlides(slides)
-    if (!isReorderMode) {
+    setEditedSlides(slides)
+    if (!isEditMode) {
       setOriginalSlides(slides)
     }
-  }, [slides, isReorderMode])
+  }, [slides, isEditMode])
 
-  // Save original slides when entering reorder mode
+  // Save original slides when entering edit mode
   useEffect(() => {
-    if (isReorderMode) {
-      setOriginalSlides([...reorderedSlides])
+    if (isEditMode) {
+      setOriginalSlides([...editedSlides])
     }
-  }, [isReorderMode])
+  }, [isEditMode])
 
   // Handle URL parameter for direct slide access
   useEffect(() => {
@@ -196,7 +232,7 @@ export default function SlideGallery({
   }, [searchParams, slides])
 
   const openLightbox = (index: number) => {
-    if (isReorderMode) return
+    if (isEditMode) return
     setSelectedSlideIndex(index)
     // Update URL with slide parameter
     const params = new URLSearchParams(searchParams.toString())
@@ -260,7 +296,7 @@ export default function SlideGallery({
     const { active, over } = event
 
     if (over && active.id !== over.id) {
-      setReorderedSlides((items) => {
+      setEditedSlides((items) => {
         const oldIndex = items.findIndex((item) => item.slide_id === active.id)
         const newIndex = items.findIndex((item) => item.slide_id === over.id)
 
@@ -274,7 +310,33 @@ export default function SlideGallery({
     }
   }
 
-  const handleSaveReorder = async () => {
+  const handleRemoveSlide = (slideId: string) => {
+    setEditedSlides((items) => {
+      const filtered = items.filter((item) => item.slide_id !== slideId)
+      // Update order numbers to be sequential
+      return filtered.map((slide, index) => ({
+        ...slide,
+        order: index + 1,
+      }))
+    })
+  }
+
+  const handleAddSlides = (
+    newSlides: Array<{ slide_id: string; object_id: string }>,
+  ) => {
+    setEditedSlides((items) => {
+      const currentMaxOrder = items.length
+      const slidesWithImages = newSlides.map((slide, index) => ({
+        order: currentMaxOrder + index + 1,
+        slide_id: slide.slide_id,
+        object_id: slide.object_id,
+        imageUrl: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${organizationId}/${slide.object_id}.jpg`,
+      }))
+      return [...items, ...slidesWithImages]
+    })
+  }
+
+  const handleSaveEdit = async () => {
     if (!presentationId) {
       alert('Cannot save: Presentation ID is missing')
       return
@@ -282,7 +344,7 @@ export default function SlideGallery({
 
     setIsSaving(true)
     try {
-      const slidesData = reorderedSlides.map((slide) => ({
+      const slidesData = editedSlides.map((slide) => ({
         order: slide.order,
         slide_id: slide.slide_id,
         object_id: slide.object_id,
@@ -290,25 +352,25 @@ export default function SlideGallery({
 
       await reorderSlides(presentationId, slidesData)
 
-      setOriginalSlides([...reorderedSlides])
-      onExitReorderMode?.()
+      setOriginalSlides([...editedSlides])
+      onExitEditMode?.()
 
       // Refresh the page to show updated data
       router.refresh()
     } catch (error) {
-      console.error('Failed to save slide order:', error)
-      alert('Failed to save slide order. Please try again.')
+      console.error('Failed to save presentation:', error)
+      alert('Failed to save changes. Please try again.')
     } finally {
       setIsSaving(false)
     }
   }
 
-  const handleCancelReorder = () => {
-    setReorderedSlides([...originalSlides])
-    onExitReorderMode?.()
+  const handleCancelEdit = () => {
+    setEditedSlides([...originalSlides])
+    onExitEditMode?.()
   }
 
-  const displaySlides = isReorderMode ? reorderedSlides : slides
+  const displaySlides = isEditMode ? editedSlides : slides
   const sortedSlides = [...displaySlides].sort((a, b) => a.order - b.order)
 
   if (!slides || slides.length === 0) {
@@ -338,8 +400,8 @@ export default function SlideGallery({
 
   return (
     <>
-      {/* Reorder Mode Controls */}
-      {canEdit && isReorderMode && (
+      {/* Edit Mode Controls */}
+      {canEdit && isEditMode && (
         <div className="mb-4 flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
           <div className="flex items-center">
             <div className="mr-3 rounded-full bg-indigo-100 p-2">
@@ -359,17 +421,37 @@ export default function SlideGallery({
             </div>
             <div>
               <p className="text-sm font-medium text-gray-900">
-                Reorder Mode Active
+                Edit Mode Active
               </p>
               <p className="text-xs text-gray-600">
-                Drag slides to reorder, then save or cancel
+                Reorder, add, or remove slides, then save or cancel
               </p>
             </div>
           </div>
           <div className="flex space-x-2">
             <button
               type="button"
-              onClick={handleCancelReorder}
+              onClick={() => setIsAddSlideModalOpen(true)}
+              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              <svg
+                className="mr-1.5 -ml-0.5 h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Add Slide
+            </button>
+            <button
+              type="button"
+              onClick={handleCancelEdit}
               disabled={isSaving}
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
@@ -377,7 +459,7 @@ export default function SlideGallery({
             </button>
             <button
               type="button"
-              onClick={handleSaveReorder}
+              onClick={handleSaveEdit}
               disabled={isSaving}
               className="inline-flex items-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
@@ -405,7 +487,7 @@ export default function SlideGallery({
                   Saving...
                 </>
               ) : (
-                'Save Order'
+                'Save Changes'
               )}
             </button>
           </div>
@@ -429,8 +511,9 @@ export default function SlideGallery({
                   key={slide.slide_id}
                   slide={slide}
                   index={index}
-                  isReorderMode={isReorderMode}
+                  isEditMode={isEditMode}
                   onClick={() => openLightbox(index)}
+                  onRemove={() => handleRemoveSlide(slide.slide_id)}
                 />
               ))}
             </div>
@@ -543,6 +626,19 @@ export default function SlideGallery({
             ))}
           </div>
         </div>
+      )}
+
+      {/* Add Slide Modal */}
+      {canEdit && presentationId && projectId && (
+        <AddSlideModal
+          isOpen={isAddSlideModalOpen}
+          onClose={() => setIsAddSlideModalOpen(false)}
+          onAdd={handleAddSlides}
+          organizationId={organizationId}
+          projectId={projectId}
+          presentationId={presentationId}
+          excludeSlideIds={editedSlides.map((s) => s.slide_id)}
+        />
       )}
     </>
   )

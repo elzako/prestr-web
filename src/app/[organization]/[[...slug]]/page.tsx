@@ -162,8 +162,6 @@ async function getFolderId(
   return data
 }
 
-
-
 async function getRootFolderId(folderId: string): Promise<string | null> {
   if (isE2ETestMode()) {
     return getTestRootFolderId(folderId)
@@ -214,21 +212,27 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
 
   const { data: folders, error: foldersError } = await supabase
     .from('folders')
-    .select('id, organization_id, parent_id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at, deleted_at')
+    .select(
+      'id, organization_id, parent_id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at, deleted_at',
+    )
     .eq('parent_id', folderId)
     .is('deleted_at', null)
     .order('folder_name', { ascending: true })
 
   const { data: presentations, error: presentationsError } = await supabase
     .from('presentations')
-    .select('id, parent_id, presentation_name, metadata, created_at, updated_at, deleted_at, tags, settings')
+    .select(
+      'id, parent_id, presentation_name, metadata, created_at, updated_at, deleted_at, tags, settings',
+    )
     .eq('parent_id', folderId)
     .is('deleted_at', null)
     .order('presentation_name', { ascending: true })
 
   const { data: slides, error: slidesError } = await supabase
     .from('slides')
-    .select('id, object_id, parent_id, slide_name, metadata, tags, created_at, updated_at, deleted_at')
+    .select(
+      'id, object_id, parent_id, slide_name, metadata, tags, created_at, updated_at, deleted_at',
+    )
     .eq('parent_id', folderId)
     .is('deleted_at', null)
     .order('slide_name', { ascending: true })
@@ -496,6 +500,9 @@ export default async function OrganizationPage({ params }: PageProps) {
       notFound()
     }
 
+    // Get project ID (root folder ID)
+    const projectId = await getRootFolderId(presentation.parent_id)
+
     // Check if user can edit this presentation (using same logic as slide edit permissions)
     const canEdit = await checkEditPermissions(presentation.parent_id)
 
@@ -512,6 +519,7 @@ export default async function OrganizationPage({ params }: PageProps) {
               organization={organization}
               folderPath={folderPath}
               canEdit={canEdit}
+              projectId={projectId || undefined}
             />
           </div>
         </div>
