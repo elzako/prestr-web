@@ -29,6 +29,9 @@ import type {
 import { MeiliSearch } from 'meilisearch'
 import { getSlideImageUrl } from './cloudinary'
 import { createClient } from './supabase/server'
+import { isE2ETestMode } from '@/lib/e2e/test-mode'
+import { searchSlidesInStore, getUserRoles as getTestUserRoles } from '@/lib/e2e/testStore'
+import { getUser as getAuthUser } from '@/lib/auth-actions'
 
 export async function searchSlides(options: SearchOptions): Promise<{
   success: boolean
@@ -46,6 +49,39 @@ export async function searchSlides(options: SearchOptions): Promise<{
     filters = [],
     userRoles,
   } = options
+
+  if (isE2ETestMode()) {
+    try {
+      let effectiveRoles = userRoles
+      if (!effectiveRoles) {
+        const currentUser = await getAuthUser()
+        effectiveRoles = currentUser ? getTestUserRoles(currentUser.id) : {
+          organizationRoles: [],
+          folderRoles: [],
+        }
+      }
+
+      const permittedOrgIds = effectiveRoles ? effectiveRoles.organizationRoles : []
+      const permittedFolderIds = effectiveRoles
+        ? effectiveRoles.folderRoles.map((role) => role.folder_id)
+        : []
+
+      const { results, total } = searchSlidesInStore(query, {
+        organizationId: organizationId || null,
+        limit,
+        offset,
+        permittedFolderIds,
+        permittedOrgIds,
+      })
+
+      return { success: true, results, total }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Search failed',
+      }
+    }
+  }
 
   // Check if MeiliSearch is configured
   const searchUrl = process.env.NEXT_PUBLIC_SEARCH_URL

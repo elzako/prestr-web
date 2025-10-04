@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Tests for ProfileEditForm component
  */
 
@@ -16,7 +16,7 @@ const mockSelect = jest.fn()
 const mockSingle = jest.fn()
 const mockEq = jest.fn()
 
-jest.mock('@/lib/supabase/client', () => ({
+jest.mock('@/lib/supabase/server', () => ({
   createClient: jest.fn(() => ({
     from: jest.fn(() => ({
       update: mockUpdate,

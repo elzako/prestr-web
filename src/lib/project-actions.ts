@@ -3,6 +3,15 @@
 import { createClient } from '@/lib/supabase/server'
 import type { Enums, ProjectInsert, ProjectUpdate } from '@/types'
 import { revalidatePath } from 'next/cache'
+import { getUser as getAuthUser } from '@/lib/auth-actions'
+import { isE2ETestMode } from '@/lib/e2e/test-mode'
+import {
+  createProjectRecord,
+  updateProjectRecord,
+  deleteProjectRecord,
+  getOrganizationByName as getTestOrganizationByName,
+  getUserOrganizationRole as getTestUserOrganizationRole,
+} from '@/lib/e2e/testStore'
 
 // Helper function to get current user
 async function getCurrentUser() {
@@ -64,6 +73,33 @@ export async function createProject(
     visibility?: Enums<'visibility_options'>
   },
 ) {
+  if (isE2ETestMode()) {
+    try {
+      const user = await getAuthUser()
+      if (!user) {
+        throw new Error('User not authenticated')
+      }
+      const organization = await getOrganizationByName(organizationName)
+      const userRole = getTestUserOrganizationRole(organization.id, user.id)
+      if (!userRole || (userRole !== 'owner' && userRole !== 'admin')) {
+        throw new Error('Insufficient permissions to create projects')
+      }
+      const project = createProjectRecord(organization.id, projectData.folderName, {
+        description: projectData.description,
+        tags: projectData.tags,
+        visibility: projectData.visibility,
+        userId: user.id,
+      })
+      return { success: true, project }
+    } catch (error) {
+      console.error('Create project error:', error)
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to create project',
+      }
+    }
+  }
+
   try {
     const user = await getCurrentUser()
     const organization = await getOrganizationByName(organizationName)
@@ -138,6 +174,33 @@ export async function updateProject(
     visibility?: Enums<'visibility_options'>
   },
 ) {
+  if (isE2ETestMode()) {
+    try {
+      const user = await getAuthUser()
+      if (!user) {
+        throw new Error('User not authenticated')
+      }
+      const organization = await getOrganizationByName(organizationName)
+      const userRole = getTestUserOrganizationRole(organization.id, user.id)
+      if (!userRole || (userRole !== 'owner' && userRole !== 'admin')) {
+        throw new Error('Insufficient permissions to update projects')
+      }
+      const project = updateProjectRecord(projectId, {
+        folderName: updateData.folderName,
+        description: updateData.description,
+        tags: updateData.tags,
+        visibility: updateData.visibility,
+      })
+      return { success: true, project }
+    } catch (error) {
+      console.error('Update project error:', error)
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to update project',
+      }
+    }
+  }
+
   try {
     const user = await getCurrentUser()
     const organization = await getOrganizationByName(organizationName)
@@ -238,6 +301,29 @@ export async function deleteProject(
   organizationName: string,
   projectId: string,
 ) {
+  if (isE2ETestMode()) {
+    try {
+      const user = await getAuthUser()
+      if (!user) {
+        throw new Error('User not authenticated')
+      }
+      const organization = await getOrganizationByName(organizationName)
+      const userRole = getTestUserOrganizationRole(organization.id, user.id)
+      if (!userRole || (userRole !== 'owner' && userRole !== 'admin')) {
+        throw new Error('Insufficient permissions to delete projects')
+      }
+      deleteProjectRecord(projectId)
+      revalidatePath('/' + organizationName)
+      return { success: true }
+    } catch (error) {
+      console.error('Delete project error:', error)
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to delete project',
+      }
+    }
+  }
+
   try {
     const user = await getCurrentUser()
     const organization = await getOrganizationByName(organizationName)

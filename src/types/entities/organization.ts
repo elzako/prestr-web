@@ -32,6 +32,6 @@ export interface OrganizationMetadata {
   about?: string
   website?: string
   location?: string
-  profilePicture?: string
+  profilePicture?: string | null
   displayMembers?: boolean
 }

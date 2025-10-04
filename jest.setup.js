@@ -3,6 +3,41 @@ import '@testing-library/jest-dom'
 import { mockAnimationsApi } from 'jsdom-testing-mocks'
 import './__tests__/setup/polyfills'
 
+const cookieStore = new Map()
+
+const createCookieStoreApi = () => ({
+  get(name) {
+    if (!cookieStore.has(name)) {
+      return undefined
+    }
+    return { name, value: cookieStore.get(name) }
+  },
+  getAll() {
+    return Array.from(cookieStore.entries()).map(([name, value]) => ({
+      name,
+      value,
+    }))
+  },
+  set(name, value) {
+    if (value && typeof value === 'object' && 'value' in value) {
+      cookieStore.set(name, value.value)
+    } else {
+      cookieStore.set(name, value)
+    }
+  },
+  delete(name) {
+    cookieStore.delete(name)
+  },
+  has(name) {
+    return cookieStore.has(name)
+  },
+})
+
+jest.mock('next/headers', () => ({
+  cookies: jest.fn(async () => createCookieStoreApi()),
+  headers: jest.fn(() => new Headers()),
+}))
+
 import { mswServer } from './__tests__/setup/msw/server'
 
 // Mock animations API for Headless UI components
@@ -58,6 +93,10 @@ global.mockWindowLocation = (properties = {}) => {
 
   return window.location
 }
+
+beforeEach(() => {
+  cookieStore.clear()
+})
 
 beforeAll(() => mswServer.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => mswServer.resetHandlers())

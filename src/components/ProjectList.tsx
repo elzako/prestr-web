@@ -37,6 +37,9 @@ function ProjectCard({
     restricted: 'bg-red-100 text-red-800',
   }
 
+  const showActions = process.env.NEXT_PUBLIC_E2E_TEST_MODE === 'true'
+  const actionMenuClass = (showActions ? 'opacity-100' : 'opacity-0 group-hover:opacity-100') + ' transition-opacity'
+
   const visibilityColor = project.visibility
     ? visibilityColors[project.visibility]
     : 'bg-gray-100 text-gray-800'
@@ -87,9 +90,12 @@ function ProjectCard({
           )}
           {/* Actions Menu */}
           {canManage && (
-            <div className="opacity-0 transition-opacity group-hover:opacity-100">
+            <div className={actionMenuClass}>
               <Menu as="div" className="relative">
-                <MenuButton className="flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none">
+                <MenuButton
+                  aria-label={'Manage project ' + project.folder_name}
+                  className="flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
+                >
                   <EllipsisVerticalIcon
                     className="h-5 w-5"
                     aria-hidden="true"

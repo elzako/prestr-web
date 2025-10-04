@@ -1,24 +1,28 @@
 'use server'
 
+import { getUser as getAuthUser } from '@/lib/auth-actions'
 import { createClient } from '@/lib/supabase/server'
+import { isE2ETestMode } from '@/lib/e2e/test-mode'
+import { getUserOrganizationRole as getTestUserOrganizationRole } from '@/lib/e2e/testStore'
 
-// Get current user (server-side)
 async function getCurrentUser() {
-  const supabase = await createClient()
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser()
-
-  if (error || !user) {
-    return null
-  }
-
-  return user
+  return await getAuthUser()
 }
 
-// Get user role in organization (server-side)
 export async function getUserOrganizationRole(organizationId: string) {
+  if (isE2ETestMode()) {
+    const user = await getCurrentUser()
+    if (!user) {
+      return { success: false, role: null, error: 'User not authenticated' }
+    }
+
+    const role = getTestUserOrganizationRole(organizationId, user.id)
+    return {
+      success: true,
+      role: role || null,
+    }
+  }
+
   try {
     const user = await getCurrentUser()
     if (!user) {
@@ -35,7 +39,6 @@ export async function getUserOrganizationRole(organizationId: string) {
       .single()
 
     if (error) {
-      // User might not have a role in this organization
       return { success: true, role: null }
     }
 
@@ -50,7 +53,6 @@ export async function getUserOrganizationRole(organizationId: string) {
   }
 }
 
-// Check if user is organization owner (server-side)
 export async function checkUserIsOrganizationOwner(organizationId: string) {
   const result = await getUserOrganizationRole(organizationId)
   return result.success && result.role === 'owner'

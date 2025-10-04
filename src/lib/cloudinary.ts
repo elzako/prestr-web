@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary'
+import { isE2ETestMode } from '@/lib/e2e/test-mode'
 
 // Configure Cloudinary using server-side environment variables
 cloudinary.config({
@@ -17,7 +18,11 @@ export function getSlideImageUrl(
   slideId: string,
   objectId: string,
 ): string {
-  const publicId = `${organizationId}/${slideId}/${objectId}.png`
+  if (isE2ETestMode()) {
+    return 'https://placehold.co/800x450?text=Slide'
+  }
+
+  const publicId = organizationId + '/' + slideId + '/' + objectId + '.png'
 
   // Let Cloudinary handle delivery; skip Next/Image optimization by using <img>
   return cloudinary.url(publicId, {

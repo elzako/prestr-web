@@ -12,6 +12,8 @@ import type {
   UploadState,
 } from '@/types'
 
+const isTestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === 'true'
+
 export default function PowerPointUpload({
   organizationId,
   folderId,
@@ -96,6 +98,10 @@ export default function PowerPointUpload({
 
   // Get current user from Supabase auth
   const getCurrentUser = async () => {
+    if (isTestMode) {
+      return 'test-user'
+    }
+
     try {
       const { createClient } = await import('@/lib/supabase/client')
       const supabase = createClient()
@@ -114,6 +120,10 @@ export default function PowerPointUpload({
   }
 
   const getRootVisbility = async () => {
+    if (isTestMode) {
+      return 'internal'
+    }
+
     const { createClient } = await import('@/lib/supabase/client')
     const supabase = createClient()
 

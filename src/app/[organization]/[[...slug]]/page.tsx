@@ -7,6 +7,19 @@ import SlideView from '@/components/SlideView'
 import { createClient } from '@/lib/supabase/server'
 import { getUserOrganizationRole } from '@/lib/organization-server-actions'
 import { getSlideImageUrl } from '@/lib/cloudinary'
+import { isE2ETestMode } from '@/lib/e2e/test-mode'
+import {
+  getOrganizationByName as getTestOrganizationByName,
+  listProjects as listTestProjects,
+  findFolderIdByPath,
+  getRootFolderId as getTestRootFolderId,
+  getSubFolderIds as getTestSubFolderIds,
+  getFolderContent as getTestFolderContent,
+  getSlide as getTestSlide,
+  getPresentation as getTestPresentation,
+  getUserRoles as getTestUserRoles,
+} from '@/lib/e2e/testStore'
+import { getUser as getAuthUser } from '@/lib/auth-actions'
 import type {
   FolderContent,
   Organization,
@@ -31,6 +44,11 @@ type FolderContentData = FolderContent
 async function getOrganization(
   organizationName: string,
 ): Promise<Organization | null> {
+  if (isE2ETestMode()) {
+    const organization = getTestOrganizationByName(organizationName)
+    return organization || null
+  }
+
   const supabase = await createClient()
 
   const { data, error } = await supabase
@@ -48,6 +66,14 @@ async function getOrganization(
 }
 
 async function getCurrentUserRoles(): Promise<UserRoles | null> {
+  if (isE2ETestMode()) {
+    const user = await getAuthUser()
+    if (!user) {
+      return null
+    }
+    return getTestUserRoles(user.id)
+  }
+
   const supabase = await createClient()
 
   const {
@@ -62,15 +88,17 @@ async function getCurrentUserRoles(): Promise<UserRoles | null> {
 }
 
 async function getUserRoles(userId: string): Promise<UserRoles> {
+  if (isE2ETestMode()) {
+    return getTestUserRoles(userId)
+  }
+
   const supabase = await createClient()
 
-  // Get user organization roles
   const { data: orgRoles } = await supabase
     .from('user_organization_roles')
     .select('organization_id, user_role')
     .eq('user_id', userId)
 
-  // Get user folder roles
   const { data: folderRoles } = await supabase
     .from('user_folder_roles')
     .select('folder_id, user_role')
@@ -87,6 +115,10 @@ async function getUserRoles(userId: string): Promise<UserRoles> {
 }
 
 async function getTopLevelProjects(organizationId: string): Promise<Project[]> {
+  if (isE2ETestMode()) {
+    return listTestProjects(organizationId)
+  }
+
   const supabase = await createClient()
 
   const { data, error } = await supabase
@@ -111,11 +143,15 @@ async function getFolderId(
   organizationId: string,
   currentPath: string,
 ): Promise<string | null> {
+  if (isE2ETestMode()) {
+    return findFolderIdByPath(organizationId, currentPath)
+  }
+
   const supabase = await createClient()
 
   const { data, error } = await supabase.rpc('get_folder_id_by_full_path', {
     org_id: organizationId,
-    current_path: currentPath.startsWith('/') ? currentPath : `/${currentPath}`,
+    current_path: currentPath.startsWith('/') ? currentPath : '/' + currentPath,
   })
 
   if (error) {
@@ -126,7 +162,13 @@ async function getFolderId(
   return data
 }
 
+
+
 async function getRootFolderId(folderId: string): Promise<string | null> {
+  if (isE2ETestMode()) {
+    return getTestRootFolderId(folderId)
+  }
+
   const supabase = await createClient()
 
   const { data, error } = await supabase.rpc('get_root_folder_id', {
@@ -142,6 +184,10 @@ async function getRootFolderId(folderId: string): Promise<string | null> {
 }
 
 async function getSubFolderIds(folderId: string): Promise<string[] | null> {
+  if (isE2ETestMode()) {
+    return getTestSubFolderIds(folderId)
+  }
+
   const supabase = await createClient()
 
   const { data, error } = await supabase.rpc(
@@ -160,9 +206,12 @@ async function getSubFolderIds(folderId: string): Promise<string[] | null> {
 }
 
 async function getFolderContent(folderId: string): Promise<FolderContentData> {
+  if (isE2ETestMode()) {
+    return getTestFolderContent(folderId)
+  }
+
   const supabase = await createClient()
 
-  // Fetch sub-folders
   const { data: folders, error: foldersError } = await supabase
     .from('folders')
     .select('id, organization_id, parent_id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at, deleted_at')
@@ -170,7 +219,6 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
     .is('deleted_at', null)
     .order('folder_name', { ascending: true })
 
-  // Fetch presentations
   const { data: presentations, error: presentationsError } = await supabase
     .from('presentations')
     .select('id, parent_id, presentation_name, metadata, created_at, updated_at, deleted_at, tags, settings')
@@ -178,7 +226,6 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
     .is('deleted_at', null)
     .order('presentation_name', { ascending: true })
 
-  // Fetch slides
   const { data: slides, error: slidesError } = await supabase
     .from('slides')
     .select('id, object_id, parent_id, slide_name, metadata, tags, created_at, updated_at, deleted_at')
@@ -209,6 +256,11 @@ async function getSlideData(
   parentId: string,
   slideName: string,
 ): Promise<SlideDetail | null> {
+  if (isE2ETestMode()) {
+    const slide = getTestSlide(parentId, slideName)
+    return slide || null
+  }
+
   const supabase = await createClient()
 
   const { data, error } = await supabase
@@ -253,6 +305,11 @@ async function getPresentationData(
   parentId: string,
   presentationName: string,
 ): Promise<PresentationDetail | null> {
+  if (isE2ETestMode()) {
+    const presentation = getTestPresentation(parentId, presentationName)
+    return presentation || null
+  }
+
   const supabase = await createClient()
 
   const { data, error } = await supabase

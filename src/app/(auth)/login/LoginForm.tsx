@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { login } from '@/lib/auth-actions'
 import { Button } from '@/components/Button'
 import { TextField } from '@/components/Fields'
@@ -58,6 +59,14 @@ export function LoginForm() {
           required
           disabled={isLoading}
         />
+        <div className="flex justify-end">
+          <Link
+            href="/forgot-password"
+            className="text-sm font-medium text-blue-600 hover:underline"
+          >
+            Forgot your password?
+          </Link>
+        </div>
         <div>
           <Button
             type="submit"

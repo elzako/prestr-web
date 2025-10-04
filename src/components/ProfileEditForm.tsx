@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { createClient } from '@/lib/supabase/client'
+import { updateUserProfileAction } from '@/lib/auth-actions'
 import type { User } from '@supabase/supabase-js'
 import type { Database } from '@/types/database.types'
 
@@ -46,45 +46,27 @@ export function ProfileEditForm({
     },
   })
 
-  const supabase = createClient()
-
   const onSubmit = async (data: ProfileFormData) => {
     setIsLoading(true)
     setError(null)
     setSuccessMessage(null)
 
     try {
-      // Prepare the updated metadata
-      const updatedMetadata: ProfileMetadata = {
-        ...userProfile?.metadata,
+      const updatedProfile = await updateUserProfileAction({
+        userId,
         firstName: data.firstName,
         lastName: data.lastName,
         position: data.position,
-      }
+      })
 
-      const { data: updatedProfile, error } = await supabase
-        .from('user_profiles')
-        .update({ metadata: updatedMetadata })
-        .eq('id', userId)
-        .select()
-        .single()
-
-      if (error) {
-        throw error
-      }
-
-      onProfileUpdate(updatedProfile)
+      onProfileUpdate(updatedProfile as UserProfile)
       setIsEditing(false)
       setSuccessMessage('Profile updated successfully!')
-
-      // Clear success message after 3 seconds
       setTimeout(() => setSuccessMessage(null), 3000)
     } catch (err) {
       console.error('Error updating profile:', err)
-      // Handle both Error instances and Supabase error objects
-      const errorMessage = err instanceof Error
-        ? err.message
-        : (err as any)?.message || 'Failed to update profile'
+      const errorMessage =
+        err instanceof Error ? err.message : (err as any)?.message || 'Failed to update profile'
       setError(errorMessage)
     } finally {
       setIsLoading(false)

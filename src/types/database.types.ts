@@ -455,7 +455,7 @@ export type Database = {
             about?: string
             website?: string
             location?: string
-            profilePicture?: string
+            profilePicture?: string | null
             displayMembers?: boolean
           }
           organization_name: string
@@ -481,7 +481,7 @@ export type Database = {
             about?: string
             website?: string
             location?: string
-            profilePicture?: string
+            profilePicture?: string | null
             displayMembers?: boolean
           }
           organization_name: string
@@ -503,7 +503,7 @@ export type Database = {
             about?: string
             website?: string
             location?: string
-            profilePicture?: string
+            profilePicture?: string | null
             displayMembers?: boolean
           }
           organization_name?: string
@@ -733,13 +733,19 @@ export type Database = {
           id: string
           locked: boolean
           locked_by: string | null
-          metadata?: { url?: string; description?: string }
+          metadata?: {
+            url?: string
+            description?: string
+            thumbnailUrl?: string
+            slideCount?: number
+          }
           parent_id: string
           presentation_name: string
           settings: {
             pptxDownloadRole: Enums<'presentation_role'>
             pdfDownloadRole: Enums<'presentation_role'>
             chatRole: Enums<'presentation_role'>
+            aspectRatio?: string
           }
           slides?: {
             order: number
@@ -762,13 +768,19 @@ export type Database = {
           id?: string
           locked?: boolean
           locked_by?: string | null
-          metadata?: { url?: string; description?: string }
+          metadata?: {
+            url?: string
+            description?: string
+            thumbnailUrl?: string
+            slideCount?: number
+          }
           parent_id?: string
           presentation_name?: string | null
           settings?: {
             pptxDownloadRole: Enums<'presentation_role'>
             pdfDownloadRole: Enums<'presentation_role'>
             chatRole: Enums<'presentation_role'>
+            aspectRatio?: string
           }
           slides?: {
             order: number
@@ -792,13 +804,19 @@ export type Database = {
           id?: string
           locked?: boolean
           locked_by?: string | null
-          metadata?: { url?: string; description?: string }
+          metadata?: {
+            url?: string
+            description?: string
+            thumbnailUrl?: string
+            slideCount?: number
+          }
           parent_id?: string | null
           presentation_name?: string | null
           settings?: {
             pptxDownloadRole: Enums<'presentation_role'>
             pdfDownloadRole: Enums<'presentation_role'>
             chatRole: Enums<'presentation_role'>
+            aspectRatio?: string
           }
           slides?: {
             order: number
@@ -1523,7 +1541,7 @@ export type Database = {
             position?: string
             organization?: string
             about?: string
-            profilePicture?: string
+            profilePicture?: string | null
           }
         }
         Insert: {
@@ -1537,7 +1555,7 @@ export type Database = {
             position?: string
             organization?: string
             about?: string
-            profilePicture?: string
+            profilePicture?: string | null
           }
         }
         Update: {
@@ -1551,7 +1569,7 @@ export type Database = {
             position?: string
             organization?: string
             about?: string
-            profilePicture?: string
+            profilePicture?: string | null
           }
         }
         Relationships: []
@@ -1566,7 +1584,7 @@ export type Database = {
             about?: string
             website?: string
             location?: string
-            profilePicture?: string
+            profilePicture?: string | null
             displayMembers?: boolean
           }
           organization_name: string

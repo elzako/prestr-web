@@ -72,7 +72,7 @@ describe('Supabase server client cookie integration', () => {
   })
 
   it('enforces secure cookie attributes for admin client in production', async () => {
-    process.env.NODE_ENV = 'production'
+    const restoreNodeEnv = jest.replaceProperty(process.env, 'NODE_ENV', 'production')
 
     const set = jest.fn()
     ;(cookies as jest.Mock).mockResolvedValue({
@@ -83,26 +83,30 @@ describe('Supabase server client cookie integration', () => {
     const supabaseStub = { auth: { getUser: jest.fn() } }
     ;(createServerClient as jest.Mock).mockReturnValue(supabaseStub)
 
-    await createAdminClient()
+    try {
+      await createAdminClient()
 
-    const config = (createServerClient as jest.Mock).mock.calls[0][2]
+      const config = (createServerClient as jest.Mock).mock.calls[0][2]
 
-    const cookieOptions = { domain: 'example.com', path: '/' }
-    config.cookies.setAll([
-      { name: 'sb-admin-token', value: 'secret', options: cookieOptions },
-    ])
+      const cookieOptions = { domain: 'example.com', path: '/' }
+      config.cookies.setAll([
+        { name: 'sb-admin-token', value: 'secret', options: cookieOptions },
+      ])
 
-    expect(set).toHaveBeenCalledWith(
-      'sb-admin-token',
-      'secret',
-      expect.objectContaining({
-        domain: 'example.com',
-        path: '/',
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7,
-      }),
-    )
+      expect(set).toHaveBeenCalledWith(
+        'sb-admin-token',
+        'secret',
+        expect.objectContaining({
+          domain: 'example.com',
+          path: '/',
+          httpOnly: true,
+          secure: true,
+          sameSite: 'lax',
+          maxAge: 60 * 60 * 24 * 7,
+        }),
+      )
+    } finally {
+      restoreNodeEnv.restore()
+    }
   })
 })
