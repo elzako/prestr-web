@@ -25,6 +25,7 @@ export default function PresentationViewClient({
   slideData,
 }: PresentationViewClientProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isReorderMode, setIsReorderMode] = useState(false)
 
   return (
     <div className="mt-8">
@@ -106,14 +107,36 @@ export default function PresentationViewClient({
             </h1>
           </div>
           {canEdit && (
-            <div className="mt-4 sm:mt-0 sm:ml-4">
+            <div className="mt-4 flex space-x-2 sm:mt-0 sm:ml-4">
+              {!isReorderMode && (
+                <button
+                  type="button"
+                  onClick={() => setIsReorderMode(true)}
+                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  <svg
+                    className="mr-1.5 -ml-0.5 h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 8h16M4 16h16"
+                    />
+                  </svg>
+                  Reorder Slides
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => setIsEditModalOpen(true)}
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PencilIcon className="mr-1.5 -ml-0.5 h-4 w-4" />
-                Edit
+                Edit Metadata
               </button>
             </div>
           )}
@@ -129,6 +152,10 @@ export default function PresentationViewClient({
             organizationName={organization.organization_name}
             folderPath={folderPath}
             presentationName={presentation.presentation_name}
+            presentationId={presentation.id}
+            canEdit={canEdit}
+            isReorderMode={isReorderMode}
+            onExitReorderMode={() => setIsReorderMode(false)}
           />
 
           {/* Tags */}

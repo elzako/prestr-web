@@ -109,3 +109,28 @@ export async function checkPresentationEditPermissions(
   const folderRole = folderRoles?.[0]?.user_role
   return ['admin', 'contributor'].includes(folderRole || '')
 }
+
+// Reorder slides in a presentation
+export async function reorderSlides(
+  presentationId: string,
+  slides: Array<{
+    order: number
+    slide_id: string
+    object_id: string
+  }>,
+) {
+  const response = await fetch(`/api/presentations/${presentationId}/reorder`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ slides }),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error || 'Failed to reorder slides')
+  }
+
+  return response.json()
+}
