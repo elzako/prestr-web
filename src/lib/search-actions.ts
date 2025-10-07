@@ -30,7 +30,10 @@ import { MeiliSearch } from 'meilisearch'
 import { getSlideImageUrl } from './cloudinary'
 import { createClient } from './supabase/server'
 import { isE2ETestMode } from '@/lib/e2e/test-mode'
-import { searchSlidesInStore, getUserRoles as getTestUserRoles } from '@/lib/e2e/testStore'
+import {
+  searchSlidesInStore,
+  getUserRoles as getTestUserRoles,
+} from '@/lib/e2e/testStore'
 import { getUser as getAuthUser } from '@/lib/auth-actions'
 
 export async function searchSlides(options: SearchOptions): Promise<{
@@ -55,13 +58,17 @@ export async function searchSlides(options: SearchOptions): Promise<{
       let effectiveRoles = userRoles
       if (!effectiveRoles) {
         const currentUser = await getAuthUser()
-        effectiveRoles = currentUser ? getTestUserRoles(currentUser.id) : {
-          organizationRoles: [],
-          folderRoles: [],
-        }
+        effectiveRoles = currentUser
+          ? getTestUserRoles(currentUser.id)
+          : {
+              organizationRoles: [],
+              folderRoles: [],
+            }
       }
 
-      const permittedOrgIds = effectiveRoles ? effectiveRoles.organizationRoles : []
+      const permittedOrgIds = effectiveRoles
+        ? effectiveRoles.organizationRoles
+        : []
       const permittedFolderIds = effectiveRoles
         ? effectiveRoles.folderRoles.map((role) => role.folder_id)
         : []
@@ -102,6 +109,15 @@ export async function searchSlides(options: SearchOptions): Promise<{
       host: searchUrl,
       apiKey: searchKey,
     })
+
+    const isHealthy = await client.isHealthy()
+
+    if (!isHealthy) {
+      return {
+        success: false,
+        error: 'Search service is not available',
+      }
+    }
 
     // Get the slides index
     const index = client.index('slides')

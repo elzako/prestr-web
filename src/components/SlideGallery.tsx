@@ -19,7 +19,10 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { updatePresentationContent } from '@/lib/presentation-actions'
+import {
+  updatePresentationContent,
+  updatePresentation,
+} from '@/lib/presentation-actions'
 import AddSlideModal from './AddSlideModal'
 
 interface SlideData {
@@ -40,6 +43,7 @@ interface SlideGalleryProps {
   canEdit?: boolean
   isEditMode?: boolean
   onExitEditMode?: () => void
+  presentationTags?: string[]
 }
 
 interface SortableSlideProps {
@@ -192,12 +196,18 @@ export default function SlideGallery({
   canEdit = false,
   isEditMode = false,
   onExitEditMode,
+  presentationTags = [],
 }: SlideGalleryProps) {
   const [selectedSlideIndex, setSelectedSlideIndex] = useState<number | null>(
     null,
   )
   const [editedSlides, setEditedSlides] = useState<SlideData[]>(slides)
   const [originalSlides, setOriginalSlides] = useState<SlideData[]>(slides)
+  const [editedName, setEditedName] = useState(presentationName)
+  const [editedTags, setEditedTags] = useState<string[]>(presentationTags)
+  const [originalName, setOriginalName] = useState(presentationName)
+  const [originalTags, setOriginalTags] = useState<string[]>(presentationTags)
+  const [tagInput, setTagInput] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [isAddSlideModalOpen, setIsAddSlideModalOpen] = useState(false)
   const router = useRouter()
@@ -218,10 +228,22 @@ export default function SlideGallery({
     }
   }, [slides, isEditMode])
 
-  // Save original slides when entering edit mode
+  // Update metadata when props change
+  useEffect(() => {
+    setEditedName(presentationName)
+    setEditedTags(presentationTags)
+    if (!isEditMode) {
+      setOriginalName(presentationName)
+      setOriginalTags(presentationTags)
+    }
+  }, [presentationName, presentationTags, isEditMode])
+
+  // Save original state when entering edit mode
   useEffect(() => {
     if (isEditMode) {
       setOriginalSlides([...editedSlides])
+      setOriginalName(editedName)
+      setOriginalTags([...editedTags])
     }
   }, [isEditMode])
 
@@ -347,8 +369,20 @@ export default function SlideGallery({
       return
     }
 
+    if (!editedName.trim()) {
+      alert('Presentation name cannot be empty')
+      return
+    }
+
     setIsSaving(true)
     try {
+      // Update presentation metadata
+      await updatePresentation(presentationId, {
+        presentation_name: editedName.trim(),
+        tags: editedTags,
+      })
+
+      // Update presentation content (slides)
       const slidesData = editedSlides.map((slide) => ({
         order: slide.order,
         slide_id: slide.slide_id,
@@ -358,6 +392,8 @@ export default function SlideGallery({
       await updatePresentationContent(presentationId, slidesData)
 
       setOriginalSlides([...editedSlides])
+      setOriginalName(editedName)
+      setOriginalTags([...editedTags])
       onExitEditMode?.()
 
       // Refresh the page to show updated data
@@ -372,7 +408,29 @@ export default function SlideGallery({
 
   const handleCancelEdit = () => {
     setEditedSlides([...originalSlides])
+    setEditedName(originalName)
+    setEditedTags([...originalTags])
+    setTagInput('')
     onExitEditMode?.()
+  }
+
+  const handleAddTag = () => {
+    const trimmedTag = tagInput.trim()
+    if (trimmedTag && !editedTags.includes(trimmedTag)) {
+      setEditedTags([...editedTags, trimmedTag])
+      setTagInput('')
+    }
+  }
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setEditedTags(editedTags.filter((tag) => tag !== tagToRemove))
+  }
+
+  const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleAddTag()
+    }
   }
 
   const displaySlides = isEditMode ? editedSlides : slides
@@ -405,10 +463,10 @@ export default function SlideGallery({
 
   return (
     <>
-      {/* Edit Mode Controls */}
+      {/* Edit Mode - Metadata Section */}
       {canEdit && isEditMode && (
-        <div className="mb-4 flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <div className="flex items-center">
+        <div className="mb-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-center">
             <div className="mr-3 rounded-full bg-indigo-100 p-2">
               <svg
                 className="h-5 w-5 text-indigo-600"
@@ -420,7 +478,7 @@ export default function SlideGallery({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M4 8h16M4 16h16"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                 />
               </svg>
             </div>
@@ -429,11 +487,93 @@ export default function SlideGallery({
                 Edit Mode Active
               </p>
               <p className="text-xs text-gray-600">
-                Reorder, add, or remove slides, then save or cancel
+                Update presentation details and manage slides
               </p>
             </div>
           </div>
-          <div className="flex space-x-2">
+
+          {/* Presentation Name */}
+          <div className="mb-4">
+            <label
+              htmlFor="presentation-name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Presentation Name
+            </label>
+            <input
+              type="text"
+              id="presentation-name"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              placeholder="Enter presentation name"
+            />
+          </div>
+
+          {/* Tags */}
+          <div className="mb-4">
+            <label
+              htmlFor="tags"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Tags
+            </label>
+            <div className="mt-1">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  id="tags"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={handleTagInputKeyDown}
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Add a tag and press Enter"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddTag}
+                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Add
+                </button>
+              </div>
+              {editedTags.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {editedTags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center gap-1 rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"
+                    >
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTag(tag)}
+                        className="inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-gray-200"
+                        aria-label={`Remove ${tag}`}
+                      >
+                        <svg
+                          className="h-3 w-3"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center justify-between border-t border-gray-200 pt-4">
             <button
               type="button"
               onClick={() => setIsAddSlideModalOpen(true)}
@@ -454,47 +594,49 @@ export default function SlideGallery({
               </svg>
               Add Slide
             </button>
-            <button
-              type="button"
-              onClick={handleCancelEdit}
-              disabled={isSaving}
-              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSaveEdit}
-              disabled={isSaving}
-              className="inline-flex items-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {isSaving ? (
-                <>
-                  <svg
-                    className="mr-1.5 -ml-0.5 h-4 w-4 animate-spin"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    />
-                  </svg>
-                  Saving...
-                </>
-              ) : (
-                'Save Changes'
-              )}
-            </button>
+            <div className="flex space-x-2">
+              <button
+                type="button"
+                onClick={handleCancelEdit}
+                disabled={isSaving}
+                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveEdit}
+                disabled={isSaving}
+                className="inline-flex items-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isSaving ? (
+                  <>
+                    <svg
+                      className="mr-1.5 -ml-0.5 h-4 w-4 animate-spin"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    Saving...
+                  </>
+                ) : (
+                  'Save Changes'
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}

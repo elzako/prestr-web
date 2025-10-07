@@ -1,9 +1,8 @@
 'use client'
 
 import type { PresentationViewProps } from '@/types'
-import { PencilIcon, RectangleStackIcon } from '@heroicons/react/24/outline'
+import { PencilIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-import EditPresentationModal from './EditPresentationModal'
 import SlideGallery from './SlideGallery'
 
 interface SlideData {
@@ -25,8 +24,7 @@ export default function PresentationViewClient({
   slideData,
   projectId,
 }: PresentationViewClientProps) {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [isReorderMode, setIsReorderMode] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
 
   return (
     <div className="mt-8">
@@ -107,25 +105,15 @@ export default function PresentationViewClient({
               {presentation.presentation_name}
             </h1>
           </div>
-          {canEdit && (
-            <div className="mt-4 flex space-x-2 sm:mt-0 sm:ml-4">
-              {!isReorderMode && (
-                <button
-                  type="button"
-                  onClick={() => setIsReorderMode(true)}
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  <RectangleStackIcon className="mr-1.5 -ml-0.5 h-4 w-4" />
-                  Edit Content
-                </button>
-              )}
+          {canEdit && !isEditMode && (
+            <div className="mt-4 sm:mt-0 sm:ml-4">
               <button
                 type="button"
-                onClick={() => setIsEditModalOpen(true)}
+                onClick={() => setIsEditMode(true)}
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PencilIcon className="mr-1.5 -ml-0.5 h-4 w-4" />
-                Edit Metadata
+                Edit Presentation
               </button>
             </div>
           )}
@@ -145,8 +133,9 @@ export default function PresentationViewClient({
             presentationId={presentation.id}
             projectId={projectId}
             canEdit={canEdit}
-            isEditMode={isReorderMode}
-            onExitEditMode={() => setIsReorderMode(false)}
+            isEditMode={isEditMode}
+            onExitEditMode={() => setIsEditMode(false)}
+            presentationTags={presentation.tags || []}
           />
 
           {/* Tags */}
@@ -167,21 +156,6 @@ export default function PresentationViewClient({
           )}
         </div>
       </div>
-
-      {/* Edit Modal */}
-      {canEdit && (
-        <EditPresentationModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          organizationName={organization.organization_name}
-          presentation={presentation}
-          folderPath={folderPath}
-          onSuccess={() => {
-            // Refresh the page to show updated data
-            window.location.reload()
-          }}
-        />
-      )}
     </div>
   )
 }

@@ -72,7 +72,6 @@ Based on comprehensive analysis of the codebase, here's the implementation statu
 ### Update Features
 
 - **❌ Replace existing slide**: No slide replacement upload system
-- **❌ Update refreshes across presentations**: No cascading update logic
 
 ### Team Account Management
 
@@ -81,7 +80,11 @@ Based on comprehensive analysis of the codebase, here's the implementation statu
 
 ### Pricing
 
-- **❌ Integration with Stripe Payment**: Individual Plan $20/month, Team Plan $40/month, 7 days free trial with credit card
+- **❌ Integration with Stripe Payment**: Individual Plan $19/month, Team Plan $38/user/month, 7 days free trial with credit card
+
+### Non-functional
+
+- **❌ Clean up**: Remove unused frontend code, backend code and SQL
 
 ## Architecture Strengths
 
