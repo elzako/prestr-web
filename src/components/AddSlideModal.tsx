@@ -18,7 +18,9 @@ interface AvailableSlide {
 interface AddSlideModalProps {
   isOpen: boolean
   onClose: () => void
-  onAdd: (slides: Array<{ slide_id: string; object_id: string }>) => void
+  onAdd: (
+    slides: Array<{ slide_id: string; object_id: string; imageUrl: string }>,
+  ) => void
   organizationId: string
   projectId?: string
   presentationId: string
@@ -125,6 +127,7 @@ export default function AddSlideModal({
       .map((slide) => ({
         slide_id: slide.slide_id,
         object_id: slide.object_id,
+        imageUrl: slide.imageUrl,
       }))
 
     onAdd(slidesToAdd)

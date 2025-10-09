@@ -352,7 +352,7 @@ export default function SlideGallery({
   }
 
   const handleAddSlides = (
-    newSlides: Array<{ slide_id: string; object_id: string }>,
+    newSlides: Array<{ slide_id: string; object_id: string; imageUrl: string }>,
   ) => {
     setEditedSlides((items) => {
       const currentMaxOrder = items.length
@@ -360,7 +360,7 @@ export default function SlideGallery({
         order: currentMaxOrder + index + 1,
         slide_id: slide.slide_id,
         object_id: slide.object_id,
-        imageUrl: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${organizationId}/${slide.object_id}.jpg`,
+        imageUrl: slide.imageUrl,
       }))
       return [...items, ...slidesWithImages]
     })
