@@ -5,7 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useDebounce } from '@/hooks/useDebounce'
 import { searchSlides } from '@/lib/search-actions'
-import type { SearchResult } from '@/types'
+import type { SearchResult, UserRoles } from '@/types'
 
 interface AvailableSlide {
   slide_id: string
@@ -23,6 +23,7 @@ interface AddSlideModalProps {
   projectId?: string
   presentationId: string
   excludeSlideIds?: string[]
+  userRoles?: UserRoles | null
 }
 
 export default function AddSlideModal({
@@ -33,6 +34,7 @@ export default function AddSlideModal({
   projectId,
   presentationId,
   excludeSlideIds = [],
+  userRoles,
 }: AddSlideModalProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [availableSlides, setAvailableSlides] = useState<AvailableSlide[]>([])
@@ -63,6 +65,7 @@ export default function AddSlideModal({
           query,
           limit: 100,
           offset: 0,
+          userRoles,
         })
 
         if (response.success && response.results) {
@@ -97,7 +100,14 @@ export default function AddSlideModal({
     }
 
     performSearch()
-  }, [isOpen, organizationId, projectId, debouncedSearchTerm, excludeSlideIds])
+  }, [
+    isOpen,
+    organizationId,
+    projectId,
+    debouncedSearchTerm,
+    excludeSlideIds,
+    userRoles,
+  ])
 
   const handleToggleSlide = (slideId: string) => {
     const newSelected = new Set(selectedSlideIds)

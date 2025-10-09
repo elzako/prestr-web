@@ -24,6 +24,7 @@ import {
   updatePresentation,
 } from '@/lib/presentation-actions'
 import AddSlideModal from './AddSlideModal'
+import type { UserRoles } from '@/types'
 
 interface SlideData {
   order: number
@@ -44,6 +45,7 @@ interface SlideGalleryProps {
   isEditMode?: boolean
   onExitEditMode?: () => void
   presentationTags?: string[]
+  userRoles?: UserRoles | null
 }
 
 interface SortableSlideProps {
@@ -197,6 +199,7 @@ export default function SlideGallery({
   isEditMode = false,
   onExitEditMode,
   presentationTags = [],
+  userRoles,
 }: SlideGalleryProps) {
   const [selectedSlideIndex, setSelectedSlideIndex] = useState<number | null>(
     null,
@@ -785,6 +788,7 @@ export default function SlideGallery({
           projectId={projectId}
           presentationId={presentationId}
           excludeSlideIds={editedSlides.map((s) => s.slide_id)}
+          userRoles={userRoles}
         />
       )}
     </>

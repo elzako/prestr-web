@@ -520,6 +520,7 @@ export default async function OrganizationPage({ params }: PageProps) {
               folderPath={folderPath}
               canEdit={canEdit}
               projectId={projectId || undefined}
+              userRoles={userRoles}
             />
           </div>
         </div>

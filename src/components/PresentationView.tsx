@@ -8,6 +8,7 @@ export default async function PresentationView({
   folderPath,
   canEdit = false,
   projectId,
+  userRoles,
 }: PresentationViewProps) {
   const slides = presentation.slides as
     | {
@@ -39,6 +40,7 @@ export default async function PresentationView({
       canEdit={canEdit}
       slideData={slideData}
       projectId={projectId}
+      userRoles={userRoles}
     />
   )
 }

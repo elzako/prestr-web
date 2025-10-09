@@ -23,6 +23,7 @@ export default function PresentationViewClient({
   canEdit = false,
   slideData,
   projectId,
+  userRoles,
 }: PresentationViewClientProps) {
   const [isEditMode, setIsEditMode] = useState(false)
 
@@ -136,6 +137,7 @@ export default function PresentationViewClient({
             isEditMode={isEditMode}
             onExitEditMode={() => setIsEditMode(false)}
             presentationTags={presentation.tags || []}
+            userRoles={userRoles}
           />
 
           {/* Tags */}
