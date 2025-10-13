@@ -35,6 +35,8 @@ export type {
 
 // Presentation form types
 export type {
+  CreatePresentationFormData,
+  CreatePresentationViewProps,
   EditPresentationFormData,
   EditPresentationModalProps,
   PresentationFormValidation,

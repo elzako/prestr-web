@@ -1,5 +1,5 @@
 import type { BaseModalFormProps, FormSubmissionResult } from './base'
-import type { PresentationDetail } from '../entities'
+import type { PresentationDetail, Organization, UserRoles } from '../entities'
 
 /**
  * Presentation form types
@@ -7,6 +7,17 @@ import type { PresentationDetail } from '../entities'
  * These types define the structure for presentation editing forms
  * and their associated props and validation.
  */
+
+// Form data for creating a new presentation
+export interface CreatePresentationFormData {
+  presentation_name: string
+  tags: string
+  slides: Array<{
+    slide_id: string
+    object_id: string
+    imageUrl: string
+  }>
+}
 
 // Form data for editing presentation metadata
 export interface EditPresentationFormData {
@@ -41,4 +52,15 @@ export interface PresentationFormValidation {
 export interface PresentationUpdateResult extends FormSubmissionResult {
   nameChanged?: boolean
   newName?: string
+}
+
+// Props for create presentation view
+export interface CreatePresentationViewProps {
+  organization: Organization
+  folderId: string
+  folderPath: string
+  projectId: string | null
+  userRoles: UserRoles | null
+  onCancel: () => void
+  onSuccess: () => void
 }

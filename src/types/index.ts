@@ -49,6 +49,8 @@ export type {
   EditProjectModalProps,
   CreateFolderModalProps,
   EditFolderModalProps,
+  CreatePresentationFormData,
+  CreatePresentationViewProps,
   EditPresentationFormData,
   EditPresentationModalProps,
   PresentationUpdateResult,

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import CreateFolderModal from './CreateFolderModal'
+import CreatePresentationView from './CreatePresentationView'
 import FolderContentList from './FolderContentList'
 import UploadModal from './UploadModal'
 
@@ -20,6 +21,8 @@ export default function FolderView({
   const router = useRouter()
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
   const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false)
+  const [isCreatePresentationMode, setIsCreatePresentationMode] =
+    useState(false)
 
   const handleUploadSuccess = () => {
     // Refresh the page to show the new upload
@@ -45,6 +48,35 @@ export default function FolderView({
 
   const closeCreateFolderModal = () => {
     setIsCreateFolderModalOpen(false)
+  }
+
+  const openCreatePresentationMode = () => {
+    setIsCreatePresentationMode(true)
+  }
+
+  const closeCreatePresentationMode = () => {
+    setIsCreatePresentationMode(false)
+  }
+
+  const handlePresentationSuccess = () => {
+    // Refresh the page to show the new presentation
+    router.refresh()
+    setIsCreatePresentationMode(false)
+  }
+
+  // If in create presentation mode, show the creation view
+  if (isCreatePresentationMode) {
+    return (
+      <CreatePresentationView
+        organization={organization}
+        folderId={folderId}
+        folderPath={folderPath}
+        projectId={projectId}
+        userRoles={userRoles}
+        onCancel={closeCreatePresentationMode}
+        onSuccess={handlePresentationSuccess}
+      />
+    )
   }
 
   return (
@@ -90,6 +122,26 @@ export default function FolderView({
                 />
               </svg>
               New Folder
+            </button>
+            <button
+              type="button"
+              onClick={openCreatePresentationMode}
+              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+            >
+              <svg
+                className="mr-1.5 -ml-0.5 h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Create Presentation
             </button>
             <button
               type="button"
