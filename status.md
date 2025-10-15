@@ -64,10 +64,14 @@ Based on comprehensive analysis of the codebase, here's the implementation statu
 
 ### Assembly Features
 
-- **✅ Assemble new presentation from uploaded slides**: Database schema supports it (`presentations.slides` array) but no UI/actions
+- **✅ Assemble new presentation from uploaded slides**: `src/components/CreatePresentationView.tsx`
 - **✅ Modify existing presentation**: Add/remove/reorder slides in a presentation
 
 ## ❌ NOT IMPLEMENTED
+
+### Slide Generation
+
+- **❌ Generate house style**
 
 ### Update Features
 
