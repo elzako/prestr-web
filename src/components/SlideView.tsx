@@ -335,57 +335,38 @@ export default function SlideView({
 
       {/* Lightbox Overlay */}
       {isLightboxOpen && (
-        <div
-          className="bg-opacity-90 fixed inset-0 z-50 flex items-center justify-center bg-black"
-          onClick={toggleLightbox}
-        >
-          <div className="relative max-h-[90vh] max-w-[90vw]">
-            {/* Close button */}
-            <button
-              onClick={toggleLightbox}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 focus:ring-2 focus:ring-white focus:outline-none"
-              aria-label="Close lightbox"
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+          {/* Close Button */}
+          <button
+            onClick={toggleLightbox}
+            className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+            aria-label="Close lightbox"
+          >
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <svg
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
 
-            {/* Lightbox image */}
+          {/* Slide Content */}
+          <div className="relative max-h-[90vh] max-w-[90vw]">
             <img
               src={imageUrl}
               alt={
                 metadata?.slide_text ||
                 `Slide image for ${currentSlide.slide_name}`
               }
-              className="max-h-full max-w-full object-contain"
-              onClick={(e) => e.stopPropagation()}
+              className="max-h-full max-w-full rounded-lg shadow-2xl"
             />
-
-            {/* Slide info overlay */}
-            {/* <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
-              <h2 className="text-xl font-semibold">{currentSlide.slide_name}</h2>
-              {metadata?.slideNumber && (
-                <p className="text-sm text-gray-200">
-                  Slide {metadata.slideNumber}
-                </p>
-              )}
-              {metadata?.presentationTitle && (
-                <p className="text-sm text-gray-200">
-                  {metadata.presentationTitle}
-                </p>
-              )}
-            </div> */}
           </div>
         </div>
       )}
