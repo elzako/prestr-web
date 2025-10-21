@@ -29,6 +29,7 @@ import type {
   UserRoles,
 } from '@/types'
 import { notFound } from 'next/navigation'
+import MicrosoftFileEditor from '@/components/MicrosoftFileEditor'
 
 export const revalidate = 3600
 
@@ -333,6 +334,60 @@ async function getPresentationData(
   return data
 }
 
+async function getWopiToken(
+  fileId: string,
+  canWrite: boolean = false,
+  resourceType: string,
+) {
+  const supabase = await createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) {
+    notFound()
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_PRESTR_API_URL}/wopi/token`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileId,
+        userId: user.id,
+        canWrite,
+        ttlMs: 3600000,
+        resourceType,
+      }),
+    },
+  )
+  if (!response.ok) {
+    console.error('Error fetching WOPI token')
+    notFound()
+  }
+
+  return response.json()
+}
+
+async function getSlideInfo(orgId: string, slideName: string) {
+  const supabase = await createClient()
+  const { data: slide, error } = await supabase
+    .from('slides')
+    .select('id, object_id')
+    .eq('slide_name', slideName.substring(0, slideName.length - 6))
+    .single()
+
+  if (error || !slide) {
+    console.error('Error fetching slide:', error)
+    notFound()
+  }
+
+  return `${orgId}~${slide.id}~${slide.object_id}.pptx`
+}
+
 export async function generateMetadata({ params }: PageProps) {
   const { organization: organizationName, slug } = await params
   const organization = await getOrganization(organizationName)
@@ -438,6 +493,41 @@ export default async function OrganizationPage({ params }: PageProps) {
   const lastSegment = slug[slug.length - 1]
   const isSlideRoute = lastSegment?.endsWith('.slide')
   const isPresentationRoute = lastSegment?.endsWith('.presentation')
+  const isEditRoute = lastSegment?.endsWith('edit')
+
+  if (isEditRoute) {
+    const resourceId = slug[slug.length - 2]
+
+    if (resourceId.endsWith('.slide')) {
+      const fileId = await getSlideInfo(organization.id, resourceId)
+
+      const wopiToken = await getWopiToken(fileId, true, 'slide')
+
+      return (
+        <MicrosoftFileEditor
+          wopiUrl={wopiToken.wopiUrl}
+          accessToken={wopiToken.accessToken}
+          accessTokenTtl={wopiToken.accessTokenTtl}
+        />
+      )
+    }
+
+    /* if (resourceId.endsWith('.presentation')) {
+      const fileId = await getPresentationInfo(organization.id, resourceId)
+
+      const wopiToken = await getWopiToken(fileId, true, 'presentation')
+
+      return (
+        <MicrosoftFileEditor
+          wopiUrl={wopiToken.wopiUrl}
+          accessToken={wopiToken.accessToken}
+          accessTokenTtl={wopiToken.accessTokenTtl}
+        />
+      )
+    } */
+
+    notFound()
+  }
 
   if (isSlideRoute) {
     // Handle slide view
