@@ -364,9 +364,7 @@ export async function updateFolder(
     }
 
     if (updateData.description !== undefined) {
-      const currentMetadata = currentFolder.metadata || {}
       folderUpdate.metadata = {
-        ...currentMetadata,
         description: updateData.description || undefined,
       }
     }

@@ -16,7 +16,10 @@ interface TestUser {
   firstName: string
   lastName: string
   position: string
-  organizationRoles: { organizationId: string; role: 'owner' | 'admin' | 'member' }[]
+  organizationRoles: {
+    organizationId: string
+    role: 'owner' | 'admin' | 'member'
+  }[]
   folderRoles: { folderId: string; role: string }[]
 }
 
@@ -164,7 +167,9 @@ function makeInitialStore(): TestStore {
       full_path: '/BrandCampaigns',
       tags: ['brand', 'launch'],
       visibility: 'internal',
-      metadata: { description: 'Launch playbooks and brand storytelling kits.' },
+      metadata: {
+        description: 'Launch playbooks and brand storytelling kits.',
+      },
       created_at: daysFromBase(-30),
       updated_at: daysFromBase(-5),
       deleted_at: null,
@@ -276,7 +281,7 @@ function makeInitialStore(): TestStore {
     'presentation-launch-seq': {
       id: 'presentation-launch-seq',
       parent_id: launchFolderId,
-      presentation_name: 'LaunchSequence',
+      file_name: 'LaunchSequence',
       metadata: {
         description: 'Sequenced launch plan with key milestones.',
         thumbnailUrl: '/images/thumbnails/launch-sequence.png',
@@ -301,7 +306,7 @@ function makeInitialStore(): TestStore {
     'presentation-design-weekly': {
       id: 'presentation-design-weekly',
       parent_id: designFolderId,
-      presentation_name: 'DesignReview',
+      file_name: 'DesignReview',
       metadata: {
         description: 'Weekly design review snapshots.',
         slideCount: 8,
@@ -309,7 +314,13 @@ function makeInitialStore(): TestStore {
       created_at: daysFromBase(-17),
       updated_at: daysFromBase(-1),
       tags: ['design', 'feedback'],
-      slides: [{ order: 1, slide_id: 'slide-color-system', object_id: 'obj-color-system' }],
+      slides: [
+        {
+          order: 1,
+          slide_id: 'slide-color-system',
+          object_id: 'obj-color-system',
+        },
+      ],
       settings: {
         pptxDownloadRole: 'project-member',
         pdfDownloadRole: 'project-member',
@@ -322,7 +333,7 @@ function makeInitialStore(): TestStore {
     'presentation-sales-onboarding': {
       id: 'presentation-sales-onboarding',
       parent_id: playbookFolderId,
-      presentation_name: 'SalesOnboarding',
+      file_name: 'SalesOnboarding',
       metadata: {
         description: 'Fast-track onboarding deck for new sellers.',
         slideCount: 15,
@@ -348,12 +359,11 @@ function makeInitialStore(): TestStore {
     'slide-vision': {
       id: 'slide-vision',
       parent_id: launchFolderId,
-      slide_name: 'Vision',
+      file_name: 'Vision',
       metadata: {
-        textContent: [
+        slide_text: [
           'Our north star vision for the product launch covering positioning and impact.',
         ],
-        slideNumber: 2,
       },
       created_at: daysFromBase(-24),
       updated_at: daysFromBase(-2),
@@ -379,10 +389,11 @@ function makeInitialStore(): TestStore {
     'slide-roadmap': {
       id: 'slide-roadmap',
       parent_id: launchFolderId,
-      slide_name: 'Roadmap',
+      file_name: 'Roadmap',
       metadata: {
-        textContent: ['Milestones and timeline for the multi-phase launch roadmap.'],
-        slideNumber: 5,
+        slide_text: [
+          'Milestones and timeline for the multi-phase launch roadmap.',
+        ],
       },
       created_at: daysFromBase(-23),
       updated_at: daysFromBase(-2),
@@ -393,7 +404,8 @@ function makeInitialStore(): TestStore {
       parent_path: '/BrandCampaigns/ProductLaunch',
       organization_id: organizationId,
       project_id: brandProjectId,
-      searchText: 'roadmap timeline milestones gantt ownership launch checkpoints',
+      searchText:
+        'roadmap timeline milestones gantt ownership launch checkpoints',
       has_chart: true,
       has_table: true,
       has_diagram: false,
@@ -407,10 +419,9 @@ function makeInitialStore(): TestStore {
     'slide-color-system': {
       id: 'slide-color-system',
       parent_id: designFolderId,
-      slide_name: 'ColorSystem',
+      file_name: 'ColorSystem',
       metadata: {
-        textContent: ['Palette exploration and accessibility checks.'],
-        slideNumber: 3,
+        slide_text: ['Palette exploration and accessibility checks.'],
       },
       created_at: daysFromBase(-17),
       updated_at: daysFromBase(-1),
@@ -435,10 +446,9 @@ function makeInitialStore(): TestStore {
     'slide-discovery': {
       id: 'slide-discovery',
       parent_id: playbookFolderId,
-      slide_name: 'DiscoveryQuestions',
+      file_name: 'DiscoveryQuestions',
       metadata: {
-        textContent: ['Key discovery questions for first customer call.'],
-        slideNumber: 4,
+        slide_text: ['Key discovery questions for first customer call.'],
       },
       created_at: daysFromBase(-36),
       updated_at: daysFromBase(-3),
@@ -449,7 +459,8 @@ function makeInitialStore(): TestStore {
       parent_path: '/SalesEnablement/Playbooks',
       organization_id: organizationId,
       project_id: salesProjectId,
-      searchText: 'discovery questions framework customer pain points call prep',
+      searchText:
+        'discovery questions framework customer pain points call prep',
       has_chart: false,
       has_table: false,
       has_diagram: false,
@@ -463,10 +474,9 @@ function makeInitialStore(): TestStore {
     'slide-pricing': {
       id: 'slide-pricing',
       parent_id: playbookFolderId,
-      slide_name: 'PricingComparison',
+      file_name: 'PricingComparison',
       metadata: {
-        textContent: ['Competitive comparison with pricing guardrails.'],
-        slideNumber: 6,
+        slide_text: ['Competitive comparison with pricing guardrails.'],
       },
       created_at: daysFromBase(-35),
       updated_at: daysFromBase(-3),
@@ -491,10 +501,9 @@ function makeInitialStore(): TestStore {
     'slide-customer-story': {
       id: 'slide-customer-story',
       parent_id: galleryFolderId,
-      slide_name: 'CustomerStory',
+      file_name: 'CustomerStory',
       metadata: {
-        textContent: ['Case study summarizing ROI from ACME pilot.'],
-        slideNumber: 2,
+        slide_text: ['Case study summarizing ROI from ACME pilot.'],
       },
       created_at: daysFromBase(-30),
       updated_at: daysFromBase(-4),
@@ -519,11 +528,15 @@ function makeInitialStore(): TestStore {
   }
   const pathToFolderId: Record<string, string> = {} as Record<string, string>
   pathToFolderId[organizationId + '|BrandCampaigns'] = brandProjectId
-  pathToFolderId[organizationId + '|BrandCampaigns/ProductLaunch'] = launchFolderId
-  pathToFolderId[organizationId + '|BrandCampaigns/DesignReviews'] = designFolderId
+  pathToFolderId[organizationId + '|BrandCampaigns/ProductLaunch'] =
+    launchFolderId
+  pathToFolderId[organizationId + '|BrandCampaigns/DesignReviews'] =
+    designFolderId
   pathToFolderId[organizationId + '|SalesEnablement'] = salesProjectId
-  pathToFolderId[organizationId + '|SalesEnablement/Playbooks'] = playbookFolderId
-  pathToFolderId[organizationId + '|SalesEnablement/CustomerStories'] = galleryFolderId
+  pathToFolderId[organizationId + '|SalesEnablement/Playbooks'] =
+    playbookFolderId
+  pathToFolderId[organizationId + '|SalesEnablement/CustomerStories'] =
+    galleryFolderId
 
   return {
     users,
@@ -644,7 +657,9 @@ export function getUserRoles(userId: string): UserRoles {
   }
 
   return {
-    organizationRoles: user.organizationRoles.map((item) => item.organizationId),
+    organizationRoles: user.organizationRoles.map(
+      (item) => item.organizationId,
+    ),
     folderRoles: user.folderRoles.map((item) => ({
       folder_id: item.folderId,
       user_role: item.role,
@@ -668,7 +683,8 @@ export function getOrganizationById(id: string) {
 export function listProjects(organizationId: string): Project[] {
   const store = getStore()
   return Object.values(store.folders).filter(
-    (folder) => folder.organization_id === organizationId && folder.parent_id === null,
+    (folder) =>
+      folder.organization_id === organizationId && folder.parent_id === null,
   )
 }
 
@@ -739,7 +755,7 @@ export function getFolderContent(folderId: string): FolderContent {
 export function getSlide(parentId: string, slideName: string) {
   const store = getStore()
   return Object.values(store.slides).find(
-    (slide) => slide.parent_id === parentId && slide.slide_name === slideName,
+    (slide) => slide.parent_id === parentId && slide.file_name === slideName,
   )
 }
 
@@ -748,7 +764,7 @@ export function getPresentation(parentId: string, presentationName: string) {
   return Object.values(store.presentations).find(
     (presentation) =>
       presentation.parent_id === parentId &&
-      presentation.presentation_name === presentationName,
+      presentation.file_name === presentationName,
   )
 }
 export function updateUserProfileMetadata(
@@ -889,9 +905,8 @@ export function updateProjectRecord(
     ]
     project.folder_name = updates.folderName
     project.full_path = '/' + updates.folderName
-    store.pathToFolderId[
-      project.organization_id + '|' + updates.folderName
-    ] = projectId
+    store.pathToFolderId[project.organization_id + '|' + updates.folderName] =
+      projectId
   }
 
   if (updates.description !== undefined) {
@@ -1006,7 +1021,7 @@ export function searchSlidesInStore(
     organization_id: slide.organization_id,
     project_id: slide.project_id,
     tags: slide.tags || [],
-    slide_text: slide.metadata?.textContent?.join(' ') ?? '',
+    slide_text: slide.metadata?.slide_text?.join(' ') ?? '',
     notes_text: '',
     has_chart: Boolean(slide.has_chart),
     has_table: Boolean(slide.has_table),
@@ -1019,13 +1034,13 @@ export function searchSlidesInStore(
     has_audio: Boolean(slide.has_audio),
     layout_name: 'Standard',
     theme_name: 'Default',
-    slide_name: slide.slide_name || 'Untitled Slide',
+    file_name: slide.file_name || 'Untitled Slide',
     description: slide.description || '',
     created_at: slide.created_at,
     updated_at: slide.updated_at,
     imageUrl:
       'https://placehold.co/600x338?text=' +
-      encodeURIComponent(slide.slide_name || 'Slide'),
+      encodeURIComponent(slide.file_name || 'Slide'),
   }))
 
   return {
@@ -1075,7 +1090,7 @@ export function simulateUpload(args: {
   const presentation: TestPresentation = {
     id: presentationId,
     parent_id: args.folderId,
-    presentation_name: args.presentationName,
+    file_name: args.presentationName,
     metadata: {
       description: 'Imported from ' + args.originalFileName,
       slideCount: 1,
@@ -1097,10 +1112,9 @@ export function simulateUpload(args: {
   const slide: TestSlide = {
     id: slideId,
     parent_id: args.folderId,
-    slide_name: args.presentationName + '-Slide1',
+    file_name: args.presentationName + '-Slide1',
     metadata: {
-      textContent: ['Auto-generated slide from ' + args.originalFileName],
-      slideNumber: 1,
+      slide_text: ['Auto-generated slide from ' + args.originalFileName],
     },
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -1111,8 +1125,7 @@ export function simulateUpload(args: {
     parent_path: parentFolder.full_path ?? '',
     organization_id: args.organizationId,
     project_id: projectRootId,
-    searchText:
-      args.presentationName + ' uploaded ' + args.originalFileName,
+    searchText: args.presentationName + ' uploaded ' + args.originalFileName,
     has_chart: false,
     has_table: false,
     has_diagram: false,

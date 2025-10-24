@@ -145,7 +145,7 @@ export default function SlideView({
                   />
                 </svg>
                 <span className="ml-4 text-sm font-medium text-gray-900">
-                  {currentSlide.slide_name}
+                  {currentSlide.file_name}
                 </span>
               </div>
             </li>
@@ -205,7 +205,7 @@ export default function SlideView({
                 src={imageUrl}
                 alt={
                   metadata?.slide_text ||
-                  `Slide image for ${currentSlide.slide_name}`
+                  `Slide image for ${currentSlide.file_name}`
                 }
                 className="w-full cursor-pointer rounded-md border border-gray-200 transition-opacity hover:opacity-90"
                 onClick={toggleLightbox}
@@ -363,7 +363,7 @@ export default function SlideView({
               src={imageUrl}
               alt={
                 metadata?.slide_text ||
-                `Slide image for ${currentSlide.slide_name}`
+                `Slide image for ${currentSlide.file_name}`
               }
               className="max-h-full max-w-full rounded-lg shadow-2xl"
             />
@@ -375,7 +375,7 @@ export default function SlideView({
       <SlideEditForm
         slide={{
           id: currentSlide.id,
-          slide_name: currentSlide.slide_name,
+          file_name: currentSlide.file_name,
           description: currentSlide.description,
           tags: currentSlide.tags || [],
         }}
@@ -385,15 +385,15 @@ export default function SlideView({
           // Update current slide data
           setCurrentSlide((prev) => ({
             ...prev,
-            slide_name: updatedSlide.slide_name,
+            file_name: updatedSlide.file_name,
             description: updatedSlide.description,
             tags: updatedSlide.tags,
           }))
 
-          // If slide_name changed, redirect to new URL
-          if (updatedSlide.slide_name !== slide.slide_name) {
+          // If file_name changed, redirect to new URL
+          if (updatedSlide.file_name !== slide.file_name) {
             const pathSegments = pathname.split('/')
-            pathSegments[pathSegments.length - 1] = updatedSlide.slide_name
+            pathSegments[pathSegments.length - 1] = updatedSlide.file_name
             const newPath = pathSegments.join('/') + '.slide'
             router.push(newPath)
           }

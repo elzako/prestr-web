@@ -81,7 +81,7 @@ export default function AddSlideModal({
             (result: SearchResult) => ({
               slide_id: result.id,
               object_id: result.object_id,
-              title: result.slide_name || result.description || undefined,
+              title: result.file_name || result.description || undefined,
               imageUrl: result.imageUrl || '',
               created_at: result.created_at,
             }),

@@ -1,5 +1,3 @@
-// import Stripe from 'stripe';
-
 export type Json =
   | string
   | number
@@ -9,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: '13.0.5'
+  }
   public: {
     Tables: {
       access_tokens: {
@@ -16,7 +19,9 @@ export type Database = {
           created_at: string
           created_by: string
           expires_at: string
+          organization_id: string | null
           presentation_id: string | null
+          slide_id: string | null
           token_id: string
           viewer: string | null
         }
@@ -24,7 +29,9 @@ export type Database = {
           created_at?: string
           created_by: string
           expires_at: string
+          organization_id?: string | null
           presentation_id?: string | null
+          slide_id?: string | null
           token_id?: string
           viewer?: string | null
         }
@@ -32,7 +39,9 @@ export type Database = {
           created_at?: string
           created_by?: string
           expires_at?: string
+          organization_id?: string | null
           presentation_id?: string | null
+          slide_id?: string | null
           token_id?: string
           viewer?: string | null
         }
@@ -45,10 +54,132 @@ export type Database = {
             referencedColumns: ['id']
           },
           {
+            foreignKeyName: 'access_tokens_organization_id_fkey'
+            columns: ['organization_id']
+            isOneToOne: false
+            referencedRelation: 'organizations'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'access_tokens_organization_id_fkey'
+            columns: ['organization_id']
+            isOneToOne: false
+            referencedRelation: 'organizations_with_presentations'
+            referencedColumns: ['id']
+          },
+          {
             foreignKeyName: 'access_tokens_presentation_id_fkey'
             columns: ['presentation_id']
             isOneToOne: false
             referencedRelation: 'presentations'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'access_tokens_slide_id_fkey'
+            columns: ['slide_id']
+            isOneToOne: false
+            referencedRelation: 'slides'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      file_locks: {
+        Row: {
+          created_at: string
+          expires_at: string
+          lock_id: string
+          resource_id: string
+          resource_type: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          lock_id: string
+          resource_id: string
+          resource_type: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          lock_id?: string
+          resource_id?: string
+          resource_type?: string
+        }
+        Relationships: []
+      }
+      files: {
+        Row: {
+          created_at: string
+          created_by: string
+          deleted_at: string | null
+          deleted_by: string | null
+          file_name: string
+          file_size: number
+          file_type: string
+          id: string
+          object_id: string
+          parent_id: string | null
+          updated_at: string
+          updated_by: string
+          version: number | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          file_name: string
+          file_size: number
+          file_type: string
+          id?: string
+          object_id: string
+          parent_id?: string | null
+          updated_at?: string
+          updated_by: string
+          version?: number | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          file_name?: string
+          file_size?: number
+          file_type?: string
+          id?: string
+          object_id?: string
+          parent_id?: string | null
+          updated_at?: string
+          updated_by?: string
+          version?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'files_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'user_profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'files_deleted_by_fkey'
+            columns: ['deleted_by']
+            isOneToOne: false
+            referencedRelation: 'user_profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'files_parent_id_fkey'
+            columns: ['parent_id']
+            isOneToOne: false
+            referencedRelation: 'folders'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'files_updated_by_fkey'
+            columns: ['updated_by']
+            isOneToOne: false
+            referencedRelation: 'user_profiles'
             referencedColumns: ['id']
           },
         ]
@@ -103,10 +234,10 @@ export type Database = {
           id: string
           locked: boolean
           locked_by: string | null
-          metadata?: { description?: string }
+          metadata: Json | null
           organization_id: string
           parent_id: string | null
-          parent_path: unknown | null
+          parent_path: unknown
           tags: string[]
           updated_at: string
           updated_by: string
@@ -122,10 +253,12 @@ export type Database = {
           id?: string
           locked?: boolean
           locked_by?: string | null
-          metadata?: { description?: string }
+          metadata?: {
+            description?: string
+          } | null
           organization_id: string
           parent_id?: string | null
-          parent_path?: unknown | null
+          parent_path?: unknown
           tags?: string[]
           updated_at?: string
           updated_by: string
@@ -141,10 +274,10 @@ export type Database = {
           id?: string
           locked?: boolean
           locked_by?: string | null
-          metadata?: { description?: string }
+          metadata?: Json | null
           organization_id?: string
           parent_id?: string | null
-          parent_path?: unknown | null
+          parent_path?: unknown
           tags?: string[]
           updated_at?: string
           updated_by?: string
@@ -204,25 +337,28 @@ export type Database = {
       }
       notifications: {
         Row: {
-          content: { message: string }
+          content: Json
           created_at: string
           id: string
+          notification_type: string | null
           organization_id: string | null
           read: boolean | null
           user_id: string | null
         }
         Insert: {
-          content: { message: string }
+          content: Json
           created_at?: string
           id?: string
+          notification_type?: string | null
           organization_id?: string | null
           read?: boolean | null
           user_id?: string | null
         }
         Update: {
-          content?: { message: string }
+          content?: Json
           created_at?: string
           id?: string
+          notification_type?: string | null
           organization_id?: string | null
           read?: boolean | null
           user_id?: string | null
@@ -261,9 +397,8 @@ export type Database = {
           message_type: string | null
           organization_id: string
           presentation_id: string | null
-          similar_slides?: Partial<Tables<'slides'>>[] | null
+          similar_slides: Json | null
           user_id: string | null
-          slide_paths?: { path: string; url: string }[] | null
         }
         Insert: {
           created_at?: string
@@ -274,9 +409,8 @@ export type Database = {
           message_type?: string | null
           organization_id: string
           presentation_id?: string | null
-          similar_slides?: Partial<Tables<'slides'>>[] | null
+          similar_slides?: Json | null
           user_id?: string | null
-          slide_paths?: { path: string; url: string }[] | null
         }
         Update: {
           created_at?: string
@@ -287,9 +421,8 @@ export type Database = {
           message_type?: string | null
           organization_id?: string
           presentation_id?: string | null
-          similar_slides?: Partial<Tables<'slides'>>[] | null
+          similar_slides?: Json | null
           user_id?: string | null
-          slide_paths?: { path: string; url: string }[] | null
         }
         Relationships: [
           {
@@ -350,7 +483,7 @@ export type Database = {
           organization_id: string
           status?: Database['public']['Enums']['invitation_status'] | null
           user_id?: string | null
-          user_role: Database['public']['Enums']['organization_role'] | null
+          user_role?: Database['public']['Enums']['organization_role'] | null
         }
         Update: {
           accepted_at?: string | null
@@ -460,15 +593,9 @@ export type Database = {
           }
           organization_name: string
           settings: Json | null
-          sys_period: unknown
           tags: string[]
           updated_at: string
           updated_by: string
-          version: number | null
-          presentation_count?: number
-          organizations_billing?: Partial<
-            Tables<'organizations_billing'>
-          > | null
         }
         Insert: {
           created_at?: string
@@ -486,11 +613,9 @@ export type Database = {
           }
           organization_name: string
           settings?: Json | null
-          sys_period?: unknown
           tags?: string[]
           updated_at?: string
           updated_by: string
-          version?: number | null
         }
         Update: {
           created_at?: string
@@ -508,11 +633,9 @@ export type Database = {
           }
           organization_name?: string
           settings?: Json | null
-          sys_period?: unknown
           tags?: string[]
           updated_at?: string
           updated_by?: string
-          version?: number | null
         }
         Relationships: [
           {
@@ -544,8 +667,7 @@ export type Database = {
           organization_id: string | null
           price_plan: string | null
           prompt_limit: number | null
-          stripe_customer?: any // Stripe.Response<Stripe.Customer>;
-          stripe_subscription: Json | null
+          stripe_customer: Json | null
           upload_limit: number | null
         }
         Insert: {
@@ -553,8 +675,7 @@ export type Database = {
           organization_id?: string | null
           price_plan?: string | null
           prompt_limit?: number | null
-          stripe_customer?: any // Stripe.Response<Stripe.Customer>;
-          stripe_subscription?: Json | null
+          stripe_customer?: Json | null
           upload_limit?: number | null
         }
         Update: {
@@ -562,8 +683,7 @@ export type Database = {
           organization_id?: string | null
           price_plan?: string | null
           prompt_limit?: number | null
-          stripe_customer?: any // Stripe.Response<Stripe.Customer>;
-          stripe_subscription?: Json | null
+          stripe_customer?: Json | null
           upload_limit?: number | null
         }
         Relationships: [
@@ -583,140 +703,74 @@ export type Database = {
           },
         ]
       }
-      organizations_history: {
+      presentation_upload_queue: {
         Row: {
+          completed_at: string | null
           created_at: string
-          created_by: string
-          deleted_at: string | null
-          deleted_by: string | null
+          file_name: string | null
+          folder_id: string | null
           id: string
-          metadata: Json | null
-          organization_name: string
+          organization_id: string | null
+          processed_at: string | null
           settings: Json | null
-          sys_period: unknown
-          tags: string[]
-          updated_at: string
-          updated_by: string
-          version: number | null
+          status: string | null
+          upload_file_name: string | null
+          upload_type: string | null
+          user_id: string | null
         }
         Insert: {
-          created_at: string
-          created_by: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          id: string
-          metadata?: Json | null
-          organization_name: string
-          settings?: Json | null
-          sys_period: unknown
-          tags: string[]
-          updated_at: string
-          updated_by: string
-          version?: number | null
-        }
-        Update: {
+          completed_at?: string | null
           created_at?: string
-          created_by?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
+          file_name?: string | null
+          folder_id?: string | null
           id?: string
-          metadata?: Json | null
-          organization_name?: string
+          organization_id?: string | null
+          processed_at?: string | null
           settings?: Json | null
-          sys_period?: unknown
-          tags?: string[]
-          updated_at?: string
-          updated_by?: string
-          version?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: 'fk_created_by'
-            columns: ['created_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'fk_deleted_by'
-            columns: ['deleted_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'fk_updated_by'
-            columns: ['updated_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-        ]
-      }
-      presentation_workflow: {
-        Row: {
-          comments: string | null
-          id: string
-          status: string | null
-          sys_period: unknown
-          updated_at: string
-          updated_by: string
-        }
-        Insert: {
-          comments?: string | null
-          id: string
           status?: string | null
-          sys_period?: unknown
-          updated_at?: string
-          updated_by: string
+          upload_file_name?: string | null
+          upload_type?: string | null
+          user_id?: string | null
         }
         Update: {
-          comments?: string | null
+          completed_at?: string | null
+          created_at?: string
+          file_name?: string | null
+          folder_id?: string | null
           id?: string
+          organization_id?: string | null
+          processed_at?: string | null
+          settings?: Json | null
           status?: string | null
-          sys_period?: unknown
-          updated_at?: string
-          updated_by?: string
+          upload_file_name?: string | null
+          upload_type?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: 'presentation_workflow_updated_by_fkey'
-            columns: ['updated_by']
+            foreignKeyName: 'presentation_upload_queue_folder_id_fkey'
+            columns: ['folder_id']
             isOneToOne: false
-            referencedRelation: 'user_profiles'
+            referencedRelation: 'folders'
             referencedColumns: ['id']
           },
-        ]
-      }
-      presentation_workflow_history: {
-        Row: {
-          comments: string | null
-          id: string
-          status: string | null
-          sys_period: unknown
-          updated_at: string
-          updated_by: string
-        }
-        Insert: {
-          comments?: string | null
-          id: string
-          status?: string | null
-          sys_period: unknown
-          updated_at: string
-          updated_by: string
-        }
-        Update: {
-          comments?: string | null
-          id?: string
-          status?: string | null
-          sys_period?: unknown
-          updated_at?: string
-          updated_by?: string
-        }
-        Relationships: [
           {
-            foreignKeyName: 'fk_updated_by'
-            columns: ['updated_by']
+            foreignKeyName: 'presentation_upload_queue_organization_id_fkey'
+            columns: ['organization_id']
+            isOneToOne: false
+            referencedRelation: 'organizations'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'presentation_upload_queue_organization_id_fkey'
+            columns: ['organization_id']
+            isOneToOne: false
+            referencedRelation: 'organizations_with_presentations'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'presentation_upload_queue_user_id_fkey'
+            columns: ['user_id']
             isOneToOne: false
             referencedRelation: 'user_profiles'
             referencedColumns: ['id']
@@ -730,34 +784,21 @@ export type Database = {
           created_by: string
           deleted_at: string | null
           deleted_by: string | null
+          file_name: string
           id: string
-          locked: boolean
-          locked_by: string | null
-          metadata?: {
-            url?: string
-            description?: string
-            thumbnailUrl?: string
-            slideCount?: number
-          }
+          metadata: Json | null
+          object_id: string
           parent_id: string
-          presentation_name: string
-          settings: {
-            pptxDownloadRole: Enums<'presentation_role'>
-            pdfDownloadRole: Enums<'presentation_role'>
-            chatRole: Enums<'presentation_role'>
-            aspectRatio?: string
-          }
-          slides?: {
-            order: number
-            slide_id: string
-            object_id: string
-            url?: string
-          }[]
+          regen_at: string | null
+          regen_status: Database['public']['Enums']['regen_status'] | null
+          settings: Json | null
+          slides: Json | null
           sys_period: unknown
           tags: string[]
           updated_at: string
           updated_by: string
           version: number | null
+          visibility: Database['public']['Enums']['visibility_options'] | null
         }
         Insert: {
           change_description?: string | null
@@ -765,29 +806,15 @@ export type Database = {
           created_by: string
           deleted_at?: string | null
           deleted_by?: string | null
+          file_name: string
           id?: string
-          locked?: boolean
-          locked_by?: string | null
-          metadata?: {
-            url?: string
-            description?: string
-            thumbnailUrl?: string
-            slideCount?: number
-          }
-          parent_id?: string
-          presentation_name?: string | null
-          settings?: {
-            pptxDownloadRole: Enums<'presentation_role'>
-            pdfDownloadRole: Enums<'presentation_role'>
-            chatRole: Enums<'presentation_role'>
-            aspectRatio?: string
-          }
-          slides?: {
-            order: number
-            slide_id: string
-            object_id: string
-            url?: string
-          }[]
+          metadata?: Json | null
+          object_id?: string
+          parent_id?: string | null
+          regen_at?: string | null
+          regen_status?: Database['public']['Enums']['regen_status'] | null
+          settings?: Json | null
+          slides?: Json | null
           sys_period?: unknown
           tags?: string[]
           updated_at?: string
@@ -801,29 +828,15 @@ export type Database = {
           created_by?: string
           deleted_at?: string | null
           deleted_by?: string | null
+          file_name?: string
           id?: string
-          locked?: boolean
-          locked_by?: string | null
-          metadata?: {
-            url?: string
-            description?: string
-            thumbnailUrl?: string
-            slideCount?: number
-          }
+          metadata?: Json | null
+          object_id?: string
           parent_id?: string | null
-          presentation_name?: string | null
-          settings?: {
-            pptxDownloadRole: Enums<'presentation_role'>
-            pdfDownloadRole: Enums<'presentation_role'>
-            chatRole: Enums<'presentation_role'>
-            aspectRatio?: string
-          }
-          slides?: {
-            order: number
-            slide_id: string
-            object_id: string
-            url?: string
-          }[]
+          regen_at?: string | null
+          regen_status?: Database['public']['Enums']['regen_status'] | null
+          settings?: Json | null
+          slides?: Json | null
           sys_period?: unknown
           tags?: string[]
           updated_at?: string
@@ -842,13 +855,6 @@ export type Database = {
           {
             foreignKeyName: 'presentations_deleted_by_fkey'
             columns: ['deleted_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'presentations_locked_by_fkey'
-            columns: ['locked_by']
             isOneToOne: false
             referencedRelation: 'user_profiles'
             referencedColumns: ['id']
@@ -873,22 +879,19 @@ export type Database = {
         Row: {
           embedding: string | null
           id: string
-          presentation_id: string | null
         }
         Insert: {
           embedding?: string | null
-          id?: string
-          presentation_id?: string | null
+          id: string
         }
         Update: {
           embedding?: string | null
           id?: string
-          presentation_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: 'presentations_embedding_presentation_id_fkey'
-            columns: ['presentation_id']
+            foreignKeyName: 'presentations_embedding_id_fkey'
+            columns: ['id']
             isOneToOne: true
             referencedRelation: 'presentations'
             referencedColumns: ['id']
@@ -898,82 +901,119 @@ export type Database = {
       presentations_history: {
         Row: {
           change_description: string | null
-          created_at: string
-          created_by: string
-          deleted_at: string | null
-          deleted_by: string | null
+          file_name: string
           id: string
-          locked: boolean
-          locked_by: string | null
           metadata: Json | null
+          object_id: string
           parent_id: string | null
-          presentation_name: string | null
           settings: Json | null
           slides: Json | null
           sys_period: unknown
           tags: string[]
-          updated_at: string
           updated_by: string
           version: number | null
           visibility: Database['public']['Enums']['visibility_options'] | null
         }
         Insert: {
           change_description?: string | null
-          created_at: string
-          created_by: string
-          deleted_at?: string | null
-          deleted_by?: string | null
+          file_name: string
           id: string
-          locked: boolean
-          locked_by?: string | null
           metadata?: Json | null
+          object_id: string
           parent_id?: string | null
-          presentation_name?: string | null
           settings?: Json | null
           slides?: Json | null
           sys_period: unknown
           tags: string[]
-          updated_at: string
           updated_by: string
           version?: number | null
           visibility?: Database['public']['Enums']['visibility_options'] | null
         }
         Update: {
           change_description?: string | null
-          created_at?: string
-          created_by?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
+          file_name?: string
           id?: string
-          locked?: boolean
-          locked_by?: string | null
           metadata?: Json | null
+          object_id?: string
           parent_id?: string | null
-          presentation_name?: string | null
           settings?: Json | null
           slides?: Json | null
           sys_period?: unknown
           tags?: string[]
-          updated_at?: string
           updated_by?: string
           version?: number | null
           visibility?: Database['public']['Enums']['visibility_options'] | null
         }
+        Relationships: []
+      }
+      presentations_workflow: {
+        Row: {
+          comments: string | null
+          id: string
+          status: string | null
+          sys_period: unknown
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          comments?: string | null
+          id: string
+          status?: string | null
+          sys_period?: unknown
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          comments?: string | null
+          id?: string
+          status?: string | null
+          sys_period?: unknown
+          updated_at?: string
+          updated_by?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 'fk_created_by'
-            columns: ['created_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
+            foreignKeyName: 'presentations_workflow_id_fkey'
+            columns: ['id']
+            isOneToOne: true
+            referencedRelation: 'presentations'
             referencedColumns: ['id']
           },
           {
-            foreignKeyName: 'fk_deleted_by'
-            columns: ['deleted_by']
+            foreignKeyName: 'presentations_workflow_updated_by_fkey'
+            columns: ['updated_by']
             isOneToOne: false
             referencedRelation: 'user_profiles'
             referencedColumns: ['id']
           },
+        ]
+      }
+      presentations_workflow_history: {
+        Row: {
+          comments: string | null
+          id: string
+          status: string | null
+          sys_period: unknown
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          comments?: string | null
+          id: string
+          status?: string | null
+          sys_period: unknown
+          updated_at: string
+          updated_by: string
+        }
+        Update: {
+          comments?: string | null
+          id?: string
+          status?: string | null
+          sys_period?: unknown
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
           {
             foreignKeyName: 'fk_updated_by'
             columns: ['updated_by']
@@ -1012,75 +1052,26 @@ export type Database = {
           },
         ]
       }
-      slide_workflow: {
+      slide_views_temp: {
         Row: {
-          comments: string | null
-          id: string
-          status: string | null
-          sys_period: unknown
-          updated_at: string
-          updated_by: string
+          fingerprint: string
+          id: number
+          slide_id: string
+          viewed_at: string
         }
         Insert: {
-          comments?: string | null
-          id: string
-          status?: string | null
-          sys_period?: unknown
-          updated_at?: string
-          updated_by: string
+          fingerprint: string
+          id?: never
+          slide_id: string
+          viewed_at?: string
         }
         Update: {
-          comments?: string | null
-          id?: string
-          status?: string | null
-          sys_period?: unknown
-          updated_at?: string
-          updated_by?: string
+          fingerprint?: string
+          id?: never
+          slide_id?: string
+          viewed_at?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: 'slide_workflow_updated_by_fkey'
-            columns: ['updated_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-        ]
-      }
-      slide_workflow_history: {
-        Row: {
-          comments: string | null
-          id: string
-          status: string | null
-          sys_period: unknown
-          updated_at: string
-          updated_by: string
-        }
-        Insert: {
-          comments?: string | null
-          id: string
-          status?: string | null
-          sys_period: unknown
-          updated_at: string
-          updated_by: string
-        }
-        Update: {
-          comments?: string | null
-          id?: string
-          status?: string | null
-          sys_period?: unknown
-          updated_at?: string
-          updated_by?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: 'fk_updated_by'
-            columns: ['updated_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-        ]
+        Relationships: []
       }
       slides: {
         Row: {
@@ -1089,36 +1080,33 @@ export type Database = {
           created_by: string
           deleted_at: string | null
           deleted_by: string | null
+          description: string | null
+          draft_object_id: string | null
+          file_name: string | null
           id: string
-          locked: boolean
-          locked_by: string | null
-          metadata?: {
-            orgId?: string
-            presentationTitle?: string
-            presentationFileName?: string
-            createdBy?: string
-            created?: string
-            lastModified?: string
-            lastModifiedBy?: string
-            slideId?: number
-            slideNumber?: number
-            textContent?: string[]
-            slideFileSize?: number
-            slideSizeType?: string
-            url?: string
-            path?: string
+          metadata: {
+            links?: string[]
+            file_size?: number
+            has_audio?: boolean
+            has_chart?: boolean
+            has_image?: boolean
+            has_links?: boolean
+            has_table?: boolean
+            has_video?: boolean
+            has_bullet?: boolean
+            has_diagram?: boolean
+            notes_text?: string[]
+            slide_text?: string[]
+            theme_name?: string
+            layout_name?: string
           }
           object_id: string
           parent_id: string
           settings: Json | null
-          slide_name: string | null
           sys_period: unknown
-          description?: string
           tags: string[]
           updated_at: string
           updated_by: string
-          metadata_updated_at?: string
-          metadata_updated_by?: string
           version: number | null
           visibility: Database['public']['Enums']['visibility_options'] | null
         }
@@ -1128,34 +1116,18 @@ export type Database = {
           created_by: string
           deleted_at?: string | null
           deleted_by?: string | null
+          description?: string | null
+          draft_object_id?: string | null
+          file_name?: string | null
           id?: string
-          locked?: boolean
-          locked_by?: string | null
-          metadata?: {
-            orgId?: string
-            presentationTitle?: string
-            presentationFileName?: string
-            createdBy?: string
-            created?: string
-            lastModified?: string
-            slideId?: number
-            slideNumber?: number
-            textContent?: string[]
-            slideFileSize?: number
-            slideSizeType?: string
-            url?: string
-          }
+          metadata?: Json | null
           object_id: string
-          parent_id: string
+          parent_id?: string | null
           settings?: Json | null
-          slide_name?: string | null
           sys_period?: unknown
-          description?: string
           tags?: string[]
           updated_at?: string
           updated_by: string
-          metadata_updated_at?: string
-          metadata_updated_by?: string
           version?: number | null
           visibility?: Database['public']['Enums']['visibility_options'] | null
         }
@@ -1165,34 +1137,18 @@ export type Database = {
           created_by?: string
           deleted_at?: string | null
           deleted_by?: string | null
+          description?: string | null
+          draft_object_id?: string | null
+          file_name?: string | null
           id?: string
-          locked?: boolean
-          locked_by?: string | null
-          metadata?: {
-            orgId?: string
-            presentationTitle?: string
-            presentationFileName?: string
-            createdBy?: string
-            created?: string
-            lastModified?: string
-            slideId?: number
-            slideNumber?: number
-            textContent?: string[]
-            slideFileSize?: number
-            slideSizeType?: string
-            url?: string
-          }
+          metadata?: Json | null
           object_id?: string
-          parent_id?: string
+          parent_id?: string | null
           settings?: Json | null
-          slide_name?: string | null
           sys_period?: unknown
-          description?: string
-          tags?: string[] | string
+          tags?: string[]
           updated_at?: string
           updated_by?: string
-          metadata_updated_at?: string
-          metadata_updated_by?: string
           version?: number | null
           visibility?: Database['public']['Enums']['visibility_options'] | null
         }
@@ -1207,13 +1163,6 @@ export type Database = {
           {
             foreignKeyName: 'slides_deleted_by_fkey'
             columns: ['deleted_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'slides_locked_by_fkey'
-            columns: ['locked_by']
             isOneToOne: false
             referencedRelation: 'user_profiles'
             referencedColumns: ['id']
@@ -1238,22 +1187,19 @@ export type Database = {
         Row: {
           embedding: string | null
           id: string
-          slide_id: string | null
         }
         Insert: {
           embedding?: string | null
-          id?: string
-          slide_id?: string | null
+          id: string
         }
         Update: {
           embedding?: string | null
           id?: string
-          slide_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: 'slides_embedding_slide_id_fkey'
-            columns: ['slide_id']
+            foreignKeyName: 'slides_embedding_id_fkey'
+            columns: ['id']
             isOneToOne: true
             referencedRelation: 'slides'
             referencedColumns: ['id']
@@ -1263,103 +1209,86 @@ export type Database = {
       slides_history: {
         Row: {
           change_description: string | null
-          created_at: string
-          created_by: string
-          deleted_at: string | null
-          deleted_by: string | null
+          description: string | null
+          file_name: string | null
           id: string
-          locked: boolean
-          locked_by: string | null
-          metadata?: {
-            objectId?: string
-            orgId?: string
-            presentationTitle?: string
-            presentationFileName?: string
-            createdBy?: string
-            created?: string
-            lastModified?: string
-            lastModifiedBy?: string
-            slideId?: number
-            slideNumber?: number
-            textContent?: string[]
-            slideFileSize?: number
-            slideSizeType?: string
-            url?: string
-            path?: string
-          }
+          metadata: Json | null
           object_id: string
-          parent_id: string
+          parent_id: string | null
           settings: Json | null
-          slide_name: string | null
           sys_period: unknown
-          description?: string
           tags: string[]
-          updated_at: string
           updated_by: string
           version: number | null
           visibility: Database['public']['Enums']['visibility_options'] | null
         }
         Insert: {
           change_description?: string | null
-          created_at: string
-          created_by: string
-          deleted_at?: string | null
-          deleted_by?: string | null
-          id: string
-          locked: boolean
-          locked_by?: string | null
+          description?: string | null
+          file_name?: string | null
+          id?: string
           metadata?: Json | null
           object_id: string
-          parent_id: string
+          parent_id?: string | null
           settings?: Json | null
-          slide_name?: string | null
-          sys_period: unknown
-          description?: string
-          tags: string[]
-          updated_at: string
+          sys_period?: unknown
+          tags?: string[]
           updated_by: string
           version?: number | null
           visibility?: Database['public']['Enums']['visibility_options'] | null
         }
         Update: {
           change_description?: string | null
-          created_at?: string
-          created_by?: string
-          deleted_at?: string | null
-          deleted_by?: string | null
+          description?: string | null
+          file_name?: string | null
           id?: string
-          locked?: boolean
-          locked_by?: string | null
           metadata?: Json | null
           object_id?: string
-          parent_id: string
+          parent_id?: string | null
           settings?: Json | null
-          slide_name?: string | null
           sys_period?: unknown
-          description?: string
           tags?: string[]
-          updated_at?: string
           updated_by?: string
           version?: number | null
           visibility?: Database['public']['Enums']['visibility_options'] | null
         }
+        Relationships: []
+      }
+      slides_workflow: {
+        Row: {
+          comments: string | null
+          id: string
+          status: string | null
+          sys_period: unknown
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          comments?: string | null
+          id: string
+          status?: string | null
+          sys_period?: unknown
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          comments?: string | null
+          id?: string
+          status?: string | null
+          sys_period?: unknown
+          updated_at?: string
+          updated_by?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 'fk_created_by'
-            columns: ['created_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
+            foreignKeyName: 'slides_workflow_id_fkey'
+            columns: ['id']
+            isOneToOne: true
+            referencedRelation: 'slides'
             referencedColumns: ['id']
           },
           {
-            foreignKeyName: 'fk_deleted_by'
-            columns: ['deleted_by']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'fk_updated_by'
+            foreignKeyName: 'slides_workflow_updated_by_fkey'
             columns: ['updated_by']
             isOneToOne: false
             referencedRelation: 'user_profiles'
@@ -1367,89 +1296,35 @@ export type Database = {
           },
         ]
       }
-      slide_views_temp: {
+      slides_workflow_history: {
         Row: {
-          fingerprint: string
-          id: number
-          slide_id: string
-          viewed_at: string
-        }
-        Insert: {
-          fingerprint: string
-          id?: never
-          slide_id: string
-          viewed_at?: string
-        }
-        Update: {
-          fingerprint?: string
-          id?: never
-          slide_id?: string
-          viewed_at?: string
-        }
-        Relationships: []
-      }
-      presentation_upload_queue: {
-        Row: {
-          completed_at: string | null
-          created_at: string
-          folder_id: string | null
+          comments: string | null
           id: string
-          organization_id: string | null
-          presentation_name: string | null
-          processed_at: string | null
-          settings: Json | null
           status: string | null
-          user_id: string | null
+          sys_period: unknown
+          updated_at: string
+          updated_by: string
         }
         Insert: {
-          completed_at?: string | null
-          created_at?: string
-          folder_id?: string | null
-          id?: string
-          organization_id?: string | null
-          presentation_name?: string | null
-          processed_at?: string | null
-          settings?: Json | null
+          comments?: string | null
+          id: string
           status?: string | null
-          user_id?: string | null
+          sys_period: unknown
+          updated_at: string
+          updated_by: string
         }
         Update: {
-          completed_at?: string | null
-          created_at?: string
-          folder_id?: string | null
+          comments?: string | null
           id?: string
-          organization_id?: string | null
-          presentation_name?: string | null
-          processed_at?: string | null
-          settings?: Json | null
           status?: string | null
-          user_id?: string | null
+          sys_period?: unknown
+          updated_at?: string
+          updated_by?: string
         }
         Relationships: [
           {
-            foreignKeyName: 'presentation_upload_queue_folder_id_fkey'
-            columns: ['folder_id']
-            isOneToOne: false
-            referencedRelation: 'folders'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'presentation_upload_queue_organization_id_fkey'
-            columns: ['organization_id']
-            isOneToOne: false
-            referencedRelation: 'organizations'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'presentation_upload_queue_organization_id_fkey'
-            columns: ['organization_id']
-            isOneToOne: false
-            referencedRelation: 'organizations_with_presentations'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'presentation_upload_queue_user_id_fkey'
-            columns: ['user_id']
+            foreignKeyName: 'fk_updated_by'
+            columns: ['updated_by']
             isOneToOne: false
             referencedRelation: 'user_profiles'
             referencedColumns: ['id']
@@ -1578,730 +1453,153 @@ export type Database = {
     Views: {
       organizations_with_presentations: {
         Row: {
-          id: string
-          metadata?: {
-            name?: string
-            about?: string
-            website?: string
-            location?: string
-            profilePicture?: string | null
-            displayMembers?: boolean
-          }
-          organization_name: string
-          presentation_count: number
+          id: string | null
+          metadata: Json | null
+          organization_name: string | null
+          presentation_count: number | null
         }
         Relationships: []
       }
-      view_organization_chat_history: {
-        Row: {
-          created_at: string
-          folder_id: string | null
-          guest_id: string | null
-          id: string
-          message: string | null
-          message_type: string | null
-          organization_id: string
-          presentation_id: string | null
-          similar_slides?: Partial<Tables<'slides'>>[] | null
-          slide_paths?: { path: string; url: string }[] | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          folder_id?: string | null
-          guest_id?: string | null
-          id?: string | null
-          message?: string | null
-          message_type?: string | null
-          organization_id?: string | null
-          presentation_id?: string | null
-          similar_slides?: Partial<Tables<'slides'>>[] | null
-          slide_paths?: { path: string; url: string }[] | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          folder_id?: string | null
-          guest_id?: string | null
-          id?: string | null
-          message?: string | null
-          message_type?: string | null
-          organization_id?: string | null
-          presentation_id?: string | null
-          similar_slides?: Partial<Tables<'slides'>>[] | null
-          slide_paths?: { path: string; url: string }[] | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: 'organization_chat_history_folder_id_fkey'
-            columns: ['folder_id']
-            isOneToOne: false
-            referencedRelation: 'folders'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'organization_chat_history_organization_id_fkey'
-            columns: ['organization_id']
-            isOneToOne: false
-            referencedRelation: 'organizations'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'organization_chat_history_organization_id_fkey'
-            columns: ['organization_id']
-            isOneToOne: false
-            referencedRelation: 'organizations_with_presentations'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'organization_chat_history_presentation_id_fkey'
-            columns: ['presentation_id']
-            isOneToOne: false
-            referencedRelation: 'presentations'
-            referencedColumns: ['id']
-          },
-          {
-            foreignKeyName: 'organization_chat_history_user_id_fkey'
-            columns: ['user_id']
-            isOneToOne: false
-            referencedRelation: 'user_profiles'
-            referencedColumns: ['id']
-          },
-        ]
-      }
     }
     Functions: {
-      _ltree_compress: {
+      acquire_file_lock: {
         Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      _ltree_gist_options: {
-        Args: {
-          '': unknown
-        }
-        Returns: undefined
-      }
-      binary_quantize:
-        | {
-            Args: {
-              '': string
-            }
-            Returns: unknown
-          }
-        | {
-            Args: {
-              '': unknown
-            }
-            Returns: unknown
-          }
-      bytea_to_text: {
-        Args: {
-          data: string
-        }
-        Returns: string
-      }
-      get_effective_visibility: {
-        Args: {
-          folder_id: string
-        }
-        Returns: Database['public']['Enums']['visibility_options']
-      }
-      get_folder_id_by_full_path: {
-        Args: {
-          org_id: string
-          current_path: string
-        }
-        Returns: string
-      }
-      get_presentation: {
-        Args: {
-          org_name: string
-          folder_path: string
-          p_name: string
+          p_client_id: string
+          p_file_id: string
+          p_lock_token: string
+          p_ttl_minutes?: number
+          p_user_id: string
         }
         Returns: {
+          error_message: string
+          expires_at: string
+          lock_token: string
+          locked_by: string
+          success: boolean
+        }[]
+      }
+      custom_access_token_hook: { Args: { event: Json }; Returns: Json }
+      get_effective_visibility: {
+        Args: { folder_id: string }
+        Returns: Database['public']['Enums']['visibility_options']
+      }
+      get_file_lock_status: {
+        Args: { p_file_id: string }
+        Returns: {
+          client_id: string
+          expires_at: string
+          is_locked: boolean
+          lock_token: string
+          locked_by: string
+        }[]
+      }
+      get_folder_id_by_full_path: {
+        Args: { current_path: string; org_id: string }
+        Returns: string
+      }
+      get_folder_organization_id: {
+        Args: { folder_id: string }
+        Returns: string
+      }
+      get_folder_path: { Args: { folder_id: string }; Returns: string }
+      get_folder_role: {
+        Args: { folder_id: string }
+        Returns: Database['public']['Enums']['folder_role']
+      }
+      get_organization_id: {
+        Args: { slide_or_presentation_parent_id: string }
+        Returns: string
+      }
+      get_organization_role: {
+        Args: { organization_id: string }
+        Returns: Database['public']['Enums']['organization_role']
+      }
+      get_presentation: {
+        Args: { folder_path: string; org_name: string; p_name: string }
+        Returns: {
+          metadata: Json
           oid: string
           pid: string
-          slides: { object_id: string; slide_key: string }[]
-          metadata: Json
+          slides: Json
         }[]
       }
       get_presentation_effective_visibility: {
-        Args: {
-          presentation_id: string
-        }
+        Args: { presentation_id: string }
         Returns: Database['public']['Enums']['visibility_options']
       }
+      get_presentation_parent_id: {
+        Args: { presentation_id: string }
+        Returns: string
+      }
       get_presentation_path: {
-        Args: {
-          presentation_id: string
-        }
+        Args: { presentation_id: string }
         Returns: string
       }
-      get_presentation_paths_by_slide: {
-        Args: {
-          slide_id: string
-        }
-        Returns: Json
-      }
-      get_root_folder_id: {
-        Args: {
-          folder_id: string
-        }
-        Returns: string
-      }
+      get_root_folder_id: { Args: { folder_id: string }; Returns: string }
       get_slide: {
-        Args: {
-          org_name: string
-          folder_path: string
-          s_name: string
-        }
+        Args: { folder_path: string; org_name: string; s_name: string }
         Returns: {
+          metadata: Json
+          object_id: string
           oid: string
           sid: string
-          object_id: string
-          metadata?: {
-            orgId?: string
-            presentationTitle?: string
-            presentationFileName?: string
-            createdBy?: string
-            created?: string
-            lastModified?: string
-            lastModifiedBy?: string
-            slideId?: number
-            slideNumber?: number
-            textContent?: string[]
-            slideFileSize?: number
-            slideSizeType?: string
-            url?: string
-            path?: string
-            description: string
-          }
         }[]
       }
       get_slide_effective_visibility: {
-        Args: {
-          slide_id: string
-        }
+        Args: { slide_id: string }
         Returns: Database['public']['Enums']['visibility_options']
       }
-      get_slide_id_from_path: {
-        Args: {
-          path_tokens: string[]
-        }
-        Returns: string
-      }
-      get_slide_order: {
-        Args: {
-          presentation_id: string
-          slide_id: string
-        }
-        Returns: number
-      }
-      get_slide_path: {
-        Args: {
-          org_id: string
-          slide_id: string
-        }
-        Returns: string
-      }
-      get_slide_paths:
-        | {
-            Args: {
-              presentation_id: string | null
-              slide_ids: string[]
-            }
-            Returns: { id: string; path: string; url: string }[]
-          }
-        | {
-            Args: {
-              slide_ids: string[]
-            }
-            Returns: { id: string; path: string; url: string }[]
-          }
-      get_slides_for_folder: {
-        Args: {
-          folder_id: string
-        }
-        Returns: Partial<Tables<'slides'>>[]
-      }
+      get_slide_parent_id: { Args: { slide_id: string }; Returns: string }
       get_subfolder_ids_including_self: {
-        Args: {
-          p_folder_id: string
-        }
+        Args: { p_folder_id: string }
         Returns: string[]
       }
       get_user_notifications: {
-        Args: {
-          uid: string
-        }
+        Args: { uid: string }
         Returns: {
-          id: string
-          content: { message: string }
-          read: boolean
+          content: Json
           created_at: string
+          id: string
           path: string
+          read: boolean
         }[]
       }
-      halfvec_avg: {
+      is_token_or_email_valid: {
         Args: {
-          '': number[]
-        }
-        Returns: unknown
-      }
-      halfvec_out: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      halfvec_send: {
-        Args: {
-          '': unknown
-        }
-        Returns: string
-      }
-      halfvec_typmod_in: {
-        Args: {
-          '': unknown[]
-        }
-        Returns: number
-      }
-      hnsw_bit_support: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      hnsw_halfvec_support: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      hnsw_sparsevec_support: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      hnswhandler: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      http: {
-        Args: {
-          request: Database['public']['CompositeTypes']['http_request']
-        }
-        Returns: Database['public']['CompositeTypes']['http_response']
-      }
-      http_delete:
-        | {
-            Args: {
-              uri: string
-            }
-            Returns: Database['public']['CompositeTypes']['http_response']
-          }
-        | {
-            Args: {
-              uri: string
-              content: string
-              content_type: string
-            }
-            Returns: Database['public']['CompositeTypes']['http_response']
-          }
-      http_get:
-        | {
-            Args: {
-              uri: string
-            }
-            Returns: Database['public']['CompositeTypes']['http_response']
-          }
-        | {
-            Args: {
-              uri: string
-              data: Json
-            }
-            Returns: Database['public']['CompositeTypes']['http_response']
-          }
-      http_head: {
-        Args: {
-          uri: string
-        }
-        Returns: Database['public']['CompositeTypes']['http_response']
-      }
-      http_header: {
-        Args: {
-          field: string
-          value: string
-        }
-        Returns: Database['public']['CompositeTypes']['http_header']
-      }
-      http_list_curlopt: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          curlopt: string
-          value: string
-        }[]
-      }
-      http_patch: {
-        Args: {
-          uri: string
-          content: string
-          content_type: string
-        }
-        Returns: Database['public']['CompositeTypes']['http_response']
-      }
-      http_post:
-        | {
-            Args: {
-              uri: string
-              content: string
-              content_type: string
-            }
-            Returns: Database['public']['CompositeTypes']['http_response']
-          }
-        | {
-            Args: {
-              uri: string
-              data: Json
-            }
-            Returns: Database['public']['CompositeTypes']['http_response']
-          }
-      http_put: {
-        Args: {
-          uri: string
-          content: string
-          content_type: string
-        }
-        Returns: Database['public']['CompositeTypes']['http_response']
-      }
-      http_reset_curlopt: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      http_set_curlopt: {
-        Args: {
-          curlopt: string
-          value: string
+          presentation_id?: string
+          slide_id?: string
+          token_id: string
+          user_email: string
         }
         Returns: boolean
       }
-      is_email_valid: {
+      refresh_file_lock: {
         Args: {
-          auth_email: string
-          request_presentation_id: string
-          request_slide_id: string
-        }
-        Returns: boolean
-      }
-      is_token_valid: {
-        Args: {
-          request_token_id: string
-          request_presentation_id: string
-          request_slide_id: string
-        }
-        Returns: boolean
-      }
-      ivfflat_bit_support: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ivfflat_halfvec_support: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ivfflathandler: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      l2_norm:
-        | {
-            Args: {
-              '': unknown
-            }
-            Returns: number
-          }
-        | {
-            Args: {
-              '': unknown
-            }
-            Returns: number
-          }
-      l2_normalize:
-        | {
-            Args: {
-              '': string
-            }
-            Returns: string
-          }
-        | {
-            Args: {
-              '': unknown
-            }
-            Returns: unknown
-          }
-        | {
-            Args: {
-              '': unknown
-            }
-            Returns: unknown
-          }
-      lca: {
-        Args: {
-          '': unknown[]
-        }
-        Returns: unknown
-      }
-      lquery_in: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      lquery_out: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      lquery_recv: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      lquery_send: {
-        Args: {
-          '': unknown
-        }
-        Returns: string
-      }
-      ltree_compress: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltree_decompress: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltree_gist_in: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltree_gist_options: {
-        Args: {
-          '': unknown
-        }
-        Returns: undefined
-      }
-      ltree_gist_out: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltree_in: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltree_out: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltree_recv: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltree_send: {
-        Args: {
-          '': unknown
-        }
-        Returns: string
-      }
-      ltree2text: {
-        Args: {
-          '': unknown
-        }
-        Returns: string
-      }
-      ltxtq_in: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltxtq_out: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltxtq_recv: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      ltxtq_send: {
-        Args: {
-          '': unknown
-        }
-        Returns: string
-      }
-      match_slides_for_organization: {
-        Args: {
-          query_embedding: string
-          org_id: string
-          match_count?: number
+          p_file_id: string
+          p_lock_token: string
+          p_ttl_minutes?: number
+          p_user_id: string
         }
         Returns: {
-          id: string
-          object_id: string
-          content: string
-          organization_id: string
-          similarity: number
+          error_message: string
+          expires_at: string
+          success: boolean
         }[]
       }
-      match_slides_for_presentation: {
+      release_file_lock: {
         Args: {
-          query_embedding: string
-          slide_ids: string[]
-          match_count?: number
+          p_file_id: string
+          p_is_admin?: boolean
+          p_lock_token: string
+          p_user_id: string
         }
         Returns: {
-          id: string
-          object_id: string
-          content: string
-          organization_id: string
-          similarity: number
+          error_message: string
+          success: boolean
         }[]
       }
-      nlevel: {
-        Args: {
-          '': unknown
-        }
-        Returns: number
-      }
-      sparsevec_out: {
-        Args: {
-          '': unknown
-        }
-        Returns: unknown
-      }
-      sparsevec_send: {
-        Args: {
-          '': unknown
-        }
-        Returns: string
-      }
-      sparsevec_typmod_in: {
-        Args: {
-          '': unknown[]
-        }
-        Returns: number
-      }
-      text_to_bytea: {
-        Args: {
-          data: string
-        }
-        Returns: string
-      }
-      text2ltree: {
-        Args: {
-          '': string
-        }
-        Returns: unknown
-      }
-      urlencode:
-        | {
-            Args: {
-              data: Json
-            }
-            Returns: string
-          }
-        | {
-            Args: {
-              string: string
-            }
-            Returns: string
-          }
-        | {
-            Args: {
-              string: string
-            }
-            Returns: string
-          }
-      uuid_generate_v7: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      vector_avg: {
-        Args: {
-          '': number[]
-        }
-        Returns: string
-      }
-      vector_dims:
-        | {
-            Args: {
-              '': string
-            }
-            Returns: number
-          }
-        | {
-            Args: {
-              '': unknown
-            }
-            Returns: number
-          }
-      vector_norm: {
-        Args: {
-          '': string
-        }
-        Returns: number
-      }
-      vector_out: {
-        Args: {
-          '': string
-        }
-        Returns: unknown
-      }
-      vector_send: {
-        Args: {
-          '': string
-        }
-        Returns: string
-      }
-      vector_typmod_in: {
-        Args: {
-          '': unknown[]
-        }
-        Returns: number
-      }
+      text2ltree: { Args: { '': string }; Returns: unknown }
+      uuid_generate_v7: { Args: never; Returns: string }
     }
     Enums: {
       download_role:
@@ -2310,60 +1608,51 @@ export type Database = {
         | 'project-member'
         | 'organization-member'
         | 'public'
+      folder_role: 'admin' | 'contributor' | 'member'
+      invitation_status: 'pending' | 'accepted' | 'expired' | 'failed'
+      organization_role: 'owner' | 'admin' | 'member'
       presentation_role:
         | 'project-admin'
         | 'project-contributor'
         | 'project-member'
         | 'organization-member'
         | 'public'
-      folder_role: 'admin' | 'contributor' | 'member'
-      invitation_status: 'pending' | 'accepted' | 'expired' | 'failed'
-      organization_role: 'owner' | 'admin' | 'member'
+      regen_status: 'pending' | 'processing' | 'completed' | 'failed'
       visibility_options: 'public' | 'internal' | 'restricted'
     }
     CompositeTypes: {
-      http_header: {
-        field: string | null
-        value: string | null
-      }
-      http_request: {
-        method: unknown | null
-        uri: string | null
-        headers: Database['public']['CompositeTypes']['http_header'][] | null
-        content_type: string | null
-        content: string | null
-      }
-      http_response: {
-        status: number | null
-        content_type: string | null
-        headers: Database['public']['CompositeTypes']['http_header'][] | null
-        content: string | null
-      }
+      [_ in never]: never
     }
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>]
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, 'public'>]
 
 export type Tables<
-  PublicTableNameOrOptions extends
-    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-        Database[PublicTableNameOrOptions['schema']]['Views'])
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
-        PublicSchema['Views'])
-    ? (PublicSchema['Tables'] &
-        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])
+    ? (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -2371,20 +1660,24 @@ export type Tables<
     : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema['Tables']
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -2392,20 +1685,24 @@ export type TablesInsert<
     : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema['Tables']
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -2413,29 +1710,61 @@ export type TablesUpdate<
     : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof PublicSchema['Enums']
-    | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema['Enums']
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
     : never = never,
-> = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
+    ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema['CompositeTypes']
-    | { schema: keyof Database },
+    | keyof DefaultSchema['CompositeTypes']
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
-    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
+    ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never
+
+export const Constants = {
+  public: {
+    Enums: {
+      download_role: [
+        'project-admin',
+        'project-contributor',
+        'project-member',
+        'organization-member',
+        'public',
+      ],
+      folder_role: ['admin', 'contributor', 'member'],
+      invitation_status: ['pending', 'accepted', 'expired', 'failed'],
+      organization_role: ['owner', 'admin', 'member'],
+      presentation_role: [
+        'project-admin',
+        'project-contributor',
+        'project-member',
+        'organization-member',
+        'public',
+      ],
+      regen_status: ['pending', 'processing', 'completed', 'failed'],
+      visibility_options: ['public', 'internal', 'restricted'],
+    },
+  },
+} as const

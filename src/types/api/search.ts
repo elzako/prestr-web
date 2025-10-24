@@ -1,4 +1,4 @@
-import type { Enums } from '../database.types'
+import type { Enums } from '@/types/database.types'
 import type { UserRoles } from '../entities'
 
 /**
@@ -31,7 +31,7 @@ export interface MeiliSearchSlideResult {
   has_audio: boolean
   layout_name: string
   theme_name: string
-  slide_name: string
+  file_name: string
   description: string
   created_at: string
   updated_at: string

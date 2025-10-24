@@ -84,18 +84,23 @@ export async function createProject(
       if (!userRole || (userRole !== 'owner' && userRole !== 'admin')) {
         throw new Error('Insufficient permissions to create projects')
       }
-      const project = createProjectRecord(organization.id, projectData.folderName, {
-        description: projectData.description,
-        tags: projectData.tags,
-        visibility: projectData.visibility,
-        userId: user.id,
-      })
+      const project = createProjectRecord(
+        organization.id,
+        projectData.folderName,
+        {
+          description: projectData.description,
+          tags: projectData.tags,
+          visibility: projectData.visibility,
+          userId: user.id,
+        },
+      )
       return { success: true, project }
     } catch (error) {
       console.error('Create project error:', error)
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to create project',
+        error:
+          error instanceof Error ? error.message : 'Failed to create project',
       }
     }
   }
@@ -196,7 +201,8 @@ export async function updateProject(
       console.error('Update project error:', error)
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to update project',
+        error:
+          error instanceof Error ? error.message : 'Failed to update project',
       }
     }
   }
@@ -257,7 +263,6 @@ export async function updateProject(
 
     if (updateData.description !== undefined) {
       projectUpdate.metadata = {
-        ...currentProject.metadata,
         description: updateData.description || undefined,
       }
     }
@@ -319,7 +324,8 @@ export async function deleteProject(
       console.error('Delete project error:', error)
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to delete project',
+        error:
+          error instanceof Error ? error.message : 'Failed to delete project',
       }
     }
   }

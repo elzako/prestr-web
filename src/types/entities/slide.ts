@@ -1,4 +1,4 @@
-import type { Tables } from '../database.types'
+import type { Tables } from '@/types/database.types'
 
 /**
  * Slide entity types
@@ -13,7 +13,7 @@ export type Slide = Pick<
   | 'id'
   | 'object_id'
   | 'parent_id'
-  | 'slide_name'
+  | 'file_name'
   | 'metadata'
   | 'tags'
   | 'created_at'
@@ -24,7 +24,7 @@ export type Slide = Pick<
 // Extended slide type with additional fields
 export type SlideSummary = Pick<
   Tables<'slides'>,
-  'id' | 'slide_name' | 'metadata' | 'created_at' | 'tags' | 'object_id'
+  'id' | 'file_name' | 'metadata' | 'created_at' | 'tags' | 'object_id'
 >
 
 // Detailed slide type with all commonly used fields
@@ -32,7 +32,7 @@ export type SlideDetail = Pick<
   Tables<'slides'>,
   | 'id'
   | 'parent_id'
-  | 'slide_name'
+  | 'file_name'
   | 'metadata'
   | 'created_at'
   | 'updated_at'
@@ -45,14 +45,14 @@ export type SlideDetail = Pick<
 // Slide type for editing with required fields
 export type SlideForEditing = Pick<
   Tables<'slides'>,
-  'id' | 'slide_name' | 'description' | 'tags'
+  'id' | 'file_name' | 'description' | 'tags'
 >
 
 // Full slide type for comprehensive operations
 export type SlideFull = Pick<
   Tables<'slides'>,
   | 'id'
-  | 'slide_name'
+  | 'file_name'
   | 'metadata'
   | 'created_at'
   | 'updated_at'

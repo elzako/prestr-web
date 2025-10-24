@@ -223,20 +223,20 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
   const { data: presentations, error: presentationsError } = await supabase
     .from('presentations')
     .select(
-      'id, parent_id, presentation_name, metadata, created_at, updated_at, deleted_at, tags, settings',
+      'id, parent_id, file_name, metadata, created_at, updated_at, deleted_at, tags, settings',
     )
     .eq('parent_id', folderId)
     .is('deleted_at', null)
-    .order('presentation_name', { ascending: true })
+    .order('file_name', { ascending: true })
 
   const { data: slides, error: slidesError } = await supabase
     .from('slides')
     .select(
-      'id, object_id, parent_id, slide_name, metadata, tags, created_at, updated_at, deleted_at',
+      'id, object_id, parent_id, file_name, metadata, tags, created_at, updated_at, deleted_at',
     )
     .eq('parent_id', folderId)
     .is('deleted_at', null)
-    .order('slide_name', { ascending: true })
+    .order('file_name', { ascending: true })
 
   if (foldersError) {
     console.error('Error fetching folders:', foldersError)
@@ -271,10 +271,10 @@ async function getSlideData(
   const { data, error } = await supabase
     .from('slides')
     .select(
-      'id, parent_id, slide_name, metadata, description, created_at, updated_at, object_id, tags, visibility',
+      'id, parent_id, file_name, metadata, description, created_at, updated_at, object_id, tags, visibility',
     )
     .eq('parent_id', parentId)
-    .eq('slide_name', slideName)
+    .eq('file_name', slideName)
     .maybeSingle()
 
   if (error) {
@@ -320,10 +320,10 @@ async function getPresentationData(
   const { data, error } = await supabase
     .from('presentations')
     .select(
-      'id, parent_id, presentation_name, metadata, created_at, updated_at, tags, slides, settings, version',
+      'id, parent_id, file_name, metadata, created_at, updated_at, tags, slides, settings, version',
     )
     .eq('parent_id', parentId)
-    .eq('presentation_name', presentationName)
+    .eq('file_name', presentationName)
     .maybeSingle()
 
   if (error) {
@@ -377,7 +377,7 @@ async function getSlideInfo(orgId: string, slideName: string) {
   const { data: slide, error } = await supabase
     .from('slides')
     .select('id, object_id')
-    .eq('slide_name', slideName.substring(0, slideName.length - 6))
+    .eq('file_name', slideName.substring(0, slideName.length - 6))
     .single()
 
   if (error || !slide) {
@@ -386,6 +386,25 @@ async function getSlideInfo(orgId: string, slideName: string) {
   }
 
   return `${orgId}~${slide.id}~${slide.object_id}.pptx`
+}
+
+async function getPresentationInfo(orgId: string, presentationName: string) {
+  const supabase = await createClient()
+  const { data: presentation, error } = await supabase
+    .from('presentations')
+    .select('id, object_id')
+    .eq(
+      'file_name',
+      presentationName.substring(0, presentationName.length - 13),
+    )
+    .single()
+
+  if (error || !presentation) {
+    console.error('Error fetching presentation:', error)
+    notFound()
+  }
+
+  return `${orgId}~${presentation.id}~${presentation.object_id}.pptx`
 }
 
 export async function generateMetadata({ params }: PageProps) {
@@ -496,10 +515,10 @@ export default async function OrganizationPage({ params }: PageProps) {
   const isEditRoute = lastSegment?.endsWith('edit')
 
   if (isEditRoute) {
-    const resourceId = slug[slug.length - 2]
+    const resourceName = slug[slug.length - 2]
 
-    if (resourceId.endsWith('.slide')) {
-      const fileId = await getSlideInfo(organization.id, resourceId)
+    if (resourceName.endsWith('.slide')) {
+      const fileId = await getSlideInfo(organization.id, resourceName)
 
       const wopiToken = await getWopiToken(fileId, true, 'slide')
 
@@ -512,8 +531,8 @@ export default async function OrganizationPage({ params }: PageProps) {
       )
     }
 
-    /* if (resourceId.endsWith('.presentation')) {
-      const fileId = await getPresentationInfo(organization.id, resourceId)
+    if (resourceName.endsWith('.presentation')) {
+      const fileId = await getPresentationInfo(organization.id, resourceName)
 
       const wopiToken = await getWopiToken(fileId, true, 'presentation')
 
@@ -524,7 +543,7 @@ export default async function OrganizationPage({ params }: PageProps) {
           accessTokenTtl={wopiToken.accessTokenTtl}
         />
       )
-    } */
+    }
 
     notFound()
   }

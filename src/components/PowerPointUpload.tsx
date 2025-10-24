@@ -148,12 +148,18 @@ export default function PowerPointUpload({
       const apiBaseUrl = process.env.NEXT_PUBLIC_PRESTR_API_URL || ''
       const uploadUrl = `${apiBaseUrl}/api/presentations/upload`
 
-      // Create query parameters
+      // remove .pptx, replace all non-alphanumeric characters with a hyphen, trim whitespace, change to lowercase
+      const presentationName = file.name
+        .trim()
+        .replace('.pptx', '')
+        .replace(/[^a-zA-Z0-9-]/g, '-')
+        .toLowerCase()
+
       const params = new URLSearchParams({
         organizationId: organizationId,
         folderId: folderId,
         userId: userId,
-        presentationName: file.name,
+        presentationName: presentationName,
         visibility: rootVisibility,
       })
 

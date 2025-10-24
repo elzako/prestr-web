@@ -152,7 +152,7 @@ export default function CreatePresentationView({
     formState: { errors },
   } = useForm<CreatePresentationFormData>({
     defaultValues: {
-      presentation_name: '',
+      file_name: '',
       tags: '',
       slides: [],
     },
@@ -198,7 +198,7 @@ export default function CreatePresentationView({
 
       await createPresentation(
         folderId,
-        data.presentation_name.trim(),
+        data.file_name.trim(),
         tags,
         selectedSlides.map((slide) => ({
           slide_id: slide.slide_id,
@@ -274,15 +274,15 @@ export default function CreatePresentationView({
           <form className="mt-6 space-y-4">
             <div>
               <label
-                htmlFor="presentation_name"
+                htmlFor="file_name"
                 className="block text-sm font-medium text-gray-700"
               >
                 Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                id="presentation_name"
-                {...register('presentation_name', {
+                id="file_name"
+                {...register('file_name', {
                   required: 'Presentation name is required',
                   pattern: {
                     value: /^[a-zA-Z0-9-_]+$/,
@@ -293,9 +293,9 @@ export default function CreatePresentationView({
                 placeholder="my-presentation"
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none sm:text-sm"
               />
-              {errors.presentation_name && (
+              {errors.file_name && (
                 <p className="mt-1 text-xs text-red-600">
-                  {errors.presentation_name.message}
+                  {errors.file_name.message}
                 </p>
               )}
             </div>

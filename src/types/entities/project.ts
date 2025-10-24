@@ -3,7 +3,7 @@ import type {
   TablesInsert,
   TablesUpdate,
   Enums,
-} from '../database.types'
+} from '@/types/database.types'
 
 /**
  * Project and Folder entity types
@@ -95,7 +95,7 @@ type Presentation = Pick<
   Tables<'presentations'>,
   | 'id'
   | 'parent_id'
-  | 'presentation_name'
+  | 'file_name'
   | 'metadata'
   | 'tags'
   | 'created_at'
@@ -108,7 +108,7 @@ type Slide = Pick<
   | 'id'
   | 'object_id'
   | 'parent_id'
-  | 'slide_name'
+  | 'file_name'
   | 'metadata'
   | 'tags'
   | 'created_at'

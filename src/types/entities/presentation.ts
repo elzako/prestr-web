@@ -1,4 +1,4 @@
-import type { Tables } from '../database.types'
+import type { Tables } from '@/types/database.types'
 
 /**
  * Presentation entity types
@@ -12,7 +12,7 @@ export type Presentation = Pick<
   Tables<'presentations'>,
   | 'id'
   | 'parent_id'
-  | 'presentation_name'
+  | 'file_name'
   | 'metadata'
   | 'tags'
   | 'created_at'
@@ -23,7 +23,7 @@ export type Presentation = Pick<
 // Extended presentation type with additional fields
 export type PresentationSummary = Pick<
   Tables<'presentations'>,
-  'id' | 'presentation_name' | 'metadata' | 'created_at' | 'tags' | 'settings'
+  'id' | 'file_name' | 'metadata' | 'created_at' | 'tags' | 'settings'
 >
 
 // Detailed presentation type with all commonly used fields
@@ -31,7 +31,7 @@ export type PresentationDetail = Pick<
   Tables<'presentations'>,
   | 'id'
   | 'parent_id'
-  | 'presentation_name'
+  | 'file_name'
   | 'metadata'
   | 'created_at'
   | 'updated_at'
@@ -45,7 +45,7 @@ export type PresentationDetail = Pick<
 export type PresentationFull = Pick<
   Tables<'presentations'>,
   | 'id'
-  | 'presentation_name'
+  | 'file_name'
   | 'metadata'
   | 'created_at'
   | 'updated_at'

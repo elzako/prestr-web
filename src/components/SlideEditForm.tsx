@@ -8,7 +8,7 @@ import { updateSlide } from '@/lib/slide-actions'
 interface SlideEditFormProps {
   slide: {
     id: string
-    slide_name: string | null
+    file_name: string | null
     description?: string | null
     tags: string[]
   }
@@ -18,7 +18,7 @@ interface SlideEditFormProps {
 }
 
 interface FormData {
-  slide_name: string
+  file_name: string
   description: string
   tags: string
 }
@@ -42,7 +42,7 @@ export default function SlideEditForm({
   } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
-      slide_name: slide.slide_name || '',
+      file_name: slide.file_name || '',
       description: slide.description || '',
       tags: slide.tags.join(', '),
     },
@@ -53,7 +53,7 @@ export default function SlideEditForm({
   // Reset form when slide changes
   useState(() => {
     if (slide) {
-      setValue('slide_name', slide.slide_name || '')
+      setValue('file_name', slide.file_name || '')
       setValue('description', slide.description || '')
       setValue('tags', slide.tags.join(', '))
     }
@@ -70,9 +70,9 @@ export default function SlideEditForm({
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0)
 
-      // Validate slide_name format
+      // Validate file_name format
       const slideNameRegex = /^[a-z0-9-]+$/
-      if (!slideNameRegex.test(data.slide_name)) {
+      if (!slideNameRegex.test(data.file_name)) {
         throw new Error(
           'Slide name must contain only lowercase letters, numbers, and dashes',
         )
@@ -84,7 +84,7 @@ export default function SlideEditForm({
       }
 
       const updatedSlide = await updateSlide(slide.id, {
-        slide_name: data.slide_name,
+        file_name: data.file_name,
         description: data.description || undefined,
         tags: tagsArray,
       })
@@ -100,7 +100,7 @@ export default function SlideEditForm({
 
   // Check if form has changes
   const hasChanges =
-    watchedValues.slide_name !== (slide.slide_name || '') ||
+    watchedValues.file_name !== (slide.file_name || '') ||
     watchedValues.description !== (slide.description || '') ||
     watchedValues.tags !== slide.tags.join(', ')
 
@@ -148,7 +148,7 @@ export default function SlideEditForm({
                 {/* Slide Name */}
                 <div>
                   <label
-                    htmlFor="slide_name"
+                    htmlFor="file_name"
                     className="block text-sm leading-6 font-medium text-gray-900"
                   >
                     Slide Name
@@ -156,8 +156,8 @@ export default function SlideEditForm({
                   <div className="mt-2">
                     <input
                       type="text"
-                      id="slide_name"
-                      {...register('slide_name', {
+                      id="file_name"
+                      {...register('file_name', {
                         required: 'Slide name is required',
                         pattern: {
                           value: /^[a-z0-9-]+$/,
@@ -168,9 +168,9 @@ export default function SlideEditForm({
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
                       placeholder="slide-name"
                     />
-                    {errors.slide_name && (
+                    {errors.file_name && (
                       <p className="mt-1 text-sm text-red-600">
-                        {errors.slide_name.message}
+                        {errors.file_name.message}
                       </p>
                     )}
                   </div>

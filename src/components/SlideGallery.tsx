@@ -381,7 +381,7 @@ export default function SlideGallery({
     try {
       // Update presentation metadata
       await updatePresentation(presentationId, {
-        presentation_name: editedName.trim(),
+        file_name: editedName.trim(),
         tags: editedTags,
       })
 

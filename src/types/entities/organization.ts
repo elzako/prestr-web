@@ -1,5 +1,4 @@
-import type { Tables } from '../database.types'
-
+import type { Tables } from '@/types/database.types'
 /**
  * Organization entity types
  *

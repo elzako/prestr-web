@@ -10,7 +10,7 @@ import type { PresentationDetail, Organization, UserRoles } from '../entities'
 
 // Form data for creating a new presentation
 export interface CreatePresentationFormData {
-  presentation_name: string
+  file_name: string
   tags: string
   slides: Array<{
     slide_id: string

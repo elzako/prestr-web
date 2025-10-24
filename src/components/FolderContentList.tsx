@@ -189,7 +189,7 @@ function PresentationCard({
       id: 'delete',
       label: 'Delete presentation',
       icon: <TrashIcon className="h-5 w-5" />,
-      onClick: () => onDelete(presentation.id, presentation.presentation_name),
+      onClick: () => onDelete(presentation.id, presentation.file_name),
       variant: 'danger' as const,
     },
   ]
@@ -213,7 +213,7 @@ function PresentationCard({
               />
             </svg>
             <h3 className="text-lg font-semibold text-gray-900">
-              {presentation.presentation_name}
+              {presentation.file_name}
             </h3>
           </div>
 
@@ -231,7 +231,7 @@ function PresentationCard({
 
       <div className="mt-4 flex items-center justify-between">
         <Link
-          href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${presentation.presentation_name}.presentation`}
+          href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${presentation.file_name}.presentation`}
           className="text-sm font-medium text-sky-600 hover:text-sky-800"
         >
           View presentation →
@@ -274,7 +274,7 @@ function SlideCard({
       id: 'delete',
       label: 'Delete slide',
       icon: <TrashIcon className="h-5 w-5" />,
-      onClick: () => onDelete(slide.id, slide.slide_name || ''),
+      onClick: () => onDelete(slide.id, slide.file_name || ''),
       variant: 'danger' as const,
     },
   ]
@@ -298,7 +298,7 @@ function SlideCard({
               />
             </svg>
             <h3 className="text-lg font-semibold text-gray-900">
-              {slide.slide_name || 'Untitled Slide'}
+              {slide.file_name || 'Untitled Slide'}
             </h3>
           </div>
 
@@ -316,7 +316,7 @@ function SlideCard({
 
       <div className="mt-4 flex items-center justify-between">
         <Link
-          href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${slide.slide_name}.slide`}
+          href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${slide.file_name}.slide`}
           className="text-sm font-medium text-sky-600 hover:text-sky-800"
         >
           View slide →

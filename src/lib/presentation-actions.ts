@@ -69,7 +69,7 @@ export async function createPresentation(
   // Create the presentation
   const insertData = {
     parent_id: parentFolderId,
-    presentation_name: presentationName,
+    file_name: presentationName,
     tags: tags.length > 0 ? tags : [],
     slides: formattedSlides,
     settings: {
@@ -99,7 +99,7 @@ export async function createPresentation(
 export async function updatePresentation(
   presentationId: string,
   updates: {
-    presentation_name?: string
+    file_name?: string
     tags?: string[]
   },
 ) {

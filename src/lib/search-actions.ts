@@ -197,7 +197,7 @@ export async function searchSlides(options: SearchOptions): Promise<{
       limit,
       offset,
       filter: allFilters,
-      attributesToHighlight: ['slide_text', 'description', 'slide_name'],
+      attributesToHighlight: ['slide_text', 'description', 'file_name'],
     })
 
     // Map results and add image URLs and parent paths (server-side only)

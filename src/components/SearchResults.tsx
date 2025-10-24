@@ -36,7 +36,7 @@ function SearchResultCard({
 
   return (
     <Link
-      href={`/${organizationName}${result.parent_path}/${result.slide_name}.slide`}
+      href={`/${organizationName}${result.parent_path}/${result.file_name}.slide`}
       className="group relative block overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
     >
       {/* Main Image */}
@@ -44,7 +44,7 @@ function SearchResultCard({
         {result.imageUrl ? (
           <img
             src={result.imageUrl}
-            alt={result.slide_name || 'Slide thumbnail'}
+            alt={result.file_name || 'Slide thumbnail'}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
@@ -129,7 +129,7 @@ function SearchResultCard({
       {/* Title - Always visible */}
       <div className="p-3">
         <h3 className="line-clamp-2 text-sm font-medium text-gray-900 group-hover:text-sky-600">
-          {result.slide_name || 'Untitled Slide'}
+          {result.file_name || 'Untitled Slide'}
         </h3>
       </div>
     </Link>

@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 export async function updateSlide(
   slideId: string,
   updates: {
-    slide_name?: string
+    file_name?: string
     description?: string
     tags?: string[]
   },

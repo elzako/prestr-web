@@ -91,7 +91,7 @@ export default function PresentationViewClient({
                 />
               </svg>
               <span className="ml-4 text-sm font-medium text-gray-900">
-                {presentation.presentation_name}
+                {presentation.file_name}
               </span>
             </div>
           </li>
@@ -103,7 +103,7 @@ export default function PresentationViewClient({
         <div className="sm:flex sm:items-center sm:justify-between">
           <div className="sm:flex-auto">
             <h1 className="text-2xl font-bold text-gray-900">
-              {presentation.presentation_name}
+              {presentation.file_name}
             </h1>
           </div>
           {canEdit && !isEditMode && (
@@ -130,7 +130,7 @@ export default function PresentationViewClient({
             organizationName={organization.organization_name}
             organizationId={organization.id}
             folderPath={folderPath}
-            presentationName={presentation.presentation_name}
+            presentationName={presentation.file_name}
             presentationId={presentation.id}
             projectId={projectId}
             canEdit={canEdit}

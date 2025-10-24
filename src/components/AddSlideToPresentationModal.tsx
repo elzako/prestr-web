@@ -227,7 +227,7 @@ export default function AddSlideToPresentationModal({
                             {result.imageUrl ? (
                               <img
                                 src={result.imageUrl}
-                                alt={result.slide_name || 'Slide'}
+                                alt={result.file_name || 'Slide'}
                                 className="h-full w-full object-cover object-top"
                               />
                             ) : (
@@ -250,9 +250,9 @@ export default function AddSlideToPresentationModal({
                           </div>
 
                           {/* Slide Info */}
-                          {result.slide_name && (
+                          {result.file_name && (
                             <p className="mt-2 truncate text-xs text-gray-700">
-                              {result.slide_name}
+                              {result.file_name}
                             </p>
                           )}
                         </button>
