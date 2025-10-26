@@ -37,6 +37,7 @@ export type {
   FolderContentListProps,
   PresentationViewProps,
   SlideViewProps,
+  DraftReviewModalProps,
   SearchResultsProps,
   BreadcrumbsProps,
   OrgHeaderProps,

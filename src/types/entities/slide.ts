@@ -37,6 +37,7 @@ export type SlideDetail = Pick<
   | 'created_at'
   | 'updated_at'
   | 'object_id'
+  | 'draft_object_id'
   | 'tags'
   | 'visibility'
   | 'description'
@@ -57,6 +58,7 @@ export type SlideFull = Pick<
   | 'created_at'
   | 'updated_at'
   | 'object_id'
+  | 'draft_object_id'
   | 'tags'
   | 'parent_id'
 >

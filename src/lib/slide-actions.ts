@@ -38,3 +38,67 @@ export async function updateSlide(
 
   return data
 }
+
+// Publish a draft slide
+export async function publishDraft(slideId: string): Promise<{
+  success: boolean
+  error?: string
+}> {
+  try {
+    const response = await fetch(`/api/slides/publish/${slideId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: data.error || 'Failed to publish draft',
+      }
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error publishing draft:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to publish draft',
+    }
+  }
+}
+
+// Discard a draft slide
+export async function discardDraft(slideId: string): Promise<{
+  success: boolean
+  error?: string
+}> {
+  try {
+    const response = await fetch(`/api/slides/discard/${slideId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: data.error || 'Failed to discard draft',
+      }
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error discarding draft:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to discard draft',
+    }
+  }
+}

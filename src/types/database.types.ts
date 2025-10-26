@@ -1076,11 +1076,13 @@ export type Database = {
       slides: {
         Row: {
           change_description: string | null
+          content_hash: string | null
           created_at: string
           created_by: string
           deleted_at: string | null
           deleted_by: string | null
           description: string | null
+          draft_content_hash: string | null
           draft_object_id: string | null
           file_name: string | null
           id: string
@@ -1112,11 +1114,13 @@ export type Database = {
         }
         Insert: {
           change_description?: string | null
+          content_hash?: string | null
           created_at?: string
           created_by: string
           deleted_at?: string | null
           deleted_by?: string | null
           description?: string | null
+          draft_content_hash?: string | null
           draft_object_id?: string | null
           file_name?: string | null
           id?: string
@@ -1133,11 +1137,13 @@ export type Database = {
         }
         Update: {
           change_description?: string | null
+          content_hash?: string | null
           created_at?: string
           created_by?: string
           deleted_at?: string | null
           deleted_by?: string | null
           description?: string | null
+          draft_content_hash?: string | null
           draft_object_id?: string | null
           file_name?: string | null
           id?: string

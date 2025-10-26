@@ -61,7 +61,20 @@ export interface SlideViewProps {
   organization: Organization
   folderPath: string
   imageUrl: string
+  draftImageUrl: string | null
   canEdit: boolean
+}
+
+// Draft review modal props
+export interface DraftReviewModalProps {
+  isOpen: boolean
+  onClose: () => void
+  slide: SlideDetail
+  organizationName: string
+  folderPath: string
+  publishedImageUrl: string
+  draftImageUrl: string
+  onSuccess: () => void
 }
 
 // Search results props

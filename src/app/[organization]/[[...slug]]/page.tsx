@@ -271,7 +271,7 @@ async function getSlideData(
   const { data, error } = await supabase
     .from('slides')
     .select(
-      'id, parent_id, file_name, metadata, description, created_at, updated_at, object_id, tags, visibility',
+      'id, parent_id, file_name, metadata, description, created_at, updated_at, object_id, draft_object_id, tags, visibility',
     )
     .eq('parent_id', parentId)
     .eq('file_name', slideName)
@@ -575,6 +575,15 @@ export default async function OrganizationPage({ params }: PageProps) {
       slide.object_id,
     )
 
+    // Generate draft image URL if draft exists
+    const draftImageUrl = slide.draft_object_id
+      ? await getSlideImageUrl(
+          organization.id,
+          String(slide.id),
+          slide.draft_object_id,
+        )
+      : null
+
     return (
       <div className="bg-gray-50">
         <div className="min-h-screen">
@@ -587,6 +596,7 @@ export default async function OrganizationPage({ params }: PageProps) {
             organization={organization}
             folderPath={folderPath}
             imageUrl={imageUrl}
+            draftImageUrl={draftImageUrl}
             canEdit={canEdit}
           />
         </div>
