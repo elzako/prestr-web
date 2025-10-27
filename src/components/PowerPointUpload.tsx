@@ -45,30 +45,60 @@ export default function PowerPointUpload({
     }
   }
 
-  // Validate file type
   const validateFile = (file: File): string | null => {
-    // Check file extension
-    if (!file.name.toLowerCase().endsWith('.pptx')) {
-      return 'Please select a PowerPoint (.pptx) file only.'
+    const allowedExts = new Set([
+      'pptx',
+      'xlsx',
+      'docx',
+      'wopitest',
+      'wopitestx',
+    ])
+
+    // --- Map extensions to their known MIME types ---
+    const mimeByExt: Record<string, string[]> = {
+      pptx: [
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      ],
+      xlsx: [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      ],
+      docx: [
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ],
+      // Custom/test types: no standard MIME; accept empty or octet-stream
+      wopitest: [],
+      wopitestx: [],
     }
 
-    // Check file size (50MB limit)
-    const maxSize = 50 * 1024 * 1024 // 50MB in bytes
+    // 1) Extract & validate extension
+    const name = file.name.trim()
+    const match = name.toLowerCase().match(/\.([a-z0-9]+)$/)
+    if (!match) {
+      return 'File must have an extension: .pptx, .xlsx, .docx, .wopitest, or .wopitestx.'
+    }
+    const ext = match[1]
+    if (!allowedExts.has(ext)) {
+      return `Unsupported file type ".${ext}". Allowed: .pptx, .xlsx, .docx, .wopitest, .wopitestx.`
+    }
+
+    // 2) Size check (50 MB)
+    const maxSize = 50 * 1024 * 1024 // 50MB
     if (file.size > maxSize) {
       return 'File size must be less than 50MB.'
     }
 
-    // Check MIME type
-    const acceptedTypes = [
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-      'application/octet-stream', // Some browsers might report this for .pptx
-    ]
-    if (!acceptedTypes.includes(file.type) && file.type !== '') {
-      // Allow empty type as some browsers don't set it correctly
-      return 'Invalid file type. Please select a valid PowerPoint file.'
+    // 3) MIME type check
+    // Accept empty string (some browsers), octet-stream (generic), or the known types for that ext.
+    const acceptedTypes = new Set<string>([
+      'application/octet-stream',
+      ...mimeByExt[ext],
+    ])
+
+    if (file.type !== '' && !acceptedTypes.has(file.type)) {
+      return `Invalid file type (${file.type}). Please select a valid ${'.' + ext} file.`
     }
 
-    return null
+    return null // All good
   }
 
   // Handle file selection
@@ -146,20 +176,26 @@ export default function PowerPointUpload({
 
       // Get API base URL from environment or use relative path
       const apiBaseUrl = process.env.NEXT_PUBLIC_PRESTR_API_URL || ''
-      const uploadUrl = `${apiBaseUrl}/api/presentations/upload`
+      const pptxUploadUrl = `${apiBaseUrl}/api/presentations/upload`
+      const filesUploadUrl = `${apiBaseUrl}/api/files/upload`
 
-      // remove .pptx, replace all non-alphanumeric characters with a hyphen, trim whitespace, change to lowercase
-      const presentationName = file.name
+      // Determine which endpoint to use based on file extension
+      const fileExtension = file.name.split('.').pop()?.toLowerCase()
+      const isPptx = fileExtension === 'pptx'
+      const uploadUrl = isPptx ? pptxUploadUrl : filesUploadUrl
+
+      // remove file extension, replace all non-alphanumeric characters with a hyphen, trim whitespace, change to lowercase
+      const fileName = file.name
         .trim()
-        .replace('.pptx', '')
-        .replace(/[^a-zA-Z0-9-]/g, '-')
+        .replace(/\.[^/.]+$/, '') // removes any file extension
+        .replace(/[^a-zA-Z0-9-]/g, '-') // replaces invalid characters with '-'
         .toLowerCase()
 
       const params = new URLSearchParams({
         organizationId: organizationId,
         folderId: folderId,
         userId: userId,
-        presentationName: presentationName,
+        fileName: fileName,
         visibility: rootVisibility,
       })
 
@@ -325,7 +361,16 @@ export default function PowerPointUpload({
       <input
         ref={fileInputRef}
         type="file"
-        accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        accept="
+        .pptx,
+        .xlsx,
+        .docx,
+        .wopitest,
+        .wopitestx,
+        application/vnd.openxmlformats-officedocument.presentationml.presentation,
+        application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+        application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+    application/octet-stream"
         onChange={handleFileSelect}
         className="hidden"
         disabled={uploadState.isUploading}
