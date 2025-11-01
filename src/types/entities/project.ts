@@ -88,7 +88,13 @@ export interface FolderContent {
   folders: Folder[]
   presentations: Presentation[]
   slides: Slide[]
+  files: File[]
 }
+
+type File = Pick<
+  Tables<'files'>,
+  'id' | 'object_id' | 'parent_id' | 'file_name' | 'file_type'
+>
 
 // Import presentation and slide types (avoiding circular dependency)
 type Presentation = Pick<

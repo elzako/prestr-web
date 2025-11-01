@@ -238,6 +238,13 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
     .is('deleted_at', null)
     .order('file_name', { ascending: true })
 
+  const { data: files, error: filesError } = await supabase
+    .from('files')
+    .select('id, object_id, parent_id, file_name, file_type')
+    .eq('parent_id', folderId)
+    .is('deleted_at', null)
+    .order('file_name', { ascending: true })
+
   if (foldersError) {
     console.error('Error fetching folders:', foldersError)
   }
@@ -250,10 +257,15 @@ async function getFolderContent(folderId: string): Promise<FolderContentData> {
     console.error('Error fetching slides:', slidesError)
   }
 
+  if (filesError) {
+    console.error('Error fetching files:', filesError)
+  }
+
   return {
     folders: folders || [],
     presentations: presentations || [],
     slides: slides || [],
+    files: files || [],
   }
 }
 
@@ -372,11 +384,16 @@ async function getWopiToken(
   return response.json()
 }
 
-async function getSlideInfo(orgId: string, slideName: string) {
+async function getSlideInfo(
+  orgId: string,
+  parentId: string,
+  slideName: string,
+) {
   const supabase = await createClient()
   const { data: slide, error } = await supabase
     .from('slides')
     .select('id, object_id')
+    .eq('parent_id', parentId)
     .eq('file_name', slideName.substring(0, slideName.length - 6))
     .single()
 
@@ -388,11 +405,16 @@ async function getSlideInfo(orgId: string, slideName: string) {
   return `${orgId}~${slide.id}~${slide.object_id}.pptx`
 }
 
-async function getPresentationInfo(orgId: string, presentationName: string) {
+async function getPresentationInfo(
+  orgId: string,
+  parentId: string,
+  presentationName: string,
+) {
   const supabase = await createClient()
   const { data: presentation, error } = await supabase
     .from('presentations')
     .select('id, object_id')
+    .eq('parent_id', parentId)
     .eq(
       'file_name',
       presentationName.substring(0, presentationName.length - 13),
@@ -407,62 +429,24 @@ async function getPresentationInfo(orgId: string, presentationName: string) {
   return `${orgId}~${presentation.id}~${presentation.object_id}.pptx`
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const { organization: organizationName, slug } = await params
-  const organization = await getOrganization(organizationName)
+async function getFileInfo(orgId: string, parentId: string, fileId: string) {
+  const supabase = await createClient()
 
-  if (!organization) {
-    return {
-      title: 'Organization Not Found',
-    }
+  const { data: file, error } = await supabase
+    .from('files')
+    .select('id, object_id, file_type')
+    .eq('parent_id', parentId)
+
+    .eq('file_name', fileId.substring(0, fileId.indexOf('.')))
+    .eq('file_type', fileId.substring(fileId.indexOf('.') + 1).toLowerCase())
+    .single()
+
+  if (error || !file) {
+    console.error('Error fetching file:', error)
+    notFound()
   }
 
-  const metadata = organization.metadata as {
-    name?: string
-    about?: string
-    website?: string
-    location?: string
-    profilePicture?: string
-    displayMembers?: boolean
-  } | null
-
-  const displayName = metadata?.name || organization.organization_name
-
-  if (!slug || slug.length === 0) {
-    return {
-      title: `${displayName} - Projects`,
-      description: metadata?.about || `Explore projects from ${displayName}`,
-    }
-  }
-
-  // Check if this is a slide or presentation route
-  const lastSegment = slug[slug.length - 1]
-  const isSlideRoute = lastSegment?.endsWith('.slide')
-  const isPresentationRoute = lastSegment?.endsWith('.presentation')
-
-  if (isSlideRoute) {
-    const slideName = lastSegment.replace('.slide', '')
-    const folderPath = slug.slice(0, -1).join('/')
-    return {
-      title: `${slideName} - ${folderPath} - ${displayName}`,
-      description: `Slide: ${slideName} in ${folderPath}`,
-    }
-  }
-
-  if (isPresentationRoute) {
-    const presentationName = lastSegment.replace('.presentation', '')
-    const folderPath = slug.slice(0, -1).join('/')
-    return {
-      title: `${presentationName} - ${folderPath} - ${displayName}`,
-      description: `Presentation: ${presentationName} in ${folderPath}`,
-    }
-  }
-
-  const currentPath = slug.join('/')
-  return {
-    title: `${currentPath} - ${displayName}`,
-    description: `Browse ${currentPath} in ${displayName}`,
-  }
+  return `${orgId}~${file.id}~${file.object_id}.${file.file_type}`
 }
 
 export default async function OrganizationPage({ params }: PageProps) {
@@ -514,11 +498,44 @@ export default async function OrganizationPage({ params }: PageProps) {
   const isPresentationRoute = lastSegment?.endsWith('.presentation')
   const isEditRoute = lastSegment?.endsWith('edit')
 
+  const exts = ['.docx', '.xlsx', '.wopitest', '.wopitestx']
+
+  const clean = (s: string) =>
+    s?.split(/[?#]/, 1)[0]?.replace(/\/+$/, '').toLowerCase() // strip ?query, #hash, trailing /
+
+  const isFileRoute =
+    exts.some((ext) => clean(lastSegment)?.endsWith(ext)) || false
+
+  if (isFileRoute) {
+    const folderPath = slug.slice(0, slug.length - 1).join('/')
+
+    const folderId = await getFolderId(organization.id, folderPath)
+    if (!folderId) {
+      notFound()
+    }
+    const fileId = await getFileInfo(organization.id, folderId, lastSegment)
+    const wopiToken = await getWopiToken(fileId, true, 'file')
+    return (
+      <MicrosoftFileEditor
+        wopiUrl={wopiToken.wopiUrl}
+        accessToken={wopiToken.accessToken}
+        accessTokenTtl={wopiToken.accessTokenTtl}
+      />
+    )
+  }
+
   if (isEditRoute) {
     const resourceName = slug[slug.length - 2]
+    const folderPath = slug.slice(0, -2).join('/')
+
+    // Get folder ID using the full path
+    const folderId = await getFolderId(organization.id, folderPath)
+    if (!folderId) {
+      notFound()
+    }
 
     if (resourceName.endsWith('.slide')) {
-      const fileId = await getSlideInfo(organization.id, resourceName)
+      const fileId = await getSlideInfo(organization.id, folderId, resourceName)
 
       const wopiToken = await getWopiToken(fileId, true, 'slide')
 
@@ -532,7 +549,11 @@ export default async function OrganizationPage({ params }: PageProps) {
     }
 
     if (resourceName.endsWith('.presentation')) {
-      const fileId = await getPresentationInfo(organization.id, resourceName)
+      const fileId = await getPresentationInfo(
+        organization.id,
+        folderId,
+        resourceName,
+      )
 
       const wopiToken = await getWopiToken(fileId, true, 'presentation')
 
@@ -681,3 +702,61 @@ export default async function OrganizationPage({ params }: PageProps) {
     )
   }
 }
+
+/* export async function generateMetadata({ params }: PageProps) {
+  const { organization: organizationName, slug } = await params
+  const organization = await getOrganization(organizationName)
+
+  if (!organization) {
+    return {
+      title: 'Organization Not Found',
+    }
+  }
+
+  const metadata = organization.metadata as {
+    name?: string
+    about?: string
+    website?: string
+    location?: string
+    profilePicture?: string
+    displayMembers?: boolean
+  } | null
+
+  const displayName = metadata?.name || organization.organization_name
+
+  if (!slug || slug.length === 0) {
+    return {
+      title: `${displayName} - Projects`,
+      description: metadata?.about || `Explore projects from ${displayName}`,
+    }
+  }
+
+  // Check if this is a slide or presentation route
+  const lastSegment = slug[slug.length - 1]
+  const isSlideRoute = lastSegment?.endsWith('.slide')
+  const isPresentationRoute = lastSegment?.endsWith('.presentation')
+
+  if (isSlideRoute) {
+    const slideName = lastSegment.replace('.slide', '')
+    const folderPath = slug.slice(0, -1).join('/')
+    return {
+      title: `${slideName} - ${folderPath} - ${displayName}`,
+      description: `Slide: ${slideName} in ${folderPath}`,
+    }
+  }
+
+  if (isPresentationRoute) {
+    const presentationName = lastSegment.replace('.presentation', '')
+    const folderPath = slug.slice(0, -1).join('/')
+    return {
+      title: `${presentationName} - ${folderPath} - ${displayName}`,
+      description: `Presentation: ${presentationName} in ${folderPath}`,
+    }
+  }
+
+  const currentPath = slug.join('/')
+  return {
+    title: `${currentPath} - ${displayName}`,
+    description: `Browse ${currentPath} in ${displayName}`,
+  }
+} */

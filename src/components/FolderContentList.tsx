@@ -17,6 +17,7 @@ import {
   TrashIcon,
   XMarkIcon,
 } from '@heroicons/react/20/solid'
+import { DocumentIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { useState } from 'react'
 import ActionDropdown, { ActionItem } from './ActionDropdown'
@@ -488,7 +489,8 @@ export default function FolderContentList({
   const totalItems =
     content.folders.length +
     content.presentations.length +
-    content.slides.length
+    content.slides.length +
+    content.files.length
 
   if (totalItems === 0) {
     return (
@@ -614,6 +616,37 @@ export default function FolderContentList({
                     currentFolderPath={currentFolderPath}
                     onDelete={(id, name) => handleDelete(id, name, 'slide')}
                   />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Files Section */}
+          {content.files.length > 0 && (
+            <div>
+              <h3 className="mb-4 text-lg font-medium text-gray-900">
+                Files ({content.files.length})
+              </h3>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {content.files.map((file) => (
+                  <Link
+                    key={file.id}
+                    href={`/${organizationName}/${currentFolderPath ? `${currentFolderPath}/` : ''}${file.file_name}.${file.file_type}`}
+                    className="group relative rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-sky-300 hover:shadow-md"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start space-x-3">
+                        <div className="flex-shrink-0">
+                          <DocumentIcon className="h-8 w-8 text-sky-600" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="truncate text-base font-semibold text-gray-900 group-hover:text-sky-600">
+                            {file.file_name}.{file.file_type}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>
