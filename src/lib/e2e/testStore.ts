@@ -755,6 +755,7 @@ export function getFolderContent(folderId: string): FolderContent {
     slides: children.slides
       .map((slideId) => store.slides[slideId])
       .filter((value): value is TestSlide => Boolean(value)),
+    files: [],
   }
 }
 

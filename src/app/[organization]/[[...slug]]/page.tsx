@@ -4,32 +4,35 @@ import OrgHeader from '@/components/OrgHeader'
 import PresentationView from '@/components/PresentationView'
 import ProjectList from '@/components/ProjectList'
 import SlideView from '@/components/SlideView'
-import { createClient } from '@/lib/supabase/server'
-import { getUserOrganizationRole } from '@/lib/organization-server-actions'
-import { getSlideImageUrl } from '@/lib/cloudinary'
-import { isE2ETestMode } from '@/lib/e2e/test-mode'
-import {
-  getOrganizationByName as getTestOrganizationByName,
-  listProjects as listTestProjects,
-  findFolderIdByPath,
-  getRootFolderId as getTestRootFolderId,
-  getSubFolderIds as getTestSubFolderIds,
-  getFolderContent as getTestFolderContent,
-  getSlide as getTestSlide,
-  getPresentation as getTestPresentation,
-  getUserRoles as getTestUserRoles,
-} from '@/lib/e2e/testStore'
-import { getUser as getAuthUser } from '@/lib/auth-actions'
-import type {
-  FolderContent,
-  Organization,
-  PresentationDetail,
-  Project,
-  SlideDetail,
-  UserRoles,
-} from '@/types'
-import { notFound } from 'next/navigation'
 import MicrosoftFileEditor from '@/components/MicrosoftFileEditor'
+import { getUserOrganizationRole } from '@/lib/organization-server-actions'
+import { parseOrganizationRoute, RouteType } from '@/lib/route-parser'
+import {
+  getOrganization,
+  getTopLevelProjects,
+} from '@/lib/services/organization-service'
+import {
+  getFolderId,
+  getRootFolderId,
+  getSubFolderIds,
+  getFolderContent,
+} from '@/lib/services/folder-service'
+import {
+  getSlideData,
+  getSlideInfo,
+  getSlideImageUrl,
+} from '@/lib/services/slide-service'
+import {
+  getPresentationData,
+  getPresentationInfo,
+} from '@/lib/services/presentation-service'
+import { getFileInfo } from '@/lib/services/file-service'
+import {
+  getCurrentUserRoles,
+  checkEditPermissions,
+} from '@/lib/services/user-service'
+import { getWopiToken } from '@/lib/services/wopi-service'
+import { notFound } from 'next/navigation'
 
 export const revalidate = 3600
 
@@ -40,418 +43,13 @@ interface PageProps {
   }>
 }
 
-type FolderContentData = FolderContent
-
-async function getOrganization(
-  organizationName: string,
-): Promise<Organization | null> {
-  if (isE2ETestMode()) {
-    const organization = getTestOrganizationByName(organizationName)
-    return organization || null
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from('organizations')
-    .select('id, organization_name, metadata, tags')
-    .eq('organization_name', organizationName)
-    .maybeSingle()
-
-  if (error) {
-    console.error('Error fetching organization:', error)
-    return null
-  }
-
-  return data
-}
-
-async function getCurrentUserRoles(): Promise<UserRoles | null> {
-  if (isE2ETestMode()) {
-    const user = await getAuthUser()
-    if (!user) {
-      return null
-    }
-    return getTestUserRoles(user.id)
-  }
-
-  const supabase = await createClient()
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    return null
-  }
-
-  return await getUserRoles(user.id)
-}
-
-async function getUserRoles(userId: string): Promise<UserRoles> {
-  if (isE2ETestMode()) {
-    return getTestUserRoles(userId)
-  }
-
-  const supabase = await createClient()
-
-  const { data: orgRoles } = await supabase
-    .from('user_organization_roles')
-    .select('organization_id, user_role')
-    .eq('user_id', userId)
-
-  const { data: folderRoles } = await supabase
-    .from('user_folder_roles')
-    .select('folder_id, user_role')
-    .eq('user_id', userId)
-
-  return {
-    organizationRoles: orgRoles?.map((role) => role.organization_id) || [],
-    folderRoles:
-      folderRoles?.map((role) => ({
-        folder_id: role.folder_id,
-        user_role: role.user_role || 'member',
-      })) || [],
-  }
-}
-
-async function getTopLevelProjects(organizationId: string): Promise<Project[]> {
-  if (isE2ETestMode()) {
-    return listTestProjects(organizationId)
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from('folders')
-    .select(
-      'id, organization_id, parent_id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at, deleted_at',
-    )
-    .eq('organization_id', organizationId)
-    .is('parent_id', null)
-    .is('deleted_at', null)
-    .order('updated_at', { ascending: false })
-
-  if (error) {
-    console.error('Error fetching projects:', error)
-    return []
-  }
-
-  return data || []
-}
-
-async function getFolderId(
-  organizationId: string,
-  currentPath: string,
-): Promise<string | null> {
-  if (isE2ETestMode()) {
-    return findFolderIdByPath(organizationId, currentPath)
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase.rpc('get_folder_id_by_full_path', {
-    org_id: organizationId,
-    current_path: currentPath.startsWith('/') ? currentPath : '/' + currentPath,
-  })
-
-  if (error) {
-    console.error('Error fetching folder ID:', error)
-    return null
-  }
-
-  return data
-}
-
-async function getRootFolderId(folderId: string): Promise<string | null> {
-  if (isE2ETestMode()) {
-    return getTestRootFolderId(folderId)
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase.rpc('get_root_folder_id', {
-    folder_id: folderId,
-  })
-
-  if (error) {
-    console.error('Error fetching root folder ID:', error)
-    return null
-  }
-
-  return data
-}
-
-async function getSubFolderIds(folderId: string): Promise<string[] | null> {
-  if (isE2ETestMode()) {
-    return getTestSubFolderIds(folderId)
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase.rpc(
-    'get_subfolder_ids_including_self',
-    {
-      p_folder_id: folderId,
-    },
-  )
-
-  if (error) {
-    console.error('Error fetching sub folder IDs:', error)
-    return []
-  }
-
-  return data
-}
-
-async function getFolderContent(folderId: string): Promise<FolderContentData> {
-  if (isE2ETestMode()) {
-    return getTestFolderContent(folderId)
-  }
-
-  const supabase = await createClient()
-
-  const { data: folders, error: foldersError } = await supabase
-    .from('folders')
-    .select(
-      'id, organization_id, parent_id, folder_name, full_path, tags, visibility, metadata, created_at, updated_at, deleted_at',
-    )
-    .eq('parent_id', folderId)
-    .is('deleted_at', null)
-    .order('folder_name', { ascending: true })
-
-  const { data: presentations, error: presentationsError } = await supabase
-    .from('presentations')
-    .select(
-      'id, parent_id, file_name, metadata, created_at, updated_at, deleted_at, tags, settings',
-    )
-    .eq('parent_id', folderId)
-    .is('deleted_at', null)
-    .order('file_name', { ascending: true })
-
-  const { data: slides, error: slidesError } = await supabase
-    .from('slides')
-    .select(
-      'id, object_id, parent_id, file_name, metadata, tags, created_at, updated_at, deleted_at',
-    )
-    .eq('parent_id', folderId)
-    .is('deleted_at', null)
-    .order('file_name', { ascending: true })
-
-  const { data: files, error: filesError } = await supabase
-    .from('files')
-    .select('id, object_id, parent_id, file_name, file_type')
-    .eq('parent_id', folderId)
-    .is('deleted_at', null)
-    .order('file_name', { ascending: true })
-
-  if (foldersError) {
-    console.error('Error fetching folders:', foldersError)
-  }
-
-  if (presentationsError) {
-    console.error('Error fetching presentations:', presentationsError)
-  }
-
-  if (slidesError) {
-    console.error('Error fetching slides:', slidesError)
-  }
-
-  if (filesError) {
-    console.error('Error fetching files:', filesError)
-  }
-
-  return {
-    folders: folders || [],
-    presentations: presentations || [],
-    slides: slides || [],
-    files: files || [],
-  }
-}
-
-async function getSlideData(
-  parentId: string,
-  slideName: string,
-): Promise<SlideDetail | null> {
-  if (isE2ETestMode()) {
-    const slide = getTestSlide(parentId, slideName)
-    return slide || null
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from('slides')
-    .select(
-      'id, parent_id, file_name, metadata, description, created_at, updated_at, object_id, draft_object_id, tags, visibility',
-    )
-    .eq('parent_id', parentId)
-    .eq('file_name', slideName)
-    .maybeSingle()
-
-  if (error) {
-    console.error('Error fetching slide:', error)
-    return null
-  }
-
-  return data
-}
-
-async function checkEditPermissions(parentId: string): Promise<boolean> {
-  const [userRoles, rootFolderId] = await Promise.all([
-    getCurrentUserRoles(),
-    getRootFolderId(parentId),
-  ])
-
-  if (!userRoles || !rootFolderId) return false
-
-  const { organizationRoles, folderRoles } = userRoles
-
-  const isOrgAdmin = ['owner', 'admin'].some((role) =>
-    organizationRoles.includes(role),
-  )
-
-  if (isOrgAdmin) return true
-
-  const folderRole = folderRoles.find((r) => r.folder_id === rootFolderId)
-
-  return ['admin', 'contributor'].includes(folderRole?.user_role ?? '')
-}
-
-async function getPresentationData(
-  parentId: string,
-  presentationName: string,
-): Promise<PresentationDetail | null> {
-  if (isE2ETestMode()) {
-    const presentation = getTestPresentation(parentId, presentationName)
-    return presentation || null
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from('presentations')
-    .select(
-      'id, parent_id, file_name, metadata, created_at, updated_at, tags, slides, settings, version',
-    )
-    .eq('parent_id', parentId)
-    .eq('file_name', presentationName)
-    .maybeSingle()
-
-  if (error) {
-    console.error('Error fetching presentation:', error)
-    return null
-  }
-
-  return data
-}
-
-async function getWopiToken(
-  fileId: string,
-  canWrite: boolean = false,
-  resourceType: string,
-) {
-  const supabase = await createClient()
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  if (!user) {
-    notFound()
-  }
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_PRESTR_API_URL}/wopi/token`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        fileId,
-        userId: user.id,
-        canWrite,
-        ttlMs: 3600000,
-        resourceType,
-      }),
-    },
-  )
-  if (!response.ok) {
-    console.error('Error fetching WOPI token')
-    notFound()
-  }
-
-  return response.json()
-}
-
-async function getSlideInfo(
-  orgId: string,
-  parentId: string,
-  slideName: string,
-) {
-  const supabase = await createClient()
-  const { data: slide, error } = await supabase
-    .from('slides')
-    .select('id, object_id')
-    .eq('parent_id', parentId)
-    .eq('file_name', slideName.substring(0, slideName.length - 6))
-    .single()
-
-  if (error || !slide) {
-    console.error('Error fetching slide:', error)
-    notFound()
-  }
-
-  return `${orgId}~${slide.id}~${slide.object_id}.pptx`
-}
-
-async function getPresentationInfo(
-  orgId: string,
-  parentId: string,
-  presentationName: string,
-) {
-  const supabase = await createClient()
-  const { data: presentation, error } = await supabase
-    .from('presentations')
-    .select('id, object_id')
-    .eq('parent_id', parentId)
-    .eq(
-      'file_name',
-      presentationName.substring(0, presentationName.length - 13),
-    )
-    .single()
-
-  if (error || !presentation) {
-    console.error('Error fetching presentation:', error)
-    notFound()
-  }
-
-  return `${orgId}~${presentation.id}~${presentation.object_id}.pptx`
-}
-
-async function getFileInfo(orgId: string, parentId: string, fileId: string) {
-  const supabase = await createClient()
-
-  const { data: file, error } = await supabase
-    .from('files')
-    .select('id, object_id, file_type')
-    .eq('parent_id', parentId)
-
-    .eq('file_name', fileId.substring(0, fileId.indexOf('.')))
-    .eq('file_type', fileId.substring(fileId.indexOf('.') + 1).toLowerCase())
-    .single()
-
-  if (error || !file) {
-    console.error('Error fetching file:', error)
-    notFound()
-  }
-
-  return `${orgId}~${file.id}~${file.object_id}.${file.file_type}`
-}
-
 export default async function OrganizationPage({ params }: PageProps) {
   const { organization: organizationName, slug } = await params
 
+  // Parse the route to determine what type of page to render
+  const route = parseOrganizationRoute(slug)
+
+  // Fetch organization and user roles (needed for all routes)
   const [organization, userRoles] = await Promise.all([
     getOrganization(organizationName),
     getCurrentUserRoles(),
@@ -467,240 +65,348 @@ export default async function OrganizationPage({ params }: PageProps) {
     ? userOrgRoleResult.role
     : null
 
-  // If no slug, show organization root with top-level projects
-  if (!slug || slug.length === 0) {
-    const projects = await getTopLevelProjects(organization.id)
+  // Handle different route types
+  switch (route.type) {
+    case RouteType.OrganizationRoot:
+      return renderOrganizationRoot(
+        organization,
+        organizationName,
+        userOrganizationRole,
+        userRoles,
+      )
 
-    return (
-      <div className="bg-gray-50">
-        <div className="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <OrgHeader
-            organization={organization}
-            userRole={userOrganizationRole}
-          />
+    case RouteType.File:
+      return renderFile(organization, route)
 
-          <div className="mt-8">
-            <ProjectList
-              projects={projects}
-              organizationName={organizationName}
-              organizationId={organization.id}
-              userRoles={userRoles}
-            />
-          </div>
-        </div>
-      </div>
-    )
-  }
+    case RouteType.EditSlide:
+      return renderEditSlide(organization, route)
 
-  // Check if this is a slide or presentation route
-  const lastSegment = slug[slug.length - 1]
-  const isSlideRoute = lastSegment?.endsWith('.slide')
-  const isPresentationRoute = lastSegment?.endsWith('.presentation')
-  const isEditRoute = lastSegment?.endsWith('edit')
+    case RouteType.EditPresentation:
+      return renderEditPresentation(organization, route)
 
-  const exts = ['.docx', '.xlsx', '.wopitest', '.wopitestx']
+    case RouteType.EditFile:
+      return renderEditFile(organization, route)
 
-  const clean = (s: string) =>
-    s?.split(/[?#]/, 1)[0]?.replace(/\/+$/, '').toLowerCase() // strip ?query, #hash, trailing /
+    case RouteType.Slide:
+      return renderSlide(organization, route, userOrganizationRole)
 
-  const isFileRoute =
-    exts.some((ext) => clean(lastSegment)?.endsWith(ext)) || false
+    case RouteType.Presentation:
+      return renderPresentation(
+        organization,
+        route,
+        userOrganizationRole,
+        userRoles,
+      )
 
-  if (isFileRoute) {
-    const folderPath = slug.slice(0, slug.length - 1).join('/')
+    case RouteType.Folder:
+      return renderFolder(organization, route, userOrganizationRole, userRoles)
 
-    const folderId = await getFolderId(organization.id, folderPath)
-    if (!folderId) {
+    default:
       notFound()
-    }
-    const fileId = await getFileInfo(organization.id, folderId, lastSegment)
-    const wopiToken = await getWopiToken(fileId, true, 'file')
-    return (
-      <MicrosoftFileEditor
-        wopiUrl={wopiToken.wopiUrl}
-        accessToken={wopiToken.accessToken}
-        accessTokenTtl={wopiToken.accessTokenTtl}
-      />
-    )
   }
+}
 
-  if (isEditRoute) {
-    const resourceName = slug[slug.length - 2]
-    const folderPath = slug.slice(0, -2).join('/')
+/**
+ * Render organization root with top-level projects
+ */
+async function renderOrganizationRoot(
+  organization: any,
+  organizationName: string,
+  userOrganizationRole: string | null,
+  userRoles: any,
+) {
+  const projects = await getTopLevelProjects(organization.id)
 
-    // Get folder ID using the full path
-    const folderId = await getFolderId(organization.id, folderPath)
-    if (!folderId) {
-      notFound()
-    }
-
-    if (resourceName.endsWith('.slide')) {
-      const fileId = await getSlideInfo(organization.id, folderId, resourceName)
-
-      const wopiToken = await getWopiToken(fileId, true, 'slide')
-
-      return (
-        <MicrosoftFileEditor
-          wopiUrl={wopiToken.wopiUrl}
-          accessToken={wopiToken.accessToken}
-          accessTokenTtl={wopiToken.accessTokenTtl}
+  return (
+    <div className="bg-gray-50">
+      <div className="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <OrgHeader
+          organization={organization}
+          userRole={userOrganizationRole}
         />
-      )
-    }
 
-    if (resourceName.endsWith('.presentation')) {
-      const fileId = await getPresentationInfo(
-        organization.id,
-        folderId,
-        resourceName,
-      )
-
-      const wopiToken = await getWopiToken(fileId, true, 'presentation')
-
-      return (
-        <MicrosoftFileEditor
-          wopiUrl={wopiToken.wopiUrl}
-          accessToken={wopiToken.accessToken}
-          accessTokenTtl={wopiToken.accessTokenTtl}
-        />
-      )
-    }
-
-    notFound()
-  }
-
-  if (isSlideRoute) {
-    // Handle slide view
-    const slideName = lastSegment.replace('.slide', '')
-    const folderPath = slug.slice(0, -1).join('/')
-
-    // Get folder ID using the full path
-    const folderId = await getFolderId(organization.id, folderPath)
-    if (!folderId) {
-      notFound()
-    }
-
-    // Get slide data
-    const slide = await getSlideData(folderId, slideName)
-    if (!slide) {
-      notFound()
-    }
-
-    // Check if user can edit this slide
-    const canEdit = await checkEditPermissions(slide.parent_id)
-
-    // Generate image URL server-side
-    const imageUrl = await getSlideImageUrl(
-      organization.id,
-      String(slide.id),
-      slide.object_id,
-    )
-
-    // Generate draft image URL if draft exists
-    const draftImageUrl = slide.draft_object_id
-      ? await getSlideImageUrl(
-          organization.id,
-          String(slide.id),
-          slide.draft_object_id,
-        )
-      : null
-
-    return (
-      <div className="bg-gray-50">
-        <div className="min-h-screen">
-          <CompactOrgHeader
-            organization={organization}
-            userRole={userOrganizationRole}
-          />
-          <SlideView
-            slide={slide}
-            organization={organization}
-            folderPath={folderPath}
-            imageUrl={imageUrl}
-            draftImageUrl={draftImageUrl}
-            canEdit={canEdit}
-          />
-        </div>
-      </div>
-    )
-  } else if (isPresentationRoute) {
-    // Handle presentation view
-    const presentationName = lastSegment.replace('.presentation', '')
-    const folderPath = slug.slice(0, -1).join('/')
-
-    // Get folder ID using the full path
-    const folderId = await getFolderId(organization.id, folderPath)
-    if (!folderId) {
-      notFound()
-    }
-
-    // Get presentation data
-    const presentation = await getPresentationData(folderId, presentationName)
-    if (!presentation) {
-      notFound()
-    }
-
-    // Get project ID (root folder ID)
-    const projectId = await getRootFolderId(presentation.parent_id)
-
-    // Check if user can edit this presentation (using same logic as slide edit permissions)
-    const canEdit = await checkEditPermissions(presentation.parent_id)
-
-    return (
-      <div className="bg-gray-50">
-        <div className="min-h-screen">
-          <CompactOrgHeader
-            organization={organization}
-            userRole={userOrganizationRole}
-          />
-          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            <PresentationView
-              presentation={presentation}
-              organization={organization}
-              folderPath={folderPath}
-              canEdit={canEdit}
-              projectId={projectId || undefined}
-              userRoles={userRoles}
-            />
-          </div>
-        </div>
-      </div>
-    )
-  } else {
-    // Handle nested folder navigation
-    const currentPath = slug.join('/')
-    const folderId = await getFolderId(organization.id, currentPath)
-
-    if (!folderId) {
-      notFound()
-    }
-
-    const [folderContent, projectId, subFolderIds] = await Promise.all([
-      getFolderContent(folderId),
-      getRootFolderId(folderId),
-      slug.length === 1 ? Promise.resolve([]) : getSubFolderIds(folderId),
-    ])
-
-    return (
-      <div className="bg-gray-50">
-        <div className="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <OrgHeader
-            organization={organization}
-            userRole={userOrganizationRole}
-          />
-          <FolderView
-            organization={organization}
-            folderId={folderId}
-            folderPath={currentPath}
-            content={folderContent}
-            projectId={projectId}
-            subFolderIds={subFolderIds}
+        <div className="mt-8">
+          <ProjectList
+            projects={projects}
+            organizationName={organizationName}
+            organizationId={organization.id}
             userRoles={userRoles}
           />
         </div>
       </div>
-    )
+    </div>
+  )
+}
+
+/**
+ * Render file editor (Microsoft Office files)
+ */
+async function renderFile(organization: any, route: any) {
+  const folderId = await getFolderId(organization.id, route.folderPath)
+  if (!folderId) {
+    notFound()
   }
+
+  const fileId = await getFileInfo(
+    organization.id,
+    folderId,
+    route.resourceName,
+  )
+  if (!fileId) {
+    notFound()
+  }
+
+  const wopiToken = await getWopiToken(fileId, true, 'file')
+  if (!wopiToken) {
+    notFound()
+  }
+
+  return (
+    <MicrosoftFileEditor
+      wopiUrl={wopiToken.wopiUrl}
+      accessToken={wopiToken.accessToken}
+      accessTokenTtl={wopiToken.accessTokenTtl}
+    />
+  )
+}
+
+/**
+ * Render slide editor
+ */
+async function renderEditSlide(organization: any, route: any) {
+  const folderId = await getFolderId(organization.id, route.folderPath)
+  if (!folderId) {
+    notFound()
+  }
+
+  const fileId = await getSlideInfo(
+    organization.id,
+    folderId,
+    route.resourceName,
+  )
+  if (!fileId) {
+    notFound()
+  }
+
+  const wopiToken = await getWopiToken(fileId, true, 'slide')
+  if (!wopiToken) {
+    notFound()
+  }
+
+  return (
+    <MicrosoftFileEditor
+      wopiUrl={wopiToken.wopiUrl}
+      accessToken={wopiToken.accessToken}
+      accessTokenTtl={wopiToken.accessTokenTtl}
+    />
+  )
+}
+
+/**
+ * Render presentation editor
+ */
+async function renderEditPresentation(organization: any, route: any) {
+  const folderId = await getFolderId(organization.id, route.folderPath)
+  if (!folderId) {
+    notFound()
+  }
+
+  const fileId = await getPresentationInfo(
+    organization.id,
+    folderId,
+    route.resourceName,
+  )
+  if (!fileId) {
+    notFound()
+  }
+
+  const wopiToken = await getWopiToken(fileId, true, 'presentation')
+  if (!wopiToken) {
+    notFound()
+  }
+
+  return (
+    <MicrosoftFileEditor
+      wopiUrl={wopiToken.wopiUrl}
+      accessToken={wopiToken.accessToken}
+      accessTokenTtl={wopiToken.accessTokenTtl}
+    />
+  )
+}
+
+/**
+ * Render file editor (generic)
+ */
+async function renderEditFile(organization: any, route: any) {
+  const folderId = await getFolderId(organization.id, route.folderPath)
+  if (!folderId) {
+    notFound()
+  }
+
+  const fileId = await getFileInfo(
+    organization.id,
+    folderId,
+    route.resourceName,
+  )
+  if (!fileId) {
+    notFound()
+  }
+
+  const wopiToken = await getWopiToken(fileId, true, 'file')
+  if (!wopiToken) {
+    notFound()
+  }
+
+  return (
+    <MicrosoftFileEditor
+      wopiUrl={wopiToken.wopiUrl}
+      accessToken={wopiToken.accessToken}
+      accessTokenTtl={wopiToken.accessTokenTtl}
+    />
+  )
+}
+
+/**
+ * Render slide view
+ */
+async function renderSlide(
+  organization: any,
+  route: any,
+  userOrganizationRole: string | null,
+) {
+  const folderId = await getFolderId(organization.id, route.folderPath)
+  if (!folderId) {
+    notFound()
+  }
+
+  const slide = await getSlideData(folderId, route.resourceName)
+  if (!slide) {
+    notFound()
+  }
+
+  const canEdit = await checkEditPermissions(slide.parent_id)
+
+  // Generate image URLs
+  const imageUrl = await getSlideImageUrl(
+    organization.id,
+    String(slide.id),
+    slide.object_id,
+  )
+
+  const draftImageUrl = slide.draft_object_id
+    ? await getSlideImageUrl(
+        organization.id,
+        String(slide.id),
+        slide.draft_object_id,
+      )
+    : null
+
+  return (
+    <div className="bg-gray-50">
+      <div className="min-h-screen">
+        <CompactOrgHeader
+          organization={organization}
+          userRole={userOrganizationRole}
+        />
+        <SlideView
+          slide={slide}
+          organization={organization}
+          folderPath={route.folderPath}
+          imageUrl={imageUrl}
+          draftImageUrl={draftImageUrl}
+          canEdit={canEdit}
+        />
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Render presentation view
+ */
+async function renderPresentation(
+  organization: any,
+  route: any,
+  userOrganizationRole: string | null,
+  userRoles: any,
+) {
+  const folderId = await getFolderId(organization.id, route.folderPath)
+  if (!folderId) {
+    notFound()
+  }
+
+  const presentation = await getPresentationData(folderId, route.resourceName)
+  if (!presentation) {
+    notFound()
+  }
+
+  const projectId = await getRootFolderId(presentation.parent_id)
+  const canEdit = await checkEditPermissions(presentation.parent_id)
+
+  return (
+    <div className="bg-gray-50">
+      <div className="min-h-screen">
+        <CompactOrgHeader
+          organization={organization}
+          userRole={userOrganizationRole}
+        />
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <PresentationView
+            presentation={presentation}
+            organization={organization}
+            folderPath={route.folderPath}
+            canEdit={canEdit}
+            projectId={projectId || undefined}
+            userRoles={userRoles}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Render folder view
+ */
+async function renderFolder(
+  organization: any,
+  route: any,
+  userOrganizationRole: string | null,
+  userRoles: any,
+) {
+  const folderId = await getFolderId(organization.id, route.folderPath)
+  if (!folderId) {
+    notFound()
+  }
+
+  const [folderContent, projectId, subFolderIds] = await Promise.all([
+    getFolderContent(folderId),
+    getRootFolderId(folderId),
+    // Only get sub folder IDs if not a top-level project (slug length > 1)
+    route.folderPath.split('/').length === 1
+      ? Promise.resolve([])
+      : getSubFolderIds(folderId),
+  ])
+
+  return (
+    <div className="bg-gray-50">
+      <div className="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <OrgHeader
+          organization={organization}
+          userRole={userOrganizationRole}
+        />
+        <FolderView
+          organization={organization}
+          folderId={folderId}
+          folderPath={route.folderPath}
+          content={folderContent}
+          projectId={projectId}
+          subFolderIds={subFolderIds}
+          userRoles={userRoles}
+        />
+      </div>
+    </div>
+  )
 }
 
 /* export async function generateMetadata({ params }: PageProps) {
