@@ -206,6 +206,22 @@ export default function SlideView({
                   </svg>
                 </button>
               )}
+              {canEdit && (
+                <button
+                  onClick={() => window.open(`${pathname}/edit`, '_blank')}
+                  className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  aria-label="Edit in PowerPoint"
+                  title="Edit in PowerPoint"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M13 3v6h8l-11 13v-6H2z" fill="#D24726" />
+                  </svg>
+                </button>
+              )}
               <button
                 onClick={toggleLightbox}
                 className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
