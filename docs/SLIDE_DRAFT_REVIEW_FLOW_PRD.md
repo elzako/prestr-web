@@ -111,15 +111,15 @@ This is a new modal dialog that appears when the **Review Draft** button is clic
        - **Actions:** _Cancel_, _Publish_
 
      - If **Publish** is confirmed, call:
-       - `POST /api/slides/publish/{slideId}`
+       - Server Action: `publishDraft(slideId)` from `@/lib/slide-actions`
 
      - **On Success:**
        - Close the Draft Review modal.
        - Refresh the Slide View. The `draft_object_id` will be null, so the **Review Draft** button will no longer be visible.
-       - Show success toast: _“Draft published successfully.”_
+       - Show success toast: _"Draft published successfully."_
 
      - **On Error:**
-       - Show error toast: _“Failed to publish draft. Please try again.”_
+       - Show error toast: _"Failed to publish draft. Please try again."_
 
 2. **Discard Draft (Destructive Action)**
    - **Label:** _Discard Draft_
@@ -131,7 +131,7 @@ This is a new modal dialog that appears when the **Review Draft** button is clic
        - **Actions:** _Cancel_, _Discard_
 
      - If **Discard** is confirmed, call:
-       - `POST /api/slides/discard/{slideId}` _(or `DELETE` if specified by backend)_
+       - Server Action: `discardDraft(slideId)` from `@/lib/slide-actions`
 
      - **On Success:**
        - Close the Draft Review modal.

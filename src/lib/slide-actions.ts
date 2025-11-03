@@ -1,6 +1,24 @@
-import { createClient } from '@/lib/supabase/client'
+'use server'
 
-// Client-side function to update slide
+import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
+
+// Helper function to get current user
+async function getCurrentUser() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
+
+  if (error || !user) {
+    throw new Error('User not authenticated')
+  }
+
+  return user
+}
+
+// Server action to update slide
 export async function updateSlide(
   slideId: string,
   updates: {
@@ -9,16 +27,8 @@ export async function updateSlide(
     tags?: string[]
   },
 ) {
-  const supabase = createClient()
-
-  // Get current user
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser()
-  if (userError || !user) {
-    throw new Error('User not authenticated')
-  }
+  const user = await getCurrentUser()
+  const supabase = await createClient()
 
   // Update the slide
   const { data, error } = await supabase
@@ -39,31 +49,63 @@ export async function updateSlide(
   return data
 }
 
-// Publish a draft slide
+// Server action to publish a draft slide
 export async function publishDraft(slideId: string): Promise<{
   success: boolean
   error?: string
 }> {
   try {
-    const response = await fetch(`/api/slides/publish/${slideId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const user = await getCurrentUser()
+    const supabase = await createClient()
 
-    const data = await response.json()
+    // Get the current slide to retrieve draft_object_id
+    const { data: slide, error: fetchError } = await supabase
+      .from('slides')
+      .select('draft_object_id, parent_id')
+      .eq('id', slideId)
+      .single()
 
-    if (!response.ok) {
+    if (fetchError || !slide) {
       return {
         success: false,
-        error: data.error || 'Failed to publish draft',
+        error: 'Slide not found',
       }
+    }
+
+    if (!slide.draft_object_id) {
+      return {
+        success: false,
+        error: 'No draft to publish',
+      }
+    }
+
+    // Publish the draft: copy draft_object_id to object_id and clear draft_object_id
+    const { error: updateError } = await supabase
+      .from('slides')
+      .update({
+        object_id: slide.draft_object_id,
+        draft_object_id: null,
+        updated_at: new Date().toISOString(),
+        updated_by: user.id,
+      })
+      .eq('id', slideId)
+
+    if (updateError) {
+      console.error('Error publishing draft:', updateError)
+      return {
+        success: false,
+        error: 'Failed to publish draft',
+      }
+    }
+
+    // Revalidate the slide's parent folder path
+    if (slide.parent_id) {
+      revalidatePath(`/[organization]/[[...slug]]`, 'page')
     }
 
     return { success: true }
   } catch (error) {
-    console.error('Error publishing draft:', error)
+    console.error('Unexpected error publishing draft:', error)
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Failed to publish draft',
@@ -71,31 +113,62 @@ export async function publishDraft(slideId: string): Promise<{
   }
 }
 
-// Discard a draft slide
+// Server action to discard a draft slide
 export async function discardDraft(slideId: string): Promise<{
   success: boolean
   error?: string
 }> {
   try {
-    const response = await fetch(`/api/slides/discard/${slideId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const user = await getCurrentUser()
+    const supabase = await createClient()
 
-    const data = await response.json()
+    // Get the current slide to verify draft exists
+    const { data: slide, error: fetchError } = await supabase
+      .from('slides')
+      .select('draft_object_id, parent_id')
+      .eq('id', slideId)
+      .single()
 
-    if (!response.ok) {
+    if (fetchError || !slide) {
       return {
         success: false,
-        error: data.error || 'Failed to discard draft',
+        error: 'Slide not found',
       }
+    }
+
+    if (!slide.draft_object_id) {
+      return {
+        success: false,
+        error: 'No draft to discard',
+      }
+    }
+
+    // Discard the draft: set draft_object_id to null
+    const { error: updateError } = await supabase
+      .from('slides')
+      .update({
+        draft_object_id: null,
+        updated_at: new Date().toISOString(),
+        updated_by: user.id,
+      })
+      .eq('id', slideId)
+
+    if (updateError) {
+      console.error('Error discarding draft:', updateError)
+      return {
+        success: false,
+        error: 'Failed to discard draft',
+      }
+    }
+
+    // Revalidate the slide's parent folder path
+    if (slide.parent_id) {
+      revalidatePath(`/[organization]/[[...slug]]`, 'page')
     }
 
     return { success: true }
   } catch (error) {
-    console.error('Error discarding draft:', error)
+    console.error('Unexpected error discarding draft:', error)
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Failed to discard draft',

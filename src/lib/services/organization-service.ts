@@ -66,7 +66,6 @@ export async function getTopLevelProjects(
     .eq('organization_id', organizationId)
     .is('parent_id', null)
     .is('deleted_at', null)
-    .order('updated_at', { ascending: false })
 
   if (error) {
     console.error('Error fetching projects:', error)
