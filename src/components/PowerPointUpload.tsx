@@ -184,18 +184,10 @@ export default function PowerPointUpload({
       const isPptx = fileExtension === 'pptx'
       const uploadUrl = isPptx ? pptxUploadUrl : filesUploadUrl
 
-      // remove file extension, replace all non-alphanumeric characters with a hyphen, trim whitespace, change to lowercase
-      const fileName = file.name
-        .trim()
-        .replace(/\.[^/.]+$/, '') // removes any file extension
-        .replace(/[^a-zA-Z0-9-]/g, '-') // replaces invalid characters with '-'
-        .toLowerCase()
-
       const params = new URLSearchParams({
         organizationId: organizationId,
         folderId: folderId,
         userId: userId,
-        fileName: fileName,
         visibility: rootVisibility,
       })
 
