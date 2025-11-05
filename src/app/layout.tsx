@@ -7,7 +7,7 @@ import '@/styles/tailwind.css'
 export const metadata: Metadata = {
   title: {
     template: '%s - Prestr',
-    default: 'Prestr - The intelligent library for every slide',
+    default: 'Prestr - AI CMS for presentations',
   },
   description:
     'Prestr transforms your PowerPoint slides into a searchable, remixable library. Find any slide in seconds. Build better presentations in minutes.',

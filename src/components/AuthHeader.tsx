@@ -178,11 +178,11 @@ export function AuthHeader({
             <Link href="/" aria-label="Home">
               <Logo className="h-10 w-auto" />
             </Link>
-            <div className="hidden md:flex md:gap-x-6">
+            {/* <div className="hidden md:flex md:gap-x-6">
               <NavLink href="/dashboard">Dashboard</NavLink>
               <NavLink href="/presentations">Presentations</NavLink>
               <NavLink href="/organizations">Organizations</NavLink>
-            </div>
+            </div> */}
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
