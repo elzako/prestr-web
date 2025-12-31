@@ -48,7 +48,7 @@ export default function AddSlideModal({
 
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
 
-  // Search/fetch available slides using MeiliSearch
+  // Search/fetch available slides using Typesense
   useEffect(() => {
     if (!isOpen || !projectId) return
 
@@ -57,7 +57,7 @@ export default function AddSlideModal({
       setError(null)
 
       try {
-        // Use MeiliSearch to find slides
+        // Use Typesense to find slides
         // If no search term, use wildcard to get all slides from project
         const query = debouncedSearchTerm.trim() || '*'
 

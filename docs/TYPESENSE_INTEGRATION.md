@@ -1,8 +1,8 @@
-# MeiliSearch Integration
+# Typesense Integration
 
 ## Overview
 
-The AddSlideModal component has been updated to use MeiliSearch for searching and browsing slides, leveraging the existing search infrastructure already in place for the main search feature.
+The AddSlideModal component has been updated to use Typesense for searching and browsing slides, leveraging the existing search infrastructure already in place for the main search feature.
 
 ## Implementation Details
 
@@ -10,7 +10,7 @@ The AddSlideModal component has been updated to use MeiliSearch for searching an
 
 Uses `searchSlides` from `@/lib/search-actions`, which:
 
-- Connects to MeiliSearch with the 'slides' index
+- Connects to Typesense with the 'slides' collection
 - Applies role-based visibility filtering (public/internal/restricted)
 - Filters by organization and project ID
 - Returns results with pre-generated image URLs
@@ -20,7 +20,7 @@ Uses `searchSlides` from `@/lib/search-actions`, which:
 **1. Full-Text Search**
 
 - Searches across slide content, names, and descriptions
-- Supports MeiliSearch's powerful search capabilities
+- Supports Typesense's powerful search capabilities
 - Provides ranked, relevant results
 
 **2. Wildcard Browsing**
@@ -40,7 +40,7 @@ Uses `searchSlides` from `@/lib/search-actions`, which:
 **4. Client-Side Filtering**
 
 - Excludes slides already in the presentation
-- Done client-side after MeiliSearch returns results
+- Done client-side after Typesense returns results
 - Passed via `excludeSlideIds` prop
 
 **5. Performance Optimization**
@@ -69,8 +69,8 @@ const filteredResults = response.results.filter(
 ## Benefits Over API Endpoint
 
 1. **Consistency**: Uses the same search infrastructure as main search
-2. **Performance**: MeiliSearch is optimized for fast, full-text search
-3. **Features**: Inherits all MeiliSearch features (typo tolerance, ranking, etc.)
+2. **Performance**: Typesense is optimized for fast, full-text search
+3. **Features**: Inherits all Typesense features (typo tolerance, ranking, etc.)
 4. **Maintainability**: Single search implementation to maintain
 5. **Security**: Consistent permission model across the application
 
@@ -84,10 +84,12 @@ const filteredResults = response.results.filter(
 
 ## Configuration
 
-Requires MeiliSearch environment variables:
+Requires Typesense environment variables:
 
-- `NEXT_PUBLIC_SEARCH_URL` - MeiliSearch server URL
-- `NEXT_PUBLIC_SEARCH_KEY` - API key for MeiliSearch
+- `TYPESENSE_HOST` - Typesense server host
+- `TYPESENSE_PORT` - Typesense server port
+- `TYPESENSE_PROTOCOL` - `http` or `https`
+- `TYPESENSE_API_KEY` - API key for Typesense
 
 ## Type Definitions
 
@@ -102,7 +104,7 @@ interface SearchOptions {
   userRoles?: UserRoles | null
 }
 
-interface SearchResult extends MeiliSearchSlideResult {
+interface SearchResult extends TypesenseSlideResult {
   imageUrl?: string
   parent_path: string | null
 }
@@ -124,4 +126,4 @@ Potential improvements:
 - `src/lib/search-actions.ts` - Core search implementation
 - `src/types/api/search.ts` - Type definitions
 - `src/components/SearchResults.tsx` - Main search UI (reference implementation)
-- `src/components/AddSlideModal.tsx` - Uses MeiliSearch for slide browsing
+- `src/components/AddSlideModal.tsx` - Uses Typesense for slide browsing

@@ -65,8 +65,8 @@ export type {
 export type {
   SearchResult,
   SearchOptions,
-  MeiliSearchSlideResult,
-  MeiliSearchResponse,
+  TypesenseSlideResult,
+  TypesenseSearchResponse,
   UploadState,
   UploadProgress,
   UploadResult,

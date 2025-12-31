@@ -57,9 +57,9 @@
 - [x] Test transformation parameter handling
 - [x] Test error scenarios (upload failures, invalid configs)
 
-### Meilisearch Integration Tests
+### Typesense Integration Tests
 
-- [x] Mock Meilisearch client
+- [x] Mock Typesense client
 - [x] Test search query building
 - [x] Test result parsing and formatting
 - [x] Test error handling for search failures
@@ -268,5 +268,4 @@
 - Whether visual regression testing is necessary
 - CI/CD platform to use
 - Test data management strategy (fixtures vs factories vs generated)
-
 

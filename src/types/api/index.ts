@@ -7,8 +7,8 @@
 
 // Search API types
 export type {
-  MeiliSearchSlideResult,
-  MeiliSearchResponse,
+  TypesenseSlideResult,
+  TypesenseSearchResponse,
   SearchResult,
   SearchOptions,
   SearchFilters,

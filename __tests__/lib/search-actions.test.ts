@@ -1,18 +1,23 @@
 /**
- * Tests for Meilisearch integration
+ * Tests for Typesense integration
  */
 
 import { searchSlides } from '@/lib/search-actions'
 import { createClient } from '@/lib/supabase/server'
-import { MeiliSearch } from 'meilisearch'
+import Typesense from 'typesense'
 
 // Mock environment variables
-process.env.NEXT_PUBLIC_SEARCH_URL = 'http://localhost:7700'
-process.env.NEXT_PUBLIC_SEARCH_KEY = 'test-key'
+process.env.TYPESENSE_HOST = 'localhost'
+process.env.TYPESENSE_PORT = '8108'
+process.env.TYPESENSE_PROTOCOL = 'http'
+process.env.TYPESENSE_API_KEY = 'test-key'
 
-// Mock Meilisearch
-jest.mock('meilisearch', () => ({
-  MeiliSearch: jest.fn(),
+// Mock Typesense
+jest.mock('typesense', () => ({
+  __esModule: true,
+  default: {
+    Client: jest.fn(),
+  },
 }))
 
 // Mock Supabase
@@ -28,24 +33,31 @@ jest.mock('@/lib/cloudinary', () => ({
   ),
 }))
 
-describe('Meilisearch Integration Tests', () => {
-  let mockMeilisearchClient: any
+describe('Typesense Integration Tests', () => {
+  let mockTypesenseClient: any
   let mockSupabaseClient: any
 
   beforeEach(() => {
     jest.clearAllMocks()
 
-    // Setup mock Meilisearch client
+    // Setup mock Typesense client
     const mockSearchMethod = jest.fn()
-    const mockIndexMethod = jest.fn(() => ({
-      search: mockSearchMethod,
+    const mockDocumentsMethod = jest.fn(() => ({ search: mockSearchMethod }))
+    const mockCollectionsMethod = jest.fn(() => ({
+      documents: mockDocumentsMethod,
     }))
+    const mockHealthRetrieve = jest.fn().mockResolvedValue({ ok: true })
 
-    mockMeilisearchClient = {
-      index: mockIndexMethod,
+    mockTypesenseClient = {
+      collections: mockCollectionsMethod,
+      health: {
+        retrieve: mockHealthRetrieve,
+      },
     }
 
-    ;(MeiliSearch as jest.Mock).mockImplementation(() => mockMeilisearchClient)
+    ;(Typesense as unknown as { Client: jest.Mock }).Client.mockImplementation(
+      () => mockTypesenseClient,
+    )
 
     // Setup mock Supabase client
     mockSupabaseClient = {
@@ -64,20 +76,22 @@ describe('Meilisearch Integration Tests', () => {
     })
 
     // Default search response
-    mockMeilisearchClient.index().search.mockResolvedValue({
+    mockTypesenseClient.collections().documents().search.mockResolvedValue({
       hits: [
         {
-          id: 'slide-1',
-          slide_name: 'Test Slide',
-          slide_text: 'Test content',
-          organization_id: 'org-1',
-          project_id: 'project-1',
-          parent_id: 'folder-1',
-          object_id: 'object-1',
-          visibility: 'public',
+          document: {
+            id: 'slide-1',
+            slide_name: 'Test Slide',
+            slide_text: 'Test content',
+            organization_id: 'org-1',
+            project_id: 'project-1',
+            parent_id: 'folder-1',
+            object_id: 'object-1',
+            visibility: 'public',
+          },
         },
       ],
-      estimatedTotalHits: 1,
+      found: 1,
     })
   })
 
@@ -88,11 +102,13 @@ describe('Meilisearch Integration Tests', () => {
         query: 'test',
       })
 
-      expect(mockMeilisearchClient.index).toHaveBeenCalledWith('slides')
-      expect(mockMeilisearchClient.index().search).toHaveBeenCalledWith(
-        'test',
+      expect(mockTypesenseClient.collections).toHaveBeenCalledWith('slides')
+      expect(
+        mockTypesenseClient.collections().documents().search,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
-          filter: expect.stringContaining('visibility = "public"'),
+          q: 'test',
+          filter_by: expect.stringContaining('visibility:=`public`'),
         }),
       )
       expect(result.success).toBe(true)
@@ -108,12 +124,13 @@ describe('Meilisearch Integration Tests', () => {
         },
       })
 
-      const searchCall = mockMeilisearchClient.index().search.mock.calls[0]
-      const filterString = searchCall[1].filter
+      const searchCall =
+        mockTypesenseClient.collections().documents().search.mock.calls[0]
+      const filterString = searchCall[0].filter_by
 
-      expect(filterString).toContain('visibility = "public"')
-      expect(filterString).toContain('visibility = "internal"')
-      expect(filterString).toContain('organization_id IN ["org-1"]')
+      expect(filterString).toContain('visibility:=`public`')
+      expect(filterString).toContain('visibility:=`internal`')
+      expect(filterString).toContain('organization_id:=[`org-1`]')
     })
 
     it('should include restricted slides filter when user has folder roles', async () => {
@@ -126,11 +143,12 @@ describe('Meilisearch Integration Tests', () => {
         },
       })
 
-      const searchCall = mockMeilisearchClient.index().search.mock.calls[0]
-      const filterString = searchCall[1].filter
+      const searchCall =
+        mockTypesenseClient.collections().documents().search.mock.calls[0]
+      const filterString = searchCall[0].filter_by
 
-      expect(filterString).toContain('visibility = "restricted"')
-      expect(filterString).toContain('project_id IN ["folder-1"]')
+      expect(filterString).toContain('visibility:=`restricted`')
+      expect(filterString).toContain('project_id:=[`folder-1`]')
     })
 
     it('should apply organization filter when provided', async () => {
@@ -139,10 +157,11 @@ describe('Meilisearch Integration Tests', () => {
         query: 'test',
       })
 
-      const searchCall = mockMeilisearchClient.index().search.mock.calls[0]
-      const filterString = searchCall[1].filter
+      const searchCall =
+        mockTypesenseClient.collections().documents().search.mock.calls[0]
+      const filterString = searchCall[0].filter_by
 
-      expect(filterString).toContain('organization_id = "org-123"')
+      expect(filterString).toContain('organization_id:=`org-123`')
     })
 
     it('should apply project filter when provided', async () => {
@@ -152,10 +171,11 @@ describe('Meilisearch Integration Tests', () => {
         query: 'test',
       })
 
-      const searchCall = mockMeilisearchClient.index().search.mock.calls[0]
-      const filterString = searchCall[1].filter
+      const searchCall =
+        mockTypesenseClient.collections().documents().search.mock.calls[0]
+      const filterString = searchCall[0].filter_by
 
-      expect(filterString).toContain('project_id = "project-456"')
+      expect(filterString).toContain('project_id:=`project-456`')
     })
 
     it('should apply sub folder filters when provided', async () => {
@@ -165,10 +185,13 @@ describe('Meilisearch Integration Tests', () => {
         query: 'test',
       })
 
-      const searchCall = mockMeilisearchClient.index().search.mock.calls[0]
-      const filterString = searchCall[1].filter
+      const searchCall =
+        mockTypesenseClient.collections().documents().search.mock.calls[0]
+      const filterString = searchCall[0].filter_by
 
-      expect(filterString).toContain('parent_id IN ["folder-1","folder-2"]')
+      expect(filterString).toContain(
+        'parent_id:=[`folder-1`,`folder-2`]',
+      )
     })
   })
 
@@ -217,9 +240,9 @@ describe('Meilisearch Integration Tests', () => {
     })
 
     it('should handle empty search results', async () => {
-      mockMeilisearchClient.index().search.mockResolvedValue({
+      mockTypesenseClient.collections().documents().search.mockResolvedValue({
         hits: [],
-        estimatedTotalHits: 0,
+        found: 0,
       })
 
       const result = await searchSlides({
@@ -241,10 +264,11 @@ describe('Meilisearch Integration Tests', () => {
         limit: 10,
       })
 
-      expect(mockMeilisearchClient.index().search).toHaveBeenCalledWith(
-        'test',
+      expect(
+        mockTypesenseClient.collections().documents().search,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
-          limit: 10,
+          per_page: 10,
         }),
       )
     })
@@ -256,10 +280,11 @@ describe('Meilisearch Integration Tests', () => {
         offset: 20,
       })
 
-      expect(mockMeilisearchClient.index().search).toHaveBeenCalledWith(
-        'test',
+      expect(
+        mockTypesenseClient.collections().documents().search,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
-          offset: 20,
+          page: 2,
         }),
       )
     })
@@ -270,10 +295,11 @@ describe('Meilisearch Integration Tests', () => {
         query: 'test',
       })
 
-      expect(mockMeilisearchClient.index().search).toHaveBeenCalledWith(
-        'test',
+      expect(
+        mockTypesenseClient.collections().documents().search,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
-          limit: 20,
+          per_page: 20,
         }),
       )
     })
@@ -281,7 +307,7 @@ describe('Meilisearch Integration Tests', () => {
 
   describe('searchSlides - Error Handling', () => {
     it('should return error when search service is not configured', async () => {
-      delete process.env.NEXT_PUBLIC_SEARCH_URL
+      delete process.env.TYPESENSE_HOST
 
       const result = await searchSlides({
         organizationId: 'org-1',
@@ -292,11 +318,11 @@ describe('Meilisearch Integration Tests', () => {
       expect(result.error).toBe('Search service not configured')
 
       // Restore env var
-      process.env.NEXT_PUBLIC_SEARCH_URL = 'http://localhost:7700'
+      process.env.TYPESENSE_HOST = 'localhost'
     })
 
-    it('should handle Meilisearch errors gracefully', async () => {
-      mockMeilisearchClient.index().search.mockRejectedValue(
+    it('should handle Typesense errors gracefully', async () => {
+      mockTypesenseClient.collections().documents().search.mockRejectedValue(
         new Error('Search index not found'),
       )
 
@@ -312,7 +338,7 @@ describe('Meilisearch Integration Tests', () => {
     })
 
     it('should handle network errors', async () => {
-      mockMeilisearchClient.index().search.mockRejectedValue(
+      mockTypesenseClient.collections().documents().search.mockRejectedValue(
         new Error('Network timeout'),
       )
 
@@ -328,7 +354,9 @@ describe('Meilisearch Integration Tests', () => {
     })
 
     it('should handle non-Error exceptions', async () => {
-      mockMeilisearchClient.index().search.mockRejectedValue('Unknown error')
+      mockTypesenseClient.collections().documents().search.mockRejectedValue(
+        'Unknown error',
+      )
 
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
       const result = await searchSlides({

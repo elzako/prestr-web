@@ -5,11 +5,11 @@ import type { UserRoles } from '../entities'
  * Search API types
  *
  * These types define the data structures used for search functionality,
- * including MeiliSearch integration and role-based filtering.
+ * including Typesense integration and role-based filtering.
  */
 
-// MeiliSearch slide result (from search service)
-export interface MeiliSearchSlideResult {
+// Typesense slide result (from search service)
+export interface TypesenseSlideResult {
   id: string
   object_id: string
   parent_id: string
@@ -37,9 +37,9 @@ export interface MeiliSearchSlideResult {
   updated_at: string
 }
 
-// MeiliSearch API response wrapper
-export interface MeiliSearchResponse {
-  results: MeiliSearchSlideResult[]
+// Typesense API response wrapper
+export interface TypesenseSearchResponse {
+  results: TypesenseSlideResult[]
   offset: number
   limit: number
   total: number
@@ -48,11 +48,11 @@ export interface MeiliSearchResponse {
 /**
  * Enhanced search result with additional computed fields
  *
- * Extends the raw MeiliSearch result with additional computed properties
+ * Extends the raw Typesense result with additional computed properties
  * like imageUrl for display purposes. This is the primary interface used
  * by search result components.
  */
-export interface SearchResult extends MeiliSearchSlideResult {
+export interface SearchResult extends TypesenseSlideResult {
   imageUrl?: string
 }
 

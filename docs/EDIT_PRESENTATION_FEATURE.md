@@ -48,9 +48,9 @@ Updates the slides array for a presentation.
 - Checks edit permissions (admin/contributor only)
 - Updates the `slides` JSONB column
 
-#### **MeiliSearch Integration for Slide Search**
+#### **Typesense Integration for Slide Search**
 
-The AddSlideModal uses the existing MeiliSearch infrastructure (`searchSlides` from `@/lib/search-actions`).
+The AddSlideModal uses the existing Typesense infrastructure (`searchSlides` from `@/lib/search-actions`).
 
 **Features:**
 
@@ -61,7 +61,7 @@ The AddSlideModal uses the existing MeiliSearch infrastructure (`searchSlides` f
 - Uses wildcard (`*`) query when no search term to browse all available slides
 - Debounced search (300ms) to reduce API calls
 
-**See:** `docs/MEILISEARCH_INTEGRATION.md` for detailed documentation
+**See:** `docs/TYPESENSE_INTEGRATION.md` for detailed documentation
 
 ### 2. Components
 
@@ -71,7 +71,7 @@ A modal dialog for browsing and adding slides to a presentation.
 
 **Features:**
 
-- **MeiliSearch Integration:** Uses the same search infrastructure as the main search feature
+- **Typesense Integration:** Uses the same search infrastructure as the main search feature
 - **Full-Text Search:** Searches across slide content, names, and descriptions
 - **Debounced Search:** 300ms delay to reduce unnecessary API calls
 - **Wildcard Browsing:** Shows all available slides when search is empty
@@ -209,10 +209,10 @@ Updated to manage edit mode state and pass required props.
 
 **Created:**
 
-- `src/components/AddSlideModal.tsx` - Modal for adding slides (uses MeiliSearch)
-- `src/app/api/projects/[id]/slides/route.ts` - API for fetching available slides (can be removed - superseded by MeiliSearch)
+- `src/components/AddSlideModal.tsx` - Modal for adding slides (uses Typesense)
+- `src/app/api/projects/[id]/slides/route.ts` - API for fetching available slides (can be removed - superseded by Typesense)
 - `docs/EDIT_PRESENTATION_FEATURE.md` - This documentation
-- `docs/MEILISEARCH_INTEGRATION.md` - MeiliSearch integration details
+- `docs/TYPESENSE_INTEGRATION.md` - Typesense integration details
 
 **Modified:**
 
