@@ -2,9 +2,24 @@
   "name": "my-nextjs-app",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-12-28",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "binding": "ASSETS",
     "directory": ".open-next/assets"
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    }
+  },
+  "vars": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://evglirxvmfojuhbykspn.supabase.co",
+    "NEXT_CLOUDINARY_CLOUD_NAME": "dlxd3wtyd",
+    "NEXT_CLOUDINARY_API_KEY": "591765335123183"
   }
 }
