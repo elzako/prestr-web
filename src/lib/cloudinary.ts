@@ -3,9 +3,9 @@ import { isE2ETestMode } from '@/lib/e2e/test-mode'
 
 // Configure Cloudinary using server-side environment variables
 cloudinary.config({
-  cloud_name: process.env.NEXT_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.NEXT_CLOUDINARY_API_KEY,
-  api_secret: process.env.NEXT_CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
   secure: true,
 })
 

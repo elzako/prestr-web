@@ -175,7 +175,7 @@ export default function PowerPointUpload({
       ])
 
       // Get API base URL from environment or use relative path
-      const apiBaseUrl = process.env.NEXT_PUBLIC_PRESTR_API_URL || ''
+      const apiBaseUrl = process.env.PRESTR_API_URL || ''
       const pptxUploadUrl = `${apiBaseUrl}/api/presentations/upload`
       const filesUploadUrl = `${apiBaseUrl}/api/files/upload`
 

@@ -1,11 +1,16 @@
 jest.mock('next/server', () => {
   const cookieStoreFactory = () => {
-    const store = new Map<string, { value: string; options?: Record<string, unknown> }>()
+    const store = new Map<
+      string,
+      { value: string; options?: Record<string, unknown> }
+    >()
 
     return {
-      set: jest.fn((name: string, value: string, options?: Record<string, unknown>) => {
-        store.set(name, { value, options })
-      }),
+      set: jest.fn(
+        (name: string, value: string, options?: Record<string, unknown>) => {
+          store.set(name, { value, options })
+        },
+      ),
       getAll: jest.fn(() =>
         Array.from(store.entries()).map(([name, { value, options }]) => ({
           name,
@@ -99,7 +104,10 @@ function createMockRequest(path: string): MockRequest {
   return {
     cookies: {
       getAll: jest.fn(() =>
-        Array.from(cookieJar.entries()).map(([name, value]) => ({ name, value })),
+        Array.from(cookieJar.entries()).map(([name, value]) => ({
+          name,
+          value,
+        })),
       ),
       set: jest.fn((name: string, value: string) => {
         cookieJar.set(name, value)
@@ -115,8 +123,8 @@ describe('middleware route protection', () => {
 
   beforeEach(() => {
     process.env = { ...originalEnv }
-    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'anon-key'
+    process.env.SUPABASE_URL = 'https://example.supabase.co'
+    process.env.SUPABASE_ANON_KEY = 'anon-key'
     jest.clearAllMocks()
     ;(createServerClient as jest.Mock).mockReset()
   })
@@ -148,7 +156,9 @@ describe('middleware route protection', () => {
   })
 
   it('redirects authenticated users away from auth routes', async () => {
-    const getUser = jest.fn().mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    const getUser = jest
+      .fn()
+      .mockResolvedValue({ data: { user: { id: 'user-1' } } })
     ;(createServerClient as jest.Mock).mockReturnValue({ auth: { getUser } })
 
     const request = createMockRequest('/login')

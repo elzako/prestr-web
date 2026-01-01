@@ -16,8 +16,8 @@ describe('Supabase server client cookie integration', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     process.env = { ...originalEnv }
-    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'anon-key'
+    process.env.SUPABASE_URL = 'https://example.supabase.co'
+    process.env.SUPABASE_ANON_KEY = 'anon-key'
   })
 
   afterAll(() => {
@@ -41,7 +41,11 @@ describe('Supabase server client cookie integration', () => {
     expect(config.cookies.getAll()).toEqual(cookieList)
 
     const cookiesToSet = [
-      { name: 'sb-refresh-token', value: 'abc', options: { path: '/', httpOnly: true } },
+      {
+        name: 'sb-refresh-token',
+        value: 'abc',
+        options: { path: '/', httpOnly: true },
+      },
     ]
 
     config.cookies.setAll(cookiesToSet)
@@ -57,7 +61,10 @@ describe('Supabase server client cookie integration', () => {
     const set = jest.fn(() => {
       throw new Error('read-only')
     })
-    ;(cookies as jest.Mock).mockResolvedValue({ getAll: jest.fn(() => []), set })
+    ;(cookies as jest.Mock).mockResolvedValue({
+      getAll: jest.fn(() => []),
+      set,
+    })
     ;(createServerClient as jest.Mock).mockReturnValue({})
 
     await createClient()
@@ -72,7 +79,11 @@ describe('Supabase server client cookie integration', () => {
   })
 
   it('enforces secure cookie attributes for admin client in production', async () => {
-    const restoreNodeEnv = jest.replaceProperty(process.env, 'NODE_ENV', 'production')
+    const restoreNodeEnv = jest.replaceProperty(
+      process.env,
+      'NODE_ENV',
+      'production',
+    )
 
     const set = jest.fn()
     ;(cookies as jest.Mock).mockResolvedValue({

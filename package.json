@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "NEXT_RUNTIME=edge next build",
-    "deploy": "npx @opennextjs/cloudflare build && npx wrangler deploy",
+    "deploy:staging": "npx @opennextjs/cloudflare build && npx wrangler deploy --env staging",
+    "deploy:prod": "npx @opennextjs/cloudflare build && npx wrangler deploy --env prod",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",

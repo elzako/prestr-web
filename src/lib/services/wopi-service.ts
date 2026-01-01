@@ -36,22 +36,19 @@ export async function getWopiToken(
     return null
   }
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_PRESTR_API_URL}/wopi/token`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        fileId,
-        userId: user.id,
-        canWrite,
-        ttlMs: 3600000,
-        resourceType,
-      }),
+  const response = await fetch(`${process.env.PRESTR_API_URL}/wopi/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  )
+    body: JSON.stringify({
+      fileId,
+      userId: user.id,
+      canWrite,
+      ttlMs: 3600000,
+      resourceType,
+    }),
+  })
 
   if (!response.ok) {
     console.error('Error fetching WOPI token')

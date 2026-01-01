@@ -75,9 +75,9 @@ POST {PRESTR_API_URL}/api/upload
 Required environment variables:
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-NEXT_PUBLIC_PRESTR_API_URL=your_api_base_url  # Optional, defaults to relative paths
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
+PRESTR_API_URL=your_api_base_url  # Optional, defaults to relative paths
 ```
 
 ## Usage

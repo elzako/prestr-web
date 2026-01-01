@@ -1,5 +1,5 @@
 {
-  "name": "my-nextjs-app",
+  "name": "prestr-web",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-12-28",
   "compatibility_flags": [
@@ -18,8 +18,43 @@
     }
   },
   "vars": {
-    "NEXT_PUBLIC_SUPABASE_URL": "https://evglirxvmfojuhbykspn.supabase.co",
-    "NEXT_CLOUDINARY_CLOUD_NAME": "dlxd3wtyd",
-    "NEXT_CLOUDINARY_API_KEY": "591765335123183"
+    "PRESTR_API_URL": "https://api-staging.prestr.com",
+    "SUPABASE_URL": "https://evglirxvmfojuhbykspn.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2Z2xpcnh2bWZvanVoYnlrc3BuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE4ODY3ODIsImV4cCI6MjA0NzQ2Mjc4Mn0.v6OLpzLfLl5eAwxJ5TAEhx45-7FEwljVR2_7xrBTVQ4",
+    "CLOUDINARY_CLOUD_NAME": "dlxd3wtyd",
+    "CLOUDINARY_API_KEY": "591765335123183",
+    "TYPESENSE_HOST": "search-staging.prestr.com",
+    "TYPESENSE_PORT": 443,
+    "TYPESENSE_PROTOCOL": "https"
+  },
+  "env": {
+    // Usage: wrangler deploy --env production
+    "prod": {
+      "name": "prestr-web-prod",
+      "vars": {
+        "PRESTR_API_URL": "https://api-prod.prestr.com",
+        "SUPABASE_URL": "https://evglirxvmfojuhbykspn.supabase.co",
+        "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2Z2xpcnh2bWZvanVoYnlrc3BuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE4ODY3ODIsImV4cCI6MjA0NzQ2Mjc4Mn0.v6OLpzLfLl5eAwxJ5TAEhx45-7FEwljVR2_7xrBTVQ4",
+        "CLOUDINARY_CLOUD_NAME": "dlxd3wtyd",
+        "CLOUDINARY_API_KEY": "591765335123183",
+        "TYPESENSE_HOST": "search-staging.prestr.com",
+        "TYPESENSE_PORT": 443,
+        "TYPESENSE_PROTOCOL": "https"
+      }
+    },
+    // Usage: wrangler deploy --env staging
+    "staging": {
+      "name": "prestr-web-staging",
+      "vars": {
+        "PRESTR_API_URL": "https://api-staging.prestr.com",
+        "SUPABASE_URL": "https://mgocmxeocnwgrqxjkrbp.supabase.co",
+        "SUPABASE_ANON_KEY": "sb_publishable_8A1cjeFS4s9MpSKrh2ZGIA_zeIzF8Ss",
+        "CLOUDINARY_CLOUD_NAME": "prestr",
+        "CLOUDINARY_API_KEY": "978399584464345",
+        "TYPESENSE_HOST": "search-prod.prestr.com",
+        "TYPESENSE_PORT": 443,
+        "TYPESENSE_PROTOCOL": "https"
+      }
+    }
   }
 }

@@ -210,16 +210,17 @@ export async function searchSlides(options: SearchOptions): Promise<{
     const page = limit > 0 ? Math.floor(offset / limit) + 1 : 1
 
     // Perform search
-    const searchResponse = await client.collections('slides').documents().search(
-      {
+    const searchResponse = await client
+      .collections('slides')
+      .documents()
+      .search({
         q: query,
         query_by: 'slide_text,description,file_name,notes_text',
         per_page: limit,
         page,
         filter_by: allFilters || undefined,
         highlight_fields: 'slide_text,description,file_name',
-      },
-    )
+      })
 
     // Map results and add image URLs and parent paths (server-side only)
     const resultsWithImages: SearchResult[] = await Promise.all(

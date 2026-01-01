@@ -5,8 +5,8 @@
 Create a `.env.local` file in your project root with the following variables:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 You can find these values in your Supabase project dashboard under Settings > API.
