@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto'
 import type {
   FolderContent,
   Organization,
@@ -601,7 +600,7 @@ export function createUser({
   }
 
   const store = getStore()
-  const id = 'user-' + randomUUID()
+  const id = 'user-' + crypto.randomUUID()
 
   const resolvedPosition = position || 'Contributor'
 
@@ -633,7 +632,7 @@ export function createUser({
 
 export function createSession(userId: string) {
   const store = getStore()
-  const token = randomUUID()
+  const token = crypto.randomUUID()
   store.sessions[token] = {
     token,
     userId,
@@ -844,7 +843,7 @@ export function createProjectRecord(
     throw new Error('A project with this name already exists')
   }
 
-  const id = 'folder-' + randomUUID()
+  const id = 'folder-' + crypto.randomUUID()
 
   const newProject: TestFolder = {
     id,
@@ -1057,7 +1056,7 @@ export function searchSlidesInStore(
 }
 export function recordPasswordResetRequest(email: string) {
   const store = getStore()
-  const token = randomUUID()
+  const token = crypto.randomUUID()
   store.passwordResets.push({
     email,
     token,
@@ -1080,9 +1079,9 @@ export function simulateUpload(args: {
   originalFileName: string
 }) {
   const store = getStore()
-  const presentationId = 'presentation-' + randomUUID()
-  const slideId = 'slide-' + randomUUID()
-  const slideObjectId = 'obj-' + randomUUID()
+  const presentationId = 'presentation-' + crypto.randomUUID()
+  const slideId = 'slide-' + crypto.randomUUID()
+  const slideObjectId = 'obj-' + crypto.randomUUID()
 
   const parentFolder = getFolderById(args.folderId)
   if (!parentFolder) {

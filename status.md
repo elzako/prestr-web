@@ -115,7 +115,7 @@ Based on comprehensive analysis of the codebase, here's the implementation statu
 ### Integration Points
 
 - **Cloudinary**: Image storage and delivery for slides
-- **MeiliSearch**: Full-text search with role-based filtering
+- **Typesense**: Full-text search with role-based filtering
 - **File uploads**: Robust PowerPoint processing pipeline
 
 ## Summary
